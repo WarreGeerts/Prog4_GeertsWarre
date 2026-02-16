@@ -13,10 +13,9 @@ void FPSComponent::Update() {
     m_IntervalTime += dt;
     m_IntervalFrames++;
 
-    // Update FPS every 0.2 seconds (5x/sec)
     if (m_IntervalTime >= m_UpdateInterval) {
-        m_FPS = static_cast<int>(static_cast<float>(m_IntervalFrames) / m_IntervalTime);
-        m_IntervalTime -= m_UpdateInterval;  // Carry remainder
+        m_FPS = static_cast<float>(m_IntervalFrames) / m_IntervalTime;
+        m_IntervalTime -= m_UpdateInterval;
         m_IntervalFrames = 0;
     }
 }

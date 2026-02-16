@@ -84,7 +84,7 @@ void dae::Minigin::Run(const std::function<void()> &load) {
     load(); //initialization (once run)
 
 #ifndef __EMSCRIPTEN__
-
+    DeltaTime::GetInstance().SetFPS(60);
     while (!m_quit) //main loop
     {
         //DeltaTime
@@ -92,9 +92,7 @@ void dae::Minigin::Run(const std::function<void()> &load) {
 
         RunOneFrame(); //main loop function
 
-        if (auto sleep = DeltaTime::GetInstance().SleepTime(); sleep > std::chrono::microseconds(100)) {
-            std::this_thread::sleep_for(sleep);
-        }
+        std::this_thread::sleep_for(DeltaTime::GetInstance().CalcSleepTime());
     }
 
 #else
@@ -104,12 +102,13 @@ void dae::Minigin::Run(const std::function<void()> &load) {
 
 void dae::Minigin::RunOneFrame() //main loop
 {
-    Scene &mainScene{SceneManager::GetInstance().GetSceneByName("Main")};
-
-    const int currentFPS{mainScene.GetGameObjectByName("FPSCounter").GetComponent<FPSComponent>()->GetFPS()};
-
+    //FPS counter
+    const Scene &mainScene{SceneManager::GetInstance().GetSceneByName("Main")};
+    const float currentFPS{mainScene.GetGameObjectByName("FPSCounter").GetComponent<FPSComponent>()->GetFPS()};
+    std::stringstream ss;
+    ss << std::fixed << std::setprecision(1) << currentFPS;
     mainScene.GetGameObjectByName("FPSCounter").GetComponent<TextComponent>()->SetText(
-        "FPS: " + std::to_string(currentFPS));
+        "FPS: " + ss.str());
 
     //input process
     m_quit = !InputManager::GetInstance().ProcessInput();

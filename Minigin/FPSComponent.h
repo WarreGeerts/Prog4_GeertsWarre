@@ -7,12 +7,12 @@ namespace dae {
         explicit FPSComponent(GameObject *go);
         void Update() override;
         void Render() const override {}
-        int GetFPS() const { return m_FPS; }
+        float GetFPS() const { return m_FPS; }
 
     private:
         float m_Time = 0.f;
         int m_Frames = 0;
-        int m_FPS = 0;
+        float m_FPS = 0;
 
         float m_IntervalTime{0.0f};
         int m_IntervalFrames{0};
