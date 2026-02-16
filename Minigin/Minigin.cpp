@@ -11,6 +11,9 @@
 //#include <SDL3_image/SDL_image.h>
 #include <SDL3_ttf/SDL_ttf.h>
 #include "Minigin.h"
+
+#include <thread>
+
 #include "InputManager.h"
 #include "SceneManager.h"
 #include "Renderer.h"
@@ -89,18 +92,43 @@ dae::Minigin::~Minigin()
 
 void dae::Minigin::Run(const std::function<void()>& load)
 {
-	load();
+	load(); //initialization (once run)
+
+
 #ifndef __EMSCRIPTEN__
-	while (!m_quit)
-		RunOneFrame();
+
+
+	auto last_time = std::chrono::high_resolution_clock::now();
+
+	while (!m_quit) //main loop
+	{
+		constexpr int ms_per_frame{17};
+		const auto current_time = std::chrono::high_resolution_clock::now();
+		const float delta_time = std::chrono::duration<float>(current_time - last_time).count();
+		last_time = current_time;
+
+		RunOneFrame(delta_time); //main loop function
+
+		const auto sleep_time = current_time + std::chrono::milliseconds(ms_per_frame) - std::chrono::high_resolution_clock::now();
+
+		std::this_thread::sleep_for(sleep_time);
+	}
+
+
+
 #else
 	emscripten_set_main_loop_arg(&LoopCallback, this, 0, true);
 #endif
 }
 
-void dae::Minigin::RunOneFrame()
+void dae::Minigin::RunOneFrame(float delta_time) //main loop
 {
+	//input process
 	m_quit = !InputManager::GetInstance().ProcessInput();
+	//scene update
 	SceneManager::GetInstance().Update();
+	//render update
 	Renderer::GetInstance().Render();
+	std::cout<<delta_time<<std::endl;
+
 }

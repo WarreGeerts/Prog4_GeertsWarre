@@ -1,4 +1,5 @@
-﻿#include <stdexcept>
+﻿/*
+#include <stdexcept>
 #include <SDL3_ttf/SDL_ttf.h>
 #include "TextObject.h"
 #include "Renderer.h"
@@ -54,5 +55,6 @@ void dae::TextObject::SetColor(const SDL_Color& color)
 	m_color = color; 
 	m_needsUpdate = true; 
 }
+*/
 
 

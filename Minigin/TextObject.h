@@ -1,4 +1,5 @@
 #pragma once
+/*
 #include <string>
 #include <memory>
 #include "GameObject.h"
@@ -33,3 +34,4 @@ namespace dae
 		std::shared_ptr<Texture2D> m_textTexture{};
 	};
 }
+*/
