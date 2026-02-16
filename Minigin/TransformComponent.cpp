@@ -8,12 +8,4 @@ namespace dae {
         : Component(go), m_transform(std::make_unique<Transform>()) {
         m_transform->SetPosition(x, y, 0);
     }
-
-    void TransformComponent::Update() {
-        // Empty - TransformComponent doesn't update
-    }
-
-    void TransformComponent::Render() const {
-        // Empty - TransformComponent doesn't render
-    }
 }

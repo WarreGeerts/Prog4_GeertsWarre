@@ -1,7 +1,6 @@
 ﻿#include "FPSComponent.h"
 #include "ResourceManager.h"
 #include "Font.h"
-#include "TextObject.h"
 using namespace dae;
 
 FPSComponent::FPSComponent(GameObject* go)

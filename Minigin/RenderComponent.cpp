@@ -2,7 +2,6 @@
 #include "GameObject.h"
 #include "Renderer.h"
 #include "ResourceManager.h"
-#include "Texture2D.h"
 #include "TransformComponent.h"
 using namespace dae;
 

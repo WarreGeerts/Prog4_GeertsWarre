@@ -1,23 +1,21 @@
-﻿#include <stdexcept>
-#include "TextComponent.h"
+﻿#include "TextComponent.h"
+#include "Component.h"
+#include "TransformComponent.h"
+#include "GameObject.h"
 #include <SDL3_ttf/SDL_ttf.h>
 #include "Renderer.h"
 #include "Font.h"
 #include "Texture2D.h"
-#include "Component.h"
-#include "TransformComponent.h"
-#include "GameObject.h"
-
 using namespace dae;
-
 //default constructor
 TextComponent::TextComponent(GameObject *go)
     : Component(go), m_needsUpdate(false), m_text(" "), m_font(nullptr), m_textTexture(nullptr) {}
+
 //extra one go constructor
-TextComponent::TextComponent(GameObject *go, const std::string &text, std::shared_ptr<Font> font, float x, float y,
+TextComponent::TextComponent(GameObject *go, const std::string &text, std::shared_ptr<Font> font,
                              const SDL_Color &color)
     : Component(go), m_needsUpdate(true), m_text(text), m_color(color), m_font(std::move(font)),
-      m_textTexture(nullptr) { m_transform.SetPosition(x, y); }
+      m_textTexture(nullptr) {}
 
 void TextComponent::Update() {
     if (m_needsUpdate) {
@@ -37,7 +35,7 @@ void TextComponent::Update() {
 
 void TextComponent::Render() const {
     if (m_textTexture != nullptr) {
-        const auto& transform = m_gameObject->GetComponent<TransformComponent>()->GetPosition();
+        auto &transform = m_gameObject->GetComponent<TransformComponent>()->GetPosition();
         Renderer::GetInstance().RenderTexture(*m_textTexture, transform.x, transform.y);
     }
 }

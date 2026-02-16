@@ -1,5 +1,5 @@
 #include "GameObject.h"
-#include "ResourceManager.h"
+#include <algorithm>
 #include "Component.h"
 
 using namespace dae;

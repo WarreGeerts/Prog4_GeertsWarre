@@ -3,13 +3,14 @@
 #include "Transform.h"
 
 namespace dae {
+    class Transform;
     class TransformComponent : public Component {
     public:
         TransformComponent(GameObject *go);
         TransformComponent(GameObject *go, float x, float y);
 
-        void Update() override;
-        void Render() const override;
+        void Update() override{}
+        void Render() const override{}
 
         const glm::vec3 &GetPosition() const { return m_transform->GetPosition(); }
         void SetPosition(float x, float y, float z = 0) const { m_transform->SetPosition(x, y, z); }
