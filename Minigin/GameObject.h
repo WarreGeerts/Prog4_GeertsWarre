@@ -1,44 +1,44 @@
 #pragma once
-#include <string>
 #include <memory>
 #include "Transform.h"
-#include "Component.h"
 
 namespace dae {
     class Texture2D;
+    class Component;
 
-    class GameObject {
+    class GameObject final {
     public:
         //important functions
-        virtual void Update();
-        virtual void Render() const;
-        void SetTexture(const std::string &filename);
-        bool MarkedForDeletion() const {return m_markedForDeletion;}
-        const std::vector<std::unique_ptr<Component>>& GetComponents() const { return m_components; }
-
+        void Update();
+        bool MarkedForDeletion() const { return m_markedForDeletion; }
+        const std::vector<std::unique_ptr<Component> > &GetComponents() const { return m_components; }
         //components
         void AddComponent(std::unique_ptr<Component> component);
         void RemoveComponent(Component *component);
+
         template<typename T>
-        T *GetComponent() const;
+        T *GetComponent() const {
+            for (const auto &component: m_components) {
+                if (auto *casted_comp = dynamic_cast<T *>(component.get())) {
+                    return casted_comp;
+                }
+            }
+            return nullptr;
+        }
+
         template<typename T>
-        bool HasComponent() const { return GetComponent<T>() != nullptr; };
+        bool HasComponent() const { return GetComponent<T>() != nullptr; }
 
         //default constructor stuff
         GameObject() = default;
-        virtual ~GameObject();
+        ~GameObject();
         GameObject(const GameObject &other) = delete;
         GameObject(GameObject &&other) = delete;
         GameObject &operator=(const GameObject &other) = delete;
         GameObject &operator=(GameObject &&other) = delete;
 
     private:
-        //Transform m_transform{}; //SHOULD get handles by transformComponent
-
-        std::shared_ptr<Texture2D> m_texture{};
         std::vector<std::unique_ptr<Component> > m_components{};
         bool m_markedForDeletion = false;
     };
-
-
 }

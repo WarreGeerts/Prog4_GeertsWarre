@@ -41,6 +41,6 @@ void Scene::Render() const {
         for (const auto &component: object->GetComponents()) {
             component->Render();
         }
-        object->Render();
+        //object->Render();
     }
 }

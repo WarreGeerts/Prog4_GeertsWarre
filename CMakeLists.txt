@@ -25,7 +25,6 @@ add_executable(${TARGET_NAME} ${TARGET_PARAM}
         Minigin/ResourceManager.cpp
         Minigin/Scene.cpp
         Minigin/SceneManager.cpp
-        Minigin/TextObject.cpp
         Minigin/Texture2D.cpp
         Minigin/Transform.cpp
         Minigin/Component.h
@@ -35,6 +34,8 @@ add_executable(${TARGET_NAME} ${TARGET_PARAM}
         Minigin/RenderComponent.h
         Minigin/FPSComponent.cpp
         Minigin/FPSComponent.h
+        Minigin/TextComponent.cpp
+        Minigin/TextComponent.h
 )
 
 # enable c++20 features

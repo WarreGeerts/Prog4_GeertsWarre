@@ -6,7 +6,6 @@ namespace dae {
     class TransformComponent : public Component {
     public:
         TransformComponent(GameObject *go);
-
         TransformComponent(GameObject *go, float x, float y);
 
         void Update() override;
