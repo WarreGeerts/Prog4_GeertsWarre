@@ -8,10 +8,12 @@ namespace dae {
 
     class GameObject final {
     public:
+        GameObject(std::string  name);
         //important functions
         void Update();
         bool MarkedForDeletion() const { return m_markedForDeletion; }
         const std::vector<std::unique_ptr<Component> > &GetComponents() const { return m_components; }
+        const std::string &GetName() const { return m_Name; }
         //components
         void AddComponent(std::unique_ptr<Component> component);
         void RemoveComponent(Component *component);
@@ -30,7 +32,6 @@ namespace dae {
         bool HasComponent() const { return GetComponent<T>() != nullptr; }
 
         //default constructor stuff
-        GameObject() = default;
         ~GameObject();
         GameObject(const GameObject &other) = delete;
         GameObject(GameObject &&other) = delete;
@@ -40,5 +41,6 @@ namespace dae {
     private:
         std::vector<std::unique_ptr<Component> > m_components{};
         bool m_markedForDeletion = false;
+        std::string m_Name;
     };
 }

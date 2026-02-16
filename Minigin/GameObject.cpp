@@ -1,11 +1,13 @@
 #include "GameObject.h"
 #include <algorithm>
+#include <utility>
 #include "Component.h"
-
 using namespace dae;
+GameObject::GameObject(std::string name) : m_Name(std::move(name)) {}
 GameObject::~GameObject() = default;
+
 void GameObject::Update() {
-    for (auto &component : m_components) {
+    for (auto &component: m_components) {
         component->Update();
     }
 }
@@ -22,4 +24,3 @@ void GameObject::RemoveComponent(Component *component) {
             [component](const auto &comp) { return comp.get() == component; }),
         m_components.end());
 }
-

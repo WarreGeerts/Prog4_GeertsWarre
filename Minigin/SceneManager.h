@@ -11,10 +11,12 @@ namespace dae
 	class SceneManager final : public Singleton<SceneManager>
 	{
 	public:
-		Scene& CreateScene();
+		Scene& CreateScene(std::string name);
 
+		Scene& GetSceneByName(const std::string& name) const;
+		Scene& GetSceneByIdx(int idx) const;
 		void Update();
-		void Render();
+		void Render() const;
 	private:
 		friend class Singleton<SceneManager>;
 		SceneManager() = default;

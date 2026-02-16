@@ -36,6 +36,7 @@ add_executable(${TARGET_NAME} ${TARGET_PARAM}
         Minigin/FPSComponent.h
         Minigin/TextComponent.cpp
         Minigin/TextComponent.h
+        Minigin/DeltaTime.h
 )
 
 # enable c++20 features

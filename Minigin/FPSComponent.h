@@ -1,19 +1,21 @@
 ﻿#pragma once
 #include "Component.h"
-#include <string>
 
 namespace dae {
-    class TextObject;
-    class Font;
     class FPSComponent : public Component {
     public:
-        FPSComponent(GameObject* go);
+        explicit FPSComponent(GameObject *go);
         void Update() override;
         void Render() const override {}
+        int GetFPS() const { return m_FPS; }
+
     private:
-        float m_time = 0.f;
-        int m_frames = 0;
-        int m_fps = 0;
-        std::string m_text;
+        float m_Time = 0.f;
+        int m_Frames = 0;
+        int m_FPS = 0;
+
+        float m_IntervalTime{0.0f};
+        int m_IntervalFrames{0};
+        const float m_UpdateInterval{0.5f};
     };
 }

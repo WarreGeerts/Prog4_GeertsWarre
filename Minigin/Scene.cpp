@@ -1,6 +1,7 @@
 #include <algorithm>
 #include "Scene.h"
 #include <cassert>
+#include <utility>
 #include "Component.h"
 using namespace dae;
 
@@ -24,6 +25,22 @@ void Scene::RemoveAll() {
     m_objects.clear();
 }
 
+GameObject &Scene::GetGameObjectByName(const std::string &name) const {
+    for (const auto &object: m_objects) {
+        if (object->GetName() == name) {
+            return *object;
+        }
+    }
+    throw std::runtime_error("GameObject '" + name + "' not found");
+}
+
+GameObject &Scene::GetGameObjectByIndex(const int idx) const {
+    if (m_objects[idx] != nullptr) {
+        return *m_objects[idx];
+    }
+    throw std::runtime_error("GameObject at idx: '" + std::to_string(idx) + "' not found");
+}
+
 void Scene::Update() {
     for (auto it = m_objects.begin(); it != m_objects.end();) {
         {
@@ -45,3 +62,4 @@ void Scene::Render() const {
         //object->Render();
     }
 }
+

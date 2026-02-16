@@ -1,6 +1,7 @@
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_main.h>
 
+#include "FPSComponent.h"
 #include "RenderComponent.h"
 #include "TextComponent.h"
 #include "TransformComponent.h"
@@ -18,9 +19,9 @@ namespace fs = std::filesystem;
 
 static void load() //loads once
 {
-	auto& scene = dae::SceneManager::GetInstance().CreateScene();
+	auto& scene = dae::SceneManager::GetInstance().CreateScene("Main");
 
-	auto go = std::make_unique<dae::GameObject>();
+	auto go = std::make_unique<dae::GameObject>("Background");
 	//RenderComponent
 	go->AddComponent(std::make_unique<dae::RenderComponent>(go.get()));
 	go->GetComponent<dae::RenderComponent>()->SetTexture("background.png");
@@ -30,7 +31,7 @@ static void load() //loads once
 	scene.Add(std::move(go));
 
 
-	go = std::make_unique<dae::GameObject>();
+	go = std::make_unique<dae::GameObject>("Logo");
 	//RenderComponent
 	go->AddComponent(std::make_unique<dae::RenderComponent>(go.get()));
 	go->GetComponent<dae::RenderComponent>()->SetTexture("logo.png");
@@ -40,16 +41,30 @@ static void load() //loads once
 	scene.Add(std::move(go));
 
 
-	go = std::make_unique<dae::GameObject>();
-	auto font = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 36);
+	auto fontLingua = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 36);
+	go = std::make_unique<dae::GameObject>("TitleText");
 	//TextComponent
 	go->AddComponent(std::make_unique<dae::TextComponent>(go.get()));
 	go->GetComponent<dae::TextComponent>()->SetText("Programming 4 Assignment");
-	go->GetComponent<dae::TextComponent>()->SetFont(font);
+	go->GetComponent<dae::TextComponent>()->SetFont(fontLingua);
 	go->GetComponent<dae::TextComponent>()->SetColor({ 255, 255, 0, 255 });
 	//transformComponent
 	go->AddComponent(std::make_unique<dae::TransformComponent>(go.get()));
 	go->GetComponent<dae::TransformComponent>()->SetPosition(292, 20);
+	scene.Add(std::move(go));
+
+
+	go = std::make_unique<dae::GameObject>("FPSCounter");
+	//FPSComponent
+	go->AddComponent(std::make_unique<dae::FPSComponent>(go.get()));
+	//TextComponent
+	go->AddComponent(std::make_unique<dae::TextComponent>(go.get()));
+	go->GetComponent<dae::TextComponent>()->SetText(std::to_string(go->GetComponent<dae::FPSComponent>()->GetFPS()));
+	go->GetComponent<dae::TextComponent>()->SetFont(fontLingua);
+	go->GetComponent<dae::TextComponent>()->SetColor({ 255, 255, 0, 255 });
+	//transformComponent
+	go->AddComponent(std::make_unique<dae::TransformComponent>(go.get()));
+	go->GetComponent<dae::TransformComponent>()->SetPosition(0, 0);
 	scene.Add(std::move(go));
 }
 
