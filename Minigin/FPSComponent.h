@@ -2,7 +2,7 @@
 #include "Component.h"
 
 namespace dae {
-    class FPSComponent : public Component {
+    class FPSComponent final : public Component {
     public:
         explicit FPSComponent(GameObject *go);
         void Update() override;

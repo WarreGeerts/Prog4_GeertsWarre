@@ -31,7 +31,7 @@ void LogSDLVersion(const std::string &message, int major, int minor, int patch) 
 #ifdef __EMSCRIPTEN__
 #include "emscripten.h"
 void LoopCallback(void *arg) {
-    static_cast<dae::Minigin *>(arg)->RunOneFrame();
+    static_cast<dae::Minigin *>(arg)->Update();
 }
 #endif
 // Why bother with this? Because sometimes students have a different SDL version installed on their pc.
@@ -88,9 +88,16 @@ void dae::Minigin::Run(const std::function<void()> &load) {
     while (!m_quit) //main loop
     {
         //DeltaTime
-        DeltaTime::GetInstance().Update();
+        DeltaTime::GetInstance().StartDeltaTime();
 
-        RunOneFrame(); //main loop function
+        //input process
+        m_quit = !InputManager::GetInstance().ProcessInput();
+
+        while (DeltaTime::GetInstance().Lag() >= DeltaTime::GetInstance().FixedTime()) {
+            FixedUpdate(); //Loop has to use FixedDeltaTime
+            DeltaTime::GetInstance().ReCalcLag();
+        }
+        Update(); //Loop has to use DeltaTime
 
         std::this_thread::sleep_for(DeltaTime::GetInstance().CalcSleepTime());
     }
@@ -100,7 +107,8 @@ void dae::Minigin::Run(const std::function<void()> &load) {
 #endif
 }
 
-void dae::Minigin::RunOneFrame() //main loop
+//uses DeltaTime
+void dae::Minigin::Update() //main loop
 {
     //FPS counter
     const Scene &mainScene{SceneManager::GetInstance().GetSceneByName("Main")};
@@ -110,10 +118,12 @@ void dae::Minigin::RunOneFrame() //main loop
     mainScene.GetGameObjectByName("FPSCounter").GetComponent<TextComponent>()->SetText(
         "FPS: " + ss.str());
 
-    //input process
-    m_quit = !InputManager::GetInstance().ProcessInput();
+
     //scene update
     SceneManager::GetInstance().Update();
     //render update
     Renderer::GetInstance().Render();
 }
+
+//uses FixedDeltaTime
+void dae::Minigin::FixedUpdate() {}

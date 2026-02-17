@@ -8,7 +8,7 @@ namespace dae {
     class Texture2D;
     class GameObject;
 
-    class TextComponent : public Component {
+    class TextComponent final : public Component {
     public:
         TextComponent(GameObject *go);
         TextComponent(GameObject *go, const std::string &text, std::shared_ptr<Font> font,

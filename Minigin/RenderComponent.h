@@ -2,7 +2,7 @@
 #include "Component.h"
 namespace dae {
     class Texture2D;
-    class RenderComponent : public Component {
+    class RenderComponent final : public Component {
     public:
         RenderComponent(GameObject* go);
         RenderComponent(GameObject* go, const std::string& filename);

@@ -4,7 +4,7 @@
 
 namespace dae {
     class Transform;
-    class TransformComponent : public Component {
+    class TransformComponent final : public Component {
     public:
         TransformComponent(GameObject *go);
         TransformComponent(GameObject *go, float x, float y);
