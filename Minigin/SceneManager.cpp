@@ -1,6 +1,7 @@
 #include "SceneManager.h"
 #include <utility>
 #include "Scene.h"
+#include <stdexcept>
 
 void dae::SceneManager::Update() {
     for (auto &scene: m_scenes) {

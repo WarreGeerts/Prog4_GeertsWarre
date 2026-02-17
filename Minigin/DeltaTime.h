@@ -7,7 +7,7 @@ namespace dae {
     class DeltaTime final : public Singleton<DeltaTime> {
     public:
         void StartDeltaTime() {
-            m_CurrentTime = std::chrono::high_resolution_clock::now();
+            m_CurrentTime = Clock::now();
             m_DeltaTime = std::chrono::duration<float>(m_CurrentTime - m_LastTime).count();
             m_LastTime = m_CurrentTime;
             m_Lag += m_DeltaTime;
@@ -18,9 +18,8 @@ namespace dae {
         }
 
         auto CalcSleepTime() const {
-            return
-                    m_CurrentTime + std::chrono::milliseconds(static_cast<int>(m_Ms_Per_Frame * 1000)) -
-                    std::chrono::high_resolution_clock::now();
+            return m_CurrentTime + std::chrono::milliseconds(static_cast<int>(m_Ms_Per_Frame * 1000))
+                   - Clock::now();
         }
 
         float Time() const { return m_DeltaTime; }
@@ -35,8 +34,10 @@ namespace dae {
 
     private:
         friend Singleton<DeltaTime>;
-        std::chrono::time_point<std::chrono::system_clock> m_LastTime{std::chrono::high_resolution_clock::now()};
-        std::chrono::time_point<std::chrono::system_clock> m_CurrentTime{};
+        using Clock = std::chrono::steady_clock;
+        Clock::time_point m_LastTime{Clock::now()};
+        Clock::time_point m_CurrentTime{};
+
         int m_FPS{60};
         float m_Ms_Per_Frame{1.f / static_cast<float>(m_FPS)};
         float m_DeltaTime{0.0f};

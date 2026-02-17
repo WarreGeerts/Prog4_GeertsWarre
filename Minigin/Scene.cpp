@@ -3,6 +3,8 @@
 #include <cassert>
 #include <utility>
 #include "Component.h"
+#include <stdexcept>
+
 using namespace dae;
 
 void Scene::Add(std::unique_ptr<GameObject> object) {

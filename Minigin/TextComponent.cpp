@@ -6,6 +6,8 @@
 #include "Renderer.h"
 #include "Font.h"
 #include "Texture2D.h"
+#include <stdexcept>
+
 using namespace dae;
 //default constructor
 TextComponent::TextComponent(GameObject *go)
