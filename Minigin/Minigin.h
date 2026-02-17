@@ -4,7 +4,7 @@
 
 namespace dae {
     class Minigin final {
-        bool m_quit{};
+       [[maybe_unused]] bool m_quit{false};
 
     public:
         explicit Minigin(const std::filesystem::path &dataPath);
