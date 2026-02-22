@@ -30,9 +30,9 @@ void LogSDLVersion(const std::string &message, int major, int minor, int patch) 
 #ifdef __EMSCRIPTEN__
 #include "emscripten.h"
 void LoopCallback(void *arg) {
+    using namespace dae;
     auto *minigin{static_cast<dae::Minigin *>(arg)};
 
-    // EXACT same as desktop!
     DeltaTime::GetInstance().StartDeltaTime();
     bool quit{!InputManager::GetInstance().ProcessInput()};
     if (quit) {
@@ -46,6 +46,7 @@ void LoopCallback(void *arg) {
     }
 
     minigin->Update();
+}
 #endif
 // Why bother with this? Because sometimes students have a different SDL version installed on their pc.
 // That is not a problem unless for some reason the dll's from this project are not copied next to the exe.
