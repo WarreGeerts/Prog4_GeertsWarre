@@ -3,6 +3,8 @@
 #include <string>
 #include <SDL3/SDL_pixels.h>
 
+#include "RenderComponent.h"
+
 namespace dae {
     class Font;
     class Texture2D;
@@ -29,6 +31,8 @@ namespace dae {
             m_needsUpdate = true;
         }
 
+        void GetRefRenderComponent(RenderComponent *component) {m_renderComponentRef = component;}
+
     private:
         bool m_needsUpdate{};
         std::string m_text{};
@@ -36,5 +40,7 @@ namespace dae {
         SDL_Color m_color{255, 255, 255, 255};
         std::shared_ptr<Font> m_font{};
         std::shared_ptr<Texture2D> m_textTexture{};
+
+        RenderComponent *m_renderComponentRef{};
     };
 }

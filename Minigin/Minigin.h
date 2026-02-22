@@ -19,8 +19,11 @@ namespace dae {
         Minigin &operator=(Minigin &&other) = delete;
 
     private:
+        //Emscripten ifdef because it doesn't use the m_quit keyword. And it treats the m_quit as an error. (cmake setting)
+#ifdef __EMSCRIPTEN__
+#else
         bool m_quit{false};
-        //Reference declarations ========
+#endif
         Scene *mainScene;
         GameObject *FPSCounter;
     };

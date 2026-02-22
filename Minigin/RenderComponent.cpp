@@ -23,3 +23,4 @@ void RenderComponent::Render() const {
 void RenderComponent::SetTexture(const std::string &filename) {
     m_texture = ResourceManager::GetInstance().LoadTexture(filename);
 }
+

@@ -44,14 +44,14 @@ GameObject &Scene::GetGameObjectByIndex(const int idx) const {
 }
 
 void Scene::Update() {
-    for (auto it = m_objects.begin(); it != m_objects.end();) {
-        {
-            if ((*it)->MarkedForDeletion()) {
-                it = m_objects.erase(it);
-            } else {
-                (*it)->Update();
-                ++it;
-            }
+    //update everything first
+    for (auto &object: m_objects) {
+        object->Update();
+    }
+    //after update look through all objects to delete those who are marked
+    for (auto &object: m_objects) {
+        if (object->MarkedForDeletion()) {
+           m_objects.erase(remove(m_objects.begin(), m_objects.end(), object), m_objects.end());
         }
     }
 }

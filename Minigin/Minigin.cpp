@@ -15,9 +15,7 @@
 #include "Renderer.h"
 #include "ResourceManager.h"
 #include "DeltaTime.h"
-
 #include "Components.h"
-
 SDL_Window *g_window{};
 
 void LogSDLVersion(const std::string &message, int major, int minor, int patch) {
@@ -32,8 +30,22 @@ void LogSDLVersion(const std::string &message, int major, int minor, int patch) 
 #ifdef __EMSCRIPTEN__
 #include "emscripten.h"
 void LoopCallback(void *arg) {
-    static_cast<dae::Minigin *>(arg)->Update();
-}
+    auto *minigin{static_cast<dae::Minigin *>(arg)};
+
+    // EXACT same as desktop!
+    DeltaTime::GetInstance().StartDeltaTime();
+    bool quit{!InputManager::GetInstance().ProcessInput()};
+    if (quit) {
+        emscripten_cancel_main_loop();
+        return;
+    }
+
+    while (DeltaTime::GetInstance().Lag() >= DeltaTime::GetInstance().FixedTime()) {
+        minigin->FixedUpdate();
+        DeltaTime::GetInstance().ReCalcLag();
+    }
+
+    minigin->Update();
 #endif
 // Why bother with this? Because sometimes students have a different SDL version installed on their pc.
 // That is not a problem unless for some reason the dll's from this project are not copied next to the exe.
@@ -86,15 +98,16 @@ void dae::Minigin::Run(const std::function<void()> &load) {
 
     mainScene = &SceneManager::GetInstance().GetSceneByName("Main");
     FPSCounter = &mainScene->GetGameObjectByName("FPSCounter");
+    DeltaTime::GetInstance().SetFPS(60);
 
 #ifndef __EMSCRIPTEN__
-    DeltaTime::GetInstance().SetFPS(60);
     while (!m_quit) //main loop
     {
         //DeltaTime
         DeltaTime::GetInstance().StartDeltaTime();
 
         //input process
+
         m_quit = !InputManager::GetInstance().ProcessInput();
 
         while (DeltaTime::GetInstance().Lag() >= DeltaTime::GetInstance().FixedTime()) {

@@ -42,8 +42,11 @@ void TextComponent::Update() {
 }
 
 void TextComponent::Render() const {
-    if (m_textTexture != nullptr) {
+    /*if (m_textTexture != nullptr) {
         auto &transform = m_gameObject->GetComponent<TransformComponent>()->GetPosition();
         Renderer::GetInstance().RenderTexture(*m_textTexture, transform.x, transform.y);
-    }
+    }*/
+    assert(m_renderComponentRef != nullptr);
+    m_renderComponentRef->SetTexture(m_textTexture);
+    m_renderComponentRef->Render();
 }

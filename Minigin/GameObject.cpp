@@ -1,5 +1,6 @@
 #include "GameObject.h"
 #include <algorithm>
+#include <cassert>
 #include <utility>
 #include "Component.h"
 using namespace dae;
@@ -13,7 +14,7 @@ void GameObject::Update() {
 }
 
 void GameObject::AddComponent(std::unique_ptr<Component> component) {
-    component->m_gameObject = this;
+    assert(component != nullptr);
     m_components.push_back(std::move(component));
 }
 
