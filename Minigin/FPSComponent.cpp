@@ -1,6 +1,8 @@
 ﻿#include "FPSComponent.h"
 #include <cassert>
 #include "DeltaTime.h"
+#include <iomanip>
+
 using namespace dae;
 
 FPSComponent::FPSComponent(GameObject *go)
