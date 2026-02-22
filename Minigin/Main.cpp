@@ -1,10 +1,7 @@
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_main.h>
 
-#include "FPSComponent.h"
-#include "RenderComponent.h"
-#include "TextComponent.h"
-#include "TransformComponent.h"
+#include "Components.h"
 #if _DEBUG && __has_include(<vld.h>)
 #include <vld.h>
 #endif
@@ -62,6 +59,8 @@ static void load() //loads once
 	go->GetComponent<dae::TextComponent>()->SetText(std::to_string(go->GetComponent<dae::FPSComponent>()->GetFPS()));
 	go->GetComponent<dae::TextComponent>()->SetFont(fontLingua);
 	go->GetComponent<dae::TextComponent>()->SetColor({ 255, 255, 0, 255 });
+	//FPSComponent
+	go->GetComponent<dae::FPSComponent>()->GetRefTextComponent(go->GetComponent<dae::TextComponent>());
 	//transformComponent
 	go->AddComponent(std::make_unique<dae::TransformComponent>(go.get()));
 	go->GetComponent<dae::TransformComponent>()->SetPosition(0, 0);

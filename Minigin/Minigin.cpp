@@ -15,8 +15,9 @@
 #include "Renderer.h"
 #include "ResourceManager.h"
 #include "DeltaTime.h"
-#include "FPSComponent.h"
-#include "TextComponent.h"
+
+#include "Components.h"
+
 SDL_Window *g_window{};
 
 void LogSDLVersion(const std::string &message, int major, int minor, int patch) {
@@ -83,6 +84,9 @@ dae::Minigin::~Minigin() {
 void dae::Minigin::Run(const std::function<void()> &load) {
     load(); //initialization (once run)
 
+    mainScene = &SceneManager::GetInstance().GetSceneByName("Main");
+    FPSCounter = &mainScene->GetGameObjectByName("FPSCounter");
+
 #ifndef __EMSCRIPTEN__
     DeltaTime::GetInstance().SetFPS(60);
     while (!m_quit) //main loop
@@ -110,14 +114,8 @@ void dae::Minigin::Run(const std::function<void()> &load) {
 //uses DeltaTime
 void dae::Minigin::Update() //main loop
 {
-    //FPS counter
-    const Scene &mainScene{SceneManager::GetInstance().GetSceneByName("Main")};
-    const float currentFPS{mainScene.GetGameObjectByName("FPSCounter").GetComponent<FPSComponent>()->GetFPS()};
-    std::stringstream ss;
-    ss << std::fixed << std::setprecision(1) << currentFPS;
-    mainScene.GetGameObjectByName("FPSCounter").GetComponent<TextComponent>()->SetText(
-        "FPS: " + ss.str());
-
+    FPSCounter->GetComponent<FPSComponent>()->Update();
+    FPSCounter->GetComponent<FPSComponent>()->Render();
 
     //scene update
     SceneManager::GetInstance().Update();

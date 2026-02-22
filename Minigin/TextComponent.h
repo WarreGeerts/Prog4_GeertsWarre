@@ -32,6 +32,7 @@ namespace dae {
     private:
         bool m_needsUpdate{};
         std::string m_text{};
+        std::string m_prevText{" "};
         SDL_Color m_color{255, 255, 255, 255};
         std::shared_ptr<Font> m_font{};
         std::shared_ptr<Texture2D> m_textTexture{};

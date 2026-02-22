@@ -7,7 +7,6 @@
 #include "Font.h"
 #include "Texture2D.h"
 #include <stdexcept>
-
 using namespace dae;
 //default constructor
 TextComponent::TextComponent(GameObject *go)
@@ -20,6 +19,12 @@ TextComponent::TextComponent(GameObject *go, const std::string &text, std::share
       m_textTexture(nullptr) {}
 
 void TextComponent::Update() {
+    if (m_text != m_prevText) {
+        m_needsUpdate = true;
+    } else {
+        m_needsUpdate = false;
+    }
+
     if (m_needsUpdate) {
         const auto surf = TTF_RenderText_Blended(m_font->GetFont(), m_text.c_str(), m_text.length(), m_color);
         if (surf == nullptr) {
@@ -32,6 +37,7 @@ void TextComponent::Update() {
         SDL_DestroySurface(surf);
         m_textTexture = std::make_shared<Texture2D>(texture);
         m_needsUpdate = false;
+        m_prevText = m_text;
     }
 }
 

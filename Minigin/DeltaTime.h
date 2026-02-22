@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include <chrono>
-#include "Singleton.h"
 #include <iostream>
+#include "Singleton.h"
 
 namespace dae {
     class DeltaTime final : public Singleton<DeltaTime> {
@@ -25,6 +25,7 @@ namespace dae {
         float Time() const { return m_DeltaTime; }
         float FixedTime() const { return m_FixedDeltaTime; }
         float Lag() const { return m_Lag; }
+        float GetMsPerFrame() const { return m_Ms_Per_Frame; }
 
         void SetFPS(const int fps) {
             m_FPS = fps;
@@ -34,10 +35,9 @@ namespace dae {
 
     private:
         friend Singleton<DeltaTime>;
-        using Clock = std::chrono::steady_clock;
+        using Clock = std::chrono::high_resolution_clock;
         Clock::time_point m_LastTime{Clock::now()};
         Clock::time_point m_CurrentTime{};
-
         int m_FPS{60};
         float m_Ms_Per_Frame{1.f / static_cast<float>(m_FPS)};
         float m_DeltaTime{0.0f};

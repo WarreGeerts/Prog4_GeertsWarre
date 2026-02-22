@@ -3,9 +3,10 @@
 #include <filesystem>
 
 namespace dae {
-    class Minigin final {
-       [[maybe_unused]] bool m_quit{false};
+    class GameObject;
+    class Scene;
 
+    class Minigin final {
     public:
         explicit Minigin(const std::filesystem::path &dataPath);
         ~Minigin();
@@ -16,5 +17,11 @@ namespace dae {
         Minigin(Minigin &&other) = delete;
         Minigin &operator=(const Minigin &other) = delete;
         Minigin &operator=(Minigin &&other) = delete;
+
+    private:
+        bool m_quit{false};
+        //Reference declarations ========
+        Scene *mainScene;
+        GameObject *FPSCounter;
     };
 }
