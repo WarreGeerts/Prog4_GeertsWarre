@@ -30,22 +30,7 @@ void LogSDLVersion(const std::string &message, int major, int minor, int patch) 
 #ifdef __EMSCRIPTEN__
 #include "emscripten.h"
 void LoopCallback(void *arg) {
-    using namespace dae;
-    auto *minigin{static_cast<dae::Minigin *>(arg)};
-
-    DeltaTime::GetInstance().StartDeltaTime();
-    bool quit{!InputManager::GetInstance().ProcessInput()};
-    if (quit) {
-        emscripten_cancel_main_loop();
-        return;
-    }
-
-    while (DeltaTime::GetInstance().Lag() >= DeltaTime::GetInstance().FixedTime()) {
-        minigin->FixedUpdate();
-        DeltaTime::GetInstance().ReCalcLag();
-    }
-
-    minigin->Update();
+    static_cast<dae::Minigin *>(arg)->Update();
 }
 #endif
 // Why bother with this? Because sometimes students have a different SDL version installed on their pc.
@@ -104,20 +89,9 @@ void dae::Minigin::Run(const std::function<void()> &load) {
 #ifndef __EMSCRIPTEN__
     while (!m_quit) //main loop
     {
-        //DeltaTime
-        DeltaTime::GetInstance().StartDeltaTime();
-
         //input process
-
         m_quit = !InputManager::GetInstance().ProcessInput();
-
-        while (DeltaTime::GetInstance().Lag() >= DeltaTime::GetInstance().FixedTime()) {
-            FixedUpdate(); //Loop has to use FixedDeltaTime
-            DeltaTime::GetInstance().ReCalcLag();
-        }
-        Update(); //Loop has to use DeltaTime
-
-        std::this_thread::sleep_for(DeltaTime::GetInstance().CalcSleepTime());
+        Update();
     }
 
 #else
@@ -128,8 +102,16 @@ void dae::Minigin::Run(const std::function<void()> &load) {
 //uses DeltaTime
 void dae::Minigin::Update() //main loop
 {
-    FPSCounter->GetComponent<FPSComponent>()->Update();
-    FPSCounter->GetComponent<FPSComponent>()->Render();
+    //DeltaTime
+    DeltaTime::GetInstance().StartDeltaTime();
+
+    while (DeltaTime::GetInstance().Lag() >= DeltaTime::GetInstance().FixedTime()) {
+        FixedUpdate(); //Loop has to use FixedDeltaTime
+        DeltaTime::GetInstance().ReCalcLag();
+    }
+
+    std::this_thread::sleep_for(DeltaTime::GetInstance().CalcSleepTime());
+
 
     //scene update
     SceneManager::GetInstance().Update();
