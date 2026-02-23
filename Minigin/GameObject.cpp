@@ -4,6 +4,7 @@
 #include <utility>
 #include <windows.h>
 #include "Component.h"
+#include "TransformComponent.h"
 using namespace dae;
 GameObject::GameObject(std::string name) : m_Name(std::move(name)) {}
 GameObject::~GameObject() = default;
@@ -47,7 +48,7 @@ void GameObject::RemoveComponent(Component *component) {
         m_components.end());
 }
 
-void GameObject::SetParent(GameObject *parent,const bool keepWorldPosition) {
+void GameObject::SetParent(GameObject *parent, const bool keepWorldPosition) {
     if (IsChild(parent) || parent == this || m_Parent == parent) return;
     if (parent == nullptr)
         SetLocalPosition(GetWorldPosition());
@@ -78,6 +79,9 @@ void GameObject::UpdateWorldPosition() {
             m_WorldPosition = m_LocalPosition;
         else
             m_WorldPosition = m_Parent->GetWorldPosition() + m_LocalPosition;
+
+        assert(this->GetComponent<TransformComponent>() != nullptr);
+        this->GetComponent<TransformComponent>()->SetPosition(m_WorldPosition);
     }
     m_PositionIsDirty = false;
 }

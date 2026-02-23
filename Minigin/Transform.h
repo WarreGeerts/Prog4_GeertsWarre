@@ -1,6 +1,6 @@
 #pragma once
 #include <glm/glm.hpp>
-
+//ready for deletion if needed
 namespace dae
 {
 	class Transform final

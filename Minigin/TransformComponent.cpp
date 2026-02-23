@@ -1,11 +1,20 @@
 ﻿#include "TransformComponent.h"
 
-namespace dae {
-    TransformComponent::TransformComponent(GameObject *go)
-        : Component(go), m_transform(std::make_unique<Transform>()) {}
+#include "GameObject.h"
 
-    TransformComponent::TransformComponent(GameObject *go, float x, float y)
-        : Component(go), m_transform(std::make_unique<Transform>()) {
-        m_transform->SetPosition(x, y, 0);
+namespace dae {
+    const glm::vec3 & TransformComponent::GetPosition() const {
+        m_gameObject->UpdateWorldPosition();
+        return m_position;
+    }
+
+    void TransformComponent::SetPosition(float x, float y, float z) {
+        m_position.x = x;
+        m_position.y = y;
+        m_position.z = z;
+    }
+
+    void TransformComponent::SetPosition(const glm::vec3 &position) {
+        m_position = position;
     }
 }
