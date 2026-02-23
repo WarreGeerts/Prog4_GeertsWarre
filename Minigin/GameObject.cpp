@@ -2,7 +2,6 @@
 #include <algorithm>
 #include <cassert>
 #include <utility>
-#include <windows.h>
 #include "Component.h"
 #include "TransformComponent.h"
 using namespace dae;
