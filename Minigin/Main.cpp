@@ -52,7 +52,7 @@ static void load() //loads once
     //TextComponent
     go->GetComponent<dae::TextComponent>()->SetText("Programming 4 Assignment");
     go->GetComponent<dae::TextComponent>()->SetFont(fontLingua);
-    go->GetComponent<dae::TextComponent>()->SetColor({255, 255, 0, 255});
+    go->GetComponent<dae::TextComponent>()->SetColor({255, 255, 255, 255});
     go->GetComponent<dae::TextComponent>()->GetRefRenderComponent(go->GetComponent<dae::RenderComponent>());
     //TransformComponent
     go->GetComponent<dae::TransformComponent>()->SetPosition(292, 20);
@@ -70,7 +70,7 @@ static void load() //loads once
     //TextComponent
     go->GetComponent<dae::TextComponent>()->SetText(std::to_string(go->GetComponent<dae::FPSComponent>()->GetFPS()));
     go->GetComponent<dae::TextComponent>()->SetFont(fontLingua);
-    go->GetComponent<dae::TextComponent>()->SetColor({255, 255, 0, 255});
+    go->GetComponent<dae::TextComponent>()->SetColor({255, 255, 255, 255});
     go->GetComponent<dae::TextComponent>()->GetRefRenderComponent(go->GetComponent<dae::RenderComponent>());
     //FPSComponent
     go->GetComponent<dae::FPSComponent>()->GetRefTextComponent(go->GetComponent<dae::TextComponent>());

@@ -9,12 +9,14 @@ FPSComponent::FPSComponent(GameObject *go)
     : Component(go) {}
 
 void FPSComponent::Update() {
-    constexpr float waitTime{1.f};
+    m_Frames++;
+    m_TotalTime += DeltaTime::GetInstance().Time();
     m_ElapsedTime += DeltaTime::GetInstance().Time();
-    if (m_ElapsedTime >= waitTime) {
-        //1/ms_per_frame
-        m_FPS = 1.f / (DeltaTime::GetInstance().Time());
-        m_ElapsedTime -= waitTime;
+
+    if (m_ElapsedTime >= 1.f) {
+        m_FPS = static_cast<float>(m_Frames) / m_ElapsedTime;
+        m_ElapsedTime = 0.f;
+        m_Frames = 0;
     }
 }
 
