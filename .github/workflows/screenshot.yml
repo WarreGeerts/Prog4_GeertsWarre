@@ -11,26 +11,32 @@ jobs:
       with:
         node-version: 20
         
-    - name: Install Puppeteer
-      run: npm install puppeteer
+    - name: Install dependencies
+      run: npm init -y && npm install puppeteer
       
     - name: Take screenshot
       run: |
+        mkdir -p screenshots
         node <<'EOF'
         const puppeteer = require('puppeteer');
         (async () => {
-          const browser = await puppeteer.launch();
+          const browser = await puppeteer.launch({ 
+            headless: true, 
+            args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage'] 
+          });
           const page = await browser.newPage();
           await page.setViewport({width: 1024, height: 576});
-          await page.goto('https://warregeerts.github.io/Prog4_GeertsWarre/index.html', {waitUntil: 'networkidle0'});
-          await page.screenshot({path: 'screenshots/game.png'});
+          await page.goto('https://warregeerts.github.io/Prog4_GeertsWarre/index.html', { 
+            waitUntil: 'networkidle0', 
+            timeout: 30000 
+          });
+          await page.screenshot({ path: 'screenshots/game.png', fullPage: false });
           await browser.close();
         })();
         EOF
         
     - name: Commit screenshot
       run: |
-        mkdir -p screenshots
         git config --global user.name "github-actions[bot]"
         git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
         git add screenshots/game.png
