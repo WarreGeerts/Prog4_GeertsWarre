@@ -13,8 +13,8 @@ namespace dae
 	public:
 		Scene& CreateScene(std::string name);
 
-		Scene& GetSceneByName(const std::string& name) const;
-		Scene& GetSceneByIdx(int idx) const;
+		[[nodiscard]] Scene& GetSceneByName(const std::string& name) const;
+		[[nodiscard]] Scene& GetSceneByIdx(int idx) const;
 		void Update();
 		void Render() const;
 	private:

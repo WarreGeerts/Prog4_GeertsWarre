@@ -7,18 +7,16 @@ namespace dae {
     public:
         explicit RotateComponent(GameObject *go) : Component(go) {}
 
-        RotateComponent(GameObject *go, const glm::vec2 center, const float radius, const float angularSpeed)
-            : Component(go), m_Center{center}, m_Radius{radius}, m_AngularSpeed{angularSpeed}, m_CurrentAngle{0.f} {}
+        RotateComponent(GameObject *go, const float radius, const float angularSpeed)
+            : Component(go), m_Radius{radius}, m_AngularSpeed{angularSpeed}, m_CurrentAngle{0.f} {}
 
         void Update() override;
         void Render() const override {}
 
-        void SetCenter(const glm::vec2 &center) { m_Center = center; }
         void SetRadius(const float radius) { m_Radius = radius; }
         void SetAngularSpeed(const float angularSpeed) { m_AngularSpeed = angularSpeed; }
 
     private:
-        glm::vec2 m_Center{0.f};
         float m_Radius{100.f};
         float m_AngularSpeed{1.f}; //in rad/s, so 2*pi = 1 rotation (360 degrees)
         float m_CurrentAngle{0.f};

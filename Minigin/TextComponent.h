@@ -31,7 +31,7 @@ namespace dae {
             m_needsUpdate = true;
         }
 
-        void GetRefRenderComponent(RenderComponent *component) {m_renderComponentRef = component;}
+        void SetRefRenderComponent(RenderComponent *component) {m_renderComponentRef = component;}
 
     private:
         bool m_needsUpdate{};

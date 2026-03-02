@@ -10,13 +10,13 @@ namespace dae {
 
     class GameObject final {
     public:
-        GameObject(std::string name);
+        explicit GameObject(std::string name);
         //important functions
         void Update();
-        bool MarkedForDeletion() const { return m_markedForDeletion; }
-        const std::string &GetName() const { return m_Name; }
+        [[nodiscard]] bool MarkedForDeletion() const { return m_markedForDeletion; }
+        [[nodiscard]] const std::string &GetName() const { return m_Name; }
         //components
-        const std::vector<std::unique_ptr<Component> > &GetComponents() const { return m_components; }
+        [[nodiscard]] const std::vector<std::unique_ptr<Component> > &GetComponents() const { return m_components; }
         void AddComponent(std::unique_ptr<Component> component);
         void RemoveComponent(Component *component);
 
@@ -31,18 +31,18 @@ namespace dae {
         }
 
         template<typename T>
-        bool HasComponent() const { return GetComponent<T>() != nullptr; }
+        [[nodiscard]] bool HasComponent() const { return GetComponent<T>() != nullptr; }
 
         //Parent-child functions
         void SetParent(GameObject *parent,bool keepWorldPosition);
-        GameObject *GetParent() const { return m_Parent; }
-        int GetChildCount() const { return static_cast<int>(m_children.size()); }
-        GameObject *GetChildAt(const int index) const { return m_children[index]; }
+        [[nodiscard]] GameObject *GetParent() const { return m_Parent; }
+        [[nodiscard]] int GetChildCount() const { return static_cast<int>(m_children.size()); }
+        [[nodiscard]] GameObject *GetChildAt(const int index) const { return m_children[index]; }
         //positions
         void SetLocalPosition(const glm::vec3 &position);
         const glm::vec3 &GetWorldPosition();
         void UpdateWorldPosition();
-        void SetPositionDirty() { m_PositionIsDirty = true; }
+        void SetPositionDirty();
         //default constructor stuff
         ~GameObject();
         GameObject(const GameObject &other) = delete;

@@ -10,8 +10,8 @@ namespace dae {
         void Add(std::unique_ptr<GameObject> object);
         void Remove(const GameObject &object);
         void RemoveAll();
-        GameObject &GetGameObjectByName(const std::string &name) const;
-        GameObject &GetGameObjectByIndex(int idx) const;
+        [[nodiscard]] GameObject &GetGameObjectByName(const std::string &name) const;
+        [[nodiscard]] GameObject &GetGameObjectByIndex(int idx) const;
         void Update();
         void Render() const;
         ~Scene() = default;

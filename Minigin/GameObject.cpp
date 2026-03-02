@@ -84,3 +84,14 @@ void GameObject::UpdateWorldPosition() {
     }
     m_PositionIsDirty = false;
 }
+
+void GameObject::SetPositionDirty() {
+    m_PositionIsDirty = true;
+
+    //Set all children dirty
+    for (auto *child: m_children) {
+        if (child) {
+            child->SetPositionDirty();
+        }
+    }
+}

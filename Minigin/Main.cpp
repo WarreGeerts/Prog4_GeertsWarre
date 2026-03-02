@@ -58,7 +58,7 @@ static void load() //loads once
     tc1.SetText("Programming 4 Assignment");
     tc1.SetFont(fontLingua);
     tc1.SetColor({255, 255, 255, 255});
-    tc1.GetRefRenderComponent(go->GetComponent<dae::RenderComponent>());
+    tc1.SetRefRenderComponent(go->GetComponent<dae::RenderComponent>());
     //add to scene ====
     scene.Add(std::move(go));
 
@@ -74,16 +74,21 @@ static void load() //loads once
     //Initialise components ====
     //TextComponent
     dae::TextComponent &tc2{*go->GetComponent<dae::TextComponent>()};
-    tc2.SetText(std::to_string(go->GetComponent<dae::FPSComponent>()->GetFPS()));
     tc2.SetFont(fontLingua);
     tc2.SetColor({255, 255, 255, 255});
-    tc2.GetRefRenderComponent(go->GetComponent<dae::RenderComponent>());
+    tc2.SetRefRenderComponent(go->GetComponent<dae::RenderComponent>());
     //FPSComponent
-    go->GetComponent<dae::FPSComponent>()->GetRefTextComponent(go->GetComponent<dae::TextComponent>());
+    go->GetComponent<dae::FPSComponent>()->SetRefTextComponent(go->GetComponent<dae::TextComponent>());
     //add to scene ====
     scene.Add(std::move(go));
 
     //Rotating parent-child ****
+    //Empty-parent
+    go = std::make_unique<dae::GameObject>("BurgerManEmpty");
+    go->SetLocalPosition({200, 200, 0});
+    go->AddComponent(std::make_unique<dae::TransformComponent>(go.get()));
+    scene.Add(std::move(go));
+
     //parent ----
     //GameObject ====
     go = std::make_unique<dae::GameObject>("BurgerMan");
@@ -97,10 +102,11 @@ static void load() //loads once
     go->GetComponent<dae::RenderComponent>()->SetTexture("BurgerMan.png");
     //RotateComponent
     dae::RotateComponent &rc1{*go->GetComponent<dae::RotateComponent>()};
-    rc1.SetCenter({200,200});
     rc1.SetRadius(20);
     rc1.SetAngularSpeed(-1);
     //add to scene ====
+    go->SetParent(&scene.GetGameObjectByName("BurgerManEmpty"), false);
+
     scene.Add(std::move(go));
 
     //child ----
@@ -116,7 +122,6 @@ static void load() //loads once
     go->GetComponent<dae::RenderComponent>()->SetTexture("Bean.png");
     //RotateComponent
     dae::RotateComponent &rc2{*go->GetComponent<dae::RotateComponent>()};
-    rc2.SetCenter(scene.GetGameObjectByName("BurgerMan").GetWorldPosition());
     rc2.SetRadius(40);
     rc2.SetAngularSpeed(2);
     //add to scene ====
