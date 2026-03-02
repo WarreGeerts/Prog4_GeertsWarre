@@ -24,4 +24,4 @@ This project is build with github actions.
 
 ## Emscripten web version
 
-[![Play Game](screenshot.png)](https://warregeerts.github.io/Prog4_GeertsWarre/game.html)
+[![Play Game](web/screenshot.png)](https://warregeerts.github.io/Prog4_GeertsWarre/game.html)
