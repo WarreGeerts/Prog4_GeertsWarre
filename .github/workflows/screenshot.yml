@@ -1,4 +1,4 @@
-name: Update Web Screenshot
+name: Update Game Screenshot
 on: [push]
 jobs:
   screenshot:
@@ -6,20 +6,18 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     
-    - name: Generate screenshot
+    - name: Take screenshot
+      uses: hudell/screenshot@v1
       id: screenshot
-      uses: wyattehrenspider/action-screenshot@v1
       with:
-        url: https://warregeerts.github.io/Prog4_GeertsWarre/
-        width: 1024
-        height: 576
+        url: https://warregeerts.github.io/Prog4_GeertsWarre/index.html
         
-    - name: Save to web folder & commit
+    - name: Save & commit
       run: |
-        mkdir -p web
-        mv screenshot.png web/screenshot.png
-        git config --global user.name "github-actions"
+        mkdir -p screenshots
+        mv screenshot.png screenshots/game.png
+        git config --global user.name "github-actions[bot]"
         git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-        git add web/screenshot.png
-        git commit -m "Update web screenshot [skip ci]" || exit 0
+        git add screenshots/game.png
+        git commit -m "Update game screenshot [skip ci]" || exit 0
         git push
