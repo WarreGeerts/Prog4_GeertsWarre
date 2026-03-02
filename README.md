@@ -24,5 +24,4 @@ This project is build with github actions.
 
 ## Emscripten web version
 
-<iframe style="position: absolute; top: 0px; left: 0px; width: 1024px; height: 576px;" src="https://warregeerts.github.io/Prog4_GeertsWarre/" loading="lazy"></iframe>
-
+[![Play Game](screenshot.png)](https://warregeerts.github.io/Prog4_GeertsWarre/game.html)
