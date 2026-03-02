@@ -6,16 +6,31 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     
-    - name: Take screenshot
-      uses: hudell/screenshot@v1
-      id: screenshot
+    - name: Setup Node
+      uses: actions/setup-node@v4
       with:
-        url: https://warregeerts.github.io/Prog4_GeertsWarre/index.html
+        node-version: 20
         
-    - name: Save & commit
+    - name: Install Puppeteer
+      run: npm install puppeteer
+      
+    - name: Take screenshot
+      run: |
+        node <<'EOF'
+        const puppeteer = require('puppeteer');
+        (async () => {
+          const browser = await puppeteer.launch();
+          const page = await browser.newPage();
+          await page.setViewport({width: 1024, height: 576});
+          await page.goto('https://warregeerts.github.io/Prog4_GeertsWarre/index.html', {waitUntil: 'networkidle0'});
+          await page.screenshot({path: 'screenshots/game.png'});
+          await browser.close();
+        })();
+        EOF
+        
+    - name: Commit screenshot
       run: |
         mkdir -p screenshots
-        mv screenshot.png screenshots/game.png
         git config --global user.name "github-actions[bot]"
         git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
         git add screenshots/game.png
