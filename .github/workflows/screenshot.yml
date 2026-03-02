@@ -1,0 +1,25 @@
+name: Update Web Screenshot
+on: [push]
+jobs:
+  screenshot:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Generate screenshot
+      id: screenshot
+      uses: wyattehrenspider/action-screenshot@v1
+      with:
+        url: https://warregeerts.github.io/Prog4_GeertsWarre/
+        width: 1024
+        height: 576
+        
+    - name: Save to web folder & commit
+      run: |
+        mkdir -p web
+        mv screenshot.png web/screenshot.png
+        git config --global user.name "github-actions"
+        git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+        git add web/screenshot.png
+        git commit -m "Update web screenshot [skip ci]" || exit 0
+        git push
