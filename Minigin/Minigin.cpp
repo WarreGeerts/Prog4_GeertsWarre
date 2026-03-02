@@ -16,6 +16,7 @@
 #include "ResourceManager.h"
 #include "DeltaTime.h"
 #include "Components.h"
+#include "TrashTheCacheEx.h"
 SDL_Window *g_window{};
 
 void LogSDLVersion(const std::string &message, int major, int minor, int patch) {
@@ -81,6 +82,8 @@ dae::Minigin::~Minigin() {
 
 void dae::Minigin::Run(const std::function<void()> &load) {
     load(); //initialization (once run)
+    TrashTheCacheEx::Exercise1();
+    TrashTheCacheEx::Exercise2();
 
     mainScene = &SceneManager::GetInstance().GetSceneByName("Main");
     FPSCounter = &mainScene->GetGameObjectByName("FPSCounter");

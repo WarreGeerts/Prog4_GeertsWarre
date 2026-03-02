@@ -10,7 +10,6 @@
 #include "ResourceManager.h"
 #include "Scene.h"
 #include <filesystem>
-#include <iostream>
 namespace fs = std::filesystem;
 
 static void load() //loads once

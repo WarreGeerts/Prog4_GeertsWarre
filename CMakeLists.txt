@@ -40,6 +40,8 @@ add_executable(${TARGET_NAME} ${TARGET_PARAM}
         Minigin/Components.h
         Minigin/RotateComponent.cpp
         Minigin/RotateComponent.h
+        Minigin/TrashTheCacheEx.cpp
+        Minigin/TrashTheCacheEx.h
 )
 
 # enable c++20 features
