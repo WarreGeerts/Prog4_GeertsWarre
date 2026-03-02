@@ -20,5 +20,7 @@ namespace dae {
         float m_Radius{100.f};
         float m_AngularSpeed{1.f}; //in rad/s, so 2*pi = 1 rotation (360 degrees)
         float m_CurrentAngle{0.f};
+
+        const float m_PI = 3.14159265359f;
     };
 }
