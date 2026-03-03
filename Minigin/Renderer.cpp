@@ -4,12 +4,26 @@
 #include "Renderer.h"
 #include "SceneManager.h"
 #include "Texture2D.h"
+#include <cmath>
+//ImGui
+#include <imgui.h>
+#include <backends/imgui_impl_sdl3.h>
+#include <backends/imgui_impl_sdlrenderer3.h>
+#include <implot.h>
 
 void dae::Renderer::Init(SDL_Window* window)
 {
 	m_window = window;
 
 	SDL_SetHint(SDL_HINT_RENDER_VSYNC, "1");
+
+	//ImGui
+	IMGUI_CHECKVERSION();
+	ImGui::CreateContext();
+	ImPlot::CreateContext();
+	ImGuiIO& io = ImGui::GetIO(); (void)io;
+	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
+	io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
 
 #if defined(__EMSCRIPTEN__)
 	m_renderer = SDL_CreateRenderer(window, nullptr);
@@ -22,21 +36,58 @@ void dae::Renderer::Init(SDL_Window* window)
 		std::cout << "Failed to create the renderer: " << SDL_GetError() << "\n";
 		throw std::runtime_error(std::string("SDL_CreateRenderer Error: ") + SDL_GetError());
 	}
+
+	ImGui_ImplSDL3_InitForSDLRenderer(window, m_renderer);
+	ImGui_ImplSDLRenderer3_Init(m_renderer);
 }
 
 void dae::Renderer::Render() const
 {
+	ImGui_ImplSDLRenderer3_NewFrame();
+	ImGui_ImplSDL3_NewFrame();
+	ImGui::NewFrame();
+
+	// Test ImPlot - replace ShowDemoWindow
+	static float xdata[100] = {};
+	static float ydata[100] = {};
+	static int counter = 0;
+
+	// Generate demo data (sine wave)
+	for (int i = 0; i < 100; ++i) {
+		xdata[i] = i * 0.1f;
+		ydata[i] = sinf(xdata[i] + counter * 0.01f);
+	}
+
+	if (ImGui::Begin("ImPlot Test")) {
+		if (ImPlot::BeginPlot("Sine Wave Test")) {
+			ImPlot::PlotLine("sin(x)", xdata, ydata, 100);
+			ImPlot::EndPlot();
+		}
+		ImGui::End();
+	}
+
+
+	ImGui::ShowDemoWindow(); // For demonstration purposes, do not keep this in your engine
+
+	ImGui::Render();
+
 	const auto& color = GetBackgroundColor();
 	SDL_SetRenderDrawColor(m_renderer, color.r, color.g, color.b, color.a);
 	SDL_RenderClear(m_renderer);
 
 	SceneManager::GetInstance().Render();
 
+	ImGui_ImplSDLRenderer3_RenderDrawData(ImGui::GetDrawData(), m_renderer);
 	SDL_RenderPresent(m_renderer);
 }
 
 void dae::Renderer::Destroy()
 {
+	ImGui_ImplSDLRenderer3_Shutdown();
+	ImGui_ImplSDL3_Shutdown();
+	ImPlot::DestroyContext();
+	ImGui::DestroyContext();
+
 	if (m_renderer != nullptr)
 	{
 		SDL_DestroyRenderer(m_renderer);

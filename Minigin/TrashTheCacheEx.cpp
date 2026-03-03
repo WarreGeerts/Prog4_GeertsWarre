@@ -20,6 +20,9 @@ void TrashTheCacheEx::Exercise1() {
 void TrashTheCacheEx::Exercise2() {
     SDL_Log("Exercise2.1\n");
     RunExperiment<GameObject3D>(TimingsGO, AmountIterationsGO);
+}
+
+void TrashTheCacheEx::Exercise2p2() {
     SDL_Log("Exercise2.2\n");
     RunExperiment<GameObject3DAlt>(TimingsGOAlt, AmountIterationsGO);
 }

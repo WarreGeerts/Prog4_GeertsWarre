@@ -26,6 +26,7 @@ class TrashTheCacheEx {
 public:
     static void Exercise1();
     static void Exercise2();
+    static void Exercise2p2();
     static void SetAmountIterationsInt(int amount);
     static void SetAmountIterationsGO(int amount);
 
