@@ -11,8 +11,7 @@ bool dae::InputManager::ProcessInput()
 		}
 		if (e.type == SDL_EVENT_KEY_DOWN) {
 			if (e.key.scancode == SDL_SCANCODE_F1) {
-				// Toggle your debug menu or whatever
-				SDL_Log("Pressed");
+				m_F1Pressed = !m_F1Pressed;
 			}
 		}
 

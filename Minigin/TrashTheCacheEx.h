@@ -1,5 +1,9 @@
 ﻿#pragma once
+#include <string>
 #include <vector>
+
+#include "imgui.h"
+struct ImVec4;
 
 struct Transform {
     float matrix[16] = {
@@ -30,10 +34,14 @@ public:
     static void SetAmountIterationsInt(int amount);
     static void SetAmountIterationsGO(int amount);
 
+    static void PlotExercise1();
+    static void PlotExercise2();
+
 private:
     //main helper function (making DRY code :p)
     template<typename T>
     static void RunExperiment(std::vector<long long> &averageTiming, int iterations);
+    static void PlotHelper(const ImVec4& color, const std::vector<long long> &Timings, const ImVec4& color2 = ImVec4{}, const std::vector<long long> &Timings2 = std::vector<long long>{});
     //helper functions
     static void Operate(int &value) { value *= 2; }
     static void Operate(GameObject3D &go) { go.ID *= 2; }
@@ -47,4 +55,8 @@ private:
     static std::vector<long long> TimingsInt;
     static std::vector<long long> TimingsGO;
     static std::vector<long long> TimingsGOAlt;
+    //Imgui
+    static bool ShowTimingsInt;
+    static bool ShowTimingsGO;
+    static bool ShowTimingsGOAlt;
 };
