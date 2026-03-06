@@ -42,6 +42,8 @@ add_executable(${TARGET_NAME} ${TARGET_PARAM}
         Minigin/RotateComponent.h
         Minigin/TrashTheCacheEx.cpp
         Minigin/TrashTheCacheEx.h
+        Minigin/ThrashCacheComponent.cpp
+        Minigin/ThrashCacheComponent.h
 )
 
 # enable c++20 features
@@ -160,8 +162,6 @@ target_sources(${TARGET_NAME} PRIVATE
         ${implot_SOURCE_DIR}/implot_items.cpp
 )
 target_include_directories(${TARGET_NAME} PUBLIC ${implot_SOURCE_DIR})
-
-
 
 
 

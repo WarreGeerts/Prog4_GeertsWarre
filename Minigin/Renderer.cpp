@@ -42,16 +42,14 @@ void dae::Renderer::Init(SDL_Window *window) {
 }
 
 void dae::Renderer::Render() const {
-    if (InputManager::GetInstance().IsF1Pressed()) {
-        ImGui_ImplSDLRenderer3_NewFrame();
-        ImGui_ImplSDL3_NewFrame();
-        ImGui::NewFrame();
+    ImGui_ImplSDLRenderer3_NewFrame();
+    ImGui_ImplSDL3_NewFrame();
+    ImGui::NewFrame();
 
-        TrashTheCacheEx::PlotExercise1();
-        TrashTheCacheEx::PlotExercise2();
+    TrashTheCacheEx::PlotExercise1();
+    TrashTheCacheEx::PlotExercise2();
 
-        ImGui::Render();
-    }
+    ImGui::Render();
 
     const auto &color = GetBackgroundColor();
     SDL_SetRenderDrawColor(m_renderer, color.r, color.g, color.b, color.a);
@@ -59,8 +57,7 @@ void dae::Renderer::Render() const {
 
     SceneManager::GetInstance().Render();
 
-    if (InputManager::GetInstance().IsF1Pressed())
-        ImGui_ImplSDLRenderer3_RenderDrawData(ImGui::GetDrawData(), m_renderer);
+    ImGui_ImplSDLRenderer3_RenderDrawData(ImGui::GetDrawData(), m_renderer);
 
     SDL_RenderPresent(m_renderer);
 }
@@ -96,5 +93,3 @@ void dae::Renderer::RenderTexture(const Texture2D &texture, const float x, const
 }
 
 SDL_Renderer *dae::Renderer::GetSDLRenderer() const { return m_renderer; }
-
-

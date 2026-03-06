@@ -85,9 +85,6 @@ dae::Minigin::~Minigin() {
 void dae::Minigin::Run(const std::function<void()> &load) {
 
     load(); //initialization (once run)
-    //TrashTheCacheEx::Exercise1();
-    //TrashTheCacheEx::Exercise2();
-    //TrashTheCacheEx::Exercise2p2();
 
     mainScene = &SceneManager::GetInstance().GetSceneByName("Main");
     FPSCounter = &mainScene->GetGameObjectByName("FPSCounter");

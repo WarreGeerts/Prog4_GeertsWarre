@@ -10,9 +10,7 @@ bool dae::InputManager::ProcessInput()
 			return false;
 		}
 		if (e.type == SDL_EVENT_KEY_DOWN) {
-			if (e.key.scancode == SDL_SCANCODE_F1) {
-				m_F1Pressed = !m_F1Pressed;
-			}
+			
 		}
 
 		if (e.type == SDL_EVENT_MOUSE_BUTTON_DOWN) {

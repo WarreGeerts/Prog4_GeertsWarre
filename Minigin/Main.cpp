@@ -2,6 +2,7 @@
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_main.h>
 #include "Components.h"
+#include "ThrashCacheComponent.h"
 #if _DEBUG && __has_include(<vld.h>)
 #include <vld.h>
 #endif
@@ -143,8 +144,20 @@ static void load() //loads once
     rc2.SetAngularSpeed(2);
     //add to scene ====
     go->SetParent(&scene.GetGameObjectByName("BurgerMan"), false);
-
     scene.Add(std::move(go));
+
+
+    //ImGui Object ****
+    //GameObject ====
+    go = std::make_unique<dae::GameObject>("ImGui");
+    //Add components =====
+    go->AddComponent(std::make_unique<dae::RenderComponent>(go.get()));
+    go->AddComponent(std::make_unique<dae::TransformComponent>(go.get()));
+    go->AddComponent(std::make_unique<dae::ThrashCacheComponent>(go.get()));
+    //Initialise components ====
+    //add to scene ====
+    scene.Add(std::move(go));
+
 }
 
 int main(int, char *[]) {

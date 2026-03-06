@@ -6,3 +6,4 @@
 #include "TransformComponent.h"
 #include "FPSComponent.h"
 #include "RotateComponent.h"
+#include "ThrashCacheComponent.h"
