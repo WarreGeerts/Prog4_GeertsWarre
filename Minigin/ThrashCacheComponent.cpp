@@ -3,19 +3,11 @@
 #include <SDL3/SDL_log.h>
 #include <algorithm>
 #include <cmath>
+#include <numeric>
 #include <backends/imgui_impl_sdl3.h>
 #include <backends/imgui_impl_sdlrenderer3.h>
 #include "implot.h"
 using namespace dae;
-
-    void ThrashCacheComponent::Render() const {
-        ImGui::Render();
-    }
-
-void ThrashCacheComponent::Update() {
-        PlotExercise1();
-        PlotExercise2();
-    }
 
 void ThrashCacheComponent::SetAmountIterationsInt(const int amount) {
     AmountIterationsInt = amount;
@@ -25,7 +17,12 @@ void ThrashCacheComponent::SetAmountIterationsGO(const int amount) {
     AmountIterationsGO = amount;
 }
 
-void ThrashCacheComponent::PlotExercise1() {
+void ThrashCacheComponent::RenderGUI() {
+    PlotIntTimings();
+    PlotGOTimings();
+}
+
+void ThrashCacheComponent::PlotIntTimings() {
     if (ImGui::Begin("Exercise 1")) {
         ImGui::InputInt("# samples", &AmountIterationsInt, 1, 10);
         if (ImGui::Button("Thrash the cache")) {
@@ -38,7 +35,7 @@ void ThrashCacheComponent::PlotExercise1() {
     }
 }
 
-void ThrashCacheComponent::PlotExercise2() {
+void ThrashCacheComponent::PlotGOTimings() {
     if (ImGui::Begin("Exercise 2")) {
         ImGui::InputInt("# samples", &AmountIterationsGO, 1, 100);
         if (ImGui::Button("Thrash the cache with GameObject3D")) {
@@ -106,9 +103,9 @@ void ThrashCacheComponent::RunExperiment(std::vector<long long> &averageTiming, 
 
     int step{0};
 
-    for (int iteration{0}; iteration < iterations; ++iteration) {
+    for (step = 1; step <= 1024; step *= 2) {
         std::vector<long long> exp;
-        for (step = 1; step <= 1024; step *= 2) {
+        for (int iteration{0}; iteration < iterations; ++iteration) {
             auto start = std::chrono::high_resolution_clock::now();
 
             for (auto idx2{0}; idx2 < static_cast<int>(array.size()); idx2 += step) {
@@ -123,33 +120,19 @@ void ThrashCacheComponent::RunExperiment(std::vector<long long> &averageTiming, 
         timings.push_back(exp);
     }
 
-    averageTiming = MakeAverage(timings, iterations);
+    MakeAverage(timings, averageTiming);
     DisplayValues(averageTiming);
 }
 
-std::vector<long long>
-ThrashCacheComponent::MakeAverage(const std::vector<std::vector<long long> > &timings, const int iterations) {
-    std::vector<long long> averageTimings(11, 0);
-
-    for (auto idx{0}; idx < static_cast<int>(averageTimings.size()); ++idx) {
-        std::vector<long long> orderedTimings{};
-        for (auto &timing: timings) {
-            orderedTimings.push_back(timing[idx]);
-        }
-        //order small to big
-        std::sort(orderedTimings.begin(), orderedTimings.end());
-        //remove start and end
-        orderedTimings.erase(orderedTimings.begin());
-        orderedTimings.pop_back();
-
-        long long sum{0};
-        for (const auto &orderedTiming: orderedTimings) {
-            sum += orderedTiming;
-        }
-
-        averageTimings[idx] = sum / static_cast<long long>(iterations);
+void ThrashCacheComponent::MakeAverage(const std::vector<std::vector<long long> > &timings,
+                                       std::vector<long long> &averageTiming) {
+    auto iteration{0};
+    for (auto &timing: timings) {
+        auto [fst, snd] = minmax_element(timing.begin(), timing.end());
+        const auto sum{std::accumulate(timing.begin(), timing.end(), 0LL) - (*fst) - (*snd)};
+        averageTiming[iteration] = (sum / static_cast<long long>(timings.size()) - 2);
+        ++iteration;
     }
-    return averageTimings;
 }
 
 void ThrashCacheComponent::DisplayValues(const std::vector<long long> &timings) {

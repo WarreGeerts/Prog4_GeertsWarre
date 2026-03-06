@@ -12,6 +12,7 @@ namespace dae {
 
         void Update() override;
         void Render() const override {}
+        void RenderGUI() override{};
 
         void SetRadius(const float radius) { m_Radius = radius; }
         void SetAngularSpeed(const float angularSpeed) { m_AngularSpeed = angularSpeed; }

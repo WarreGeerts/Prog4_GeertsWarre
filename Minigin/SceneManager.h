@@ -17,6 +17,8 @@ namespace dae
 		[[nodiscard]] Scene& GetSceneByIdx(int idx) const;
 		void Update();
 		void Render() const;
+		void RenderGUI() const;
+
 	private:
 		friend class Singleton<SceneManager>;
 		SceneManager() = default;

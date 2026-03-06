@@ -10,7 +10,6 @@
 #include <backends/imgui_impl_sdlrenderer3.h>
 #include <implot.h>
 #include "InputManager.h"
-#include "TrashTheCacheEx.h"
 
 void dae::Renderer::Init(SDL_Window *window) {
     m_window = window;
@@ -44,11 +43,9 @@ void dae::Renderer::Init(SDL_Window *window) {
 void dae::Renderer::Render() const {
     ImGui_ImplSDLRenderer3_NewFrame();
     ImGui_ImplSDL3_NewFrame();
+
     ImGui::NewFrame();
-
-    TrashTheCacheEx::PlotExercise1();
-    TrashTheCacheEx::PlotExercise2();
-
+    SceneManager::GetInstance().RenderGUI();
     ImGui::Render();
 
     const auto &color = GetBackgroundColor();
@@ -58,7 +55,6 @@ void dae::Renderer::Render() const {
     SceneManager::GetInstance().Render();
 
     ImGui_ImplSDLRenderer3_RenderDrawData(ImGui::GetDrawData(), m_renderer);
-
     SDL_RenderPresent(m_renderer);
 }
 

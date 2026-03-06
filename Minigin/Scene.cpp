@@ -61,7 +61,14 @@ void Scene::Render() const {
         for (const auto &component: object->GetComponents()) {
             component->Render();
         }
-        //object->Render();
+    }
+}
+
+void Scene::RenderGUI() const {
+    for (const auto &object: m_objects) {
+        for (const auto &component: object->GetComponents()) {
+            component->RenderGUI();
+        }
     }
 }
 

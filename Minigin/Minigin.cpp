@@ -18,7 +18,6 @@
 #include "Components.h"
 #include "imgui.h"
 #include "implot.h"
-#include "TrashTheCacheEx.h"
 SDL_Window *g_window{};
 
 void LogSDLVersion(const std::string &message, int major, int minor, int patch) {

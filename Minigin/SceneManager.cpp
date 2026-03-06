@@ -15,6 +15,12 @@ void dae::SceneManager::Render() const {
     }
 }
 
+void dae::SceneManager::RenderGUI() const {
+    for (const auto &scene: m_scenes) {
+        scene->RenderGUI();
+    }
+}
+
 dae::Scene &dae::SceneManager::CreateScene(std::string name) {
     m_scenes.emplace_back(new Scene(std::move(name)));
     return *m_scenes.back();

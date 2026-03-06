@@ -4,7 +4,7 @@
 namespace dae {
     class GameObject;
 
-    class Component {
+    class  Component {
     public:
         virtual ~Component() = default;
         Component(const Component &other) = delete;
@@ -13,9 +13,10 @@ namespace dae {
         Component &operator=(Component &&other) = delete;
         virtual void Update() = 0;
         virtual void Render() const = 0;
+        virtual void RenderGUI() = 0;
 
     protected:
-        Component(GameObject *go) : m_gameObject(go) {}
+        explicit Component(GameObject *go) : m_gameObject(go) {}
         GameObject *m_gameObject;
     };
 }

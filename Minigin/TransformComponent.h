@@ -9,6 +9,8 @@ namespace dae {
         TransformComponent(GameObject *go, const float x, const float y) : Component(go), m_position(x, y, 0) {}
         void Update() override {}
         void Render() const override {}
+        void RenderGUI() override{};
+
         [[nodiscard]] const glm::vec3 &GetPosition() const;
         void SetPosition(float x, float y, float z = 0);
         void SetPosition(const glm::vec3 &position);

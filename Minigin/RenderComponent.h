@@ -11,6 +11,7 @@ namespace dae {
         RenderComponent(GameObject *go, const std::string &filename);
         void Update() override;
         void Render() const override;
+        void RenderGUI() override{};
         void SetTexture(const std::string &filename);
         void SetTexture(const std::shared_ptr<Texture2D> &texture) { m_texture = texture; }
 

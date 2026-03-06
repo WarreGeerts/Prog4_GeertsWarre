@@ -18,6 +18,8 @@ namespace dae {
         //-
         void Update() override;
         void Render() const override;
+        void RenderGUI() override{};
+
         //-
         void SetFont(std::shared_ptr<Font> font) { m_font = std::move(font); };
 

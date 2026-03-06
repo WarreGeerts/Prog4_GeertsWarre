@@ -62,24 +62,6 @@ static void load() //loads once
     //add to scene ====
     scene.Add(std::move(go));
 
-    //Title text ****
-    //GameObject ====
-    go = std::make_unique<dae::GameObject>("InfoTextF1");
-    go->SetLocalPosition({0, 540, 0});
-    //Add components =====
-    go->AddComponent(std::make_unique<dae::TextComponent>(go.get()));
-    go->AddComponent(std::make_unique<dae::RenderComponent>(go.get()));
-    go->AddComponent(std::make_unique<dae::TransformComponent>(go.get()));
-    //Initialise components ====
-    //TextComponent
-    dae::TextComponent &tc2{*go->GetComponent<dae::TextComponent>()};
-    tc2.SetText("F1 to toggle ImGui");
-    tc2.SetFont(fontLingua);
-    tc2.SetColor({255, 255, 0, 255});
-    tc2.SetRefRenderComponent(go->GetComponent<dae::RenderComponent>());
-    //add to scene ====
-    scene.Add(std::move(go));
-
     //FPS counter ****
     //GameObject ====
     go = std::make_unique<dae::GameObject>("FPSCounter");

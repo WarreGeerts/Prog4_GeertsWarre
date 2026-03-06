@@ -14,6 +14,7 @@ namespace dae {
         [[nodiscard]] GameObject &GetGameObjectByIndex(int idx) const;
         void Update();
         void Render() const;
+        void RenderGUI() const;
         ~Scene() = default;
         Scene(const Scene &other) = delete;
         Scene(Scene &&other) = delete;

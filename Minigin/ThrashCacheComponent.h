@@ -27,13 +27,25 @@ namespace dae {
 
     class ThrashCacheComponent final : public Component {
     public:
-        explicit ThrashCacheComponent(GameObject *go) : Component(go) {}
-        void Render() const override;
-        void Update() override;
+        explicit ThrashCacheComponent(GameObject *go) : Component(go) {
+            constexpr auto AmountSteps{11};
+            TimingsInt.reserve(AmountSteps);
+            TimingsGO.reserve(AmountSteps);
+            TimingsGOAlt.reserve(AmountSteps);
+
+            for (int i = 0; i < AmountSteps; i++) {
+                TimingsInt.push_back(0);
+                TimingsGO.push_back(0);
+                TimingsGOAlt.push_back(0);
+            }
+        }
+        void Render() const override {};
+        void RenderGUI() override;
+        void Update() override {};
         void SetAmountIterationsInt(int amount);
         void SetAmountIterationsGO(int amount);
-        void PlotExercise1();
-        void PlotExercise2();
+        void PlotIntTimings();
+        void PlotGOTimings();
 
     private:
         //main helper function (making DRY code :p)
@@ -45,7 +57,7 @@ namespace dae {
         void Operate(int &value) { value *= 2; }
         void Operate(GameObject3D &go) { go.ID *= 2; }
         void Operate(GameObject3DAlt &go) { go.ID *= 2; }
-        std::vector<long long> MakeAverage(const std::vector<std::vector<long long> > &timings, int iterations);
+        void MakeAverage(const std::vector<std::vector<long long> > &timings, std::vector<long long> &averageTiming);
         void DisplayValues(const std::vector<long long> &timings);
         //static vars
         int size{67108864}; //2^26
