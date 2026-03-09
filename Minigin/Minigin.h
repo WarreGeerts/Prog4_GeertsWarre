@@ -22,8 +22,8 @@ namespace dae {
         //Emscripten ifdef because it doesn't use the m_quit keyword. And it treats the m_quit as an error. (cmake setting)
 #ifdef __EMSCRIPTEN__
 #else
-        bool m_quit{false};
 #endif
+        bool m_quit{false};
         Scene *mainScene;
         GameObject *FPSCounter;
     };
