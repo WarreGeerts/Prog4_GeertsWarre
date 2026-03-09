@@ -55,7 +55,7 @@ namespace dae {
 namespace dae {
     class Controller::ControllerImpl {
         int m_ControllerIndex{0};
-        SDL_GameController* m_pController{nullptr};
+        SDL_Gamepad* m_pController{nullptr};
 
         uint32_t m_PreviousState{0};
         uint32_t m_CurrentState{0};
@@ -69,7 +69,7 @@ namespace dae {
 
         ~ControllerImpl() {
             if (m_pController) {
-                SDL_GameControllerClose(m_pController);
+                SDL_CloseGamepad(m_pController);
                 m_pController = nullptr;
             }
         }
@@ -82,9 +82,8 @@ namespace dae {
 
             if (!m_pController) return;
 
-            // Poll all standard gamepad buttons (0-14 covers everything)
             for (int i = 0; i < 15; ++i) {
-                if (SDL_GameControllerGetButton(m_pController, static_cast<SDL_GameControllerButton>(i))) {
+                if (SDL_GetGamepadButton(m_pController, static_cast<SDL_GamepadButton>(i))) {
                     m_CurrentState |= (1u << i);
                 }
             }
@@ -94,41 +93,34 @@ namespace dae {
             m_ButtonsReleasedThisFrame = buttonChanges & (~m_CurrentState);
         }
 
-        bool IsConnected() const {
-            return m_pController != nullptr;
-        }
+        bool IsConnected() const { return m_pController != nullptr; }
 
-        void SetControllerIndex(const uint32_t idx) {
+        void SetControllerIndex(uint32_t idx) {
             m_ControllerIndex = idx;
             if (m_pController) {
-                SDL_GameControllerClose(m_pController);
+                SDL_CloseGamepad(m_pController);
                 m_pController = nullptr;
             }
             UpdateConnection();
         }
 
-        bool IsPressed(const int button) const {
-            return m_CurrentState & (1u << button);
-        }
-        bool IsDownThisFrame(const int button) const {
-            return m_ButtonsPressedThisFrame & (1u << button);
-        }
-        bool IsUpThisFrame(const int button) const {
-            return m_ButtonsReleasedThisFrame & (1u << button);
-        }
+        bool IsPressed(int button) const { return m_CurrentState & (1u << button); }
+        bool IsDownThisFrame(int button) const { return m_ButtonsPressedThisFrame & (1u << button); }
+        bool IsUpThisFrame(int button) const { return m_ButtonsReleasedThisFrame & (1u << button); }
 
     private:
         void UpdateConnection() {
             if (m_pController) return;
 
-            int numControllers = SDL_NumGamepads();
+            int numControllers = SDL_GetNumGamepads();
             if (m_ControllerIndex < numControllers) {
-                m_pController = SDL_GameControllerOpen(m_ControllerIndex);
+                m_pController = SDL_OpenGamepad(m_ControllerIndex);
             }
         }
     };
 }
 #endif
+
 
 namespace dae {
     Controller::Controller() : m_pImpl(std::make_unique<ControllerImpl>(0)) {}
