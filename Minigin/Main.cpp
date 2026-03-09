@@ -135,7 +135,7 @@ static void load() //loads once
     //Add components ====
     go->AddComponent(std::make_unique<dae::RenderComponent>(go.get(), "Bean.png"));
     go->AddComponent(std::make_unique<dae::TransformComponent>(go.get()));
-    go->AddComponent(std::make_unique<dae::CharacterControllerComponent>(go.get(), 120.f, false,0));
+    go->AddComponent(std::make_unique<dae::CharacterControllerComponent>(go.get(), 120.f, false));
     //add to scene ====
     scene.Add(std::move(go));
 }

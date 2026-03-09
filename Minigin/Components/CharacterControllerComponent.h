@@ -4,7 +4,7 @@
 namespace dae {
     class CharacterControllerComponent final : public Component {
     public:
-        CharacterControllerComponent(GameObject *go, float speed, bool keyboard, int controllerIdx = 0);
+        CharacterControllerComponent(GameObject *go, float speed, bool keyboard);
         ~CharacterControllerComponent() override = default;
         void Update() override{};
         void Render() const override{};
@@ -12,6 +12,5 @@ namespace dae {
 
     private:
         bool m_Keyboard;
-        int m_ControllerIdx;
     };
 }
