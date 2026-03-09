@@ -1,6 +1,5 @@
 ﻿#include "Controller.h"
 #include <SDL3/SDL.h>
-
 #ifdef _WIN32
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
@@ -55,15 +54,14 @@ namespace dae {
 namespace dae {
     class Controller::ControllerImpl {
         int m_ControllerIndex{0};
-        SDL_Gamepad* m_pController{nullptr};
-
+        SDL_Gamepad *m_pController{nullptr};
         uint32_t m_PreviousState{0};
         uint32_t m_CurrentState{0};
         uint32_t m_ButtonsPressedThisFrame{0};
         uint32_t m_ButtonsReleasedThisFrame{0};
 
     public:
-        ControllerImpl(uint32_t controllerIndex) : m_ControllerIndex(controllerIndex) {
+        explicit ControllerImpl(uint32_t controllerIndex) : m_ControllerIndex(controllerIndex) {
             UpdateConnection();
         }
 
@@ -112,24 +110,28 @@ namespace dae {
         void UpdateConnection() {
             if (m_pController) return;
 
-            int numControllers = SDL_GetNumGamepads();
-            if (m_ControllerIndex < numControllers) {
-                m_pController = SDL_OpenGamepad(m_ControllerIndex);
+            SDL_UpdateGamepads();
+
+            int numControllers = 0;
+            SDL_JoystickID* gamepadIDs = SDL_GetGamepads(&numControllers);
+            if (gamepadIDs && numControllers > 0 && m_ControllerIndex < numControllers) {
+                m_pController = SDL_OpenGamepad(gamepadIDs[m_ControllerIndex]);
+            }
+
+            if (gamepadIDs) {
+                SDL_free(gamepadIDs);
             }
         }
     };
 }
+
 #endif
-
-
 namespace dae {
     Controller::Controller() : m_pImpl(std::make_unique<ControllerImpl>(0)) {}
     Controller::~Controller() = default;
-
     bool Controller::IsConnected() const { return m_pImpl->IsConnected(); }
     void Controller::Update() { m_pImpl->Update(); }
     void Controller::SetControllerIndex(const uint32_t idx) { m_pImpl->SetControllerIndex(idx); }
-
     bool Controller::IsPressed(const int button) const { return m_pImpl->IsPressed(button); }
     bool Controller::IsDownThisFrame(const int button) const { return m_pImpl->IsDownThisFrame(button); }
     bool Controller::IsUpThisFrame(const int button) const { return m_pImpl->IsUpThisFrame(button); }
