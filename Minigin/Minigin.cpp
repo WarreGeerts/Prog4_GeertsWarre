@@ -93,7 +93,6 @@ void dae::Minigin::Run(const std::function<void()> &load) {
     while (!m_quit) //main loop
     {
         //input process
-        m_quit = !InputManager::GetInstance().ProcessInput();
         Update();
     }
 
@@ -105,6 +104,9 @@ void dae::Minigin::Run(const std::function<void()> &load) {
 //uses DeltaTime
 void dae::Minigin::Update() //main loop
 {
+    //Inputs
+    m_quit = !InputManager::GetInstance().ProcessInput();
+
     //DeltaTime
     DeltaTime::GetInstance().StartDeltaTime();
 
