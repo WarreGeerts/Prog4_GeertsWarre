@@ -194,9 +194,14 @@ target_link_libraries("${TARGET_NAME}" PUBLIC
         SDL3_ttf::SDL3_ttf
         glm::glm
         imgui
-        xinput
         ${VLD_LIBRARIES}
 )
+
+if(NOT EMSCRIPTEN)
+    target_link_libraries("${TARGET_NAME}" PUBLIC
+            xinput
+    )
+endif()
 
 if (MSVC)
     # compile at warning level 4 + treat warnings as errors
