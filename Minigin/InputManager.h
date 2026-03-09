@@ -38,7 +38,6 @@ namespace dae {
         std::vector<std::pair<Binding, std::unique_ptr<Command> > > m_Bindings;
         Controller m_Controller;
         const bool *m_KeyboardState{nullptr};
-        Uint8 *m_PrevKeyboardState{nullptr};
         void CheckControllerBindings();
         void CheckKeyboardBindings(KeyState state);
         void UpdateKeyboardState();
