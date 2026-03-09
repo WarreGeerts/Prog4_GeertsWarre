@@ -1,7 +1,6 @@
 #include <iostream>
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_main.h>
-
 #include "Components/CharacterControllerComponent.h"
 #include "InputManager.h"
 #include "Components/Components.h"
@@ -26,7 +25,7 @@ static void load() //loads once
     auto go = std::make_unique<dae::GameObject>("Background");
     go->SetLocalPosition({0, 0, 0});
     //Add components =====
-    go->AddComponent(std::make_unique<dae::RenderComponent>(go.get(),"background.png"));
+    go->AddComponent(std::make_unique<dae::RenderComponent>(go.get(), "background.png"));
     go->AddComponent(std::make_unique<dae::TransformComponent>(go.get()));
     //add to scene ====
     scene.Add(std::move(go));
@@ -36,7 +35,7 @@ static void load() //loads once
     go = std::make_unique<dae::GameObject>("Logo");
     go->SetLocalPosition({358, 180, 0});
     //Add components =====
-    go->AddComponent(std::make_unique<dae::RenderComponent>(go.get(),"logo.png"));
+    go->AddComponent(std::make_unique<dae::RenderComponent>(go.get(), "logo.png"));
     go->AddComponent(std::make_unique<dae::TransformComponent>(go.get()));
     //add to scene ====
     scene.Add(std::move(go));
@@ -46,7 +45,7 @@ static void load() //loads once
     go = std::make_unique<dae::GameObject>("TitleText");
     go->SetLocalPosition({292, 20, 0});
     //Add components =====
-    go->AddComponent(std::make_unique<dae::TextComponent>(go.get(),"Programming 4 Assignment",fontLingua));
+    go->AddComponent(std::make_unique<dae::TextComponent>(go.get(), "Programming 4 Assignment", fontLingua));
     go->AddComponent(std::make_unique<dae::RenderComponent>(go.get()));
     go->AddComponent(std::make_unique<dae::TransformComponent>(go.get()));
     //Initialise components ====
@@ -61,7 +60,7 @@ static void load() //loads once
     go->SetLocalPosition({0, 0, 0});
     //Add components =====
     go->AddComponent(std::make_unique<dae::FPSComponent>(go.get()));
-    go->AddComponent(std::make_unique<dae::TextComponent>(go.get()," ",fontLingua));
+    go->AddComponent(std::make_unique<dae::TextComponent>(go.get(), " ", fontLingua));
     go->AddComponent(std::make_unique<dae::RenderComponent>(go.get()));
     go->AddComponent(std::make_unique<dae::TransformComponent>(go.get()));
     //Initialise components ====
@@ -72,63 +71,73 @@ static void load() //loads once
     //add to scene ====
     scene.Add(std::move(go));
 
-    //Rotating parent-child ****
-    //Empty-parent
-    go = std::make_unique<dae::GameObject>("BurgerManEmpty");
-    go->SetLocalPosition({200, 200, 0});
-    //Add components =====
-    go->AddComponent(std::make_unique<dae::TransformComponent>(go.get()));
-    //add to scene ====
-    scene.Add(std::move(go));
+    /*
+        //Rotating parent-child ****
+        //Empty-parent
+        go = std::make_unique<dae::GameObject>("BurgerManEmpty");
+        go->SetLocalPosition({200, 200, 0});
+        //Add components =====
+        go->AddComponent(std::make_unique<dae::TransformComponent>(go.get()));
+        //add to scene ====
+        scene.Add(std::move(go));
+        //parent ----
+        //GameObject ====
+        go = std::make_unique<dae::GameObject>("BurgerMan");
+        go->SetLocalPosition({0, 0, 0});
+        //Add components ====
+        go->AddComponent(std::make_unique<dae::RenderComponent>(go.get(),"BurgerMan.png"));
+        go->AddComponent(std::make_unique<dae::TransformComponent>(go.get()));
+        go->AddComponent(std::make_unique<dae::RotateComponent>(go.get(),20,-1));
+        //add to scene ====
+        go->SetParent(&scene.GetGameObjectByName("BurgerManEmpty"), false);
+        scene.Add(std::move(go));
 
-    //parent ----
+        //child ----
+        //GameObject ====
+        go = std::make_unique<dae::GameObject>("Bean");
+        go->SetLocalPosition({0, 0, 0});
+        //Add components ====
+        go->AddComponent(std::make_unique<dae::RenderComponent>(go.get(),"Bean.png"));
+        go->AddComponent(std::make_unique<dae::TransformComponent>(go.get()));
+        go->AddComponent(std::make_unique<dae::RotateComponent>(go.get(),40,2));
+        //add to scene ====
+        go->SetParent(&scene.GetGameObjectByName("BurgerMan"), false);
+        scene.Add(std::move(go));
+    */
+
+    /*
+        //ImGui Object ****
+        //GameObject ====
+        go = std::make_unique<dae::GameObject>("ImGui");
+        //Add components =====
+        go->AddComponent(std::make_unique<dae::RenderComponent>(go.get()));
+        go->AddComponent(std::make_unique<dae::TransformComponent>(go.get()));
+        go->AddComponent(std::make_unique<dae::ThrashCacheComponent>(go.get()));
+        //add to scene ====
+        scene.Add(std::move(go));
+     */
+
+    //Player1 controller ****
     //GameObject ====
     go = std::make_unique<dae::GameObject>("BurgerMan");
-    go->SetLocalPosition({0, 0, 0});
+    go->SetLocalPosition({200, 200, 0});
     //Add components ====
-    go->AddComponent(std::make_unique<dae::RenderComponent>(go.get(),"BurgerMan.png"));
+    go->AddComponent(std::make_unique<dae::RenderComponent>(go.get(), "BurgerMan.png"));
     go->AddComponent(std::make_unique<dae::TransformComponent>(go.get()));
-    go->AddComponent(std::make_unique<dae::RotateComponent>(go.get(),20,-1));
+    go->AddComponent(std::make_unique<dae::CharacterControllerComponent>(go.get(), 60.f, true));
     //add to scene ====
-    go->SetParent(&scene.GetGameObjectByName("BurgerManEmpty"), false);
     scene.Add(std::move(go));
 
-    //child ----
+    //Player2 controller ****
     //GameObject ====
     go = std::make_unique<dae::GameObject>("Bean");
-    go->SetLocalPosition({0, 0, 0});
+    go->SetLocalPosition({200, 250, 0});
     //Add components ====
-    go->AddComponent(std::make_unique<dae::RenderComponent>(go.get(),"Bean.png"));
+    go->AddComponent(std::make_unique<dae::RenderComponent>(go.get(), "Bean.png"));
     go->AddComponent(std::make_unique<dae::TransformComponent>(go.get()));
-    go->AddComponent(std::make_unique<dae::RotateComponent>(go.get(),40,2));
-    //add to scene ====
-    go->SetParent(&scene.GetGameObjectByName("BurgerMan"), false);
-    scene.Add(std::move(go));
-
-
-    //ImGui Object ****
-    //GameObject ====
-    go = std::make_unique<dae::GameObject>("ImGui");
-    //Add components =====
-    go->AddComponent(std::make_unique<dae::RenderComponent>(go.get()));
-    go->AddComponent(std::make_unique<dae::TransformComponent>(go.get()));
-    go->AddComponent(std::make_unique<dae::ThrashCacheComponent>(go.get()));
+    go->AddComponent(std::make_unique<dae::CharacterControllerComponent>(go.get(), 120.f, false,0));
     //add to scene ====
     scene.Add(std::move(go));
-
-
-    //Test Player controller ****
-    //GameObject ====
-    go = std::make_unique<dae::GameObject>("BurgerMan2");
-    go->SetLocalPosition({0, 0, 0});
-    //Add components ====
-    go->AddComponent(std::make_unique<dae::RenderComponent>(go.get(),"BurgerMan.png"));
-    go->AddComponent(std::make_unique<dae::TransformComponent>(go.get()));
-    go->AddComponent(std::make_unique<dae::CharacterControllerComponent>(go.get(),120.f,true));
-    //add to scene ====
-    scene.Add(std::move(go));
-
-
 }
 
 int main(int, char *[]) {

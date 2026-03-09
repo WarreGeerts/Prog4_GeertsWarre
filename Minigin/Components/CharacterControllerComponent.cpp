@@ -3,6 +3,11 @@
 #include <SDL3/SDL.h>
 #include "../Commands/MoveCommand.h"
 
+constexpr int XINPUT_GAMEPAD_DPAD_UP    = 0x0001;
+constexpr int XINPUT_GAMEPAD_DPAD_DOWN  = 0x0002;
+constexpr int XINPUT_GAMEPAD_DPAD_LEFT  = 0x0004;
+constexpr int XINPUT_GAMEPAD_DPAD_RIGHT = 0x0008;
+
 dae::CharacterControllerComponent::CharacterControllerComponent(GameObject *go, float speed, const bool keyboard,
                                                                 const int controllerIdx)
     : Component(go)
