@@ -26,21 +26,28 @@ add_executable(${TARGET_NAME} ${TARGET_PARAM}
         Minigin/Scene.cpp
         Minigin/SceneManager.cpp
         Minigin/Texture2D.cpp
-        Minigin/Component.h
-        Minigin/TransformComponent.h
-        Minigin/TransformComponent.cpp
-        Minigin/RenderComponent.cpp
-        Minigin/RenderComponent.h
-        Minigin/FPSComponent.cpp
-        Minigin/FPSComponent.h
-        Minigin/TextComponent.cpp
-        Minigin/TextComponent.h
+        Minigin/Components/Component.h
+        Minigin/Components/TransformComponent.h
+        Minigin/Components/TransformComponent.cpp
+        Minigin/Components/RenderComponent.cpp
+        Minigin/Components/RenderComponent.h
+        Minigin/Components/FPSComponent.cpp
+        Minigin/Components/FPSComponent.h
+        Minigin/Components/TextComponent.cpp
+        Minigin/Components/TextComponent.h
         Minigin/DeltaTime.h
-        Minigin/Components.h
-        Minigin/RotateComponent.cpp
-        Minigin/RotateComponent.h
-        Minigin/ThrashCacheComponent.cpp
-        Minigin/ThrashCacheComponent.h
+        Minigin/Components/Components.h
+        Minigin/Components/RotateComponent.cpp
+        Minigin/Components/RotateComponent.h
+        Minigin/Components/ThrashCacheComponent.cpp
+        Minigin/Components/ThrashCacheComponent.h
+        Minigin/Commands/Command.h
+        Minigin/Commands/GameActorCommand.h
+        Minigin/Controller.cpp
+        Minigin/Controller.h
+        Minigin/Commands/MoveCommand.h
+        Minigin/Components/CharacterControllerComponent.cpp
+        Minigin/Components/CharacterControllerComponent.h
 )
 
 # enable c++20 features
@@ -187,6 +194,7 @@ target_link_libraries("${TARGET_NAME}" PUBLIC
         SDL3_ttf::SDL3_ttf
         glm::glm
         imgui
+        xinput
         ${VLD_LIBRARIES}
 )
 

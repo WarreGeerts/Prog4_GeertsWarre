@@ -7,7 +7,7 @@ namespace dae {
 
     class RenderComponent final : public Component {
     public:
-        RenderComponent(GameObject *go);
+        explicit RenderComponent(GameObject *go);
         RenderComponent(GameObject *go, const std::string &filename);
         void Update() override;
         void Render() const override;

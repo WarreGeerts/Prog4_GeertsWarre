@@ -12,7 +12,7 @@ namespace dae {
 
     class TextComponent final : public Component {
     public:
-        TextComponent(GameObject *go);
+        explicit TextComponent(GameObject *go);
         TextComponent(GameObject *go, const std::string &text, std::shared_ptr<Font> font,
                       const SDL_Color &color = {255, 255, 255, 255});
         //-

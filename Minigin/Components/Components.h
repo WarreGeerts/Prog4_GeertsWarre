@@ -7,3 +7,4 @@
 #include "FPSComponent.h"
 #include "RotateComponent.h"
 #include "ThrashCacheComponent.h"
+#include "CharacterControllerComponent.h"

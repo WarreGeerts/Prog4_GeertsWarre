@@ -15,7 +15,7 @@
 #include "Renderer.h"
 #include "ResourceManager.h"
 #include "DeltaTime.h"
-#include "Components.h"
+#include "Components/Components.h"
 #include "imgui.h"
 #include "implot.h"
 SDL_Window *g_window{};

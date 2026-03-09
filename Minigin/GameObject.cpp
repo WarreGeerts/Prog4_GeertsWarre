@@ -2,8 +2,8 @@
 #include <algorithm>
 #include <cassert>
 #include <utility>
-#include "Component.h"
-#include "TransformComponent.h"
+#include "Components/Component.h"
+#include "Components/TransformComponent.h"
 using namespace dae;
 GameObject::GameObject(std::string name) : m_Name(std::move(name)) {}
 GameObject::~GameObject() = default;

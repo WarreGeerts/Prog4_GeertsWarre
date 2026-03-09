@@ -2,7 +2,7 @@
 #include "Scene.h"
 #include <cassert>
 #include <utility>
-#include "Component.h"
+#include "Components/Component.h"
 #include <stdexcept>
 
 using namespace dae;
