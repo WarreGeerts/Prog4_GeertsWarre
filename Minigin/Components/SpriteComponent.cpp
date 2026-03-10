@@ -2,7 +2,7 @@
 #include <algorithm>
 #include "ResourceManager.h"
 #include "Texture2D.h"
-#include "../../cmake-build-release/_deps/sdl3-src/include/SDL3/SDL_render.h"
+#include <SDL3/SDL_render.h>
 using namespace dae;
 
 SpriteComponent::SpriteComponent(GameObject *go, const std::string &spritesheetPath, const SpriteFraming &spriteFrame,
