@@ -8,3 +8,4 @@
 #include "RotateComponent.h"
 #include "ThrashCacheComponent.h"
 #include "CharacterControllerComponent.h"
+#include "SpriteComponent.h"

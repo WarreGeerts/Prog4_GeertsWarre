@@ -19,6 +19,7 @@ static void load() //loads once
 {
     auto &scene = dae::SceneManager::GetInstance().CreateScene("Main");
     const auto fontLingua = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 36);
+    constexpr dae::SpriteFraming spriteFraming{15,11,16.f,16.f};
 
     //Background ****
     //GameObject ====
@@ -122,9 +123,10 @@ static void load() //loads once
     go = std::make_unique<dae::GameObject>("BurgerMan");
     go->SetLocalPosition({200, 200, 0});
     //Add components ====
-    go->AddComponent(std::make_unique<dae::RenderComponent>(go.get(), "BurgerMan.png"));
+    go->AddComponent(std::make_unique<dae::RenderComponent>(go.get()));
     go->AddComponent(std::make_unique<dae::TransformComponent>(go.get()));
     go->AddComponent(std::make_unique<dae::CharacterControllerComponent>(go.get(), 60.f, true));
+    go->AddComponent(std::make_unique<dae::SpriteComponent>(go.get(),"Sprites.png",spriteFraming,1));
     //add to scene ====
     scene.Add(std::move(go));
 
@@ -133,9 +135,10 @@ static void load() //loads once
     go = std::make_unique<dae::GameObject>("Bean");
     go->SetLocalPosition({200, 250, 0});
     //Add components ====
-    go->AddComponent(std::make_unique<dae::RenderComponent>(go.get(), "Bean.png"));
+    go->AddComponent(std::make_unique<dae::RenderComponent>(go.get()));
     go->AddComponent(std::make_unique<dae::TransformComponent>(go.get()));
     go->AddComponent(std::make_unique<dae::CharacterControllerComponent>(go.get(), 120.f, false));
+    go->AddComponent(std::make_unique<dae::SpriteComponent>(go.get(),"Sprites.png",spriteFraming,30));
     //add to scene ====
     scene.Add(std::move(go));
 }

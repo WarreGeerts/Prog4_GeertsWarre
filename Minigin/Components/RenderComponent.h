@@ -2,7 +2,10 @@
 #include "Component.h"
 #include <string>
 
+#include "SpriteComponent.h"
+
 namespace dae {
+    class TransformComponent;
     class Texture2D;
 
     class RenderComponent final : public Component {
@@ -17,5 +20,8 @@ namespace dae {
 
     private:
         std::shared_ptr<Texture2D> m_texture;
+        TransformComponent* m_transform{};
+        SpriteComponent* m_sprite{};
+        bool m_expensiveLoaded{false};
     };
 }

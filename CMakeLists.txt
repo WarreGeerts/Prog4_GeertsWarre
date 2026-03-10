@@ -48,6 +48,8 @@ add_executable(${TARGET_NAME} ${TARGET_PARAM}
         Minigin/Commands/MoveCommand.h
         Minigin/Components/CharacterControllerComponent.cpp
         Minigin/Components/CharacterControllerComponent.h
+        Minigin/Components/SpriteComponent.cpp
+        Minigin/Components/SpriteComponent.h
 )
 
 # enable c++20 features
