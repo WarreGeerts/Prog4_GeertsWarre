@@ -21,8 +21,6 @@ void FPSComponent::Update() {
 }
 
 void FPSComponent::Render() const {
-    //FPS counter
-
     const float currentFPS{m_FPS};
     std::stringstream ss;
     ss << std::fixed << std::setprecision(1) << currentFPS;

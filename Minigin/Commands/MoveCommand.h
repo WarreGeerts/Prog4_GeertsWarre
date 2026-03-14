@@ -6,7 +6,7 @@
 namespace dae {
     class MoveCommand final : public GameActorCommand {
     public:
-        MoveCommand(GameObject *pActor, const glm::vec2 &direction, float speed)
+        MoveCommand(GameObject *pActor, const glm::vec2 &direction, const float speed)
             : GameActorCommand(pActor)
               , m_Direction(direction)
               , m_Speed(speed) {}

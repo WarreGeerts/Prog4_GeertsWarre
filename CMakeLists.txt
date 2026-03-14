@@ -50,6 +50,10 @@ add_executable(${TARGET_NAME} ${TARGET_PARAM}
         Minigin/Components/CharacterControllerComponent.h
         Minigin/Components/SpriteComponent.cpp
         Minigin/Components/SpriteComponent.h
+        Minigin/Components/LivesComponent.h
+        Minigin/EventManager.h
+        Minigin/Components/Observers__EventHandlers/LivesDisplayComponent.cpp
+        Minigin/Components/Observers__EventHandlers/LivesDisplayComponent.h
 )
 
 # enable c++20 features
