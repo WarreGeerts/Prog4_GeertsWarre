@@ -2,10 +2,18 @@
 #include "InputManager.h"
 #include <SDL3/SDL.h>
 #include "Commands/MoveCommand.h"
-constexpr int XINPUT_GAMEPAD_DPAD_UP = 0x0001;
-constexpr int XINPUT_GAMEPAD_DPAD_DOWN = 0x0002;
-constexpr int XINPUT_GAMEPAD_DPAD_LEFT = 0x0004;
-constexpr int XINPUT_GAMEPAD_DPAD_RIGHT = 0x0008;
+
+#ifdef WIN32
+constexpr int GAMEPAD_DPAD_UP{0x0001};
+constexpr int GAMEPAD_DPAD_DOWN{0x0002};
+constexpr int GAMEPAD_DPAD_LEFT{0x0004};
+constexpr int GAMEPAD_DPAD_RIGHT{0x0008};
+#else
+constexpr int GAMEPAD_DPAD_UP{SDL_GAMEPAD_BUTTON_DPAD_UP};
+constexpr int GAMEPAD_DPAD_DOWN{SDL_GAMEPAD_BUTTON_DPAD_DOWN};
+constexpr int GAMEPAD_DPAD_LEFT{SDL_GAMEPAD_BUTTON_DPAD_LEFT};
+constexpr int GAMEPAD_DPAD_RIGHT{SDL_GAMEPAD_BUTTON_DPAD_RIGHT};
+#endif
 
 dae::CharacterControllerComponent::CharacterControllerComponent(GameObject *go, float speed, const bool keyboard)
     : Component(go)
@@ -22,13 +30,13 @@ dae::CharacterControllerComponent::CharacterControllerComponent(GameObject *go, 
         Input.AddBinding({KeyState::Pressed, static_cast<int>(SDL_SCANCODE_D), true},
                          std::make_unique<MoveCommand>(m_gameObject, glm::vec2(1, 0), speed));
     } else {
-        Input.AddBinding({KeyState::Pressed, XINPUT_GAMEPAD_DPAD_UP, false},
+        Input.AddBinding({KeyState::Pressed, GAMEPAD_DPAD_UP, false},
                          std::make_unique<MoveCommand>(m_gameObject, glm::vec2(0, -1), speed));
-        Input.AddBinding({KeyState::Pressed, XINPUT_GAMEPAD_DPAD_DOWN, false},
+        Input.AddBinding({KeyState::Pressed, GAMEPAD_DPAD_DOWN, false},
                          std::make_unique<MoveCommand>(m_gameObject, glm::vec2(0, 1), speed));
-        Input.AddBinding({KeyState::Pressed, XINPUT_GAMEPAD_DPAD_LEFT, false},
+        Input.AddBinding({KeyState::Pressed, GAMEPAD_DPAD_LEFT, false},
                          std::make_unique<MoveCommand>(m_gameObject, glm::vec2(-1, 0), speed));
-        Input.AddBinding({KeyState::Pressed, XINPUT_GAMEPAD_DPAD_RIGHT, false},
+        Input.AddBinding({KeyState::Pressed, GAMEPAD_DPAD_RIGHT, false},
                          std::make_unique<MoveCommand>(m_gameObject, glm::vec2(1, 0), speed));
     }
 }

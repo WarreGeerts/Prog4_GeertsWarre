@@ -24,7 +24,7 @@ namespace dae {
 #else
 #endif
         bool m_quit{false};
-        Scene *mainScene;
-        GameObject *FPSCounter;
+        Scene *mainScene{};
+        GameObject *FPSCounter{};
     };
 }

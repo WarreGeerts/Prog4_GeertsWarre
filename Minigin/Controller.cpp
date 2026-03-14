@@ -1,5 +1,6 @@
 ﻿#include "Controller.h"
 #include <SDL3/SDL.h>
+
 #ifdef _WIN32
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
@@ -22,16 +23,16 @@ namespace dae {
         void Update() {
             CopyMemory(&m_PreviousState, &m_CurrentState, sizeof(XINPUT_STATE));
             ZeroMemory(&m_CurrentState, sizeof(XINPUT_STATE));
-            DWORD result = XInputGetState(m_ControllerIndex, &m_CurrentState);
+            DWORD result{XInputGetState(m_ControllerIndex, &m_CurrentState)};
 
             if (result == ERROR_SUCCESS) {
-                WORD buttonChanges = m_CurrentState.Gamepad.wButtons ^ m_PreviousState.Gamepad.wButtons;
+                const WORD buttonChanges = m_CurrentState.Gamepad.wButtons ^ m_PreviousState.Gamepad.wButtons;
                 m_ButtonsPressedThisFrame = buttonChanges & m_CurrentState.Gamepad.wButtons;
                 m_ButtonsReleasedThisFrame = buttonChanges & (~m_CurrentState.Gamepad.wButtons);
             }
         }
 
-        bool IsConnected() const {
+        [[nodiscard]] bool IsConnected() const {
             XINPUT_STATE state;
             ZeroMemory(&state, sizeof(XINPUT_STATE));
             return XInputGetState(m_ControllerIndex, &state) == ERROR_SUCCESS;
@@ -39,13 +40,15 @@ namespace dae {
 
         void SetControllerIndex(const uint32_t idx) { m_ControllerIndex = static_cast<DWORD>(idx); }
 
-        bool IsPressed(const int button) const {
+        [[nodiscard]] bool IsPressed(const int button) const {
             return m_CurrentState.Gamepad.wButtons & static_cast<WORD>(button);
         }
-        bool IsDownThisFrame(const int button) const {
+
+        [[nodiscard]] bool IsDownThisFrame(const int button) const {
             return m_ButtonsPressedThisFrame & static_cast<WORD>(button);
         }
-        bool IsUpThisFrame(const int button) const {
+
+        [[nodiscard]] bool IsUpThisFrame(const int button) const {
             return m_ButtonsReleasedThisFrame & static_cast<WORD>(button);
         }
     };
@@ -80,18 +83,18 @@ namespace dae {
 
             if (!m_pController) return;
 
-            for (int i = 0; i < 15; ++i) {
+            for (int i = 0; i < SDL_GAMEPAD_BUTTON_COUNT; ++i) {
                 if (SDL_GetGamepadButton(m_pController, static_cast<SDL_GamepadButton>(i))) {
                     m_CurrentState |= (1u << i);
                 }
             }
 
-            uint32_t buttonChanges = m_CurrentState ^ m_PreviousState;
+            const uint32_t buttonChanges = m_CurrentState ^ m_PreviousState;
             m_ButtonsPressedThisFrame = buttonChanges & m_CurrentState;
             m_ButtonsReleasedThisFrame = buttonChanges & (~m_CurrentState);
         }
 
-        bool IsConnected() const { return m_pController != nullptr; }
+        [[nodiscard]] bool IsConnected() const { return m_pController != nullptr; }
 
         void SetControllerIndex(uint32_t idx) {
             m_ControllerIndex = idx;
@@ -102,9 +105,9 @@ namespace dae {
             UpdateConnection();
         }
 
-        bool IsPressed(int button) const { return m_CurrentState & (1u << button); }
-        bool IsDownThisFrame(int button) const { return m_ButtonsPressedThisFrame & (1u << button); }
-        bool IsUpThisFrame(int button) const { return m_ButtonsReleasedThisFrame & (1u << button); }
+        [[nodiscard]] bool IsPressed(const int button) const { return m_CurrentState & (1u << button); }
+        [[nodiscard]] bool IsDownThisFrame(const int button) const { return m_ButtonsPressedThisFrame & (1u << button); }
+        [[nodiscard]] bool IsUpThisFrame(const int button) const { return m_ButtonsReleasedThisFrame & (1u << button); }
 
     private:
         void UpdateConnection() {
@@ -113,7 +116,7 @@ namespace dae {
             SDL_UpdateGamepads();
 
             int numControllers = 0;
-            SDL_JoystickID* gamepadIDs = SDL_GetGamepads(&numControllers);
+            SDL_JoystickID *gamepadIDs = SDL_GetGamepads(&numControllers);
             if (gamepadIDs && numControllers > 0 && m_ControllerIndex < numControllers) {
                 m_pController = SDL_OpenGamepad(gamepadIDs[m_ControllerIndex]);
             }
@@ -124,14 +127,14 @@ namespace dae {
         }
     };
 }
-
 #endif
+
 namespace dae {
     Controller::Controller() : m_pImpl(std::make_unique<ControllerImpl>(0)) {}
     Controller::~Controller() = default;
     bool Controller::IsConnected() const { return m_pImpl->IsConnected(); }
     void Controller::Update() { m_pImpl->Update(); }
-    void Controller::SetControllerIndex(const uint32_t idx) { m_pImpl->SetControllerIndex(idx); }
+    void Controller::SetControllerIndex(const uint32_t idx) const { m_pImpl->SetControllerIndex(idx); }
     bool Controller::IsPressed(const int button) const { return m_pImpl->IsPressed(button); }
     bool Controller::IsDownThisFrame(const int button) const { return m_pImpl->IsDownThisFrame(button); }
     bool Controller::IsUpThisFrame(const int button) const { return m_pImpl->IsUpThisFrame(button); }

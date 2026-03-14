@@ -8,9 +8,9 @@ namespace dae {
         Controller();
         ~Controller();
 
-        bool IsConnected() const;
+        [[nodiscard]] bool IsConnected() const;
         void Update();
-        void SetControllerIndex(uint32_t idx);
+        void SetControllerIndex(uint32_t idx) const;
 
         [[nodiscard]] bool IsPressed(int button) const;
         [[nodiscard]] bool IsDownThisFrame(int button) const;
