@@ -1,6 +1,6 @@
 ﻿#include "SpriteComponent.h"
 #include <algorithm>
-#include "ResourceManager.h"
+#include "Singletons/ResourceManager.h"
 #include "Texture2D.h"
 #include <SDL3/SDL_render.h>
 using namespace dae;

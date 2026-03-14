@@ -18,13 +18,13 @@ endif ()
 add_executable(${TARGET_NAME} ${TARGET_PARAM}
         Minigin/Font.cpp
         Minigin/GameObject.cpp
-        Minigin/InputManager.cpp
+        Minigin/Input/InputManager.cpp
         Minigin/Main.cpp
         Minigin/Minigin.cpp
-        Minigin/Renderer.cpp
-        Minigin/ResourceManager.cpp
+        Minigin/Singletons/Renderer.cpp
+        Minigin/Singletons/ResourceManager.cpp
         Minigin/Scene.cpp
-        Minigin/SceneManager.cpp
+        Minigin/Singletons/SceneManager.cpp
         Minigin/Texture2D.cpp
         Minigin/Components/Component.h
         Minigin/Components/TransformComponent.h
@@ -35,7 +35,7 @@ add_executable(${TARGET_NAME} ${TARGET_PARAM}
         Minigin/Components/FPSComponent.h
         Minigin/Components/TextComponent.cpp
         Minigin/Components/TextComponent.h
-        Minigin/DeltaTime.h
+        Minigin/Singletons/DeltaTime.h
         Minigin/Components/Components.h
         Minigin/Components/RotateComponent.cpp
         Minigin/Components/RotateComponent.h
@@ -43,15 +43,15 @@ add_executable(${TARGET_NAME} ${TARGET_PARAM}
         Minigin/Components/ThrashCacheComponent.h
         Minigin/Commands/Command.h
         Minigin/Commands/GameActorCommand.h
-        Minigin/Controller.cpp
-        Minigin/Controller.h
+        Minigin/Input/Controller.cpp
+        Minigin/Input/Controller.h
         Minigin/Commands/MoveCommand.h
         Minigin/Components/CharacterControllerComponent.cpp
         Minigin/Components/CharacterControllerComponent.h
         Minigin/Components/SpriteComponent.cpp
         Minigin/Components/SpriteComponent.h
         Minigin/Components/LivesComponent.h
-        Minigin/EventManager.h
+        Minigin/Singletons/EventManager.h
         Minigin/Components/Observers__EventHandlers/LivesDisplayComponent.cpp
         Minigin/Components/Observers__EventHandlers/LivesDisplayComponent.h
 )

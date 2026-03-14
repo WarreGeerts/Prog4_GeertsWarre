@@ -3,7 +3,7 @@
 #include "TransformComponent.h"
 #include "GameObject.h"
 #include <SDL3_ttf/SDL_ttf.h>
-#include "Renderer.h"
+#include "Singletons/Renderer.h"
 #include "Font.h"
 #include "Texture2D.h"
 #include <stdexcept>

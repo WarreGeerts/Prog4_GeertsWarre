@@ -10,11 +10,11 @@
 #include <SDL3_ttf/SDL_ttf.h>
 #include "Minigin.h"
 #include <thread>
-#include "InputManager.h"
-#include "SceneManager.h"
-#include "Renderer.h"
-#include "ResourceManager.h"
-#include "DeltaTime.h"
+#include "Input/InputManager.h"
+#include "Singletons/SceneManager.h"
+#include "Singletons/Renderer.h"
+#include "Singletons/ResourceManager.h"
+#include "Singletons/DeltaTime.h"
 #include "Components/Components.h"
 #include "imgui.h"
 #include "implot.h"

@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include "GameActorCommand.h"
 #include <glm/glm.hpp>
-#include "DeltaTime.h"
+#include "Singletons/DeltaTime.h"
 
 namespace dae {
     class MoveCommand final : public GameActorCommand {

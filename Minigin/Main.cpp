@@ -2,7 +2,7 @@
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_main.h>
 #include "Components/CharacterControllerComponent.h"
-#include "InputManager.h"
+#include "Input/InputManager.h"
 #include "Components/Components.h"
 #include "Components/ThrashCacheComponent.h"
 
@@ -10,8 +10,8 @@
 #include <vld.h>
 #endif
 #include "Minigin.h"
-#include "SceneManager.h"
-#include "ResourceManager.h"
+#include "Singletons/SceneManager.h"
+#include "Singletons/ResourceManager.h"
 #include "Scene.h"
 #include <filesystem>
 namespace fs = std::filesystem;

@@ -1,4 +1,4 @@
-﻿#include "../LivesDisplayComponent.h"
+﻿#include "LivesDisplayComponent.h"
 #include <cassert>
 
 using namespace dae;

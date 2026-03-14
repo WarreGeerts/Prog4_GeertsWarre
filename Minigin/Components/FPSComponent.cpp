@@ -1,6 +1,6 @@
 ﻿#include "FPSComponent.h"
 #include <cassert>
-#include "DeltaTime.h"
+#include "Singletons/DeltaTime.h"
 #include <iomanip>
 
 using namespace dae;

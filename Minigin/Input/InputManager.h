@@ -5,7 +5,7 @@
 #include <SDL3/SDL.h>
 #include "Commands/Command.h"
 #include "Controller.h"
-#include "Singleton.h"
+#include "Singletons/Singleton.h"
 #include <cstdint>
 
 namespace dae {

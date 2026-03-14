@@ -1,6 +1,6 @@
 ﻿#pragma once
-#include "../Component.h"
-#include "EventManager.h"
+#include "Components/Component.h"
+#include "Singletons/EventManager.h"
 #include "Components/Components.h"
 
 namespace dae {

@@ -1,5 +1,5 @@
 ﻿#include "RotateComponent.h"
-#include "DeltaTime.h"
+#include "Singletons/DeltaTime.h"
 #include "GameObject.h"
 using namespace dae;
 

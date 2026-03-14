@@ -1,7 +1,7 @@
 ﻿#include "RenderComponent.h"
 #include "GameObject.h"
-#include "Renderer.h"
-#include "ResourceManager.h"
+#include "Singletons/Renderer.h"
+#include "Singletons/ResourceManager.h"
 #include "TransformComponent.h"
 #include "SpriteComponent.h"
 using namespace dae;

@@ -1,5 +1,5 @@
 ﻿#include "CharacterControllerComponent.h"
-#include "InputManager.h"
+#include "Input/InputManager.h"
 #include <SDL3/SDL.h>
 #include "Commands/MoveCommand.h"
 #ifdef WIN32
