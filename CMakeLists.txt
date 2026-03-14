@@ -54,6 +54,9 @@ add_executable(${TARGET_NAME} ${TARGET_PARAM}
         Minigin/Singletons/EventManager.h
         Minigin/Components/Observers__EventHandlers/LivesDisplayComponent.cpp
         Minigin/Components/Observers__EventHandlers/LivesDisplayComponent.h
+        Minigin/Components/Observers__EventHandlers/ScoreDisplayComponent.cpp
+        Minigin/Components/Observers__EventHandlers/ScoreDisplayComponent.h
+        Minigin/Components/ScoreComponent.h
 )
 
 # enable c++20 features

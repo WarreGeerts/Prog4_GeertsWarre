@@ -11,3 +11,5 @@
 #include "LivesComponent.h"
 #include "FPSComponent.h"
 #include "CharacterControllerComponent.h"
+#include "ScoreComponent.h"
+#include "Observers__EventHandlers/ScoreDisplayComponent.h"

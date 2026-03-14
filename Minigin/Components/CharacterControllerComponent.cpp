@@ -15,9 +15,9 @@ constexpr int GAMEPAD_DPAD_UP{SDL_GAMEPAD_BUTTON_DPAD_UP};
 constexpr int GAMEPAD_DPAD_DOWN{SDL_GAMEPAD_BUTTON_DPAD_DOWN};
 constexpr int GAMEPAD_DPAD_LEFT{SDL_GAMEPAD_BUTTON_DPAD_LEFT};
 constexpr int GAMEPAD_DPAD_RIGHT{SDL_GAMEPAD_BUTTON_DPAD_RIGHT};
-constexpr int BUTTON_X{SDL_GAMEPAD_BUTTON_LABEL_X};
-constexpr int BUTTON_A{SDL_GAMEPAD_BUTTON_LABEL_A};
-constexpr int BUTTON_B{SDL_GAMEPAD_BUTTON_LABEL_B};
+constexpr int BUTTON_A{SDL_GAMEPAD_BUTTON_SOUTH};
+constexpr int BUTTON_B{SDL_GAMEPAD_BUTTON_EAST};
+constexpr int BUTTON_X{SDL_GAMEPAD_BUTTON_WEST};
 #endif
 dae::CharacterControllerComponent::CharacterControllerComponent(GameObject *go, float speed, const bool keyboard)
     : Component(go)
@@ -38,6 +38,10 @@ dae::CharacterControllerComponent::CharacterControllerComponent(GameObject *go, 
         //other keys
         Input.AddBinding({KeyState::Down, static_cast<int>(SDL_SCANCODE_C), true},
                          std::make_unique<DieCommand>(m_gameObject));
+        Input.AddBinding({KeyState::Down, static_cast<int>(SDL_SCANCODE_Z), true},
+                         std::make_unique<ScoreCommandLow>(m_gameObject));
+        Input.AddBinding({KeyState::Down, static_cast<int>(SDL_SCANCODE_X), true},
+                         std::make_unique<ScoreCommandHigh>(m_gameObject));
     } else {
         //movement
         Input.AddBinding({KeyState::Pressed, GAMEPAD_DPAD_UP, false},
@@ -52,5 +56,9 @@ dae::CharacterControllerComponent::CharacterControllerComponent(GameObject *go, 
         //other buttons
         Input.AddBinding({KeyState::Down, BUTTON_X, false},
                          std::make_unique<DieCommand>(m_gameObject));
+        Input.AddBinding({KeyState::Down, BUTTON_A, false},
+                        std::make_unique<ScoreCommandLow>(m_gameObject));
+        Input.AddBinding({KeyState::Down, BUTTON_B, false},
+                        std::make_unique<ScoreCommandHigh>(m_gameObject));
     }
 }

@@ -23,4 +23,24 @@ namespace dae {
             }
         }
     };
+
+    class ScoreCommandLow : public GameActorCommand {
+        public:
+        explicit ScoreCommandLow(GameObject *actor) : GameActorCommand(actor) {}
+        void Execute() override {
+            if (m_pActor->GetComponent<ScoreComponent>()) {
+                m_pActor->GetComponent<ScoreComponent>()->IncreaseScore(10);
+            }
+        }
+    };
+
+    class ScoreCommandHigh : public GameActorCommand {
+    public:
+        explicit ScoreCommandHigh(GameObject *actor) : GameActorCommand(actor) {}
+        void Execute() override {
+            if (m_pActor->GetComponent<ScoreComponent>()) {
+                m_pActor->GetComponent<ScoreComponent>()->IncreaseScore(100);
+            }
+        }
+    };
 }
