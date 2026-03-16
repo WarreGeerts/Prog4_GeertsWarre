@@ -6,7 +6,11 @@ namespace dae {
     class ScoreComponent final : public Component {
     public:
         explicit ScoreComponent(GameObject *go, const EventId eventId) : Component(go), m_EventId{eventId} {};
-        void Update() override {};
+        void Update() override {
+            if (m_Score >= 500) {
+                EventManager::GetInstance().SendEvent(Event(ACH_WIN_ONE_GAME));
+            }
+        };
         void Render() const override {};
         void RenderGUI() override {};
 

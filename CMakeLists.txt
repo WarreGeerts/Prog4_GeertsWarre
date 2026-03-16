@@ -52,11 +52,12 @@ add_executable(${TARGET_NAME} ${TARGET_PARAM}
         Minigin/Components/SpriteComponent.h
         Minigin/Components/LivesComponent.h
         Minigin/Singletons/EventManager.h
-        Minigin/Components/Observers__EventHandlers/LivesDisplayComponent.cpp
-        Minigin/Components/Observers__EventHandlers/LivesDisplayComponent.h
-        Minigin/Components/Observers__EventHandlers/ScoreDisplayComponent.cpp
-        Minigin/Components/Observers__EventHandlers/ScoreDisplayComponent.h
+        Minigin/Components/EventHandlers/LivesDisplayComponent.cpp
+        Minigin/Components/EventHandlers/LivesDisplayComponent.h
+        Minigin/Components/EventHandlers/ScoreDisplayComponent.cpp
+        Minigin/Components/EventHandlers/ScoreDisplayComponent.h
         Minigin/Components/ScoreComponent.h
+        Minigin/Components/SteamAchievementsComponent.h
 )
 
 # enable c++20 features
@@ -213,10 +214,13 @@ if(NOT EMSCRIPTEN)
 endif()
 
 if (MSVC)
-    # compile at warning level 4 + treat warnings as errors
     target_compile_options(${TARGET_NAME} PRIVATE /W4 /WX)
 else ()
-    target_compile_options(${TARGET_NAME} PRIVATE -Wall -Wextra -Werror)
+    target_compile_options(${TARGET_NAME} PRIVATE
+            -Wall -Wextra -Werror
+            -Wno-unknown-pragmas
+            -Wno-deprecated-declarations
+    )
 endif ()
 
 if (EMSCRIPTEN)

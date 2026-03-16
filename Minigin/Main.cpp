@@ -4,9 +4,6 @@
 #include "Components/CharacterControllerComponent.h"
 #include "Input/InputManager.h"
 #include "Components/Components.h"
-#include "Components/ScoreComponent.h"
-#include "Components/ThrashCacheComponent.h"
-#include "Components/Observers__EventHandlers/ScoreDisplayComponent.h"
 #if _DEBUG && __has_include(<vld.h>)
 #include <vld.h>
 #endif
@@ -22,7 +19,7 @@ static void load() //loads once
     auto &scene = dae::SceneManager::GetInstance().CreateScene("Main");
     const auto fontLinguaTitle = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 36);
     const auto fontLinguaLower = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 18);
-    constexpr dae::SpriteFraming spriteFraming{15,11,16.f,16.f};
+    constexpr dae::SpriteFraming spriteFraming{15, 11, 16.f, 16.f};
 
     //Background ****
     //GameObject ====
@@ -64,8 +61,8 @@ static void load() //loads once
     go->SetLocalPosition({10, 100, 0});
     //Add components =====
     go->AddComponent(std::make_unique<dae::TextComponent>(go.get(),
-        "Use WASD to move Burger Man, C to inflict damage, Z and X to drop down the burgers",
-        fontLinguaLower));
+                                                          "Use WASD to move Burger Man, C to inflict damage, Z and X to drop down the burgers",
+                                                          fontLinguaLower));
     go->AddComponent(std::make_unique<dae::RenderComponent>(go.get()));
     go->AddComponent(std::make_unique<dae::TransformComponent>(go.get()));
     //Initialise components ====
@@ -80,8 +77,8 @@ static void load() //loads once
     go->SetLocalPosition({10, 120, 0});
     //Add components =====
     go->AddComponent(std::make_unique<dae::TextComponent>(go.get(),
-        "Use D-Pad to move The Bean, X to inflict damage, A and B to drop down the burgers",
-        fontLinguaLower));
+                                                          "Use D-Pad to move The Bean, X to inflict damage, A and B to drop down the burgers",
+                                                          fontLinguaLower));
     go->AddComponent(std::make_unique<dae::RenderComponent>(go.get()));
     go->AddComponent(std::make_unique<dae::TransformComponent>(go.get()));
     //Initialise components ====
@@ -161,9 +158,13 @@ static void load() //loads once
     go->AddComponent(std::make_unique<dae::RenderComponent>(go.get()));
     go->AddComponent(std::make_unique<dae::TransformComponent>(go.get()));
     go->AddComponent(std::make_unique<dae::CharacterControllerComponent>(go.get(), 60.f, true));
-    go->AddComponent(std::make_unique<dae::SpriteComponent>(go.get(),"Sprites.png",spriteFraming,1));
-    go->AddComponent(std::make_unique<dae::LivesComponent>(go.get(),dae::PLAYER1_DIED,3));
-    go->AddComponent(std::make_unique<dae::ScoreComponent>(go.get(),dae::PLAYER1_SCORE_INCREASE));
+    go->AddComponent(std::make_unique<dae::SpriteComponent>(go.get(), "Sprites.png", spriteFraming, 1));
+    go->AddComponent(std::make_unique<dae::LivesComponent>(go.get(), dae::PLAYER1_DIED, 3));
+    go->AddComponent(std::make_unique<dae::ScoreComponent>(go.get(), dae::PLAYER1_SCORE_INCREASE));
+    go->AddComponent(std::make_unique<dae::SteamAchievementsComponent>(go.get()));
+    //Initialise components ====
+    //SpriteComponent
+    go->GetComponent<dae::SpriteComponent>()->SetScale(3);
     //add to scene ====
     scene.Add(std::move(go));
 
@@ -172,7 +173,7 @@ static void load() //loads once
     go = std::make_unique<dae::GameObject>("BurgerManLivesText");
     go->SetLocalPosition({10, 160, 0});
     //Add components =====
-    go->AddComponent(std::make_unique<dae::LivesDisplayComponent>(go.get(),dae::PLAYER1_DIED));
+    go->AddComponent(std::make_unique<dae::LivesDisplayComponent>(go.get(), dae::PLAYER1_DIED));
     go->AddComponent(std::make_unique<dae::TextComponent>(go.get(), " ", fontLinguaLower));
     go->AddComponent(std::make_unique<dae::RenderComponent>(go.get()));
     go->AddComponent(std::make_unique<dae::TransformComponent>(go.get()));
@@ -189,7 +190,7 @@ static void load() //loads once
     go = std::make_unique<dae::GameObject>("BurgerManScoreText");
     go->SetLocalPosition({10, 180, 0});
     //Add components =====
-    go->AddComponent(std::make_unique<dae::ScoreDisplayComponent>(go.get(),dae::PLAYER1_SCORE_INCREASE));
+    go->AddComponent(std::make_unique<dae::ScoreDisplayComponent>(go.get(), dae::PLAYER1_SCORE_INCREASE));
     go->AddComponent(std::make_unique<dae::TextComponent>(go.get(), " ", fontLinguaLower));
     go->AddComponent(std::make_unique<dae::RenderComponent>(go.get()));
     go->AddComponent(std::make_unique<dae::TransformComponent>(go.get()));
@@ -209,9 +210,12 @@ static void load() //loads once
     go->AddComponent(std::make_unique<dae::RenderComponent>(go.get()));
     go->AddComponent(std::make_unique<dae::TransformComponent>(go.get()));
     go->AddComponent(std::make_unique<dae::CharacterControllerComponent>(go.get(), 120.f, false));
-    go->AddComponent(std::make_unique<dae::SpriteComponent>(go.get(),"Sprites.png",spriteFraming,30));
-    go->AddComponent(std::make_unique<dae::LivesComponent>(go.get(),dae::PLAYER2_DIED,3));
-    go->AddComponent(std::make_unique<dae::ScoreComponent>(go.get(),dae::PLAYER2_SCORE_INCREASE));
+    go->AddComponent(std::make_unique<dae::SpriteComponent>(go.get(), "Sprites.png", spriteFraming, 30));
+    go->AddComponent(std::make_unique<dae::LivesComponent>(go.get(), dae::PLAYER2_DIED, 3));
+    go->AddComponent(std::make_unique<dae::ScoreComponent>(go.get(), dae::PLAYER2_SCORE_INCREASE));
+    //Initialise components ====
+    //SpriteComponent
+    go->GetComponent<dae::SpriteComponent>()->SetScale(3);
     //add to scene ====
     scene.Add(std::move(go));
 
@@ -220,7 +224,7 @@ static void load() //loads once
     go = std::make_unique<dae::GameObject>("BeanLivesText");
     go->SetLocalPosition({10, 200, 0});
     //Add components =====
-    go->AddComponent(std::make_unique<dae::LivesDisplayComponent>(go.get(),dae::PLAYER2_DIED));
+    go->AddComponent(std::make_unique<dae::LivesDisplayComponent>(go.get(), dae::PLAYER2_DIED));
     go->AddComponent(std::make_unique<dae::TextComponent>(go.get(), " ", fontLinguaLower));
     go->AddComponent(std::make_unique<dae::RenderComponent>(go.get()));
     go->AddComponent(std::make_unique<dae::TransformComponent>(go.get()));
@@ -237,7 +241,7 @@ static void load() //loads once
     go = std::make_unique<dae::GameObject>("BeanScoreText");
     go->SetLocalPosition({10, 220, 0});
     //Add components =====
-    go->AddComponent(std::make_unique<dae::ScoreDisplayComponent>(go.get(),dae::PLAYER2_SCORE_INCREASE));
+    go->AddComponent(std::make_unique<dae::ScoreDisplayComponent>(go.get(), dae::PLAYER2_SCORE_INCREASE));
     go->AddComponent(std::make_unique<dae::TextComponent>(go.get(), " ", fontLinguaLower));
     go->AddComponent(std::make_unique<dae::RenderComponent>(go.get()));
     go->AddComponent(std::make_unique<dae::TransformComponent>(go.get()));

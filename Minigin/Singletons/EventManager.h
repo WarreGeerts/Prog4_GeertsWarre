@@ -59,6 +59,8 @@ namespace dae {
     constexpr EventId PLAYER2_DIED {make_sdbm_hash("Player2Died")};
     constexpr EventId PLAYER1_SCORE_INCREASE {make_sdbm_hash("Player1ScoreIncrease")};
     constexpr EventId PLAYER2_SCORE_INCREASE {make_sdbm_hash("Player2ScoreIncrease")};
+    constexpr EventId ACH_WIN_ONE_GAME {make_sdbm_hash("AchWinOneGame")};
+
 
     //Event Manager
     class EventManager final : public Singleton<EventManager> {
