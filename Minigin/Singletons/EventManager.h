@@ -4,11 +4,9 @@
 #include <string>
 #include <unordered_map>
 #include <vector>
-
 #include "Singleton.h"
 
 namespace dae {
-
     //sdbm_hash maker
     template<int length>
     struct sdbm_hash {
@@ -30,7 +28,8 @@ namespace dae {
         consteval static int _calculate(const char *const text, unsigned int &) { return text[0]; }
     };
 
-    template<size_t N> consteval unsigned int make_sdbm_hash(const char (&text)[N]) {
+    template<size_t N>
+    consteval unsigned int make_sdbm_hash(const char (&text)[N]) {
         return sdbm_hash<N - 1>::calculate(text);
     }
 
@@ -38,7 +37,7 @@ namespace dae {
 
     struct Event {
         EventId id;
-        static constexpr uint8_t MAX_ARGS {8};
+        static constexpr uint8_t MAX_ARGS{8};
         uint8_t numArgs{0};
 
         union {
@@ -48,31 +47,56 @@ namespace dae {
 
         explicit Event(const EventId id) : id{id} {}
 
-        Event& AddInt(const int value) {
+        Event &AddInt(const int value) {
             args[numArgs++].i = value;
             return *this;
         }
     };
 
     //Id's
-    constexpr EventId PLAYER1_DIED {make_sdbm_hash("Player1Died")};
-    constexpr EventId PLAYER2_DIED {make_sdbm_hash("Player2Died")};
-    constexpr EventId PLAYER1_SCORE_INCREASE {make_sdbm_hash("Player1ScoreIncrease")};
-    constexpr EventId PLAYER2_SCORE_INCREASE {make_sdbm_hash("Player2ScoreIncrease")};
-    constexpr EventId ACH_WIN_ONE_GAME {make_sdbm_hash("AchWinOneGame")};
+    constexpr EventId P1_HEALTH_UPDATE{make_sdbm_hash("P1HealthUpdate")};
+    constexpr EventId P2_HEALTH_UPDATE{make_sdbm_hash("P2HealthUpdate")};
+    constexpr EventId P1_DMG{make_sdbm_hash("P1Dmg")};
+    constexpr EventId P2_DMG{make_sdbm_hash("P2Dmg")};
 
+    constexpr EventId P1_SCORE_UPDATE{make_sdbm_hash("P1ScoreUpdate")};
+    constexpr EventId P2_SCORE_UPDATE{make_sdbm_hash("P2ScoreUpdate")};
+    constexpr EventId P1_BURGER_FALL{make_sdbm_hash("P1BurgerFall")};
+    constexpr EventId P2_BURGER_FALL{make_sdbm_hash("P2BurgerFall")};
+    constexpr EventId P1_ENEMY_KILL{make_sdbm_hash("P1EnemyKill")};
+    constexpr EventId P2_ENEMY_KILL{make_sdbm_hash("P2EnemyKill")};
 
     //Event Manager
+    struct EventHandle {
+        EventId eventId{};
+        std::size_t index{};
+        bool valid{false};
+    };
+
     class EventManager final : public Singleton<EventManager> {
     public:
-        void AttachEvent(const EventId eventId, const std::function<void(const Event&)>& callback) {
-            m_EventListeners[static_cast<unsigned int>(eventId)].push_back(callback);
+        EventHandle AttachEvent(const EventId eventId, const std::function<void(const Event &)> &callback) {
+            auto &vec = m_EventListeners[static_cast<unsigned int>(eventId)];
+            vec.push_back(callback);
+            return EventHandle{eventId, vec.size() - 1, true};
         }
 
-        void SendEvent(const Event& event) {
-            auto iterator { m_EventListeners.find(static_cast<unsigned int>(event.id))};
+        void DetachEvent(const EventHandle &handle) {
+            if (!handle.valid) return;
+            const auto it = m_EventListeners.find(static_cast<unsigned int>(handle.eventId));
+            if (it == m_EventListeners.end()) return;
+
+            auto &vec = it->second;
+            if (handle.index >= vec.size()) return;
+
+            vec[handle.index] = std::move(vec.back());
+            vec.pop_back();
+        }
+
+        void SendEvent(const Event &event) {
+            auto iterator = m_EventListeners.find(static_cast<unsigned int>(event.id));
             if (iterator != m_EventListeners.end()) {
-                for (const auto& callback: iterator->second) {
+                for (const auto &callback: iterator->second) {
                     callback(event);
                 }
             }
@@ -81,7 +105,6 @@ namespace dae {
     private:
         friend Singleton<EventManager>;
         EventManager() = default;
-        std::unordered_map<unsigned int, std::vector<std::function<void(const Event&)>>> m_EventListeners;
+        std::unordered_map<unsigned int, std::vector<std::function<void(const Event &)> > > m_EventListeners;
     };
 }
-

@@ -37,11 +37,11 @@ dae::CharacterControllerComponent::CharacterControllerComponent(GameObject *go, 
 
         //other keys
         Input.AddBinding({KeyState::Down, static_cast<int>(SDL_SCANCODE_C), true},
-                         std::make_unique<DieCommand>(m_gameObject));
+                         std::make_unique<DieCommand>(m_gameObject, P1_DMG));
         Input.AddBinding({KeyState::Down, static_cast<int>(SDL_SCANCODE_Z), true},
-                         std::make_unique<ScoreCommandLow>(m_gameObject));
+                         std::make_unique<ScoreCommandLow>(m_gameObject, P1_BURGER_FALL));
         Input.AddBinding({KeyState::Down, static_cast<int>(SDL_SCANCODE_X), true},
-                         std::make_unique<ScoreCommandHigh>(m_gameObject));
+                         std::make_unique<ScoreCommandHigh>(m_gameObject, P1_ENEMY_KILL));
     } else {
         //movement
         Input.AddBinding({KeyState::Pressed, GAMEPAD_DPAD_UP, false},
@@ -55,10 +55,10 @@ dae::CharacterControllerComponent::CharacterControllerComponent(GameObject *go, 
 
         //other buttons
         Input.AddBinding({KeyState::Down, BUTTON_X, false},
-                         std::make_unique<DieCommand>(m_gameObject));
+                         std::make_unique<DieCommand>(m_gameObject, P2_DMG));
         Input.AddBinding({KeyState::Down, BUTTON_A, false},
-                        std::make_unique<ScoreCommandLow>(m_gameObject));
+                        std::make_unique<ScoreCommandLow>(m_gameObject, P2_BURGER_FALL));
         Input.AddBinding({KeyState::Down, BUTTON_B, false},
-                        std::make_unique<ScoreCommandHigh>(m_gameObject));
+                        std::make_unique<ScoreCommandHigh>(m_gameObject, P2_ENEMY_KILL));
     }
 }

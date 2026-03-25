@@ -2,15 +2,18 @@
 // Header file used to include all components
 
 #include "TransformComponent.h"
-#include "ThrashCacheComponent.h"
-#include "TextComponent.h"
-#include "SpriteComponent.h"
 #include "RotateComponent.h"
+
 #include "RenderComponent.h"
-#include "EventHandlers/LivesDisplayComponent.h"
-#include "LivesComponent.h"
+#include "SpriteComponent.h"
+#include "TextComponent.h"
 #include "FPSComponent.h"
+
+#include "ThrashCacheComponent.h"
 #include "CharacterControllerComponent.h"
-#include "ScoreComponent.h"
+
+//Event handlers
+#include "EventHandlers/LivesDisplayComponent.h"
+#include "EventHandlers/LivesComponent.h"
+#include "EventHandlers/ScoreComponent.h"
 #include "EventHandlers/ScoreDisplayComponent.h"
-#include "SteamAchievementsComponent.h"

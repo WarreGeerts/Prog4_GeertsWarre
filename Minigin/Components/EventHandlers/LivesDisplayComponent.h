@@ -7,11 +7,15 @@ namespace dae {
     class LivesDisplayComponent final : public Component {
     public:
         explicit LivesDisplayComponent(GameObject *go, const EventId eventId) : Component(go) {
-            EventManager::GetInstance().AttachEvent(
+            m_Handle = EventManager::GetInstance().AttachEvent(
                 eventId,
                 [this](const Event& event) {
                     OnPlayerDied(event.args[0].i);
                 });
+        };
+
+        ~LivesDisplayComponent() override {
+            EventManager::GetInstance().DetachEvent(m_Handle);
         };
 
         void SetRefTextComponent(TextComponent *component) {m_TextComponentRef = component;}
@@ -25,6 +29,7 @@ namespace dae {
 
         int m_Lives{3};
         TextComponent *m_TextComponentRef{};
+        EventHandle m_Handle{};
 
     };
 }

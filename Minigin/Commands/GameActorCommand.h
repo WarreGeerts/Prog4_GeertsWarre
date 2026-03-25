@@ -13,34 +13,43 @@ namespace dae {
         [[nodiscard]] GameObject *GetActor() const { return m_pActor; }
     };
 
+
+    //DEBUG COMMANDS
     class DieCommand : public GameActorCommand {
     public:
-        explicit DieCommand(GameObject *actor) : GameActorCommand(actor) {}
+        explicit DieCommand(GameObject *actor, const EventId playerDieEvent)
+        : GameActorCommand(actor), m_PlayerDieEvent(playerDieEvent) {}
 
         void Execute() override {
-            if (m_pActor->GetComponent<LivesComponent>()) {
-                m_pActor->GetComponent<LivesComponent>()->PlayerDie();
-            }
+           EventManager::GetInstance().SendEvent(Event(m_PlayerDieEvent));
         }
+    private:
+        EventId m_PlayerDieEvent{};
     };
 
     class ScoreCommandLow : public GameActorCommand {
-        public:
-        explicit ScoreCommandLow(GameObject *actor) : GameActorCommand(actor) {}
+    public:
+        explicit ScoreCommandLow(GameObject *actor, const EventId playerScoreEvent)
+            : GameActorCommand(actor), m_PlayerScoreEvent(playerScoreEvent) {}
+
         void Execute() override {
-            if (m_pActor->GetComponent<ScoreComponent>()) {
-                m_pActor->GetComponent<ScoreComponent>()->IncreaseScore(10);
-            }
+            EventManager::GetInstance().SendEvent(Event(m_PlayerScoreEvent).AddInt(10));
         }
+
+    private:
+        EventId m_PlayerScoreEvent{};
     };
 
     class ScoreCommandHigh : public GameActorCommand {
     public:
-        explicit ScoreCommandHigh(GameObject *actor) : GameActorCommand(actor) {}
+        explicit ScoreCommandHigh(GameObject *actor, const EventId playerScoreEvent)
+            : GameActorCommand(actor), m_PlayerScoreEvent(playerScoreEvent) {}
+
         void Execute() override {
-            if (m_pActor->GetComponent<ScoreComponent>()) {
-                m_pActor->GetComponent<ScoreComponent>()->IncreaseScore(100);
-            }
+            EventManager::GetInstance().SendEvent(Event(m_PlayerScoreEvent).AddInt(100));
         }
+
+    private:
+        EventId m_PlayerScoreEvent{};
     };
 }
