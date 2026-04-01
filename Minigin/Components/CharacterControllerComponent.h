@@ -8,7 +8,6 @@ namespace dae {
         ~CharacterControllerComponent() override = default;
         void Update() override{};
         void Render() const override{};
-        void RenderGUI() override{};
 
     private:
         bool m_Keyboard;

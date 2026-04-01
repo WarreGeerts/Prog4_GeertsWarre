@@ -7,7 +7,7 @@ using namespace dae;
 
 SpriteComponent::SpriteComponent(GameObject *go, const std::string &spritesheetPath, const SpriteFraming &spriteFrame,
                                  const int frameIdx)
-    : Component(go),
+    : Component(go, "SpriteComponent"),
       m_Columns{spriteFrame.columns}, m_Rows{spriteFrame.rows}, m_FrameWidth{spriteFrame.frameWidth},
       m_FrameHeight{spriteFrame.frameHeight}, m_SpacingX{spriteFrame.spacingX}, m_SpacingY{spriteFrame.spacingY} {
     SetSpritesheetPath(spritesheetPath);

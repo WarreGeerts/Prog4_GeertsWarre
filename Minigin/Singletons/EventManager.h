@@ -40,6 +40,7 @@ namespace dae {
         static constexpr uint8_t MAX_ARGS{8};
         uint8_t numArgs{0};
 
+        //std::variant ipv union
         union {
             int i;
             float f;
@@ -53,12 +54,11 @@ namespace dae {
         }
     };
 
-    //Id's
+    //Event Id's
     constexpr EventId P1_HEALTH_UPDATE{make_sdbm_hash("P1HealthUpdate")};
     constexpr EventId P2_HEALTH_UPDATE{make_sdbm_hash("P2HealthUpdate")};
     constexpr EventId P1_DMG{make_sdbm_hash("P1Dmg")};
     constexpr EventId P2_DMG{make_sdbm_hash("P2Dmg")};
-
     constexpr EventId P1_SCORE_UPDATE{make_sdbm_hash("P1ScoreUpdate")};
     constexpr EventId P2_SCORE_UPDATE{make_sdbm_hash("P2ScoreUpdate")};
     constexpr EventId P1_BURGER_FALL{make_sdbm_hash("P1BurgerFall")};

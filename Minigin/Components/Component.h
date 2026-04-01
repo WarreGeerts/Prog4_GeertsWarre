@@ -1,5 +1,7 @@
 ﻿#pragma once
 #include <memory>
+#include "imgui.h"
+#include <string>
 
 namespace dae {
     class GameObject;
@@ -13,10 +15,15 @@ namespace dae {
         Component &operator=(Component &&other) = delete;
         virtual void Update() = 0;
         virtual void Render() const = 0;
-        virtual void RenderGUI() = 0;
+        virtual void RenderGUI() {}
+
+        //Functions for EditorGui Inspector
+        virtual void InspectorGUI() {}
+        std::string GetName() {return m_Name;}
 
     protected:
-        explicit Component(GameObject *go) : m_gameObject(go) {}
+        explicit Component(GameObject *go, const std::string &name) : m_gameObject(go), m_Name(name) {}
         GameObject *m_gameObject;
+        std::string m_Name{"_UNKNOWN_COMPONENT_"};
     };
 }

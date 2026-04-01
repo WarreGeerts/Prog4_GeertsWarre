@@ -20,7 +20,7 @@ constexpr int BUTTON_B{SDL_GAMEPAD_BUTTON_EAST};
 constexpr int BUTTON_X{SDL_GAMEPAD_BUTTON_WEST};
 #endif
 dae::CharacterControllerComponent::CharacterControllerComponent(GameObject *go, float speed, const bool keyboard)
-    : Component(go)
+    : Component(go, "CharacterControllerComponent")
       , m_Keyboard{keyboard} {
     auto &Input{InputManager::GetInstance()};
 

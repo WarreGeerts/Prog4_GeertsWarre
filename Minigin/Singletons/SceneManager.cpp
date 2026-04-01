@@ -41,3 +41,15 @@ dae::Scene &dae::SceneManager::GetSceneByIdx(const int idx) const {
     }
     throw std::runtime_error("Scene at Idx: '" + std::to_string(idx) + "' not found");
 }
+
+std::vector<int> dae::SceneManager::GetSceneSizes() const {
+    std::vector<int> sizes;
+    for (const auto &scene: m_scenes) {
+        sizes.push_back(scene->GetSceneSize());
+    }
+    return sizes;
+}
+
+const std::vector<std::unique_ptr<dae::Scene>> &dae::SceneManager::GetScenes() const {
+    return m_scenes;
+}

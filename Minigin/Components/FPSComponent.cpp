@@ -6,7 +6,7 @@
 using namespace dae;
 
 FPSComponent::FPSComponent(GameObject *go)
-    : Component(go) {}
+    : Component(go, "FPSComponent") {}
 
 void FPSComponent::Update() {
     m_Frames++;

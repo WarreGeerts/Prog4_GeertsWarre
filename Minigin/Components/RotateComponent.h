@@ -5,14 +5,15 @@
 namespace dae {
     class RotateComponent final : public Component {
     public:
-        explicit RotateComponent(GameObject *go) : Component(go) {}
+        explicit RotateComponent(GameObject *go) : Component(go,"RotateComponent") {}
 
         RotateComponent(GameObject *go, const float radius, const float angularSpeed)
-            : Component(go), m_Radius{radius}, m_AngularSpeed{angularSpeed}, m_CurrentAngle{0.f} {}
+            : Component(go,"RotateComponent"), m_Radius{radius}, m_AngularSpeed{angularSpeed}, m_CurrentAngle{0.f} {}
 
         void Update() override;
         void Render() const override {}
-        void RenderGUI() override{};
+
+        void InspectorGUI() override;
 
         void SetRadius(const float radius) { m_Radius = radius; }
         void SetAngularSpeed(const float angularSpeed) { m_AngularSpeed = angularSpeed; }

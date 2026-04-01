@@ -17,13 +17,12 @@ namespace dae {
 
     class SpriteComponent final : public Component {
     public:
-        explicit SpriteComponent(GameObject *go) : Component(go) {}
+        explicit SpriteComponent(GameObject *go) : Component(go,"SpriteComponent") {}
         SpriteComponent(GameObject *go, const std::string &spritesheetPath, const SpriteFraming &spriteFrame, int frameIdx = 0);
         void SetSpritesheetPath(const std::string &spritesheetPath);
         void SetFrame(int frameIndex);
         void Update() override {}
         void Render() const override {}
-        void RenderGUI() override {}
         [[nodiscard]] const Rectf &GetSrcRect() const { return m_SrcRect; }
         [[nodiscard]] const Rectf &GetDstRect() const { return m_DstRect; }
         std::shared_ptr<Texture2D> &GetTexture() { return m_Spritesheet; }
@@ -32,6 +31,7 @@ namespace dae {
 
     private:
         std::shared_ptr<Texture2D> m_Spritesheet;
+
         Rectf m_SrcRect{0.f, 0.f, 0.f, 0.f};
         Rectf m_DstRect{0.f, 0.f, 0.f, 0.f};
         float m_ScaleX = 1.0f;

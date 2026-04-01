@@ -12,6 +12,9 @@ namespace dae {
         void RemoveAll();
         [[nodiscard]] GameObject &GetGameObjectByName(const std::string &name) const;
         [[nodiscard]] GameObject &GetGameObjectByIndex(int idx) const;
+        [[nodiscard]] const std::vector<std::unique_ptr<GameObject> > &GetGameObjects() const;
+        [[nodiscard]] int GetSceneSize() const;
+        std::string &GetName() { return m_Name; }
         void Update();
         void Render() const;
         void RenderGUI() const;
@@ -23,7 +26,6 @@ namespace dae {
 
     private:
         friend class SceneManager;
-        std::string &GetName() { return m_Name; }
         explicit Scene(std::string name) { m_Name = std::move(name); }
         std::vector<std::unique_ptr<GameObject> > m_objects{};
         std::string m_Name;

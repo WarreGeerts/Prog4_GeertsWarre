@@ -6,12 +6,12 @@ namespace dae {
     class LivesComponent final : public Component {
     public:
         explicit LivesComponent(GameObject *go, const EventId listenEventId, const EventId sendEventId)
-            : Component(go), m_SendEventId{sendEventId} {
+            : Component(go, "LivesComponent"), m_SendEventId{sendEventId} {
             AttachEvents(listenEventId);
         }
 
         LivesComponent(GameObject *go, const EventId listenEventId, const EventId sendEventId, const int lives)
-            : Component(go), m_SendEventId{sendEventId}, m_Lives{lives} {
+            : Component(go,"LivesComponent"), m_SendEventId{sendEventId}, m_Lives{lives} {
             AttachEvents(listenEventId);
         }
 
@@ -21,7 +21,6 @@ namespace dae {
 
         void Update() override {};
         void Render() const override {};
-        void RenderGUI() override {};
 
         void AttachEvents(const EventId listenEventId) {
             m_Handle = EventManager::GetInstance().AttachEvent(

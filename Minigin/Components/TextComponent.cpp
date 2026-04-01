@@ -10,12 +10,12 @@
 using namespace dae;
 //default constructor
 TextComponent::TextComponent(GameObject *go)
-    : Component(go), m_needsUpdate(false), m_text(" "), m_font(nullptr), m_textTexture(nullptr) {}
+    : Component(go,"TextComponent"), m_needsUpdate(false), m_text(" "), m_font(nullptr), m_textTexture(nullptr) {}
 
 //extra one go constructor
 TextComponent::TextComponent(GameObject *go, const std::string &text, std::shared_ptr<Font> font,
                              const SDL_Color &color)
-    : Component(go), m_needsUpdate(true), m_text(text), m_color(color), m_font(std::move(font)),
+    : Component(go,"TextComponent"), m_needsUpdate(true), m_text(text), m_color(color), m_font(std::move(font)),
       m_textTexture(nullptr) {}
 
 void TextComponent::Update() {

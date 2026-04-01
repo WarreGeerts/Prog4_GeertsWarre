@@ -6,7 +6,7 @@
 namespace dae {
     class LivesDisplayComponent final : public Component {
     public:
-        explicit LivesDisplayComponent(GameObject *go, const EventId eventId) : Component(go) {
+        explicit LivesDisplayComponent(GameObject *go, const EventId eventId) : Component(go,"LivesDisplayComponent") {
             m_Handle = EventManager::GetInstance().AttachEvent(
                 eventId,
                 [this](const Event& event) {
@@ -22,7 +22,6 @@ namespace dae {
 
         void Update() override{};
         void Render() const override;
-        void RenderGUI() override{};
 
     private:
         void OnPlayerDied(const int lives){m_Lives = lives;};

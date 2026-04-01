@@ -9,6 +9,7 @@
 #include <backends/imgui_impl_sdl3.h>
 #include <backends/imgui_impl_sdlrenderer3.h>
 #include <implot.h>
+#include "RealTimeEditor/EditorGui.h"
 
 void dae::Renderer::Init(SDL_Window *window) {
     m_window = window;
@@ -23,6 +24,8 @@ void dae::Renderer::Init(SDL_Window *window) {
     (void) io;
     io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard; // Enable Keyboard Controls
     io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad; // Enable Gamepad Controls
+    io.ConfigFlags |= ImGuiConfigFlags_DockingEnable; // Enable docking
+    //io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable; // Enable Multi-Viewport
 
 #if defined(__EMSCRIPTEN__)
     m_renderer = SDL_CreateRenderer(window, nullptr);
@@ -44,7 +47,13 @@ void dae::Renderer::Render() const {
     ImGui_ImplSDL3_NewFrame();
 
     ImGui::NewFrame();
+
+    ImGuiDockNodeFlags dockFlags = ImGuiDockNodeFlags_PassthruCentralNode;
+    ImGui::DockSpaceOverViewport(0, ImGui::GetMainViewport(), dockFlags);
+
     SceneManager::GetInstance().RenderGUI();
+    EditorGui::GetInstance().RenderGUI();
+
     ImGui::Render();
 
     const auto &color = GetBackgroundColor();

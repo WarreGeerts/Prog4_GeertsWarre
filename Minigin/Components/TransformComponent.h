@@ -5,11 +5,11 @@
 namespace dae {
     class TransformComponent final : public Component {
     public:
-        explicit TransformComponent(GameObject *go) : Component(go), m_position(0, 0, 0) {}
-        TransformComponent(GameObject *go, const float x, const float y) : Component(go), m_position(x, y, 0) {}
+        explicit TransformComponent(GameObject *go) : Component(go,"TransformComponent"), m_position(0, 0, 0) {}
+        TransformComponent(GameObject *go, const float x, const float y) : Component(go,"TransformComponent"), m_position(x, y, 0) {}
         void Update() override {}
         void Render() const override {}
-        void RenderGUI() override{};
+        void InspectorGUI() override;
 
         [[nodiscard]] const glm::vec3 &GetPosition() const;
         void SetPosition(float x, float y, float z = 0);

@@ -15,10 +15,13 @@ namespace dae {
         explicit TextComponent(GameObject *go);
         TextComponent(GameObject *go, const std::string &text, std::shared_ptr<Font> font,
                       const SDL_Color &color = {255, 255, 255, 255});
+
+        ~TextComponent() override {
+            m_renderComponentRef->SetOverWriten(false);
+        }
         //-
         void Update() override;
         void Render() const override;
-        void RenderGUI() override{};
 
         //-
         void SetFont(std::shared_ptr<Font> font) { m_font = std::move(font); };
@@ -33,7 +36,10 @@ namespace dae {
             m_needsUpdate = true;
         }
 
-        void SetRefRenderComponent(RenderComponent *component) {m_renderComponentRef = component;}
+        void SetRefRenderComponent(RenderComponent *component) {
+            m_renderComponentRef = component;
+            m_renderComponentRef->SetOverWriten(true);
+        }
 
     private:
         bool m_needsUpdate{};

@@ -9,42 +9,42 @@ GameObject::GameObject(std::string name) : m_Name(std::move(name)) {}
 GameObject::~GameObject() = default;
 
 void GameObject::AddChild(GameObject *child) {
-    m_children.push_back(child);
+    m_Children.push_back(child);
 }
 
 void GameObject::RemoveChild(const GameObject *child) {
     //iterate over the vector until the child is found
-    auto it = std::find(m_children.begin(), m_children.end(), child);
+    auto it = std::find(m_Children.begin(), m_Children.end(), child);
     //check if child exists in the vector
-    if (it != m_children.end()) {
-        m_children.erase(it); //erase child at iterator position
+    if (it != m_Children.end()) {
+        m_Children.erase(it); //erase child at iterator position
     }
 }
 
 bool GameObject::IsChild(GameObject *object) const {
-    for (const auto child: m_children) {
+    for (const auto child: m_Children) {
         if (child == object || child->IsChild(object)) return true;
     }
     return false;
 }
 
 void GameObject::Update() {
-    for (const auto &component: m_components) {
+    for (const auto &component: m_Components) {
         component->Update();
     }
 }
 
 void GameObject::AddComponent(std::unique_ptr<Component> component) {
     assert(component != nullptr);
-    m_components.push_back(std::move(component));
+    m_Components.push_back(std::move(component));
 }
 
 void GameObject::RemoveComponent(Component *component) {
-    m_components.erase(
+    m_Components.erase(
         std::remove_if(
-            m_components.begin(), m_components.end(),
+            m_Components.begin(), m_Components.end(),
             [component](const auto &comp) { return comp.get() == component; }),
-        m_components.end());
+        m_Components.end());
 }
 
 void GameObject::SetParent(GameObject *parent, const bool keepWorldPosition) {
@@ -79,8 +79,8 @@ void GameObject::UpdateWorldPosition() {
         else
             m_WorldPosition = m_Parent->GetWorldPosition() + m_LocalPosition;
 
-        assert(this->GetComponent<TransformComponent>() != nullptr);
-        this->GetComponent<TransformComponent>()->SetPosition(m_WorldPosition);
+        if (m_Transform != nullptr)
+            m_Transform->SetPosition(m_WorldPosition);
     }
     m_PositionIsDirty = false;
 }
@@ -89,7 +89,7 @@ void GameObject::SetPositionDirty() {
     m_PositionIsDirty = true;
 
     //Set all children dirty
-    for (auto *child: m_children) {
+    for (auto *child: m_Children) {
         if (child) {
             child->SetPositionDirty();
         }

@@ -27,7 +27,7 @@ namespace dae {
 
     class ThrashCacheComponent final : public Component {
     public:
-        explicit ThrashCacheComponent(GameObject *go) : Component(go) {
+        explicit ThrashCacheComponent(GameObject *go) : Component(go,"ThrashCacheComponent") {
             constexpr auto AmountSteps{11};
             TimingsInt.reserve(AmountSteps);
             TimingsGO.reserve(AmountSteps);

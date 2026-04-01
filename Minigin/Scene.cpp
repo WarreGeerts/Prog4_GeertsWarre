@@ -43,6 +43,14 @@ GameObject &Scene::GetGameObjectByIndex(const int idx) const {
     throw std::runtime_error("GameObject at idx: '" + std::to_string(idx) + "' not found");
 }
 
+const std::vector<std::unique_ptr<GameObject>> & Scene::GetGameObjects() const {
+    return m_objects;
+}
+
+int Scene::GetSceneSize() const {
+    return static_cast<int>(m_objects.size());
+}
+
 void Scene::Update() {
     //update everything first
     for (auto &object: m_objects) {

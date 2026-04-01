@@ -15,6 +15,8 @@ namespace dae
 
 		[[nodiscard]] Scene& GetSceneByName(const std::string& name) const;
 		[[nodiscard]] Scene& GetSceneByIdx(int idx) const;
+		[[nodiscard]] std::vector<int> GetSceneSizes() const;
+		[[nodiscard]] const std::vector<std::unique_ptr<Scene>> &GetScenes() const;
 		void Update();
 		void Render() const;
 		void RenderGUI() const;

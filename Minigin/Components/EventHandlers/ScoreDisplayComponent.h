@@ -6,7 +6,7 @@
 namespace dae {
     class ScoreDisplayComponent final : public Component {
     public:
-        explicit ScoreDisplayComponent(GameObject *go, const EventId eventId) : Component(go) {
+        explicit ScoreDisplayComponent(GameObject *go, const EventId eventId) : Component(go,"ScoreDisplayComponent") {
             m_Handle = EventManager::GetInstance().AttachEvent(
                 eventId,
                 [this](const Event &event) {
@@ -22,7 +22,6 @@ namespace dae {
 
         void Update() override {};
         void Render() const override;
-        void RenderGUI() override {};
 
     private:
         void OnScoreIncrease(const int score) { m_Score = score; };

@@ -8,8 +8,7 @@ namespace dae {
         explicit FPSComponent(GameObject *go);
         void Update() override;
         void Render() const override;
-        void RenderGUI() override{};
-        void SetRefTextComponent(TextComponent *component) {m_TextComponentRef = component;}
+        void SetRefTextComponent(TextComponent *component) {m_TextComponentRef = component; }
 
     private:
         float m_FPS{0.f};
