@@ -1,27 +1,47 @@
-﻿# Minigin
-
-Minigin is a very small project using [SDL3](https://www.libsdl.org/) and [glm](https://github.com/g-truc/glm) for 2D c++ game projects. It is in no way a game engine, only a barebone start project where everything sdl related has been set up. It contains glm for vector math, to aleviate the need to write custom vector and matrix classes. We as students have to make an engine from this barebone project for our final programming 4 exam.
+# BurgerTime - Game Engine & Implementation
 
 [![CMake](https://github.com/WarreGeerts/Prog4_GeertsWarre/actions/workflows/cmake.yml/badge.svg)](https://github.com/WarreGeerts/Prog4_GeertsWarre/actions/workflows/cmake.yml)
 [![Emscripten](https://github.com/WarreGeerts/Prog4_GeertsWarre/actions/workflows/emscripten.yml/badge.svg)](https://github.com/WarreGeerts/Prog4_GeertsWarre/actions/workflows/emscripten.yml)
-<!--
-For later, currently no versions
-[![GitHub Release](https://img.shields.io/github/v/release/avadae/minigin?logo=github&sort=semver)](https://github.com/avadae/minigin/releases/latest) -->
 
-# Goal
+This project is a recreation of the arcade classic **BurgerTime**, developed for the **Programming 4** course. This is the last programming course of the major Game Development (GD) at Digital Arts & Entertainment (DAE). It features a custom engine built upon the "Minigin" bootstrap, focused on implementing standard game programming patterns in C++.
 
-Minigin can/may be used as a start project for the exam assignment in the course [Programming 4](https://youtu.be/j96Oh6vzhmg) at DAE. In that assignment students need to recreate a popular 80's arcade game with a game engine they need to program themselves. During the course we discuss several game programming patterns, using the book '[Game Programming Patterns](https://gameprogrammingpatterns.com/)' by [Robert Nystrom](https://github.com/munificent) as reading material. 
+**[Play the Web Version Here](https://warregeerts.github.io/Prog4_GeertsWarre/)**
 
-# Disclaimer
+---
 
-Minigin is, despite perhaps the suggestion in its name, **not** a game engine. It is just a very simple SDL3 ready project with some of the scaffolding in place to get started. None of the patterns discussed in the course are used yet (except singleton which use we challenge during the course). It is up to the students to implement their own vision for their engine, apply patterns as they see fit, create their game as efficient as possible.
+## Engine Architecture
 
-## Github Actions
+The project is split into two main sections: the **Minigin Engine** (core framework) and the **BurgerTime** (game-specific logic).
 
-This project is build with github actions.
-- The CMake workflow builds the project in Debug and Release for Windows and serves as a check that the project builds on that platform.
-- The Emscripten workflow generates a web version of the project and publishes it as a [github page](https://warregeerts.github.io/Prog4_GeertsWarre/). 
+### Core Systems & Patterns
+* **Component System:** Logic is encapsulated into reusable components (e.g., `RenderComponent`, `TextComponent`, `SpriteComponent`).
+* **Scene Graph & Dirty Flag:** Implemented a hierarchical transform system. The **Dirty Flag** ensures that world positions are only recomputed when a local transform changes, optimizing the update loop.
+* **Event Bus:** A centralized messaging system that allows decoupled communication between game objects and systems (e.g., UI updating when the player's score changes).
+* **Command Pattern:** Used to decouple input handling from game logic, enabling support for both Keyboard and Gamepad.
 
-## Emscripten web version
+### Cross-Platform Hardware Abstraction
+* **Pimpl Idiom:** Specifically applied to the **Controller/Input** classes. This was chosen to "hide" the `XInput` dependencies required for Windows builds, allowing the **Emscripten** (Web) build to seamlessly swap in SDL3 controller logic without header conflicts or compilation errors.
 
-[![Play Game](web/screenshot.png)](https://warregeerts.github.io/Prog4_GeertsWarre/)
+---
+
+## BurgerTime Gameplay
+
+* **Game Modes:** Supports Single Player, Co-op, and Versus modes.
+* **Input:** Fully playable via Keyboard and Gamepad.
+* **Persistency:** Highscore list is saved locally and remains permanent between sessions.
+* **Audio:** Music and SFX implementation with a global mute toggle (**F2**).
+* **Level Management:** Level layouts are loaded from external data files, with a level-skip feature (**F1**) for debugging.
+
+---
+
+## Technical Requirements
+* **Language:** C++ 20
+* **Libraries:** SDL3 (Rendering/Input), GLM (Math), ImGui (Debugging)
+* **Warning Level:** Compiled at **Level 4 (/W4)** with **Warnings as Errors (/WX)**.
+
+---
+
+## Credits
+Developed by **Warre Geerts** as part of the Programming 4 Course at Howest DAE.
+* Base Framework: [Minigin](https://github.com/avadae/minigin)
+* References: [Game Programming Patterns](https://gameprogrammingpatterns.com/) by Robert Nystrom.
