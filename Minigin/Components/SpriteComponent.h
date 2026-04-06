@@ -23,6 +23,8 @@ namespace dae {
         void SetFrame(int frameIndex);
         void Update() override {}
         void Render() const override {}
+        void InspectorGUI() override;
+
         [[nodiscard]] const Rectf &GetSrcRect() const { return m_SrcRect; }
         [[nodiscard]] const Rectf &GetDstRect() const { return m_DstRect; }
         std::shared_ptr<Texture2D> &GetTexture() { return m_Spritesheet; }
@@ -31,16 +33,13 @@ namespace dae {
 
     private:
         std::shared_ptr<Texture2D> m_Spritesheet;
+        std::string m_FileName{};
 
         Rectf m_SrcRect{0.f, 0.f, 0.f, 0.f};
         Rectf m_DstRect{0.f, 0.f, 0.f, 0.f};
         float m_ScaleX = 1.0f;
         float m_ScaleY = 1.0f;
-        int m_Columns{};
-        int m_Rows{};
-        float m_FrameWidth{};
-        float m_FrameHeight{};
-        float m_SpacingX{};
-        float m_SpacingY{};
+        SpriteFraming m_SpriteFrame;
+        int m_FrameIndex{};
     };
 }

@@ -13,15 +13,13 @@ namespace dae {
     class TextComponent final : public Component {
     public:
         explicit TextComponent(GameObject *go);
-        TextComponent(GameObject *go, const std::string &text, std::shared_ptr<Font> font,
+        TextComponent(GameObject *go, const std::string &text, const std::string &fileName, int fontSize,
                       const SDL_Color &color = {255, 255, 255, 255});
 
-        ~TextComponent() override {
-            m_renderComponentRef->SetOverWriten(false);
-        }
         //-
         void Update() override;
         void Render() const override;
+        void InspectorGUI() override;
 
         //-
         void SetFont(std::shared_ptr<Font> font) { m_font = std::move(font); };
@@ -38,15 +36,18 @@ namespace dae {
 
         void SetRefRenderComponent(RenderComponent *component) {
             m_renderComponentRef = component;
-            m_renderComponentRef->SetOverWriten(true);
         }
 
     private:
         bool m_needsUpdate{};
+        bool m_GuiUpdated{false};
+        std::string m_FileName{};
+
         std::string m_text{};
         std::string m_prevText{" "};
         SDL_Color m_color{255, 255, 255, 255};
         std::shared_ptr<Font> m_font{};
+        int m_fontSize{10};
         std::shared_ptr<Texture2D> m_textTexture{};
 
         RenderComponent *m_renderComponentRef{};

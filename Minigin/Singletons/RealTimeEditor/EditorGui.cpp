@@ -74,6 +74,7 @@ void EditorGui::DrawInspector(GameObject *GO) {
 
     //Every gameObject has this by default and shall never get deleted!
     GO->GetTransform()->InspectorGUI();
+    ImGui::Text(" ");
 
     for (auto &Comp: GO->GetComponents()) {
         if (dynamic_cast<TransformComponent *>(Comp.get())) continue;
@@ -91,6 +92,7 @@ void EditorGui::DrawInspector(GameObject *GO) {
 
         if (open) {
             Comp->InspectorGUI();
+            ImGui::Text(" ");
         }
     }
 
@@ -101,11 +103,4 @@ void EditorGui::DrawInspector(GameObject *GO) {
     //DrawAddComponentPopup(GO);
 
     ImGui::End();
-}
-
-void EditorGui::DrawTransformComponent(GameObject *GO) {
-    float pos[2] = {};
-    if (ImGui::DragFloat2("Position", pos, 0.1f)) {
-        GO->SetLocalPosition(glm::vec3(pos[0], pos[1], 0));
-    }
 }

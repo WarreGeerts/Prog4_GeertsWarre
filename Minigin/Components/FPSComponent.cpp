@@ -2,7 +2,6 @@
 #include <cassert>
 #include "Singletons/DeltaTime.h"
 #include <iomanip>
-
 using namespace dae;
 
 FPSComponent::FPSComponent(GameObject *go)
@@ -27,4 +26,12 @@ void FPSComponent::Render() const {
 
     assert(m_TextComponentRef != nullptr);
     m_TextComponentRef->SetText("FPS: " + ss.str());
+}
+
+void FPSComponent::InspectorGUI() {
+    ImGui::Text("FPS Debug Values");
+    ImGui::InputFloat("FPS", &m_FPS,0,0,nullptr,ImGuiInputTextFlags_ReadOnly);
+    ImGui::InputFloat("Elapsed Time", &m_ElapsedTime,0,0,nullptr,ImGuiInputTextFlags_ReadOnly);
+    ImGui::InputInt("Frames", &m_Frames,1,100,ImGuiInputTextFlags_ReadOnly);
+    ImGui::InputFloat("Total Time", &m_TotalTime,0,0,nullptr,ImGuiInputTextFlags_ReadOnly);
 }

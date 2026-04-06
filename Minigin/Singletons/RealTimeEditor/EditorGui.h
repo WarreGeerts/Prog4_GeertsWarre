@@ -20,9 +20,6 @@ namespace dae {
         //Inspector
         void DrawInspector(GameObject* GO);
 
-        //Component boxes
-        void DrawTransformComponent(GameObject* GO);
-
     };
 }
 

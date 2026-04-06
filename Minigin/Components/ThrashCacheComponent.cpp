@@ -9,55 +9,44 @@
 #include "implot.h"
 using namespace dae;
 
+void ThrashCacheComponent::InspectorGUI() {
+    ImGui::Text("Plot Int Timings");
+    ImGui::InputInt("# samples#int", &AmountIterationsInt, 1, 10);
+    if (ImGui::Button("Thrash the cache")) {
+        RunExperiment<int>(TimingsInt, AmountIterationsInt);
+        ShowTimingsInt = true;
+    }
+    if (ShowTimingsInt)
+        PlotHelper(ImVec4(1.0f, 0.647f, 0.0f, 1.0f), TimingsInt);
+
+    ImGui::Text(" ");
+    ImGui::Text("Plot GameObject Timings");
+    ImGui::InputInt("# samples#Go", &AmountIterationsGO, 1, 100);
+    if (ImGui::Button("Thrash the cache with GameObject3D")) {
+        RunExperiment<GameObject3D>(TimingsGO, AmountIterationsGO);
+        ShowTimingsGO = true;
+    }
+    if (ImGui::Button("Thrash the cache with GameObject3DAlt")) {
+        RunExperiment<GameObject3DAlt>(TimingsGOAlt, AmountIterationsGO);
+        ShowTimingsGOAlt = true;
+    }
+    if (ShowTimingsGO)
+        PlotHelper(ImVec4(1.0f, 0.647f, 0.0f, 1.0f), TimingsGO);
+    if (ShowTimingsGOAlt)
+        PlotHelper(ImVec4(0.0f, 0.647f, 1.0f, 1.0f), TimingsGOAlt);
+
+    if (ShowTimingsGO && ShowTimingsGOAlt)
+        PlotHelper(
+            ImVec4(1.0f, 0.647f, 0.0f, 1.0f), TimingsGO,
+            ImVec4(0.0f, 0.647f, 1.0f, 1.0f), TimingsGOAlt);
+}
+
 void ThrashCacheComponent::SetAmountIterationsInt(const int amount) {
     AmountIterationsInt = amount;
 }
 
 void ThrashCacheComponent::SetAmountIterationsGO(const int amount) {
     AmountIterationsGO = amount;
-}
-
-void ThrashCacheComponent::RenderGUI() {
-    PlotIntTimings();
-    PlotGOTimings();
-}
-
-void ThrashCacheComponent::PlotIntTimings() {
-    if (ImGui::Begin("Exercise 1")) {
-        ImGui::InputInt("# samples", &AmountIterationsInt, 1, 10);
-        if (ImGui::Button("Thrash the cache")) {
-            RunExperiment<int>(TimingsInt, AmountIterationsInt);
-            ShowTimingsInt = true;
-        }
-        if (ShowTimingsInt)
-            PlotHelper(ImVec4(1.0f, 0.647f, 0.0f, 1.0f), TimingsInt);
-        ImGui::End();
-    }
-}
-
-void ThrashCacheComponent::PlotGOTimings() {
-    if (ImGui::Begin("Exercise 2")) {
-        ImGui::InputInt("# samples", &AmountIterationsGO, 1, 100);
-        if (ImGui::Button("Thrash the cache with GameObject3D")) {
-            RunExperiment<GameObject3D>(TimingsGO, AmountIterationsGO);
-            ShowTimingsGO = true;
-        }
-        if (ImGui::Button("Thrash the cache with GameObject3DAlt")) {
-            RunExperiment<GameObject3DAlt>(TimingsGOAlt, AmountIterationsGO);
-            ShowTimingsGOAlt = true;
-        }
-        if (ShowTimingsGO)
-            PlotHelper(ImVec4(1.0f, 0.647f, 0.0f, 1.0f), TimingsGO);
-        if (ShowTimingsGOAlt)
-            PlotHelper(ImVec4(0.0f, 0.647f, 1.0f, 1.0f), TimingsGOAlt);
-
-        if (ShowTimingsGO && ShowTimingsGOAlt)
-            PlotHelper(
-                ImVec4(1.0f, 0.647f, 0.0f, 1.0f), TimingsGO,
-                ImVec4(0.0f, 0.647f, 1.0f, 1.0f), TimingsGOAlt);
-
-        ImGui::End();
-    }
 }
 
 void ThrashCacheComponent::PlotHelper(const ImVec4 &color, const std::vector<long long> &Timings,

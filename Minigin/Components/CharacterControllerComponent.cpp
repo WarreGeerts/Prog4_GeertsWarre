@@ -19,6 +19,10 @@ constexpr int BUTTON_A{SDL_GAMEPAD_BUTTON_SOUTH};
 constexpr int BUTTON_B{SDL_GAMEPAD_BUTTON_EAST};
 constexpr int BUTTON_X{SDL_GAMEPAD_BUTTON_WEST};
 #endif
+
+//TODO:: Make comprehensive guide on how to do this, like being able to add commands, add keybinds, look for commands/keybinds out of a list
+//TODO:: Visualise button/keyboard presses
+//TODO:: When in ImGui disable button presses until focused on gameScreen again
 dae::CharacterControllerComponent::CharacterControllerComponent(GameObject *go, float speed, const bool keyboard)
     : Component(go, "CharacterControllerComponent")
       , m_Keyboard{keyboard} {
@@ -61,4 +65,8 @@ dae::CharacterControllerComponent::CharacterControllerComponent(GameObject *go, 
         Input.AddBinding({KeyState::Down, BUTTON_B, false},
                         std::make_unique<ScoreCommandHigh>(m_gameObject, P2_ENEMY_KILL));
     }
+}
+
+void dae::CharacterControllerComponent::InspectorGUI() {
+
 }

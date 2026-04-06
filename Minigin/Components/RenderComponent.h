@@ -3,9 +3,9 @@
 #include <string>
 #include <vector>
 
-#include "SpriteComponent.h"
-
 namespace dae {
+    class TextComponent;
+    class SpriteComponent;
     class TransformComponent;
     class Texture2D;
 
@@ -18,16 +18,16 @@ namespace dae {
         void InspectorGUI() override;
         void SetTexture(const std::string &filename);
         void SetTexture(const std::shared_ptr<Texture2D> &texture) { m_texture = texture; }
-        void SetOverWriten(const bool overWriten) { m_OverWriten = overWriten; }
+        static std::vector<std::string> GetTextureFiles(const std::string& directory, bool font = false);
 
     private:
         std::shared_ptr<Texture2D> m_texture;
         TransformComponent* m_transform{};
         SpriteComponent* m_sprite{};
+        TextComponent* m_text{};
         std::string m_FileName{};
         bool m_expensiveLoaded{false};
 
-        std::vector<std::string> GetTextureFiles(const std::string& directory);
         bool m_OverWriten{false};
     };
 }

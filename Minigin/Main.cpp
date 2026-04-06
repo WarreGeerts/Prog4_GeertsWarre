@@ -45,7 +45,7 @@ static void load() //loads once
     go = std::make_unique<dae::GameObject>("TitleText");
     go->SetLocalPosition({292, 20, 0});
     //Add components =====
-    go->AddComponent(std::make_unique<dae::TextComponent>(go.get(), "Programming 4 Assignment", fontLinguaTitle));
+    go->AddComponent(std::make_unique<dae::TextComponent>(go.get(), "Programming 4 Assignment", "Lingua.otf", 36));
     go->AddComponent(std::make_unique<dae::RenderComponent>(go.get()));
     //Initialise components ====
     //TextComponent
@@ -60,7 +60,7 @@ static void load() //loads once
     //Add components =====
     go->AddComponent(std::make_unique<dae::TextComponent>(go.get(),
                                                           "Use WASD to move Burger Man, C to inflict damage, Z and X to drop down the burgers",
-                                                          fontLinguaLower));
+                                                          "Lingua.otf", 18));
     go->AddComponent(std::make_unique<dae::RenderComponent>(go.get()));
     //Initialise components ====
     //TextComponent
@@ -75,7 +75,7 @@ static void load() //loads once
     //Add components =====
     go->AddComponent(std::make_unique<dae::TextComponent>(go.get(),
                                                           "Use D-Pad to move The Bean, X to inflict damage, A and B to drop down the burgers",
-                                                          fontLinguaLower));
+                                                          "Lingua.otf", 18));
     go->AddComponent(std::make_unique<dae::RenderComponent>(go.get()));
     //Initialise components ====
     //TextComponent
@@ -89,7 +89,7 @@ static void load() //loads once
     go->SetLocalPosition({10, 10, 0});
     //Add components =====
     go->AddComponent(std::make_unique<dae::FPSComponent>(go.get()));
-    go->AddComponent(std::make_unique<dae::TextComponent>(go.get(), " ", fontLinguaTitle));
+    go->AddComponent(std::make_unique<dae::TextComponent>(go.get(), " ", "Lingua.otf", 36));
     go->AddComponent(std::make_unique<dae::RenderComponent>(go.get()));
     //Initialise components ====
     //TextComponent
@@ -123,7 +123,7 @@ static void load() //loads once
     go->SetLocalPosition({10, 160, 0});
     //Add components =====
     go->AddComponent(std::make_unique<dae::LivesDisplayComponent>(go.get(), dae::P1_HEALTH_UPDATE));
-    go->AddComponent(std::make_unique<dae::TextComponent>(go.get(), " ", fontLinguaLower));
+    go->AddComponent(std::make_unique<dae::TextComponent>(go.get(), " ", "Lingua.otf", 18));
     go->AddComponent(std::make_unique<dae::RenderComponent>(go.get()));
     //Initialise components ====
     //TextComponent
@@ -139,7 +139,7 @@ static void load() //loads once
     go->SetLocalPosition({10, 180, 0});
     //Add components =====
     go->AddComponent(std::make_unique<dae::ScoreDisplayComponent>(go.get(), dae::P1_SCORE_UPDATE));
-    go->AddComponent(std::make_unique<dae::TextComponent>(go.get(), " ", fontLinguaLower));
+    go->AddComponent(std::make_unique<dae::TextComponent>(go.get(), " ", "Lingua.otf", 18));
     go->AddComponent(std::make_unique<dae::RenderComponent>(go.get()));
     //Initialise components ====
     //TextComponent
@@ -173,7 +173,7 @@ static void load() //loads once
     go->SetLocalPosition({10, 200, 0});
     //Add components =====
     go->AddComponent(std::make_unique<dae::LivesDisplayComponent>(go.get(), dae::P2_HEALTH_UPDATE));
-    go->AddComponent(std::make_unique<dae::TextComponent>(go.get(), " ", fontLinguaLower));
+    go->AddComponent(std::make_unique<dae::TextComponent>(go.get(), " ", "Lingua.otf", 18));
     go->AddComponent(std::make_unique<dae::RenderComponent>(go.get()));
     //Initialise components ====
     //TextComponent
@@ -189,7 +189,7 @@ static void load() //loads once
     go->SetLocalPosition({10, 220, 0});
     //Add components =====
     go->AddComponent(std::make_unique<dae::ScoreDisplayComponent>(go.get(), dae::P2_SCORE_UPDATE));
-    go->AddComponent(std::make_unique<dae::TextComponent>(go.get(), " ", fontLinguaLower));
+    go->AddComponent(std::make_unique<dae::TextComponent>(go.get(), " ", "Lingua.otf", 18));
     go->AddComponent(std::make_unique<dae::RenderComponent>(go.get()));
     //Initialise components ====
     //TextComponent

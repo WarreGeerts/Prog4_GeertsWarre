@@ -40,12 +40,11 @@ namespace dae {
             }
         }
         void Render() const override {};
-        void RenderGUI() override;
+        void RenderGUI() override{};
         void Update() override {};
+        void InspectorGUI() override;
         void SetAmountIterationsInt(int amount);
         void SetAmountIterationsGO(int amount);
-        void PlotIntTimings();
-        void PlotGOTimings();
 
     private:
         //main helper function (making DRY code :p)

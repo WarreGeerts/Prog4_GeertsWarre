@@ -6,6 +6,7 @@
 #include "SpriteComponent.h"
 #include <filesystem>
 #include <windows.h>
+#include "TextComponent.h"
 using namespace dae;
 
 RenderComponent::RenderComponent(GameObject *go)
@@ -21,7 +22,15 @@ void RenderComponent::Update() {
     if (!m_expensiveLoaded) {
         m_transform = m_gameObject->GetTransform().get();
         m_sprite = m_gameObject->GetComponent<SpriteComponent>();
+        m_text = m_gameObject->GetComponent<TextComponent>();
         m_expensiveLoaded = true;
+    }
+
+    //check if components that make use of the render component/overwrite the usage exist
+    if (m_sprite || m_text) {
+        m_OverWriten = true;
+    } else if (!m_sprite && !m_text) {
+        m_OverWriten = false;
     }
 }
 
@@ -55,12 +64,12 @@ void RenderComponent::InspectorGUI() {
 
     static std::vector<std::string> availableTextures{GetTextureFiles(path)};
 
-    const char *currentLabel { m_FileName.empty() ? "None Selected" : m_FileName.c_str()};
+    const char *currentLabel{m_FileName.empty() ? "None Selected" : m_FileName.c_str()};
 
     if (m_OverWriten) {
         ImGui::BeginDisabled();
     }
-    if (ImGui::BeginCombo("Texture", currentLabel)) {
+    if (ImGui::BeginCombo("Texture##RC", currentLabel)) {
         for (const auto &file: availableTextures) {
             const bool isSelected = (m_FileName == file);
 
@@ -74,7 +83,7 @@ void RenderComponent::InspectorGUI() {
         ImGui::EndCombo();
     }
 
-    if (ImGui::Button("Reset Textures")) {
+    if (ImGui::Button("Reset Textures##RC")) {
         availableTextures = GetTextureFiles(path);
     }
 
@@ -86,7 +95,7 @@ void RenderComponent::InspectorGUI() {
     }
 
     ImGui::SameLine();
-    if (ImGui::Button("Open Folder")) {
+    if (ImGui::Button("Open Folder##RC")) {
         std::filesystem::path absPath = std::filesystem::absolute(path);
         const std::string windowsPath = absPath.make_preferred().string();
         ShellExecuteA(NULL, "open", windowsPath.c_str(), NULL, NULL, SW_SHOWDEFAULT);
@@ -97,15 +106,21 @@ void RenderComponent::SetTexture(const std::string &filename) {
     m_texture = ResourceManager::GetInstance().LoadTexture(filename);
 }
 
-std::vector<std::string> RenderComponent::GetTextureFiles(const std::string &directory) {
+std::vector<std::string> RenderComponent::GetTextureFiles(const std::string &directory, bool font) {
     std::vector<std::string> files;
     if (!std::filesystem::exists(directory)) return files;
 
     for (const auto &entry: std::filesystem::directory_iterator(directory)) {
         if (entry.is_regular_file()) {
             auto ext = entry.path().extension().string();
-            if (ext == ".png" || ext == ".jpg") {
-                files.push_back(entry.path().filename().string());
+            if (!font) {
+                if (ext == ".png" || ext == ".jpg") {
+                    files.push_back(entry.path().filename().string());
+                }
+            } else {
+                if (ext == ".otf") {
+                    files.push_back(entry.path().filename().string());
+                }
             }
         }
     }
