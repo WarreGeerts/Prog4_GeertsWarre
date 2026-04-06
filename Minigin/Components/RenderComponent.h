@@ -24,7 +24,6 @@ namespace dae {
         std::shared_ptr<Texture2D> m_texture;
         TransformComponent* m_transform{};
         SpriteComponent* m_sprite{};
-        TextComponent* m_text{};
         std::string m_FileName{};
         bool m_expensiveLoaded{false};
 

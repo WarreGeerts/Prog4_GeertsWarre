@@ -9,6 +9,8 @@ namespace dae {
     class Font;
     class Texture2D;
     class GameObject;
+    class LivesDisplayComponent;
+    class ScoreDisplayComponent;
 
     class TextComponent final : public Component {
     public:
@@ -34,14 +36,13 @@ namespace dae {
             m_needsUpdate = true;
         }
 
-        void SetRefRenderComponent(RenderComponent *component) {
-            m_renderComponentRef = component;
-        }
-
     private:
         bool m_needsUpdate{};
         bool m_GuiUpdated{false};
+        bool m_OverWriten{false};
+        bool m_ExpensiveLoaded{false};
         std::string m_FileName{};
+
 
         std::string m_text{};
         std::string m_prevText{" "};

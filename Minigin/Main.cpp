@@ -48,8 +48,6 @@ static void load() //loads once
     go->AddComponent(std::make_unique<dae::TextComponent>(go.get(), "Programming 4 Assignment", "Lingua.otf", 36));
     go->AddComponent(std::make_unique<dae::RenderComponent>(go.get()));
     //Initialise components ====
-    //TextComponent
-    go->GetComponent<dae::TextComponent>()->SetRefRenderComponent(go->GetComponent<dae::RenderComponent>());
     //add to scene ====
     scene.Add(std::move(go));
 
@@ -63,8 +61,6 @@ static void load() //loads once
                                                           "Lingua.otf", 18));
     go->AddComponent(std::make_unique<dae::RenderComponent>(go.get()));
     //Initialise components ====
-    //TextComponent
-    go->GetComponent<dae::TextComponent>()->SetRefRenderComponent(go->GetComponent<dae::RenderComponent>());
     //add to scene ====
     scene.Add(std::move(go));
 
@@ -78,8 +74,6 @@ static void load() //loads once
                                                           "Lingua.otf", 18));
     go->AddComponent(std::make_unique<dae::RenderComponent>(go.get()));
     //Initialise components ====
-    //TextComponent
-    go->GetComponent<dae::TextComponent>()->SetRefRenderComponent(go->GetComponent<dae::RenderComponent>());
     //add to scene ====
     scene.Add(std::move(go));
 
@@ -92,8 +86,6 @@ static void load() //loads once
     go->AddComponent(std::make_unique<dae::TextComponent>(go.get(), " ", "Lingua.otf", 36));
     go->AddComponent(std::make_unique<dae::RenderComponent>(go.get()));
     //Initialise components ====
-    //TextComponent
-    go->GetComponent<dae::TextComponent>()->SetRefRenderComponent(go->GetComponent<dae::RenderComponent>());
     //FPSComponent
     go->GetComponent<dae::FPSComponent>()->SetRefTextComponent(go->GetComponent<dae::TextComponent>());
     //add to scene ====
@@ -126,8 +118,6 @@ static void load() //loads once
     go->AddComponent(std::make_unique<dae::TextComponent>(go.get(), " ", "Lingua.otf", 18));
     go->AddComponent(std::make_unique<dae::RenderComponent>(go.get()));
     //Initialise components ====
-    //TextComponent
-    go->GetComponent<dae::TextComponent>()->SetRefRenderComponent(go->GetComponent<dae::RenderComponent>());
     //LivesDisplayComponent
     go->GetComponent<dae::LivesDisplayComponent>()->SetRefTextComponent(go->GetComponent<dae::TextComponent>());
     //add to scene ====
@@ -142,8 +132,6 @@ static void load() //loads once
     go->AddComponent(std::make_unique<dae::TextComponent>(go.get(), " ", "Lingua.otf", 18));
     go->AddComponent(std::make_unique<dae::RenderComponent>(go.get()));
     //Initialise components ====
-    //TextComponent
-    go->GetComponent<dae::TextComponent>()->SetRefRenderComponent(go->GetComponent<dae::RenderComponent>());
     //LivesDisplayComponent
     go->GetComponent<dae::ScoreDisplayComponent>()->SetRefTextComponent(go->GetComponent<dae::TextComponent>());
     //add to scene ====
@@ -176,8 +164,6 @@ static void load() //loads once
     go->AddComponent(std::make_unique<dae::TextComponent>(go.get(), " ", "Lingua.otf", 18));
     go->AddComponent(std::make_unique<dae::RenderComponent>(go.get()));
     //Initialise components ====
-    //TextComponent
-    go->GetComponent<dae::TextComponent>()->SetRefRenderComponent(go->GetComponent<dae::RenderComponent>());
     //LivesDisplayComponent
     go->GetComponent<dae::LivesDisplayComponent>()->SetRefTextComponent(go->GetComponent<dae::TextComponent>());
     //add to scene ====
@@ -192,8 +178,6 @@ static void load() //loads once
     go->AddComponent(std::make_unique<dae::TextComponent>(go.get(), " ", "Lingua.otf", 18));
     go->AddComponent(std::make_unique<dae::RenderComponent>(go.get()));
     //Initialise components ====
-    //TextComponent
-    go->GetComponent<dae::TextComponent>()->SetRefRenderComponent(go->GetComponent<dae::RenderComponent>());
     //LivesDisplayComponent
     go->GetComponent<dae::ScoreDisplayComponent>()->SetRefTextComponent(go->GetComponent<dae::TextComponent>());
     //add to scene ====

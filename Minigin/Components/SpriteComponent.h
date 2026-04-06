@@ -34,6 +34,7 @@ namespace dae {
     private:
         std::shared_ptr<Texture2D> m_Spritesheet;
         std::string m_FileName{};
+        bool m_HasRenderComponent{false};
 
         Rectf m_SrcRect{0.f, 0.f, 0.f, 0.f};
         Rectf m_DstRect{0.f, 0.f, 0.f, 0.f};

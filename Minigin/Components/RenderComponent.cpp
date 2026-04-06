@@ -19,18 +19,13 @@ RenderComponent::RenderComponent(GameObject *go, const std::string &filename)
 }
 
 void RenderComponent::Update() {
-    if (!m_expensiveLoaded) {
+    if (NeedsUpdate()) {
+        //check if components that make use of the render component/overwrite the usage exist
+        m_OverWriten = m_gameObject->HasComponent<SpriteComponent>() ||
+                       m_gameObject->HasComponent<TextComponent>();
+
         m_transform = m_gameObject->GetTransform().get();
         m_sprite = m_gameObject->GetComponent<SpriteComponent>();
-        m_text = m_gameObject->GetComponent<TextComponent>();
-        m_expensiveLoaded = true;
-    }
-
-    //check if components that make use of the render component/overwrite the usage exist
-    if (m_sprite || m_text) {
-        m_OverWriten = true;
-    } else if (!m_sprite && !m_text) {
-        m_OverWriten = false;
     }
 }
 
@@ -54,15 +49,16 @@ void RenderComponent::Render() const {
         };
         Renderer::GetInstance().RenderTextureRegion(*m_sprite->GetTexture(), &src, &dst);
     } else {
-        if (!m_texture) return;
-        Renderer::GetInstance().RenderTexture(*m_texture, posX, posY);
+        if (m_texture) {
+            Renderer::GetInstance().RenderTexture(*m_texture, posX, posY);
+        }
     }
 }
 
 void RenderComponent::InspectorGUI() {
     const std::string path{"./Data/"};
 
-    static std::vector<std::string> availableTextures{GetTextureFiles(path)};
+    std::vector<std::string> availableTextures{GetTextureFiles(path)};
 
     const char *currentLabel{m_FileName.empty() ? "None Selected" : m_FileName.c_str()};
 

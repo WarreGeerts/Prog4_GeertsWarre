@@ -65,7 +65,7 @@ void EditorGui::DrawInspector(GameObject *GO) {
         return;
     }
 
-    char nameBuffer[64]; //Max size of name that user can put inside
+    char nameBuffer[128]; //Max size of name that user can put inside
     strcpy(nameBuffer, GO->GetName().c_str());
     if (ImGui::InputText("##Name", nameBuffer, sizeof(nameBuffer))) {
         GO->SetName(nameBuffer);
@@ -76,16 +76,25 @@ void EditorGui::DrawInspector(GameObject *GO) {
     GO->GetTransform()->InspectorGUI();
     ImGui::Text(" ");
 
+    Component* componentToPendingRemoval = nullptr;
+
     for (auto &Comp: GO->GetComponents()) {
         if (dynamic_cast<TransformComponent *>(Comp.get())) continue;
+
+        bool hasWarning = Comp->HasWarning();
+
+        if (hasWarning) {
+            ImGui::PushStyleColor(ImGuiCol_Header, ImVec4(0.2f, 0.f, 0.f, 0.95f));
+            ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f, 1.0f, 0.0f, 1.0f));
+        }
 
         const bool open = ImGui::CollapsingHeader(Comp->GetName().c_str(), ImGuiTreeNodeFlags_DefaultOpen);
 
         if (ImGui::BeginPopupContextItem()) {
             if (ImGui::MenuItem("Remove Component")) {
-                GO->RemoveComponent(Comp.get());
+                componentToPendingRemoval = Comp.get();
                 ImGui::EndPopup();
-                return;
+                break;
             }
             ImGui::EndPopup();
         }
@@ -94,6 +103,15 @@ void EditorGui::DrawInspector(GameObject *GO) {
             Comp->InspectorGUI();
             ImGui::Text(" ");
         }
+
+        if (hasWarning) {
+            ImGui::PopStyleColor(2);
+        }
+
+    }
+
+    if (componentToPendingRemoval) {
+        GO->RemoveComponent(componentToPendingRemoval);
     }
 
     if (ImGui::Button("Add Component...", ImVec2(-1, 0))) {

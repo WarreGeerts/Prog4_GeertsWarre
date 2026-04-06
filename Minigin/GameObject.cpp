@@ -37,6 +37,7 @@ void GameObject::Update() {
 void GameObject::AddComponent(std::unique_ptr<Component> component) {
     assert(component != nullptr);
     m_Components.push_back(std::move(component));
+    NoteChange();
 }
 
 void GameObject::RemoveComponent(Component *component) {
@@ -45,6 +46,7 @@ void GameObject::RemoveComponent(Component *component) {
             m_Components.begin(), m_Components.end(),
             [component](const auto &comp) { return comp.get() == component; }),
         m_Components.end());
+    NoteChange();
 }
 
 void GameObject::SetParent(GameObject *parent, const bool keepWorldPosition) {

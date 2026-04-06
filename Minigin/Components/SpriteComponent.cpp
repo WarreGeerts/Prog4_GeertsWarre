@@ -5,6 +5,7 @@
 #include "Singletons/ResourceManager.h"
 #include "Texture2D.h"
 #include <SDL3/SDL_render.h>
+#include "GameObject.h"
 #include "RenderComponent.h"
 using namespace dae;
 
@@ -27,7 +28,7 @@ void SpriteComponent::SetSpritesheetPath(const std::string &spritesheetPath) {
 }
 
 void SpriteComponent::SetFrame(const int) {
-    const int maxIndex { m_SpriteFrame.columns * m_SpriteFrame.rows - 1 };
+    const int maxIndex{m_SpriteFrame.columns * m_SpriteFrame.rows - 1};
     if (m_FrameIndex > maxIndex) m_FrameIndex -= maxIndex;
     if (m_FrameIndex < 0) m_FrameIndex += maxIndex;
 
@@ -44,6 +45,25 @@ void SpriteComponent::SetFrame(const int) {
 }
 
 void SpriteComponent::InspectorGUI() {
+    if (NeedsUpdate()) {
+        if (m_gameObject->HasComponent<RenderComponent>()) m_HasRenderComponent = true;
+        else m_HasRenderComponent = false;
+    }
+
+    m_HasWarning = false;
+    if (!m_HasRenderComponent) {
+        m_HasWarning = true;
+        if (ImGui::IsItemHovered()) {
+            ImGui::PushStyleColor(ImGuiCol_PopupBg, ImVec4(0.2f, 0.f, 0.f, 0.95f));
+
+            ImGui::BeginTooltip();
+            ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "WARNING: RenderComponent is NEEDED");
+            ImGui::EndTooltip();
+
+            ImGui::PopStyleColor();
+        }
+    }
+
     const std::string path{"./Data/"};
 
     static std::vector<std::string> availableTextures{RenderComponent::GetTextureFiles(path)};
@@ -68,7 +88,7 @@ void SpriteComponent::InspectorGUI() {
 
     //Frame width and height
     float width_height[2] = {m_SpriteFrame.frameWidth, m_SpriteFrame.frameHeight};
-    if (ImGui::DragFloat2("Frame Width & Height", width_height,0.01f)) {
+    if (ImGui::DragFloat2("Frame Width & Height", width_height, 0.01f)) {
         m_SpriteFrame.frameWidth = width_height[0];
         m_SpriteFrame.frameHeight = width_height[1];
         SetFrame(m_FrameIndex);
@@ -76,7 +96,7 @@ void SpriteComponent::InspectorGUI() {
 
     //Frame Spacing
     float SpacingX_Y[2] = {m_SpriteFrame.spacingX, m_SpriteFrame.spacingY};
-    if (ImGui::DragFloat2("Frame Spacing X & Y", SpacingX_Y,0.01f)) {
+    if (ImGui::DragFloat2("Frame Spacing X & Y", SpacingX_Y, 0.01f)) {
         m_SpriteFrame.spacingX = SpacingX_Y[0];
         m_SpriteFrame.spacingY = SpacingX_Y[1];
         SetFrame(m_FrameIndex);
@@ -84,7 +104,7 @@ void SpriteComponent::InspectorGUI() {
 
     //Frame scale
     float ScaleX_Y[2] = {m_ScaleX, m_ScaleY};
-    if (ImGui::DragFloat2("Scale X & Y", ScaleX_Y,0.01f)) {
+    if (ImGui::DragFloat2("Scale X & Y", ScaleX_Y, 0.01f)) {
         m_ScaleX = ScaleX_Y[0];
         m_ScaleY = ScaleX_Y[1];
         SetFrame(m_FrameIndex);

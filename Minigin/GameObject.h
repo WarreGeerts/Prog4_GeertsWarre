@@ -36,6 +36,8 @@ namespace dae {
         template<typename T>
         [[nodiscard]] bool HasComponent() const { return GetComponent<T>() != nullptr; }
 
+        void NoteChange() { m_ComponentListVersion++; }
+        uint32_t GetComponentListVersion() const { return m_ComponentListVersion; }
         //Parent-child functions
         void SetParent(GameObject *parent, bool keepWorldPosition);
         [[nodiscard]] GameObject *GetParent() const { return m_Parent; }
@@ -57,8 +59,9 @@ namespace dae {
         //general vars
         std::vector<std::unique_ptr<Component> > m_Components{};
         std::unique_ptr<TransformComponent> m_Transform{std::make_unique<TransformComponent>(this)};
-        bool m_MarkedForDeletion = false;
         std::string m_Name;
+        bool m_MarkedForDeletion{false};
+        uint32_t m_ComponentListVersion{0};
         //parent-child vars
         GameObject *m_Parent{nullptr};
         std::vector<GameObject *> m_Children{};

@@ -59,6 +59,7 @@ add_executable(${TARGET_NAME} ${TARGET_PARAM}
         Minigin/Components/EventHandlers/ScoreComponent.h
         Minigin/Singletons/RealTimeEditor/EditorGui.cpp
         Minigin/Singletons/RealTimeEditor/EditorGui.h
+        Minigin/Components/Component.cpp
 )
 
 # enable c++20 features
