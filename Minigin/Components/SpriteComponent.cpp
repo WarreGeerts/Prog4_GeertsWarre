@@ -19,18 +19,28 @@ SpriteComponent::SpriteComponent(GameObject *go, const std::string &spritesheetP
 }
 
 void SpriteComponent::SetSpritesheetPath(const std::string &spritesheetPath) {
-    m_Spritesheet = ResourceManager::GetInstance().LoadTexture(spritesheetPath);
-    if (m_Spritesheet) {
+    if (spritesheetPath.empty()) return;
+
+    auto texture = ResourceManager::GetInstance().LoadTexture(spritesheetPath);
+    if (texture && texture->GetSDLTexture()) {
+        m_Spritesheet = texture;
         const auto size{m_Spritesheet->GetSize()};
-        m_SrcRect = {0.f, 0.f, size.x, size.y};
+
+        if (m_SpriteFrame.frameWidth <= 0) m_SpriteFrame.frameWidth = size.x;
+        if (m_SpriteFrame.frameHeight <= 0) m_SpriteFrame.frameHeight = size.y;
+
+        //m_SrcRect = {0.f, 0.f, size.x, size.y};
         SDL_SetTextureScaleMode(m_Spritesheet->GetSDLTexture(), SDL_SCALEMODE_PIXELART);
+
+        SetFrame(m_FrameIndex);
     }
 }
 
 void SpriteComponent::SetFrame(const int) {
-    const int maxIndex{m_SpriteFrame.columns * m_SpriteFrame.rows - 1};
-    if (m_FrameIndex > maxIndex) m_FrameIndex -= maxIndex;
-    if (m_FrameIndex < 0) m_FrameIndex += maxIndex;
+    if (m_SpriteFrame.columns <= 0 || m_SpriteFrame.rows <= 0) return;
+
+    const int totalFrames = m_SpriteFrame.columns * m_SpriteFrame.rows;
+    m_FrameIndex = (m_FrameIndex % totalFrames + totalFrames) % totalFrames;
 
     const int col{m_FrameIndex % m_SpriteFrame.columns};
     const int row{m_FrameIndex / m_SpriteFrame.columns};
@@ -66,7 +76,7 @@ void SpriteComponent::InspectorGUI() {
 
     const std::string path{"./Data/"};
 
-    static std::vector<std::string> availableTextures{RenderComponent::GetTextureFiles(path)};
+    std::vector<std::string> availableTextures{RenderComponent::GetTextureFiles(path)};
 
     const char *currentLabel{m_FileName.empty() ? "None Selected" : m_FileName.c_str()};
 
@@ -111,7 +121,7 @@ void SpriteComponent::InspectorGUI() {
     }
 
     //File selection
-    if (ImGui::BeginCombo("Texture##SC", currentLabel)) {
+    if (ImGui::BeginCombo("Sprite Sheet##SC", currentLabel)) {
         for (const auto &file: availableTextures) {
             const bool isSelected = (m_FileName == file);
 

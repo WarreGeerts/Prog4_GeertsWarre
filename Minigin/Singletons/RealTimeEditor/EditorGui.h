@@ -19,7 +19,9 @@ namespace dae {
         void VisualizeSceneGraph(GameObject *GO);
         //Inspector
         void DrawInspector(GameObject* GO);
-
+        void DrawAddComponentPopup(GameObject* GO);
+        template<class T>
+        void DrawAddComponentItem(GameObject *GO, const char *label);
     };
 }
 

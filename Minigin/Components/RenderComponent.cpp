@@ -7,6 +7,7 @@
 #include <filesystem>
 #include <windows.h>
 #include "TextComponent.h"
+#include "Texture2D.h"
 using namespace dae;
 
 RenderComponent::RenderComponent(GameObject *go)
@@ -39,17 +40,20 @@ void RenderComponent::Render() const {
     }
 
     if (m_sprite) {
-        const SDL_FRect src{
-            m_sprite->GetSrcRect().x, m_sprite->GetSrcRect().y,
-            m_sprite->GetSrcRect().w, m_sprite->GetSrcRect().h
-        };
-        const SDL_FRect dst{
-            posX + m_sprite->GetDstRect().x, posY + m_sprite->GetDstRect().y,
-            m_sprite->GetDstRect().w, m_sprite->GetDstRect().h
-        };
-        Renderer::GetInstance().RenderTextureRegion(*m_sprite->GetTexture(), &src, &dst);
+        auto pTexture = m_sprite->GetTexture();
+        if (pTexture && pTexture->GetSDLTexture()) {
+            const SDL_FRect src{
+                m_sprite->GetSrcRect().x, m_sprite->GetSrcRect().y,
+                m_sprite->GetSrcRect().w, m_sprite->GetSrcRect().h
+            };
+            const SDL_FRect dst{
+                posX + m_sprite->GetDstRect().x, posY + m_sprite->GetDstRect().y,
+                m_sprite->GetDstRect().w, m_sprite->GetDstRect().h
+            };
+            Renderer::GetInstance().RenderTextureRegion(*pTexture, &src, &dst);
+        }
     } else {
-        if (m_texture) {
+        if (m_texture && m_texture->GetSDLTexture()) {
             Renderer::GetInstance().RenderTexture(*m_texture, posX, posY);
         }
     }

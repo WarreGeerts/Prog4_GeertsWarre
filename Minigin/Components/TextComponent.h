@@ -15,7 +15,7 @@ namespace dae {
     class TextComponent final : public Component {
     public:
         explicit TextComponent(GameObject *go);
-        TextComponent(GameObject *go, const std::string &text, const std::string &fileName, int fontSize,
+        TextComponent(GameObject *go, std::string text, std::string fileName, int fontSize,
                       const SDL_Color &color = {255, 255, 255, 255});
 
         //-
@@ -41,13 +41,12 @@ namespace dae {
         bool m_GuiUpdated{false};
         bool m_OverWriten{false};
         bool m_ExpensiveLoaded{false};
-        std::string m_FileName{};
 
-
-        std::string m_text{};
+        std::string m_FileName;
+        std::string m_text;
         std::string m_prevText{" "};
         SDL_Color m_color{255, 255, 255, 255};
-        std::shared_ptr<Font> m_font{};
+        std::shared_ptr<Font> m_font;
         int m_fontSize{10};
         std::shared_ptr<Texture2D> m_textTexture{};
 

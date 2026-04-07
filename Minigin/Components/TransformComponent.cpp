@@ -4,17 +4,31 @@
 namespace dae {
     void TransformComponent::InspectorGUI() {
         if (ImGui::CollapsingHeader("Transform", ImGuiTreeNodeFlags_DefaultOpen)) {
-            float pos[3] = {m_position.x, m_position.y, m_position.z};
-            if (ImGui::DragFloat2("Position", pos, 0.1f)) {
-                m_gameObject->SetLocalPosition(glm::vec3(pos[0], pos[1], pos[2]));
+            const glm::vec3 localPos = m_gameObject->GetLocalPosition();
+            float lPos[2] = {localPos.x, localPos.y};
+
+            if (ImGui::DragFloat2("Local Position", lPos, 0.1f)) {
+                m_gameObject->SetLocalPosition(glm::vec3(lPos[0], lPos[1], 0.0f));
             }
-            ImGui::Text(" ");
+
+            const glm::vec3 worldPos = m_gameObject->GetWorldPosition();
+            float wPos[2] = {worldPos.x, worldPos.y};
+
+            ImGui::BeginDisabled();
+            if (ImGui::DragFloat2("World Position", wPos, 0.1f)) {
+                m_gameObject->SetLocalPosition(glm::vec3(wPos[0], wPos[1], 0.0f));
+            }
+            ImGui::EndDisabled();
+            if (m_gameObject->GetParent() != nullptr) {
+                ImGui::TextDisabled("(Relative to parent: %s)", m_gameObject->GetParent()->GetName().c_str());
+            }
+
+            ImGui::Separator();
         }
     }
 
     const glm::vec3 &TransformComponent::GetPosition() const {
-        m_gameObject->UpdateWorldPosition();
-        return m_position;
+        return m_gameObject->GetWorldPosition();
     }
 
     void TransformComponent::SetPosition(float x, float y, float z) {

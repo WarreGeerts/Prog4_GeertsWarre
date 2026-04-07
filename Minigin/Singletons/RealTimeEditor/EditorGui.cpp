@@ -75,7 +75,7 @@ void EditorGui::DrawInspector(GameObject *GO) {
     //Every gameObject has this by default and shall never get deleted!
     GO->GetTransform()->InspectorGUI();
 
-    Component* componentToPendingRemoval = nullptr;
+    Component *componentToPendingRemoval = nullptr;
 
     for (auto &Comp: GO->GetComponents()) {
         if (dynamic_cast<TransformComponent *>(Comp.get())) continue;
@@ -106,7 +106,6 @@ void EditorGui::DrawInspector(GameObject *GO) {
         if (hasWarning) {
             ImGui::PopStyleColor(2);
         }
-
     }
 
     if (componentToPendingRemoval) {
@@ -117,7 +116,54 @@ void EditorGui::DrawInspector(GameObject *GO) {
         ImGui::OpenPopup("AddComponentPopup");
     }
 
-    //DrawAddComponentPopup(GO);
+    DrawAddComponentPopup(GO);
 
     ImGui::End();
+}
+
+void EditorGui::DrawAddComponentPopup(GameObject *GO) {
+    if (ImGui::BeginPopup("AddComponentPopup")) {
+        ImGui::TextColored(ImVec4(0.7f, 0.7f, 0.7f, 1.0f), "Add Component");
+        ImGui::Separator();
+        if (ImGui::BeginMenu("Rendering")) {
+            DrawAddComponentItem<RenderComponent>(GO, "Render Component");
+            DrawAddComponentItem<SpriteComponent>(GO, "Sprite Component");
+            ImGui::EndMenu();
+        }
+        if (ImGui::BeginMenu("UI")) {
+            DrawAddComponentItem<TextComponent>(GO, "Text Component");
+            DrawAddComponentItem<FPSComponent>(GO, "FPS Component");
+            //DrawAddComponentItem<LivesDisplayComponent>(GO, "Lives Display Component"); //Need eventID to be working in editor
+            //DrawAddComponentItem<ScoreDisplayComponent>(GO, "Score Display Component"); //Need eventID to be working in editor
+            ImGui::EndMenu();
+        }
+        if (ImGui::BeginMenu("Controlling")) {
+            DrawAddComponentItem<CharacterControllerComponent>(GO, "Character Controller Component");
+            DrawAddComponentItem<RotateComponent>(GO, "Rotate Component");
+            //DrawAddComponentItem<LivesComponent>(GO, "Lives Component"); //Need eventID to be working in editor
+            //DrawAddComponentItem<ScoreComponent>(GO, "Score Component"); //Need eventID to be working in editor
+            ImGui::EndMenu();
+        }
+        if (ImGui::BeginMenu("UnListed")) {
+            DrawAddComponentItem<ThrashCacheComponent>(GO, "Thrash Cache Component");
+            ImGui::EndMenu();
+        }
+
+
+        ImGui::EndPopup();
+    }
+}
+
+template<typename T>
+void EditorGui::DrawAddComponentItem(GameObject *GO, const char *label) {
+    const bool hasComp = GO->HasComponent<T>();
+
+    if (ImGui::MenuItem(label, nullptr, false, !hasComp)) {
+        GO->AddComponent(std::make_unique<T>(GO));
+        ImGui::CloseCurrentPopup();
+    }
+
+    if (hasComp && ImGui::IsItemHovered(ImGuiHoveredFlags_AllowWhenDisabled)) {
+        ImGui::SetTooltip("Object already has this component.");
+    }
 }

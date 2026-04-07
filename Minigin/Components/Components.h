@@ -6,6 +6,7 @@
 
 #include "RenderComponent.h"
 #include "SpriteComponent.h"
+
 #include "TextComponent.h"
 #include "FPSComponent.h"
 

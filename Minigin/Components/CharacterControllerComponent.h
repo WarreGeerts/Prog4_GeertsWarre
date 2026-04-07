@@ -4,6 +4,7 @@
 namespace dae {
     class CharacterControllerComponent final : public Component {
     public:
+        CharacterControllerComponent(GameObject *go);
         CharacterControllerComponent(GameObject *go, float speed, bool keyboard);
         ~CharacterControllerComponent() override = default;
         void Update() override{};

@@ -46,6 +46,7 @@ namespace dae {
         //positions
         void SetLocalPosition(const glm::vec3 &position);
         const glm::vec3 &GetWorldPosition();
+        [[nodiscard]] const glm::vec3 &GetLocalPosition() const { return m_LocalPosition; }
         void UpdateWorldPosition();
         void SetPositionDirty();
         //default constructor stuff
