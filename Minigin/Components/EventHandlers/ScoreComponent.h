@@ -23,6 +23,7 @@ namespace dae {
 
         void Update() override {};
         void Render() const override {};
+        void InspectorGUI() override;
 
         void IncreaseScore(const int amount) {
             m_Score += amount;

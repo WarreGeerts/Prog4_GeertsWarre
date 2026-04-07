@@ -21,6 +21,7 @@ namespace dae {
 
         void Update() override {};
         void Render() const override {};
+        void InspectorGUI() override;
 
         void AttachEvents(const EventId listenEventId) {
             m_Handle = EventManager::GetInstance().AttachEvent(
@@ -40,5 +41,6 @@ namespace dae {
         EventId m_SendEventId;
         EventHandle m_Handle;
         int m_Lives{3};
+
     };
 }

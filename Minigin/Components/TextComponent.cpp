@@ -91,11 +91,11 @@ void TextComponent::InspectorGUI() {
 
     const char *currentLabel{m_FileName.empty() ? "None Selected" : m_FileName.c_str()};
 
+    //Text
     if (m_OverWriten) {
         ImGui::BeginDisabled();
     }
 
-    //Text
     char textBuffer[256];
     strncpy(textBuffer, m_text.c_str(), sizeof(textBuffer));
     textBuffer[sizeof(textBuffer) - 1] = '\0';

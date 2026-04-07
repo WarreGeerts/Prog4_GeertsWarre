@@ -8,6 +8,7 @@ namespace dae {
             if (ImGui::DragFloat2("Position", pos, 0.1f)) {
                 m_gameObject->SetLocalPosition(glm::vec3(pos[0], pos[1], pos[2]));
             }
+            ImGui::Text(" ");
         }
     }
 

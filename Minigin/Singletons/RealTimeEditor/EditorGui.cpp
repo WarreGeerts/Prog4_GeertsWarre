@@ -74,7 +74,6 @@ void EditorGui::DrawInspector(GameObject *GO) {
 
     //Every gameObject has this by default and shall never get deleted!
     GO->GetTransform()->InspectorGUI();
-    ImGui::Text(" ");
 
     Component* componentToPendingRemoval = nullptr;
 

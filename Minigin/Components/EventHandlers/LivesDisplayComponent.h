@@ -20,7 +20,7 @@ namespace dae {
 
         void SetRefTextComponent(TextComponent *component) {m_TextComponentRef = component;}
 
-        void Update() override{};
+        void Update() override;;
         void Render() const override;
         void InspectorGUI() override;
 
@@ -30,7 +30,7 @@ namespace dae {
         int m_Lives{3};
         TextComponent *m_TextComponentRef{};
         EventHandle m_Handle{};
-        std::string m_Text{"# lives: "};
+        std::string m_Text{"# Lives: "};
 
     };
 }
