@@ -22,9 +22,8 @@ namespace dae {
             if (m_gameObject->GetParent() != nullptr) {
                 ImGui::TextDisabled("(Relative to parent: %s)", m_gameObject->GetParent()->GetName().c_str());
             }
-
-            ImGui::Separator();
         }
+        ImGui::Text(" ");
     }
 
     const glm::vec3 &TransformComponent::GetPosition() const {

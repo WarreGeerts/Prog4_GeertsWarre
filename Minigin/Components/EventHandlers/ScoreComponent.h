@@ -5,12 +5,14 @@
 namespace dae {
     class ScoreComponent final : public Component {
     public:
+        explicit ScoreComponent(GameObject *go) : Component(go, "ScoreComponent"){}
+
         explicit ScoreComponent(GameObject *go, const std::vector<EventId> &listenEventIds, const EventId sendEventId)
             : Component(go,"ScoreComponent"), m_ListenEventIds{listenEventIds}, m_SendEventId{sendEventId} {
             for (const auto &eventId: m_ListenEventIds) {
                 m_handles.emplace_back(EventManager::GetInstance().AttachEvent(
                     eventId,
-                    [this](const Event &event) { IncreaseScore(event.args[0].i); }
+                    [this](const Event &event) { IncreaseScore(std::get<int>(event.args[0])); }
                 ));
             }
         }
@@ -20,6 +22,7 @@ namespace dae {
                 EventManager::GetInstance().DetachEvent(handle);
             }
         }
+
 
         void Update() override {};
         void Render() const override {};
@@ -31,9 +34,9 @@ namespace dae {
         }
 
     private:
-        std::vector<EventId> m_ListenEventIds;
+        std::vector<EventId> m_ListenEventIds{};
+        EventId m_SendEventId{};
         std::vector<EventHandle> m_handles;
-        EventId m_SendEventId;
         int m_Score{};
     };
 }

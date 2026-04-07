@@ -80,7 +80,7 @@ void EditorGui::DrawInspector(GameObject *GO) {
     for (auto &Comp: GO->GetComponents()) {
         if (dynamic_cast<TransformComponent *>(Comp.get())) continue;
 
-        bool hasWarning = Comp->HasWarning();
+        const bool hasWarning = Comp->HasWarning();
 
         if (hasWarning) {
             ImGui::PushStyleColor(ImGuiCol_Header, ImVec4(0.2f, 0.f, 0.f, 0.95f));
@@ -133,22 +133,21 @@ void EditorGui::DrawAddComponentPopup(GameObject *GO) {
         if (ImGui::BeginMenu("UI")) {
             DrawAddComponentItem<TextComponent>(GO, "Text Component");
             DrawAddComponentItem<FPSComponent>(GO, "FPS Component");
-            //DrawAddComponentItem<LivesDisplayComponent>(GO, "Lives Display Component"); //Need eventID to be working in editor
-            //DrawAddComponentItem<ScoreDisplayComponent>(GO, "Score Display Component"); //Need eventID to be working in editor
+            DrawAddComponentItem<LivesDisplayComponent>(GO, "Lives Display Component");
+            DrawAddComponentItem<ScoreDisplayComponent>(GO, "Score Display Component");
             ImGui::EndMenu();
         }
         if (ImGui::BeginMenu("Controlling")) {
             DrawAddComponentItem<CharacterControllerComponent>(GO, "Character Controller Component");
             DrawAddComponentItem<RotateComponent>(GO, "Rotate Component");
-            //DrawAddComponentItem<LivesComponent>(GO, "Lives Component"); //Need eventID to be working in editor
-            //DrawAddComponentItem<ScoreComponent>(GO, "Score Component"); //Need eventID to be working in editor
+            DrawAddComponentItem<LivesComponent>(GO, "Lives Component");
+            DrawAddComponentItem<ScoreComponent>(GO, "Score Component");
             ImGui::EndMenu();
         }
         if (ImGui::BeginMenu("UnListed")) {
             DrawAddComponentItem<ThrashCacheComponent>(GO, "Thrash Cache Component");
             ImGui::EndMenu();
         }
-
 
         ImGui::EndPopup();
     }

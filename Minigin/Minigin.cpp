@@ -83,6 +83,8 @@ dae::Minigin::~Minigin() {
 void dae::Minigin::Run(const std::function<void()> &load) {
 
     load(); //initialization (once run)
+    //events
+    EventRegistry::Initialize();
 
     mainScene = &SceneManager::GetInstance().GetSceneByName("Main");
     FPSCounter = &mainScene->GetGameObjectByName("FPSCounter");
@@ -107,6 +109,7 @@ void dae::Minigin::Update() //main loop
     m_quit = !InputManager::GetInstance().ProcessInput();
     //DeltaTime
     DeltaTime::GetInstance().StartDeltaTime();
+
 
     while (DeltaTime::GetInstance().Lag() >= DeltaTime::GetInstance().FixedTime()) {
         FixedUpdate(); //Loop has to use FixedDeltaTime
