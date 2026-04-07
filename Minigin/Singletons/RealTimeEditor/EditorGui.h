@@ -16,7 +16,7 @@ namespace dae {
 
         //Scene Graph
         void DrawSceneGraph();
-        void VisualizeSceneGraph(GameObject *GO);
+        static void VisualizeSceneGraph(GameObject *GO);
         //Inspector
         void DrawInspector(GameObject* GO);
         void DrawAddComponentPopup(GameObject* GO);

@@ -11,7 +11,7 @@ using namespace dae;
 
 void ThrashCacheComponent::InspectorGUI() {
     ImGui::Text("Plot Int Timings");
-    ImGui::InputInt("# samples#int", &AmountIterationsInt, 1, 10);
+    ImGui::InputInt("# samples##int", &AmountIterationsInt, 1, 10);
     if (ImGui::Button("Thrash the cache")) {
         RunExperiment<int>(TimingsInt, AmountIterationsInt);
         ShowTimingsInt = true;
@@ -21,7 +21,7 @@ void ThrashCacheComponent::InspectorGUI() {
 
     ImGui::Text(" ");
     ImGui::Text("Plot GameObject Timings");
-    ImGui::InputInt("# samples#Go", &AmountIterationsGO, 1, 100);
+    ImGui::InputInt("# samples##Go", &AmountIterationsGO, 1, 100);
     if (ImGui::Button("Thrash the cache with GameObject3D")) {
         RunExperiment<GameObject3D>(TimingsGO, AmountIterationsGO);
         ShowTimingsGO = true;
@@ -51,7 +51,7 @@ void ThrashCacheComponent::SetAmountIterationsGO(const int amount) {
 
 void ThrashCacheComponent::PlotHelper(const ImVec4 &color, const std::vector<long long> &Timings,
                                       const ImVec4 &color2, const std::vector<long long> &Timings2) {
-    if (ImPlot::BeginPlot("", ImVec2(350, 150), ImPlotFlags_NoInputs)) {
+    if (ImPlot::BeginPlot("##TimingPlot", ImVec2(350, 150), ImPlotFlags_NoInputs)) {
         ImPlot::SetupAxisLimits(ImAxis_X1, 0, 10);
 
         constexpr double x_pos[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
@@ -110,7 +110,6 @@ void ThrashCacheComponent::RunExperiment(std::vector<long long> &averageTiming, 
     }
 
     MakeAverage(timings, averageTiming);
-    DisplayValues(averageTiming);
 }
 
 void ThrashCacheComponent::MakeAverage(const std::vector<std::vector<long long> > &timings,
@@ -121,20 +120,5 @@ void ThrashCacheComponent::MakeAverage(const std::vector<std::vector<long long> 
         const auto sum{std::accumulate(timing.begin(), timing.end(), 0LL) - (*fst) - (*snd)};
         averageTiming[iteration] = (sum / static_cast<long long>(timings.size()) - 2);
         ++iteration;
-    }
-}
-
-void ThrashCacheComponent::DisplayValues(const std::vector<long long> &timings) {
-    int step{1};
-    for (const auto &timing: timings) {
-        std::string msg{};
-        msg += std::to_string(step);
-        msg += "; ";
-        msg += std::to_string(timing);
-
-        step *= 2;
-
-        //had to use SDL_Log to log the values in console because std::cout didn't work.
-        SDL_Log("%s", msg.c_str());
     }
 }

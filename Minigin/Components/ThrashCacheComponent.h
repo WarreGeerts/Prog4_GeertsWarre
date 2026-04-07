@@ -50,14 +50,13 @@ namespace dae {
         //main helper function (making DRY code :p)
         template<typename T>
         void RunExperiment(std::vector<long long> &averageTiming, int iterations);
-        void PlotHelper(const ImVec4 &color, const std::vector<long long> &Timings, const ImVec4 &color2 = ImVec4{},
-                        const std::vector<long long> &Timings2 = std::vector<long long>{});
+        static void PlotHelper(const ImVec4 &color, const std::vector<long long> &Timings, const ImVec4 &color2 = ImVec4{},
+                               const std::vector<long long> &Timings2 = std::vector<long long>{});
         //helper functions
-        void Operate(int &value) { value *= 2; }
-        void Operate(GameObject3D &go) { go.ID *= 2; }
-        void Operate(GameObject3DAlt &go) { go.ID *= 2; }
-        void MakeAverage(const std::vector<std::vector<long long> > &timings, std::vector<long long> &averageTiming);
-        void DisplayValues(const std::vector<long long> &timings);
+        static void Operate(int &value) { value *= 2; }
+        static void Operate(GameObject3D &go) { go.ID *= 2; }
+        static void Operate(GameObject3DAlt &go) { go.ID *= 2; }
+        static void MakeAverage(const std::vector<std::vector<long long> > &timings, std::vector<long long> &averageTiming);
         //static vars
         int size{67108864}; //2^26
         int AmountIterationsInt{10};
