@@ -6,7 +6,16 @@ if (EMSCRIPTEN)
     set(TARGET_NAME BurgerTime_web)
     set(TARGET_PARAM "")
 
-    # This tells Emscripten and all dependencies to use the built-in ports
+    set(Freetype_FOUND TRUE CACHE BOOL "" FORCE)
+    set(FREETYPE_FOUND TRUE CACHE BOOL "" FORCE)
+    set(FREETYPE_INCLUDE_DIRS "${EMSCRIPTEN_SYSROOT}/include/freetype2" CACHE PATH "" FORCE)
+    set(FREETYPE_LIBRARIES "freetype" CACHE STRING "" FORCE)
+
+    # Do the same for Harfbuzz to prevent the next error
+    set(HarfBuzz_FOUND TRUE CACHE BOOL "" FORCE)
+    set(HarfBuzz_INCLUDE_DIRS "${EMSCRIPTEN_SYSROOT}/include/harfbuzz" CACHE PATH "" FORCE)
+    set(HarfBuzz_LIBRARIES "harfbuzz" CACHE STRING "" FORCE)
+
     add_compile_options("-sUSE_FREETYPE=1" "-sUSE_HARFBUZZ=1")
     add_link_options("-sUSE_FREETYPE=1" "-sUSE_HARFBUZZ=1")
 else ()
@@ -38,7 +47,7 @@ if (NOT SDL3_FOUND)
     endif ()
 endif ()
 
-# SDL3_ttf
+# Add SDL3_ttf
 find_package(SDL3_ttf 3.2.2 CONFIG QUIET)
 if (NOT SDL3_ttf_FOUND)
     if (WIN32)
@@ -50,14 +59,10 @@ if (NOT SDL3_ttf_FOUND)
         FetchContent_Declare(SDL3_ttf GIT_REPOSITORY https://github.com/libsdl-org/SDL_ttf.git GIT_TAG release-3.2.2)
 
         if (EMSCRIPTEN)
-            # FORCE SDL3_ttf to skip its own internal searches
             set(SDL3TTF_VENDORED OFF CACHE BOOL "" FORCE)
-            set(SDL3TTF_FREETYPE ON CACHE BOOL "" FORCE)
+            set(SDL3TTF_SYSTEM_FREETYPE ON CACHE BOOL "" FORCE)
             set(SDL3TTF_HARFBUZZ ON CACHE BOOL "" FORCE)
-
-            # This is the "Magic" line: It tells CMake to skip the find_package(Freetype) call inside SDL3_ttf
-            set(CMAKE_DISABLE_FIND_PACKAGE_Freetype ON CACHE BOOL "" FORCE)
-            set(CMAKE_DISABLE_FIND_PACKAGE_HarfBuzz ON CACHE BOOL "" FORCE)
+            set(SDL3TTF_INSTALL OFF CACHE BOOL "" FORCE)
         endif ()
 
         FetchContent_MakeAvailable(SDL3_ttf)
