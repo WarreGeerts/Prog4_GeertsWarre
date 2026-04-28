@@ -2,8 +2,6 @@
 #include "Components/Components.h"
 //ImGui
 #include "imgui.h"
-#include <backends/imgui_impl_sdl3.h>
-#include <backends/imgui_impl_sdlrenderer3.h>
 //scene
 #include "Singletons/SceneManager.h"
 using namespace dae;
@@ -21,7 +19,7 @@ void EditorGui::RenderGUI() {
 void EditorGui::DrawSceneGraph() {
     ImGui::Begin("Scene Graph");
     for (auto &getScene: SceneManager::GetInstance().GetScenes()) {
-        ImGui::Text(getScene->GetName().c_str());
+        ImGui::Text("%s", getScene->GetName().c_str());
         for (auto &GO: getScene->GetGameObjects()) {
             if (GO->GetParent() == nullptr)
                 VisualizeSceneGraph(GO.get());
