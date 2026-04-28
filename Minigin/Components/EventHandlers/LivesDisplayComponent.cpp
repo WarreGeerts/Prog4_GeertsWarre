@@ -34,7 +34,7 @@ void LivesDisplayComponent::InspectorGUI() {
 #if defined(_WIN32) || defined(_WIN64)
     strncpy_s(textBuffer, sizeof(textBuffer), m_Text.c_str(), _TRUNCATE);
 #else
-    strncpy(textBuffer, m_text.c_str(), sizeof(textBuffer) - 1);
+    strncpy(textBuffer, m_Text.c_str(), sizeof(textBuffer) - 1);
     textBuffer[sizeof(textBuffer) - 1] = '\0';
 #endif
 
