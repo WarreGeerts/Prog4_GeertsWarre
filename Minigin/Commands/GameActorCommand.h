@@ -2,6 +2,7 @@
 #include "Command.h"
 #include "GameObject.h"
 #include "Components/Components.h"
+#include "Sound/servicelocator.h"
 
 namespace dae {
     class GameActorCommand : public Command {
@@ -22,6 +23,7 @@ namespace dae {
 
         void Execute() override {
            EventManager::GetInstance().SendEvent(Event(m_PlayerDieEvent));
+            servicelocator::GetSoundSystem().play(2,1.f);
         }
     private:
         EventId m_PlayerDieEvent{};
@@ -47,6 +49,7 @@ namespace dae {
 
         void Execute() override {
             EventManager::GetInstance().SendEvent(Event(m_PlayerScoreEvent).AddInt(100));
+            servicelocator::GetSoundSystem().play(1,1.f);
         }
 
     private:

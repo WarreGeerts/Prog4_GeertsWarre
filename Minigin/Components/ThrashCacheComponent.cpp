@@ -118,7 +118,7 @@ void ThrashCacheComponent::MakeAverage(const std::vector<std::vector<long long> 
     for (auto &timing: timings) {
         auto [fst, snd] = minmax_element(timing.begin(), timing.end());
         const auto sum{std::accumulate(timing.begin(), timing.end(), 0LL) - (*fst) - (*snd)};
-        averageTiming[iteration] = (sum / static_cast<long long>(timings.size()) - 2);
+        averageTiming[iteration] = (sum / static_cast<long long>(timings.size() - 2));
         ++iteration;
     }
 }

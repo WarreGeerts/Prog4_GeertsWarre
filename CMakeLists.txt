@@ -62,6 +62,11 @@ add_executable(${TARGET_NAME} ${TARGET_PARAM}
         Minigin/Components/Component.cpp
         Minigin/Components/EventHandlers/LivesComponent.cpp
         Minigin/Components/EventHandlers/ScoreComponent.cpp
+        Minigin/Sound/sound_system.h
+        Minigin/Sound/servicelocator.h
+        Minigin/Sound/sdl_sound_system.h
+        Minigin/Sound/servicelocator.cpp
+        Minigin/Sound/sdl_sound_system.cpp
 )
 
 # enable c++20 features

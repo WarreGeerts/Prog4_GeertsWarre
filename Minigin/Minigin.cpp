@@ -16,8 +16,12 @@
 #include "Singletons/ResourceManager.h"
 #include "Singletons/DeltaTime.h"
 #include "Components/Components.h"
+#include "Sound/sdl_sound_system.h"
+#include "Sound/servicelocator.h"
 SDL_Window *g_window{};
 
+//visualise debugging for sounds
+#define DBG true
 
 void LogSDLVersion(const std::string &message, int major, int minor, int patch) {
 #if WIN32
@@ -54,7 +58,7 @@ void PrintSDLVersion() {
 dae::Minigin::Minigin(const std::filesystem::path &dataPath) {
     PrintSDLVersion();
 
-    if (!SDL_InitSubSystem(SDL_INIT_VIDEO | SDL_INIT_GAMEPAD)) {
+    if (!SDL_InitSubSystem(SDL_INIT_VIDEO | SDL_INIT_GAMEPAD | SDL_INIT_AUDIO)) {
         SDL_Log("Renderer error: %s", SDL_GetError());
         throw std::runtime_error(std::string("SDL_Init Error: ") + SDL_GetError());
     }
@@ -81,8 +85,21 @@ dae::Minigin::~Minigin() {
 }
 
 void dae::Minigin::Run(const std::function<void()> &load) {
-
     load(); //initialization (once run)
+
+    //sound
+    auto sdl_ss{std::make_unique<sdl_sound_system>()};
+
+#if DBG
+    auto logger_ss = std::make_unique<logging_sound_system>(std::move(sdl_ss));
+    servicelocator::RegisterSoundSystem(std::move(logger_ss));
+#else
+    servicelocator::RegisterSoundSystem(std::move(sdl_ss));
+#endif
+
+    //TODO: put inside component for sounds and or music. And then make it so you can link sounds to events that happen instead of putting them inside code
+    servicelocator::GetSoundSystem().play_music(0, 0.5f, true);
+
     //events
     EventRegistry::Initialize();
 
@@ -110,14 +127,12 @@ void dae::Minigin::Update() //main loop
     //DeltaTime
     DeltaTime::GetInstance().StartDeltaTime();
 
-
     while (DeltaTime::GetInstance().Lag() >= DeltaTime::GetInstance().FixedTime()) {
         FixedUpdate(); //Loop has to use FixedDeltaTime
         DeltaTime::GetInstance().ReCalcLag();
     }
 
     std::this_thread::sleep_for(DeltaTime::GetInstance().CalcSleepTime());
-
 
     //scene update
     SceneManager::GetInstance().Update();
