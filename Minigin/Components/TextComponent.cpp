@@ -18,7 +18,7 @@ using namespace dae;
 TextComponent::TextComponent(GameObject *go)
     : Component(go, "TextComponent"), m_needsUpdate(true), m_FileName("Lingua.otf"), m_text("New Text"),
       m_textTexture(nullptr) {
-    m_font = ResourceManager::GetInstance().LoadFont(m_FileName, m_fontSize);
+    m_font = ResourceManager::GetInstance().LoadFont(m_FileName, static_cast<uint8_t>(m_fontSize));
 }
 
 //extra one go constructor
@@ -27,7 +27,7 @@ TextComponent::TextComponent(GameObject *go, std::string text, std::string fileN
     : Component(go, "TextComponent"), m_needsUpdate(true), m_FileName(std::move(fileName)), m_text(std::move(text)),
       m_color(color),
       m_fontSize(fontSize), m_textTexture(nullptr) {
-    m_font = ResourceManager::GetInstance().LoadFont(m_FileName, m_fontSize);
+    m_font = ResourceManager::GetInstance().LoadFont(m_FileName, static_cast<uint8_t>(m_fontSize));
 }
 
 void TextComponent::Update() {
@@ -117,7 +117,7 @@ void TextComponent::InspectorGUI() {
     int fontSize[1] = {m_fontSize};
     if (ImGui::InputInt("Font Size##TC", fontSize)) {
         m_fontSize = fontSize[0];
-        m_font = ResourceManager::GetInstance().LoadFont(m_FileName, m_fontSize);
+        m_font = ResourceManager::GetInstance().LoadFont(m_FileName, static_cast<uint8_t>(m_fontSize));
         m_GuiUpdated = true;
     }
 
@@ -133,7 +133,7 @@ void TextComponent::InspectorGUI() {
         m_color.g = static_cast<Uint8>(color[1] * 255.0f);
         m_color.b = static_cast<Uint8>(color[2] * 255.0f);
 
-        m_font = ResourceManager::GetInstance().LoadFont(m_FileName, m_fontSize);
+        m_font = ResourceManager::GetInstance().LoadFont(m_FileName, static_cast<uint8_t>(m_fontSize));
         m_GuiUpdated = true;
     }
 
@@ -144,7 +144,7 @@ void TextComponent::InspectorGUI() {
 
             if (ImGui::Selectable(file.c_str(), isSelected)) {
                 m_FileName = file;
-                m_font = ResourceManager::GetInstance().LoadFont(m_FileName, m_fontSize);
+                m_font = ResourceManager::GetInstance().LoadFont(m_FileName, static_cast<uint8_t>(m_fontSize));
                 m_GuiUpdated = true;
             }
 

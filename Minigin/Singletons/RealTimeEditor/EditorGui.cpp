@@ -66,7 +66,7 @@ void EditorGui::DrawInspector(GameObject *GO) {
     }
 
     char nameBuffer[128]; //Max size of name that user can put inside
-    strcpy(nameBuffer, GO->GetName().c_str());
+    strcpy_s(nameBuffer, sizeof(nameBuffer), GO->GetName().c_str());
     if (ImGui::InputText("##Name", nameBuffer, sizeof(nameBuffer))) {
         GO->SetName(nameBuffer);
     }
