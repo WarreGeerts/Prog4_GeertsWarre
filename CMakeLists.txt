@@ -8,7 +8,11 @@ endif ()
 
 if (EMSCRIPTEN)
     set(TARGET_NAME BurgerTime_web)
-    set(TARGET_PARAM)
+    set(TARGET_PARAM "")
+
+    # This tells Emscripten and all dependencies to use the built-in ports
+    add_compile_options("-sUSE_FREETYPE=1" "-sUSE_HARFBUZZ=1")
+    add_link_options("-sUSE_FREETYPE=1" "-sUSE_HARFBUZZ=1")
 else ()
     set(TARGET_NAME BurgerTime)
     set(TARGET_PARAM WIN32)
@@ -53,36 +57,28 @@ if (NOT SDL3_FOUND)
     endif ()
 endif ()
 
-# Add SDL3_ttf
+# SDL3_ttf
 find_package(SDL3_ttf 3.2.2 CONFIG QUIET)
 if (NOT SDL3_ttf_FOUND)
     if (WIN32)
-        FetchContent_Declare(
-                SDL3_ttf
-                URL https://www.libsdl.org/projects/SDL_ttf/release/SDL3_ttf-devel-3.2.2-VC.zip
-                DOWNLOAD_NO_PROGRESS ON
-                DOWNLOAD_DIR ${CMAKE_BINARY_DIR}/downloads
-        )
+        FetchContent_Declare(SDL3_ttf URL https://www.libsdl.org/projects/SDL_ttf/release/SDL3_ttf-devel-3.2.2-VC.zip)
         FetchContent_MakeAvailable(SDL3_ttf)
         list(PREPEND CMAKE_PREFIX_PATH "${sdl3_ttf_SOURCE_DIR}")
         find_package(SDL3_ttf CONFIG REQUIRED)
     else ()
-        FetchContent_Declare(
-                SDL3_ttf
-                GIT_REPOSITORY https://github.com/libsdl-org/SDL_ttf.git
-                GIT_TAG release-3.2.2
-                GIT_SHALLOW TRUE
-                GIT_PROGRESS TRUE
-        )
-        set(SDL3TTF_INSTALL OFF)
+        FetchContent_Declare(SDL3_ttf GIT_REPOSITORY https://github.com/libsdl-org/SDL_ttf.git GIT_TAG release-3.2.2)
+
         if (EMSCRIPTEN)
-            list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake/emscripten")
-            set(SDL3TTF_USE_SYSTEM_FREETYPE ON)
-            set(SDL3TTF_VENDORED OFF)
-            set(SDLTTF_PLUTOSVG OFF)
-            add_compile_options(-sUSE_FREETYPE=1 -sUSE_HARFBUZZ=1)
-            add_link_options(-sUSE_FREETYPE=1 -sUSE_HARFBUZZ=1)
+            # FORCE SDL3_ttf to skip its own internal searches
+            set(SDL3TTF_VENDORED OFF CACHE BOOL "" FORCE)
+            set(SDL3TTF_FREETYPE ON CACHE BOOL "" FORCE)
+            set(SDL3TTF_HARFBUZZ ON CACHE BOOL "" FORCE)
+
+            # This is the "Magic" line: It tells CMake to skip the find_package(Freetype) call inside SDL3_ttf
+            set(CMAKE_DISABLE_FIND_PACKAGE_Freetype ON CACHE BOOL "" FORCE)
+            set(CMAKE_DISABLE_FIND_PACKAGE_HarfBuzz ON CACHE BOOL "" FORCE)
         endif ()
+
         FetchContent_MakeAvailable(SDL3_ttf)
     endif ()
 endif ()
