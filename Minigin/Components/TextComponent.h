@@ -40,7 +40,7 @@ namespace dae {
         bool m_needsUpdate{};
         bool m_GuiUpdated{false};
         bool m_OverWriten{false};
-        bool m_ExpensiveLoaded{false};
+        //bool m_ExpensiveLoaded{false};
 
         std::string m_FileName;
         std::string m_text;

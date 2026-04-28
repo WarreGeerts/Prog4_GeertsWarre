@@ -25,7 +25,7 @@ namespace dae {
         TransformComponent* m_transform{};
         SpriteComponent* m_sprite{};
         std::string m_FileName{};
-        bool m_expensiveLoaded{false};
+        //bool m_expensiveLoaded{false};
 
         bool m_OverWriten{false};
     };
