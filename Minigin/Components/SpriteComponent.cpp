@@ -1,7 +1,9 @@
 ﻿#include "SpriteComponent.h"
 #include <algorithm>
 #include <vector>
+#if defined(_WIN32) || defined(_WIN64)
 #include <windows.h>
+#endif
 #include "Singletons/ResourceManager.h"
 #include "Texture2D.h"
 #include <SDL3/SDL_render.h>

@@ -5,9 +5,11 @@
 #include "TransformComponent.h"
 #include "SpriteComponent.h"
 #include <filesystem>
-#include <windows.h>
 #include "TextComponent.h"
 #include "Texture2D.h"
+#if defined(_WIN32) || defined(_WIN64)
+#include <windows.h>
+#endif
 using namespace dae;
 
 RenderComponent::RenderComponent(GameObject *go)
@@ -94,12 +96,24 @@ void RenderComponent::InspectorGUI() {
         if (ImGui::IsItemHovered()) ImGui::SetTooltip("Texture is managed by other Component.");
     }
 
-    ImGui::SameLine();
+#if !defined(_WIN32) && !defined(_WIN64)
+    ImGui::BeginDisabled();
+#endif
+
     if (ImGui::Button("Open Folder##RC")) {
+#if defined(_WIN32) || defined(_WIN64)
         std::filesystem::path absPath = std::filesystem::absolute(path);
         const std::string windowsPath = absPath.make_preferred().string();
-        ShellExecuteA(NULL, "open", windowsPath.c_str(), NULL, NULL, SW_SHOWDEFAULT);
+        ShellExecuteA(nullptr, "open", windowsPath.c_str(), nullptr, nullptr, SW_SHOWDEFAULT);
+#endif
     }
+
+#if !defined(_WIN32) && !defined(_WIN64)
+    ImGui::EndDisabled();
+    if (ImGui::IsItemHovered(ImGuiHoveredFlags_AllowWhenDisabled)) {
+        ImGui::SetTooltip("Opening folder is only supported on Windows.");
+    }
+#endif
 }
 
 void RenderComponent::SetTexture(const std::string &filename) {

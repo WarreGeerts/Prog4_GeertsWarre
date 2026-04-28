@@ -1,6 +1,5 @@
 ﻿#include "TextComponent.h"
 #include "Component.h"
-#include "TransformComponent.h"
 #include "Components/EventHandlers/LivesDisplayComponent.h"
 #include "Components/EventHandlers/ScoreDisplayComponent.h"
 #include <filesystem>
@@ -8,11 +7,12 @@
 #include <SDL3_ttf/SDL_ttf.h>
 #include "Font.h"
 #include "Texture2D.h"
-#include <stdexcept>
 #include <utility>
-#include <windows.h>
 #include "Singletons/Renderer.h"
 #include "Singletons/ResourceManager.h"
+#if defined(_WIN32) || defined(_WIN64)
+#include <windows.h>
+#endif
 using namespace dae;
 //default constructor
 TextComponent::TextComponent(GameObject *go)
@@ -24,7 +24,8 @@ TextComponent::TextComponent(GameObject *go)
 //extra one go constructor
 TextComponent::TextComponent(GameObject *go, std::string text, std::string fileName, const int fontSize,
                              const SDL_Color &color)
-    : Component(go, "TextComponent"), m_needsUpdate(true), m_FileName(std::move(fileName)), m_text(std::move(text)), m_color(color),
+    : Component(go, "TextComponent"), m_needsUpdate(true), m_FileName(std::move(fileName)), m_text(std::move(text)),
+      m_color(color),
       m_fontSize(fontSize), m_textTexture(nullptr) {
     m_font = ResourceManager::GetInstance().LoadFont(m_FileName, m_fontSize);
 }
@@ -47,8 +48,7 @@ void TextComponent::Update() {
     if ((m_needsUpdate || m_GuiUpdated) && m_font != nullptr) {
         const char *textToRender = m_text.empty() ? " " : m_text.c_str();
 
-        const auto surf = TTF_RenderText_Blended(m_font->GetFont(), textToRender,
-                                                 static_cast<uint32_t>(m_text.length()), m_color);
+        const auto surf = TTF_RenderText_Blended(m_font->GetFont(), textToRender, m_text.length(), m_color);
         if (surf == nullptr) {
             return;
         }
@@ -100,8 +100,7 @@ void TextComponent::InspectorGUI() {
     }
 
     char textBuffer[256];
-    strncpy(textBuffer, m_text.c_str(), sizeof(textBuffer));
-    textBuffer[sizeof(textBuffer) - 1] = '\0';
+    strncpy_s(textBuffer, sizeof(textBuffer), m_text.c_str(), _TRUNCATE);
 
     if (ImGui::InputText("Display Text##TC", textBuffer, sizeof(textBuffer))) {
         m_text = textBuffer;
@@ -123,11 +122,17 @@ void TextComponent::InspectorGUI() {
     }
 
     //Color
-    int color[3] = {m_color.r, m_color.g, m_color.b};
-    if (ImGui::DragInt3("[RGB] Color##TC", color, 1, 0, 255)) {
-        m_color.r = color[0];
-        m_color.g = color[1];
-        m_color.b = color[2];
+    float color[3] = {
+        static_cast<float>(m_color.r) / 255.0f,
+        static_cast<float>(m_color.g) / 255.0f,
+        static_cast<float>(m_color.b) / 255.0f
+    };
+
+    if (ImGui::ColorEdit3("Text Color##TC", color)) {
+        m_color.r = static_cast<Uint8>(color[0] * 255.0f);
+        m_color.g = static_cast<Uint8>(color[1] * 255.0f);
+        m_color.b = static_cast<Uint8>(color[2] * 255.0f);
+
         m_font = ResourceManager::GetInstance().LoadFont(m_FileName, m_fontSize);
         m_GuiUpdated = true;
     }
@@ -152,10 +157,22 @@ void TextComponent::InspectorGUI() {
         availableTextures = RenderComponent::GetTextureFiles(path, true);
     }
 
-    ImGui::SameLine();
+#if !defined(_WIN32) && !defined(_WIN64)
+    ImGui::BeginDisabled();
+#endif
+
     if (ImGui::Button("Open Folder##TC")) {
+#if defined(_WIN32) || defined(_WIN64)
         std::filesystem::path absPath = std::filesystem::absolute(path);
         const std::string windowsPath = absPath.make_preferred().string();
-        ShellExecuteA(NULL, "open", windowsPath.c_str(), NULL, NULL, SW_SHOWDEFAULT);
+        ShellExecuteA(nullptr, "open", windowsPath.c_str(), nullptr, nullptr, SW_SHOWDEFAULT);
+#endif
+
+#if !defined(_WIN32) && !defined(_WIN64)
+        ImGui::EndDisabled();
+        if (ImGui::IsItemHovered(ImGuiHoveredFlags_AllowWhenDisabled)) {
+            ImGui::SetTooltip("Opening folder is only supported on Windows.");
+        }
+#endif
     }
 }
