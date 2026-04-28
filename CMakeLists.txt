@@ -6,18 +6,9 @@ if (EMSCRIPTEN)
     set(TARGET_NAME BurgerTime_web)
     set(TARGET_PARAM "")
 
-    # TRICK: Fool SDL3_ttf so it skips find_package(Freetype REQUIRED)
-    # We provide dummy values because Emscripten handles the real linking via -sUSE_FREETYPE
-    set(Freetype_FOUND TRUE CACHE BOOL "" FORCE)
-    set(FREETYPE_FOUND TRUE CACHE BOOL "" FORCE)
-    set(FREETYPE_INCLUDE_DIRS "EMSCRIPTEN_BUILTIN" CACHE PATH "" FORCE)
-    set(FREETYPE_LIBRARIES "EMSCRIPTEN_BUILTIN" CACHE STRING "" FORCE)
-
-    # Do the same for Harfbuzz to keep things consistent
-    set(harfbuzz_FOUND TRUE CACHE BOOL "" FORCE)
-    set(HarfBuzz_FOUND TRUE CACHE BOOL "" FORCE)
-    set(harfbuzz_INCLUDE_DIRS "EMSCRIPTEN_BUILTIN" CACHE PATH "" FORCE)
-    set(harfbuzz_LIBRARIES "EMSCRIPTEN_BUILTIN" CACHE STRING "" FORCE)
+    # This tells Emscripten and all dependencies to use the built-in ports
+    add_compile_options("-sUSE_FREETYPE=1" "-sUSE_HARFBUZZ=1")
+    add_link_options("-sUSE_FREETYPE=1" "-sUSE_HARFBUZZ=1")
 else ()
     set(TARGET_NAME BurgerTime)
     set(TARGET_PARAM WIN32)
@@ -59,13 +50,14 @@ if (NOT SDL3_ttf_FOUND)
         FetchContent_Declare(SDL3_ttf GIT_REPOSITORY https://github.com/libsdl-org/SDL_ttf.git GIT_TAG release-3.2.2)
 
         if (EMSCRIPTEN)
-            # Tell SDL3_ttf to use the "System" (which we spoofed above)
+            # FORCE SDL3_ttf to skip its own internal searches
             set(SDL3TTF_VENDORED OFF CACHE BOOL "" FORCE)
-            set(SDL3TTF_SYSTEM_FREETYPE ON CACHE BOOL "" FORCE)
+            set(SDL3TTF_FREETYPE ON CACHE BOOL "" FORCE)
             set(SDL3TTF_HARFBUZZ ON CACHE BOOL "" FORCE)
 
-            add_compile_options(-sUSE_FREETYPE=1 -sUSE_HARFBUZZ=1)
-            add_link_options(-sUSE_FREETYPE=1 -sUSE_HARFBUZZ=1)
+            # This is the "Magic" line: It tells CMake to skip the find_package(Freetype) call inside SDL3_ttf
+            set(CMAKE_DISABLE_FIND_PACKAGE_Freetype ON CACHE BOOL "" FORCE)
+            set(CMAKE_DISABLE_FIND_PACKAGE_HarfBuzz ON CACHE BOOL "" FORCE)
         endif ()
 
         FetchContent_MakeAvailable(SDL3_ttf)
