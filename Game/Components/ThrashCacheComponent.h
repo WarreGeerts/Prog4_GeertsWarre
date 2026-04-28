@@ -1,6 +1,6 @@
 ﻿#pragma once
 #include <vector>
-#include "Component.h"
+#include "../../Minigin/Components/Component.h"
 #include "imgui.h"
 
 namespace dae {

@@ -10,11 +10,11 @@
 #include "TextComponent.h"
 #include "FPSComponent.h"
 
-#include "ThrashCacheComponent.h"
+#include "../../Game/Components/ThrashCacheComponent.h"
 #include "CharacterControllerComponent.h"
 
 //Event handlers
-#include "EventHandlers/LivesDisplayComponent.h"
-#include "EventHandlers/LivesComponent.h"
-#include "EventHandlers/ScoreComponent.h"
-#include "EventHandlers/ScoreDisplayComponent.h"
+#include "../../Game/Components/LivesDisplayComponent.h"
+#include "../../Game/Components/LivesComponent.h"
+#include "../../Game/Components/ScoreComponent.h"
+#include "../../Game/Components/ScoreDisplayComponent.h"

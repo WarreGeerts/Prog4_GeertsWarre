@@ -1,16 +1,16 @@
 #include <iostream>
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_main.h>
-#include "Components/CharacterControllerComponent.h"
-#include "Input/InputManager.h"
-#include "Components/Components.h"
+#include "../Minigin/Components/CharacterControllerComponent.h"
+#include "../Minigin/Input/InputManager.h"
+#include "../Minigin/Components/Components.h"
 #if _DEBUG && __has_include(<vld.h>)
 #include <vld.h>
 #endif
-#include "Minigin.h"
-#include "Singletons/SceneManager.h"
-#include "Singletons/ResourceManager.h"
-#include "Scene.h"
+#include "../Minigin/Minigin.h"
+#include "../Minigin/Singletons/SceneManager.h"
+#include "../Minigin/Singletons/ResourceManager.h"
+#include "../Minigin/Scene.h"
 #include <filesystem>
 namespace fs = std::filesystem;
 using namespace dae;

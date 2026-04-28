@@ -20,7 +20,7 @@
 #include "Sound/servicelocator.h"
 SDL_Window *g_window{};
 
-//visualise debugging for sounds
+//visualize debugging for sounds
 #define DBG true
 
 void LogSDLVersion(const std::string &message, int major, int minor, int patch) {
@@ -64,7 +64,7 @@ dae::Minigin::Minigin(const std::filesystem::path &dataPath) {
     }
 
     g_window = SDL_CreateWindow(
-        "Programming 4 assignment",
+        "Burger Time",
         1024,
         576,
         SDL_WINDOW_OPENGL

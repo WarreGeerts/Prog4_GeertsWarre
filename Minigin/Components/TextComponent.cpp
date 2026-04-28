@@ -1,7 +1,7 @@
 ﻿#include "TextComponent.h"
 #include "Component.h"
-#include "Components/EventHandlers/LivesDisplayComponent.h"
-#include "Components/EventHandlers/ScoreDisplayComponent.h"
+#include "../../Game/Components/LivesDisplayComponent.h"
+#include "../../Game/Components/ScoreDisplayComponent.h"
 #include <filesystem>
 #include "GameObject.h"
 #include <SDL3_ttf/SDL_ttf.h>
