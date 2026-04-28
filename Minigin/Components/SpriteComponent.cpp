@@ -142,11 +142,24 @@ void SpriteComponent::InspectorGUI() {
         availableTextures = RenderComponent::GetTextureFiles(path);
     }
 
+#if !defined(_WIN32) && !defined(_WIN64)
+    ImGui::BeginDisabled();
+#endif
+
     ImGui::SameLine();
     if (ImGui::Button("Open Folder##SC")) {
+#if defined(_WIN32) || defined(_WIN64)
         std::filesystem::path absPath = std::filesystem::absolute(path);
         const std::string windowsPath = absPath.make_preferred().string();
-        ShellExecuteA(NULL, "open", windowsPath.c_str(), NULL, NULL, SW_SHOWDEFAULT);
+        ShellExecuteA(nullptr, "open", windowsPath.c_str(), nullptr, nullptr, SW_SHOWDEFAULT);
+#endif
+
+#if !defined(_WIN32) && !defined(_WIN64)
+        ImGui::EndDisabled();
+        if (ImGui::IsItemHovered(ImGuiHoveredFlags_AllowWhenDisabled)) {
+            ImGui::SetTooltip("Opening folder is only supported on Windows.");
+        }
+#endif
     }
 }
 
