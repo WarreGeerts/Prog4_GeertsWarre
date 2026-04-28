@@ -4,24 +4,6 @@ project(MiniginWorkspace)
 # --- 1. Global Platform Setup ---
 if (EMSCRIPTEN)
     set(TARGET_NAME BurgerTime_web)
-    set(TARGET_PARAM "")
-
-    # Create a dummy file in the build directory so CMake 'finds' a library file
-    file(WRITE "${CMAKE_BINARY_DIR}/dummy_freetype.a" "")
-
-    # Provide the EXACT variables FindFreetype.cmake looks for
-    set(Freetype_FOUND TRUE CACHE BOOL "" FORCE)
-    set(FREETYPE_FOUND TRUE CACHE BOOL "" FORCE)
-    set(FREETYPE_INCLUDE_DIRS "EMSCRIPTEN_INTERNAL" CACHE PATH "" FORCE)
-    set(FREETYPE_LIBRARY "${CMAKE_BINARY_DIR}/dummy_freetype.a" CACHE FILEPATH "" FORCE)
-    set(FREETYPE_LIBRARIES "${CMAKE_BINARY_DIR}/dummy_freetype.a" CACHE FILEPATH "" FORCE)
-
-    # Do the same for Harfbuzz to stay ahead of the next error
-    file(WRITE "${CMAKE_BINARY_DIR}/dummy_harfbuzz.a" "")
-    set(HarfBuzz_FOUND TRUE CACHE BOOL "" FORCE)
-    set(HarfBuzz_INCLUDE_DIRS "EMSCRIPTEN_INTERNAL" CACHE PATH "" FORCE)
-    set(HarfBuzz_LIBRARIES "${CMAKE_BINARY_DIR}/dummy_harfbuzz.a" CACHE FILEPATH "" FORCE)
-
     add_compile_options("-sUSE_FREETYPE=1" "-sUSE_HARFBUZZ=1")
     add_link_options("-sUSE_FREETYPE=1" "-sUSE_HARFBUZZ=1")
 else ()
@@ -68,11 +50,8 @@ if (NOT SDL3_ttf_FOUND)
             set(SDL3TTF_VENDORED OFF CACHE BOOL "" FORCE)
             set(SDL3TTF_SYSTEM_FREETYPE ON CACHE BOOL "" FORCE)
             set(SDL3TTF_HARFBUZZ ON CACHE BOOL "" FORCE)
-            set(SDL3TTF_INSTALL OFF CACHE BOOL "" FORCE)
 
-            # This prevents CMake from trying to use a "FindFreetype" module at all
-            # if it was already "Found" by our dummy variables.
-            set(Freetype_DIR "${CMAKE_BINARY_DIR}" CACHE PATH "" FORCE)
+            set(SDL3TTF_FREETYPE_CHECK_PKG_CONFIG OFF CACHE BOOL "" FORCE)
         endif ()
 
         FetchContent_MakeAvailable(SDL3_ttf)
