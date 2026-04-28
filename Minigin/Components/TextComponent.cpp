@@ -100,7 +100,14 @@ void TextComponent::InspectorGUI() {
     }
 
     char textBuffer[256];
+
+#if defined(_WIN32) || defined(_WIN64)
+    // Windows: Use the secure version
     strncpy_s(textBuffer, sizeof(textBuffer), m_text.c_str(), _TRUNCATE);
+#else
+    strncpy(textBuffer, m_text.c_str(), sizeof(textBuffer) - 1);
+    textBuffer[sizeof(textBuffer) - 1] = '\0';
+#endif
 
     if (ImGui::InputText("Display Text##TC", textBuffer, sizeof(textBuffer))) {
         m_text = textBuffer;

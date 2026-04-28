@@ -13,7 +13,6 @@ void LivesDisplayComponent::Update() {
     }
 }
 
-
 void LivesDisplayComponent::InspectorGUI() {
     m_HasWarning = false;
     if (!m_TextComponentRef) {
@@ -31,9 +30,15 @@ void LivesDisplayComponent::InspectorGUI() {
 
     //Text
     char textBuffer[256];
-    strncpy_s(textBuffer, sizeof(textBuffer), m_Text.c_str(), _TRUNCATE);
 
-    if (ImGui::InputText("Display Text", textBuffer, sizeof(textBuffer))) {
+#if defined(_WIN32) || defined(_WIN64)
+    strncpy_s(textBuffer, sizeof(textBuffer), m_Text.c_str(), _TRUNCATE);
+#else
+    strncpy(textBuffer, m_text.c_str(), sizeof(textBuffer) - 1);
+    textBuffer[sizeof(textBuffer) - 1] = '\0';
+#endif
+
+    if (ImGui::InputText("Display Text##LD", textBuffer, sizeof(textBuffer))) {
         m_Text = textBuffer;
     }
 
