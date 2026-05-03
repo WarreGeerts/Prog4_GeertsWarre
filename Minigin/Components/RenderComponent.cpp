@@ -22,10 +22,12 @@ RenderComponent::RenderComponent(GameObject *go, const std::string &filename)
 }
 
 void RenderComponent::Update() {
+    if (!m_IsActive) return;
+
     if (NeedsUpdate()) {
         //check if components that make use of the render component/overwrite the usage exist
-        m_OverWriten = m_gameObject->HasComponent<SpriteComponent>() ||
-                       m_gameObject->HasComponent<TextComponent>();
+        m_OverWritten = m_gameObject->HasComponent<SpriteComponent>() ||
+                        m_gameObject->HasComponent<TextComponent>();
 
         m_transform = m_gameObject->GetTransform().get();
         m_sprite = m_gameObject->GetComponent<SpriteComponent>();
@@ -33,6 +35,8 @@ void RenderComponent::Update() {
 }
 
 void RenderComponent::Render() const {
+    if (!m_IsActive) return;
+
     float posX{0};
     float posY{0};
 
@@ -61,6 +65,20 @@ void RenderComponent::Render() const {
     }
 }
 
+nlohmann::ordered_json RenderComponent::Serialize() const {
+    nlohmann::ordered_json data;
+    data["file_name"] = m_FileName;
+    data["overwritten"] = m_OverWritten;
+    return data;
+}
+
+void RenderComponent::Deserialize(const nlohmann::ordered_json &data) {
+    m_FileName = data.value("file_name", " ");
+    m_OverWritten = data.value("overwritten", false);
+    if (!m_OverWritten)
+        SetTexture(m_FileName);
+}
+
 void RenderComponent::InspectorGUI() {
     const std::string path{"./Data/"};
 
@@ -68,7 +86,7 @@ void RenderComponent::InspectorGUI() {
 
     const char *currentLabel{m_FileName.empty() ? "None Selected" : m_FileName.c_str()};
 
-    if (m_OverWriten) {
+    if (m_OverWritten) {
         ImGui::BeginDisabled();
     }
     if (ImGui::BeginCombo("Texture##RC", currentLabel)) {
@@ -89,7 +107,7 @@ void RenderComponent::InspectorGUI() {
         availableTextures = GetTextureFiles(path);
     }
 
-    if (m_OverWriten) {
+    if (m_OverWritten) {
         ImGui::EndDisabled();
         ImGui::SameLine();
         ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "(?)");

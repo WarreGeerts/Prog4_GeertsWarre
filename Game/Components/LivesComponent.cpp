@@ -18,10 +18,10 @@ void dae::LivesComponent::InspectorGUI() {
 
             if (ImGui::BeginPopupContextItem("ItemContext")) {
                 if (ImGui::MenuItem("Delete Listener")) {
-                    em.DetachEvent(m_handles[i]);
+                    em.DetachEvent(m_Handles[i]);
 
                     m_ListenEventIds.erase(m_ListenEventIds.begin() + i);
-                    m_handles.erase(m_handles.begin() + i);
+                    m_Handles.erase(m_Handles.begin() + i);
 
                     ImGui::EndPopup();
                     ImGui::PopID();
@@ -51,7 +51,7 @@ void dae::LivesComponent::InspectorGUI() {
     if (ImGui::Button("Add Trigger")) {
         if (idToAdd != 0) {
             m_ListenEventIds.push_back(idToAdd);
-            m_handles.push_back(em.AttachEvent(idToAdd, [this](const Event &) {
+            m_Handles.push_back(em.AttachEvent(idToAdd, [this](const Event &) {
                 PlayerDie();
             }));
         }

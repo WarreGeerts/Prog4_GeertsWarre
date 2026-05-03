@@ -30,7 +30,7 @@ namespace dae {
         return m_gameObject->GetWorldPosition();
     }
 
-    void TransformComponent::SetPosition(float x, float y, float z) {
+    void TransformComponent::SetPosition(const float x, const float y, const float z) {
         m_position.x = x;
         m_position.y = y;
         m_position.z = z;
@@ -38,5 +38,24 @@ namespace dae {
 
     void TransformComponent::SetPosition(const glm::vec3 &position) {
         m_position = position;
+    }
+
+    nlohmann::ordered_json TransformComponent::Serialize() const {
+        nlohmann::ordered_json data;
+        data["position"] = {m_position.x, m_position.y, m_position.z};
+        return data;
+    }
+
+    void TransformComponent::Deserialize(const nlohmann::ordered_json &data) {
+        if (data.contains("transform")) {
+            auto transform = data.at("transform");
+            if (transform.contains("position")) {
+                auto &posArray = transform["position"];
+
+                m_gameObject->SetLocalPosition({
+                    posArray[0].get<float>(), posArray[1].get<float>(), posArray[2].get<float>()
+                });
+            }
+        }
     }
 }

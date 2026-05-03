@@ -43,6 +43,10 @@ void InputManager::RemoveBinding(const Binding &binding) {
     );
 }
 
+void InputManager::ClearBindings() {
+    m_Bindings.clear();
+}
+
 void InputManager::CheckControllerBindings() {
     for (int controllerIdx = 0; controllerIdx < 4; ++controllerIdx) {
         Controller tempController;

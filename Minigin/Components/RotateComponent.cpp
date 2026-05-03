@@ -4,6 +4,9 @@
 using namespace dae;
 
 void RotateComponent::Update() {
+    if (!m_IsActive) return;
+
+
     glm::vec3 parentWorldPos {0,0,0};
 
     if (m_gameObject->GetParent())
@@ -22,6 +25,18 @@ void RotateComponent::Update() {
 
     const glm::vec3 newLocalPos = targetWorldPos - parentWorldPos;
     m_gameObject->SetLocalPosition(newLocalPos);
+}
+
+nlohmann::ordered_json RotateComponent::Serialize() const {
+    nlohmann::ordered_json data;
+    data["radius"] = m_Radius;
+    data["angular_speed"] = m_AngularSpeed;
+    return data;
+}
+
+void RotateComponent::Deserialize(const nlohmann::ordered_json &data) {
+    m_Radius = data.value("radius", 100.0f);
+    m_AngularSpeed = data.value("angular_speed", 1.0f);
 }
 
 void RotateComponent::InspectorGUI() {

@@ -9,6 +9,8 @@ namespace dae {
         void Update() override;
         void Render() const override;
         void InspectorGUI() override;
+        [[nodiscard]] nlohmann::ordered_json Serialize() const override;
+        void Deserialize(const nlohmann::ordered_json &data) override;
         void SetRefTextComponent(TextComponent *component) {m_TextComponentRef = component; }
 
     private:
@@ -17,5 +19,6 @@ namespace dae {
         float m_ElapsedTime{0.f};
         float m_TotalTime{0.f};
         TextComponent *m_TextComponentRef{};
+        bool onLoad{false};
     };
 }

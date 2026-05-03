@@ -31,8 +31,11 @@ namespace dae {
 
         void SetRefTextComponent(TextComponent *component) { m_TextComponentRef = component; }
         void Update() override;
-        void Render() const override{};
+        void Render() const override {};
         void InspectorGUI() override;
+
+        [[nodiscard]] nlohmann::ordered_json Serialize() const override;
+        void Deserialize(const nlohmann::ordered_json &data) override;
 
     private:
         void OnScoreIncrease(const int score) { m_Score = score; };

@@ -3,6 +3,9 @@
 using namespace dae;
 
 void ScoreDisplayComponent::Update() {
+    if (!m_IsActive) return;
+
+
     if (NeedsUpdate()) {
         m_TextComponentRef = m_gameObject->GetComponent<TextComponent>();
     }
@@ -64,4 +67,26 @@ void ScoreDisplayComponent::InspectorGUI() {
         }
         ImGui::EndCombo();
     }
+}
+
+nlohmann::ordered_json ScoreDisplayComponent::Serialize() const {
+    nlohmann::ordered_json data;
+    data["event_id"] = m_ListenEventId;
+    data["handle"] = {
+        {"event_id", m_Handle.eventId},
+        {"index", m_Handle.index},
+        {"valid", m_Handle.valid},
+    };
+    data["text"] = m_Text;
+    return data;
+}
+
+void ScoreDisplayComponent::Deserialize(const nlohmann::ordered_json &data) {
+    m_ListenEventId = data.value("event_id", -1);
+    if (data.contains("handle")) {
+        m_Handle.eventId = data.value("event_id", -1);
+        m_Handle.index = data.value("index", -1);
+        m_Handle.valid = data.value("valid", false);
+    }
+    m_Text = data.value("text", "# Lives: ");
 }

@@ -15,6 +15,8 @@ namespace dae {
         RenderComponent(GameObject *go, const std::string &filename);
         void Update() override;
         void Render() const override;
+        [[nodiscard]] nlohmann::ordered_json Serialize() const override;
+        void Deserialize(const nlohmann::ordered_json &data) override;
         void InspectorGUI() override;
         void SetTexture(const std::string &filename);
         void SetTexture(const std::shared_ptr<Texture2D> &texture) { m_texture = texture; }
@@ -25,8 +27,7 @@ namespace dae {
         TransformComponent* m_transform{};
         SpriteComponent* m_sprite{};
         std::string m_FileName{};
-        //bool m_expensiveLoaded{false};
 
-        bool m_OverWriten{false};
+        bool m_OverWritten{false};
     };
 }

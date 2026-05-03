@@ -15,8 +15,11 @@ namespace dae {
         //important functions
         void Update();
         [[nodiscard]] bool MarkedForDeletion() const { return m_MarkedForDeletion; }
+        void MarkForDeletion();
         [[nodiscard]] const std::string &GetName() const { return m_Name; }
         void SetName(const std::string &name) { m_Name = name; };
+        void SetIsEnabled(const bool value) { m_IsEnabled = value; }
+        [[nodiscard]] bool GetIsEnabled() const { return m_IsEnabled; }
         //components
         [[nodiscard]] const std::vector<std::unique_ptr<Component> > &GetComponents() const { return m_Components; }
         [[nodiscard]] const std::unique_ptr<TransformComponent> &GetTransform() const { return m_Transform; }
@@ -37,7 +40,7 @@ namespace dae {
         [[nodiscard]] bool HasComponent() const { return GetComponent<T>() != nullptr; }
 
         void NoteChange() { m_ComponentListVersion++; }
-        uint32_t GetComponentListVersion() const { return m_ComponentListVersion; }
+        [[nodiscard]] uint32_t GetComponentListVersion() const { return m_ComponentListVersion; }
         //Parent-child functions
         void SetParent(GameObject *parent, bool keepWorldPosition);
         [[nodiscard]] GameObject *GetParent() const { return m_Parent; }
@@ -55,6 +58,9 @@ namespace dae {
         GameObject(GameObject &&other) = delete;
         GameObject &operator=(const GameObject &other) = delete;
         GameObject &operator=(GameObject &&other) = delete;
+        //id
+        [[nodiscard]] int GetId() const { return m_Id; }
+        static void ClearIds();
 
     private:
         //general vars
@@ -63,16 +69,21 @@ namespace dae {
         std::string m_Name;
         bool m_MarkedForDeletion{false};
         uint32_t m_ComponentListVersion{0};
+        bool m_IsEnabled{true};
         //parent-child vars
         GameObject *m_Parent{nullptr};
         std::vector<GameObject *> m_Children{};
         //positions
         glm::vec3 m_LocalPosition{};
         glm::vec3 m_WorldPosition{};
-        bool m_PositionIsDirty{};
+        bool m_PositionIsDirty{true};
         //parent-child functions
         void AddChild(GameObject *child);
         void RemoveChild(const GameObject *child);
         bool IsChild(GameObject *object) const;
+        //id
+        int m_Id;
+        static int s_NextId;
+        static int GenerateNextId() { return s_NextId++; }
     };
 }

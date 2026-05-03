@@ -10,6 +10,8 @@ namespace dae {
         void Update() override {}
         void Render() const override {}
         void InspectorGUI() override;
+        [[nodiscard]] nlohmann::ordered_json Serialize() const override;
+        void Deserialize(const nlohmann::ordered_json &data) override;
 
         [[nodiscard]] const glm::vec3 &GetPosition() const;
         void SetPosition(float x, float y, float z = 0);

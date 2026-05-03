@@ -64,6 +64,22 @@ FetchContent_Declare(imgui GIT_REPOSITORY https://github.com/ocornut/imgui GIT_T
 FetchContent_Declare(implot GIT_REPOSITORY https://github.com/epezent/implot.git GIT_TAG v0.17)
 FetchContent_MakeAvailable(imgui implot)
 
+# ImGui FileBrowser
+FetchContent_Declare(
+        imgui_filebrowser
+        GIT_REPOSITORY https://github.com/AirGuanZ/imgui-filebrowser.git
+        GIT_TAG master
+)
+FetchContent_MakeAvailable(imgui_filebrowser)
+
+# nlohmann json
+FetchContent_Declare(
+        nlohmann_json
+        GIT_REPOSITORY https://github.com/nlohmann/json
+        GIT_TAG v3.11.3
+)
+FetchContent_MakeAvailable(nlohmann_json)
+
 # --- 3. Optional Features (VLD/Steam) ---
 if (WIN32)
     find_package(VLD CONFIG)

@@ -16,21 +16,24 @@
 using namespace dae;
 //default constructor
 TextComponent::TextComponent(GameObject *go)
-    : Component(go, "TextComponent"), m_needsUpdate(true), m_FileName("Lingua.otf"), m_text("New Text"),
+    : Component(go, "TextComponent"), m_needsUpdate(true), m_FontFileName("Lingua.otf"), m_Text("New Text"),
       m_textTexture(nullptr) {
-    m_font = ResourceManager::GetInstance().LoadFont(m_FileName, static_cast<uint8_t>(m_fontSize));
+    m_font = ResourceManager::GetInstance().LoadFont(m_FontFileName, static_cast<uint8_t>(m_FontSize));
 }
 
 //extra one go constructor
 TextComponent::TextComponent(GameObject *go, std::string text, std::string fileName, const int fontSize,
                              const SDL_Color &color)
-    : Component(go, "TextComponent"), m_needsUpdate(true), m_FileName(std::move(fileName)), m_text(std::move(text)),
+    : Component(go, "TextComponent"), m_needsUpdate(true), m_FontFileName(std::move(fileName)), m_Text(std::move(text)),
       m_color(color),
-      m_fontSize(fontSize), m_textTexture(nullptr) {
-    m_font = ResourceManager::GetInstance().LoadFont(m_FileName, static_cast<uint8_t>(m_fontSize));
+      m_FontSize(fontSize), m_textTexture(nullptr) {
+    m_font = ResourceManager::GetInstance().LoadFont(m_FontFileName, static_cast<uint8_t>(m_FontSize));
 }
 
 void TextComponent::Update() {
+    if (!m_IsActive) return;
+
+
     if (NeedsUpdate()) {
         m_renderComponentRef = m_gameObject->GetComponent<RenderComponent>();
 
@@ -41,14 +44,14 @@ void TextComponent::Update() {
 
     if (!m_renderComponentRef) return;
 
-    if (m_text != m_prevText) {
+    if (m_Text != m_prevText) {
         m_needsUpdate = true;
     }
 
     if ((m_needsUpdate || m_GuiUpdated) && m_font != nullptr) {
-        const char *textToRender = m_text.empty() ? " " : m_text.c_str();
+        const char *textToRender = m_Text.empty() ? " " : m_Text.c_str();
 
-        const auto surf = TTF_RenderText_Blended(m_font->GetFont(), textToRender, m_text.length(), m_color);
+        const auto surf = TTF_RenderText_Blended(m_font->GetFont(), textToRender, m_Text.length(), m_color);
         if (surf == nullptr) {
             return;
         }
@@ -58,7 +61,7 @@ void TextComponent::Update() {
         m_textTexture = std::make_shared<Texture2D>(texture);
         m_needsUpdate = false;
         m_GuiUpdated = false;
-        m_prevText = m_text;
+        m_prevText = m_Text;
     }
 
     if (m_GuiUpdated) {
@@ -67,6 +70,9 @@ void TextComponent::Update() {
 }
 
 void TextComponent::Render() const {
+    if (!m_IsActive) return;
+
+
     if (m_renderComponentRef && m_textTexture) {
         m_renderComponentRef->SetTexture(m_textTexture);
         m_renderComponentRef->Render();
@@ -92,7 +98,7 @@ void TextComponent::InspectorGUI() {
 
     std::vector<std::string> availableTextures{RenderComponent::GetTextureFiles(path, true)};
 
-    const char *currentLabel{m_FileName.empty() ? "None Selected" : m_FileName.c_str()};
+    const char *currentLabel{m_FontFileName.empty() ? "None Selected" : m_FontFileName.c_str()};
 
     //Text
     if (m_OverWriten) {
@@ -103,14 +109,14 @@ void TextComponent::InspectorGUI() {
 
 #if defined(_WIN32) || defined(_WIN64)
     // Windows: Use the secure version
-    strncpy_s(textBuffer, sizeof(textBuffer), m_text.c_str(), _TRUNCATE);
+    strncpy_s(textBuffer, sizeof(textBuffer), m_Text.c_str(), _TRUNCATE);
 #else
-    strncpy(textBuffer, m_text.c_str(), sizeof(textBuffer) - 1);
+    strncpy(textBuffer, m_Text.c_str(), sizeof(textBuffer) - 1);
     textBuffer[sizeof(textBuffer) - 1] = '\0';
 #endif
 
     if (ImGui::InputText("Display Text##TC", textBuffer, sizeof(textBuffer))) {
-        m_text = textBuffer;
+        m_Text = textBuffer;
         m_GuiUpdated = true;
     }
 
@@ -121,10 +127,10 @@ void TextComponent::InspectorGUI() {
     }
 
     //Font Size
-    int fontSize[1] = {m_fontSize};
+    int fontSize[1] = {m_FontSize};
     if (ImGui::InputInt("Font Size##TC", fontSize)) {
-        m_fontSize = fontSize[0];
-        m_font = ResourceManager::GetInstance().LoadFont(m_FileName, static_cast<uint8_t>(m_fontSize));
+        m_FontSize = fontSize[0];
+        m_font = ResourceManager::GetInstance().LoadFont(m_FontFileName, static_cast<uint8_t>(m_FontSize));
         m_GuiUpdated = true;
     }
 
@@ -140,18 +146,18 @@ void TextComponent::InspectorGUI() {
         m_color.g = static_cast<Uint8>(color[1] * 255.0f);
         m_color.b = static_cast<Uint8>(color[2] * 255.0f);
 
-        m_font = ResourceManager::GetInstance().LoadFont(m_FileName, static_cast<uint8_t>(m_fontSize));
+        m_font = ResourceManager::GetInstance().LoadFont(m_FontFileName, static_cast<uint8_t>(m_FontSize));
         m_GuiUpdated = true;
     }
 
     //File selection
     if (ImGui::BeginCombo("Fonts##TC", currentLabel)) {
         for (const auto &file: availableTextures) {
-            const bool isSelected = (m_FileName == file);
+            const bool isSelected = (m_FontFileName == file);
 
             if (ImGui::Selectable(file.c_str(), isSelected)) {
-                m_FileName = file;
-                m_font = ResourceManager::GetInstance().LoadFont(m_FileName, static_cast<uint8_t>(m_fontSize));
+                m_FontFileName = file;
+                m_font = ResourceManager::GetInstance().LoadFont(m_FontFileName, static_cast<uint8_t>(m_FontSize));
                 m_GuiUpdated = true;
             }
 
@@ -182,4 +188,28 @@ void TextComponent::InspectorGUI() {
         }
 #endif
     }
+}
+
+nlohmann::ordered_json TextComponent::Serialize() const {
+    nlohmann::ordered_json data;
+    data["font_file_name"] = m_FontFileName;
+    data["font_size"] = m_FontSize;
+    data["text"] = m_Text;
+    data["color"] = {m_color.r, m_color.g, m_color.b, m_color.a};
+    return data;
+}
+
+void TextComponent::Deserialize(const nlohmann::ordered_json &data) {
+    m_FontFileName = data.value("font_file_name", " ");
+    m_FontSize = data.value("font_size", 10);
+    m_Text = data.value("text", " ");
+    if (data.contains("color")) {
+        auto& posArray = data["color"];
+        m_color.r = posArray[0].get<float>();
+        m_color.g = posArray[1].get<float>();
+        m_color.b = posArray[2].get<float>();
+        m_color.a = posArray[3].get<float>();
+    }
+
+    m_font = ResourceManager::GetInstance().LoadFont(m_FontFileName, static_cast<uint8_t>(m_FontSize));
 }

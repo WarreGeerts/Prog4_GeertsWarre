@@ -10,4 +10,7 @@ public:
     static void RegisterSoundSystem(std::unique_ptr<sound_system>&& ss) {
         _ss_instance = ss == nullptr ? std::make_unique<null_sound_system>() : std::move(ss);
     }
+    static void Shutdown() {
+        _ss_instance = std::make_unique<null_sound_system>();
+    }
 };

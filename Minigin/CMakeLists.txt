@@ -28,6 +28,10 @@ add_library(Minigin STATIC
         Singletons/Renderer.cpp
         Singletons/ResourceManager.cpp
         Singletons/SceneManager.cpp
+        Singletons/RealTimeEditor/SceneSerializer.cpp
+        Singletons/RealTimeEditor/SceneSerializer.h
+        Singletons/RealTimeEditor/ComponentFactory.cpp
+        Singletons/RealTimeEditor/ComponentFactory.h
 
         #components
         Components/TransformComponent.cpp
@@ -42,6 +46,7 @@ add_library(Minigin STATIC
         #sound
         Sound/servicelocator.cpp
         Sound/sdl_sound_system.cpp
+
         # External Source
         ${implot_SOURCE_DIR}/implot.cpp
         ${implot_SOURCE_DIR}/implot_items.cpp
@@ -53,12 +58,14 @@ target_include_directories(Minigin PUBLIC
         ${imgui_SOURCE_DIR}
         ${implot_SOURCE_DIR}
         ${VLD_INCLUDE_DIRS}
+        ${imgui_filebrowser_SOURCE_DIR}
 )
 
 target_link_libraries(Minigin PUBLIC
         SDL3::SDL3
         SDL3_ttf::SDL3_ttf
         glm::glm
+        nlohmann_json::nlohmann_json
         imgui_internal
         ${VLD_LIBRARIES}
 )

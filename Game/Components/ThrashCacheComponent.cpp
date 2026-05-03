@@ -8,12 +8,26 @@
 #include <backends/imgui_impl_sdlrenderer3.h>
 #include "implot.h"
 using namespace dae;
+nlohmann::ordered_json ThrashCacheComponent::Serialize() const {
+    nlohmann::ordered_json data;
+    data["iterations_int"] = m_AmountIterationsInt;
+    data["iterations_go"] = m_AmountIterationsGO;
+    data["size"] = m_Size;
+    return data;
+}
+
+void ThrashCacheComponent::Deserialize(const nlohmann::ordered_json &data) {
+    m_AmountIterationsInt = data.value("iterations_int", 10);
+    m_AmountIterationsGO = data.value("iterations_go", 100);
+    m_Size = data.value("size", 67108864);
+
+}
 
 void ThrashCacheComponent::InspectorGUI() {
     ImGui::Text("Plot Int Timings");
-    ImGui::InputInt("# samples##int", &AmountIterationsInt, 1, 10);
+    ImGui::InputInt("# samples##int", &m_AmountIterationsInt, 1, 10);
     if (ImGui::Button("Thrash the cache")) {
-        RunExperiment<int>(TimingsInt, AmountIterationsInt);
+        RunExperiment<int>(TimingsInt, m_AmountIterationsInt);
         ShowTimingsInt = true;
     }
     if (ShowTimingsInt)
@@ -21,13 +35,13 @@ void ThrashCacheComponent::InspectorGUI() {
 
     ImGui::Text(" ");
     ImGui::Text("Plot GameObject Timings");
-    ImGui::InputInt("# samples##Go", &AmountIterationsGO, 1, 100);
+    ImGui::InputInt("# samples##Go", &m_AmountIterationsGO, 1, 100);
     if (ImGui::Button("Thrash the cache with GameObject3D")) {
-        RunExperiment<GameObject3D>(TimingsGO, AmountIterationsGO);
+        RunExperiment<GameObject3D>(TimingsGO, m_AmountIterationsGO);
         ShowTimingsGO = true;
     }
     if (ImGui::Button("Thrash the cache with GameObject3DAlt")) {
-        RunExperiment<GameObject3DAlt>(TimingsGOAlt, AmountIterationsGO);
+        RunExperiment<GameObject3DAlt>(TimingsGOAlt, m_AmountIterationsGO);
         ShowTimingsGOAlt = true;
     }
     if (ShowTimingsGO)
@@ -42,11 +56,11 @@ void ThrashCacheComponent::InspectorGUI() {
 }
 
 void ThrashCacheComponent::SetAmountIterationsInt(const int amount) {
-    AmountIterationsInt = amount;
+    m_AmountIterationsInt = amount;
 }
 
 void ThrashCacheComponent::SetAmountIterationsGO(const int amount) {
-    AmountIterationsGO = amount;
+    m_AmountIterationsGO = amount;
 }
 
 void ThrashCacheComponent::PlotHelper(const ImVec4 &color, const std::vector<long long> &Timings,
@@ -87,7 +101,7 @@ void ThrashCacheComponent::PlotHelper(const ImVec4 &color, const std::vector<lon
 
 template<typename T>
 void ThrashCacheComponent::RunExperiment(std::vector<long long> &averageTiming, const int iterations) {
-    std::vector<T> array(size, T{});
+    std::vector<T> array(m_Size, T{});
     std::vector<std::vector<long long> > timings;
 
     int step{0};

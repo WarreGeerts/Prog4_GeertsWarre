@@ -18,10 +18,10 @@ void dae::ScoreComponent::InspectorGUI() {
 
             if (ImGui::BeginPopupContextItem("ItemContext##SC")) {
                 if (ImGui::MenuItem("Delete Listener##SC")) {
-                    em.DetachEvent(m_handles[i]);
+                    em.DetachEvent(m_Handles[i]);
 
                     m_ListenEventIds.erase(m_ListenEventIds.begin() + i);
-                    m_handles.erase(m_handles.begin() + i);
+                    m_Handles.erase(m_Handles.begin() + i);
 
                     ImGui::EndPopup();
                     ImGui::PopID();
@@ -51,7 +51,7 @@ void dae::ScoreComponent::InspectorGUI() {
     if (ImGui::Button("Add Trigger##SC")) {
         if (idToAdd != 0) {
             m_ListenEventIds.push_back(idToAdd);
-            m_handles.push_back(em.AttachEvent(idToAdd, [this](const Event &e) {
+            m_Handles.push_back(em.AttachEvent(idToAdd, [this](const Event &e) {
                 IncreaseScore(std::get<int>(e.args[0]));
             }));
         }

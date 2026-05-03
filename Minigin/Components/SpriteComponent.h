@@ -23,6 +23,8 @@ namespace dae {
         void SetFrame(int frameIndex);
         void Update() override {}
         void Render() const override {}
+        [[nodiscard]] nlohmann::ordered_json Serialize() const override;
+        void Deserialize(const nlohmann::ordered_json &data) override;
         void InspectorGUI() override;
 
         [[nodiscard]] const Rectf &GetSrcRect() const { return m_SrcRect; }

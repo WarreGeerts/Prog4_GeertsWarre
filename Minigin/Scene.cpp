@@ -5,7 +5,9 @@
 #include "Components/Component.h"
 #include <stdexcept>
 
+#include "../cmake-build-release/_deps/sdl3-src/include/SDL3/SDL_log.h"
 using namespace dae;
+int Scene::s_NextId = 0;
 
 void Scene::Add(std::unique_ptr<GameObject> object) {
     assert(object != nullptr && "Cannot add a null GameObject to the scene.");
@@ -43,7 +45,7 @@ GameObject &Scene::GetGameObjectByIndex(const int idx) const {
     throw std::runtime_error("GameObject at idx: '" + std::to_string(idx) + "' not found");
 }
 
-const std::vector<std::unique_ptr<GameObject>> & Scene::GetGameObjects() const {
+const std::vector<std::unique_ptr<GameObject> > &Scene::GetGameObjects() const {
     return m_objects;
 }
 
@@ -53,30 +55,44 @@ int Scene::GetSceneSize() const {
 
 void Scene::Update() {
     //update everything first
-    for (auto &object: m_objects) {
-        object->Update();
-    }
-    //after update look through all objects to delete those who are marked
-    for (auto &object: m_objects) {
-        if (object->MarkedForDeletion()) {
-           m_objects.erase(remove(m_objects.begin(), m_objects.end(), object), m_objects.end());
+    for (const auto &object: m_objects) {
+        if (object->GetIsEnabled()) {
+            object->Update();
         }
     }
+    //after update look through all objects to delete those who are marked
+    m_objects.erase(
+        std::remove_if(m_objects.begin(), m_objects.end(),
+            [](const std::unique_ptr<GameObject>& object) {
+                if (object->MarkedForDeletion()) {
+                    SDL_Log("deleted %s", object->GetName().c_str());
+                }
+                return object->MarkedForDeletion();
+            }),
+        m_objects.end()
+    );
 }
 
 void Scene::Render() const {
     for (const auto &object: m_objects) {
-        for (const auto &component: object->GetComponents()) {
-            component->Render();
+        if (object->GetIsEnabled()) {
+            for (const auto &component: object->GetComponents()) {
+                component->Render();
+            }
         }
     }
 }
 
 void Scene::RenderGUI() const {
     for (const auto &object: m_objects) {
-        for (const auto &component: object->GetComponents()) {
-            component->RenderGUI();
+        if (object->GetIsEnabled()) {
+            for (const auto &component: object->GetComponents()) {
+                component->RenderGUI();
+            }
         }
     }
 }
 
+void Scene::ClearGameObjects() {
+    m_objects.clear();
+}

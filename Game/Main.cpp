@@ -1,16 +1,14 @@
 #include <iostream>
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_main.h>
-#include "../Minigin/Components/CharacterControllerComponent.h"
-#include "../Minigin/Input/InputManager.h"
-#include "../Minigin/Components/Components.h"
+#include "Components/Components.h"
 #if _DEBUG && __has_include(<vld.h>)
 #include <vld.h>
 #endif
-#include "../Minigin/Minigin.h"
-#include "../Minigin/Singletons/SceneManager.h"
-#include "../Minigin/Singletons/ResourceManager.h"
-#include "../Minigin/Scene.h"
+#include "Minigin.h"
+#include "Singletons/SceneManager.h"
+#include "Singletons/ResourceManager.h"
+#include "Scene.h"
 #include <filesystem>
 namespace fs = std::filesystem;
 using namespace dae;
@@ -18,8 +16,9 @@ using namespace dae;
 static void load() //loads once
 {
     auto &scene = SceneManager::GetInstance().CreateScene("Main");
-    const auto fontLinguaTitle = ResourceManager::GetInstance().LoadFont("Lingua.otf", 36);
+    /*const auto fontLinguaTitle = ResourceManager::GetInstance().LoadFont("Lingua.otf", 36);
     const auto fontLinguaLower = ResourceManager::GetInstance().LoadFont("Lingua.otf", 18);
+    */
     constexpr SpriteFraming spriteFraming{15, 11, 16.f, 16.f};
 
     //Background ****
@@ -31,7 +30,7 @@ static void load() //loads once
     //add to scene ====
     scene.Add(std::move(go));
 
-    //Logo ****
+   /* //Logo ****
     //GameObject ====
     go = std::make_unique<GameObject>("Logo");
     go->SetLocalPosition({358, 180, 0});
@@ -91,7 +90,7 @@ static void load() //loads once
     go->GetComponent<FPSComponent>()->SetRefTextComponent(go->GetComponent<TextComponent>());
     //add to scene ====
     scene.Add(std::move(go));
-
+*/
     //BurgerMan Player ****
     //GameObject ====
     go = std::make_unique<GameObject>("BurgerMan");
@@ -141,7 +140,7 @@ static void load() //loads once
     //add to scene ====
     scene.Add(std::move(go));
 
-    //Bean Player ****
+    /*//Bean Player ****
     //GameObject ====
     go = std::make_unique<GameObject>("Bean");
     go->SetLocalPosition({200, 250, 0});
@@ -188,7 +187,7 @@ static void load() //loads once
     //LivesDisplayComponent
     go->GetComponent<ScoreDisplayComponent>()->SetRefTextComponent(go->GetComponent<TextComponent>());
     //add to scene ====
-    scene.Add(std::move(go));
+    scene.Add(std::move(go));*/
 }
 
 int main(int, char *[]) {
@@ -201,5 +200,6 @@ int main(int, char *[]) {
 #endif
     Minigin engine(data_location);
     engine.Run(load);
+
     return 0;
 }

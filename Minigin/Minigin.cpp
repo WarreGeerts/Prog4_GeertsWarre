@@ -16,9 +16,11 @@
 #include "Singletons/ResourceManager.h"
 #include "Singletons/DeltaTime.h"
 #include "Components/Components.h"
+#include "Singletons/RealTimeEditor/ComponentFactory.h"
 #include "Sound/sdl_sound_system.h"
 #include "Sound/servicelocator.h"
 SDL_Window *g_window{};
+
 
 //visualize debugging for sounds
 #define DBG true
@@ -57,6 +59,21 @@ void PrintSDLVersion() {
 
 dae::Minigin::Minigin(const std::filesystem::path &dataPath) {
     PrintSDLVersion();
+
+    ComponentFactory::Register<TransformComponent>("TransformComponent");
+    ComponentFactory::Register<RenderComponent>("RenderComponent");
+    ComponentFactory::Register<TextComponent>("TextComponent");
+    ComponentFactory::Register<SpriteComponent>("SpriteComponent");
+    ComponentFactory::Register<FPSComponent>("FPSComponent");
+    ComponentFactory::Register<CharacterControllerComponent>("CharacterControllerComponent");
+    ComponentFactory::Register<RotateComponent>("RotateComponent");
+    ComponentFactory::Register<ThrashCacheComponent>("ThrashCacheComponent");
+    ComponentFactory::Register<LivesComponent>("LivesComponent");
+    ComponentFactory::Register<ScoreComponent>("ScoreComponent");
+    ComponentFactory::Register<LivesDisplayComponent>("LivesDisplayComponent");
+    ComponentFactory::Register<ScoreDisplayComponent>("ScoreDisplayComponent");
+
+
 
     if (!SDL_InitSubSystem(SDL_INIT_VIDEO | SDL_INIT_GAMEPAD | SDL_INIT_AUDIO)) {
         SDL_Log("Renderer error: %s", SDL_GetError());
@@ -103,8 +120,7 @@ void dae::Minigin::Run(const std::function<void()> &load) {
     //events
     EventRegistry::Initialize();
 
-    mainScene = &SceneManager::GetInstance().GetSceneByName("Main");
-    FPSCounter = &mainScene->GetGameObjectByName("FPSCounter");
+    //Time
     DeltaTime::GetInstance().SetFPS(60);
 
 #ifndef __EMSCRIPTEN__
@@ -114,6 +130,7 @@ void dae::Minigin::Run(const std::function<void()> &load) {
         Update();
     }
 
+    servicelocator::Shutdown();
 #else
     emscripten_set_main_loop_arg(&LoopCallback, this, 0, true);
 #endif

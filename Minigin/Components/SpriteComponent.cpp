@@ -56,6 +56,78 @@ void SpriteComponent::SetFrame(const int) {
     m_DstRect.h = m_SpriteFrame.frameHeight * m_ScaleY;
 }
 
+nlohmann::ordered_json SpriteComponent::Serialize() const {
+    nlohmann::ordered_json data;
+    data["file_name"] = m_FileName;
+    data["source_rect"] = {m_SrcRect.x, m_SrcRect.y, m_SrcRect.w, m_SrcRect.h};
+    data["dist_rect"] = {m_DstRect.x, m_DstRect.y, m_DstRect.w, m_DstRect.h};
+    data["scale"] = {m_ScaleX, m_ScaleY};
+    data["sprite_frame"] = {
+        {"columns", m_SpriteFrame.columns},
+        {"rows", m_SpriteFrame.rows},
+        {
+            "frame_size", {
+                {"width", m_SpriteFrame.frameWidth},
+                {"height", m_SpriteFrame.frameHeight}
+            }
+        },
+        {
+            "spacing", {
+                {"spacing_x", m_SpriteFrame.spacingX},
+                {"spacing_y", m_SpriteFrame.spacingY},
+            }
+        }
+    };
+    data["frame_index"] = m_FrameIndex;
+    return data;
+}
+
+void SpriteComponent::Deserialize(const nlohmann::ordered_json &data) {
+    m_FileName = data.value("file_name", " ");
+    if (data.contains("source_rect")) {
+        auto& posArray = data["source_rect"];
+        m_SrcRect.x = posArray[0].get<float>();
+        m_SrcRect.y = posArray[1].get<float>();
+        m_SrcRect.w = posArray[2].get<float>();
+        m_SrcRect.h = posArray[3].get<float>();
+    }
+    if (data.contains("dist_rect")) {
+        auto& posArray = data["dist_rect"];
+        m_DstRect.x = posArray[0].get<float>();
+        m_DstRect.y = posArray[1].get<float>();
+        m_DstRect.w = posArray[2].get<float>();
+        m_DstRect.h = posArray[3].get<float>();
+    }
+    if (data.contains("scale")) {
+        auto& posArray = data["scale"];
+        m_ScaleX = posArray[0].get<float>();
+        m_ScaleY = posArray[1].get<float>();
+    }
+
+    if (data.contains("sprite_frame")) {
+        auto& frame = data["sprite_frame"];
+        m_SpriteFrame.columns = frame.value("columns", 1);
+        m_SpriteFrame.rows = frame.value("rows", 1);
+
+        if (frame.contains("frame_size")) {
+            auto& size = frame["frame_size"];
+            m_SpriteFrame.frameWidth = size.value("width", 16.0f);
+            m_SpriteFrame.frameHeight = size.value("height", 16.0f);
+        }
+
+        if (frame.contains("spacing")) {
+            auto& spacing = frame["spacing"];
+            m_SpriteFrame.spacingX = spacing.value("spacing_x", 0.0f);
+            m_SpriteFrame.spacingY = spacing.value("spacing_y", 0.0f);
+        }
+    }
+
+    m_FrameIndex = data.value("frame_index", 0);
+
+    SetSpritesheetPath(m_FileName);
+    SetFrame(m_FrameIndex);
+}
+
 void SpriteComponent::InspectorGUI() {
     if (NeedsUpdate()) {
         if (m_gameObject->HasComponent<RenderComponent>()) m_HasRenderComponent = true;

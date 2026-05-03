@@ -2,11 +2,17 @@
 #include <algorithm>
 #include <cassert>
 #include <utility>
+#include "../cmake-build-release/_deps/sdl3-src/include/SDL3/SDL_log.h"
 #include "Components/Component.h"
 #include "Components/TransformComponent.h"
 using namespace dae;
-GameObject::GameObject(std::string name) : m_Name(std::move(name)) {}
+int GameObject::s_NextId = 0;
+GameObject::GameObject(std::string name) : m_Name(std::move(name)), m_Id(GenerateNextId()) {}
 GameObject::~GameObject() = default;
+
+void GameObject::ClearIds() {
+    s_NextId = 0;
+}
 
 void GameObject::AddChild(GameObject *child) {
     m_Children.push_back(child);
@@ -32,6 +38,24 @@ void GameObject::Update() {
     for (const auto &component: m_Components) {
         component->Update();
     }
+}
+
+void GameObject::MarkForDeletion() {
+    if (m_MarkedForDeletion) return;
+
+    m_MarkedForDeletion = true;
+
+    for (auto *child: m_Children) {
+        if (child) {
+            child->MarkForDeletion();
+        }
+    }
+
+    if (m_Parent) {
+        this->SetParent(nullptr, false);
+    }
+
+    m_Children.clear();
 }
 
 void GameObject::AddComponent(std::unique_ptr<Component> component) {

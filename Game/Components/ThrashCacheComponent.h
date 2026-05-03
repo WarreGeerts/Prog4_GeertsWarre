@@ -1,6 +1,6 @@
 ﻿#pragma once
 #include <vector>
-#include "../../Minigin/Components/Component.h"
+#include "Components/Component.h"
 #include "imgui.h"
 
 namespace dae {
@@ -41,6 +41,8 @@ namespace dae {
         }
         void Render() const override {};
         void RenderGUI() override{};
+        [[nodiscard]] nlohmann::ordered_json Serialize() const override;
+        void Deserialize(const nlohmann::ordered_json &data) override;
         void Update() override {};
         void InspectorGUI() override;
         void SetAmountIterationsInt(int amount);
@@ -58,9 +60,9 @@ namespace dae {
         static void Operate(GameObject3DAlt &go) { go.ID *= 2; }
         static void MakeAverage(const std::vector<std::vector<long long> > &timings, std::vector<long long> &averageTiming);
         //static vars
-        int size{67108864}; //2^26
-        int AmountIterationsInt{10};
-        int AmountIterationsGO{100};
+        int m_Size{67108864}; //2^26
+        int m_AmountIterationsInt{10};
+        int m_AmountIterationsGO{100};
         std::vector<long long> TimingsInt{};
         std::vector<long long> TimingsGO{};
         std::vector<long long> TimingsGOAlt{};

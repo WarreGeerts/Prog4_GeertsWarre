@@ -33,6 +33,7 @@ namespace dae {
         bool ProcessInput();
         void AddBinding(const Binding &binding, std::unique_ptr<Command> pCommand);
         void RemoveBinding(const Binding &binding);
+        void ClearBindings();
 
     private:
         std::vector<std::pair<Binding, std::unique_ptr<Command> > > m_Bindings;
