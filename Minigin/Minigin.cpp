@@ -17,6 +17,7 @@
 #include "Singletons/DeltaTime.h"
 #include "Components/EngineComponents.h"
 #include "Singletons/EventManager.h"
+#include "Singletons/RealTimeEditor/ComponentFactory.h"
 #include "Sound/SdlSoundSystem.h"
 #include "Sound/ServiceLocator.h"
 SDL_Window *g_window{};
@@ -87,6 +88,16 @@ dae::Minigin::~Minigin() {
 }
 
 void dae::Minigin::Run(const std::function<void()> &load) {
+
+    //engine components
+    ComponentFactory::Register<TransformComponent>("TransformComponent");
+    ComponentFactory::Register<RenderComponent>("RenderComponent");
+    ComponentFactory::Register<TextComponent>("TextComponent");
+    ComponentFactory::Register<SpriteComponent>("SpriteComponent");
+    ComponentFactory::Register<FPSComponent>("FPSComponent");
+    ComponentFactory::Register<CharacterControllerComponent>("CharacterControllerComponent");
+    ComponentFactory::Register<RotateComponent>("RotateComponent");
+
     load(); //initialization (once run)
 
     //sound

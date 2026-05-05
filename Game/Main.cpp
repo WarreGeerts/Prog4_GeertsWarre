@@ -16,20 +16,13 @@ using namespace dae;
 
 static void load() //loads once
 {
-    //engine
-    ComponentFactory::Register<TransformComponent>("TransformComponent");
-    ComponentFactory::Register<RenderComponent>("RenderComponent");
-    ComponentFactory::Register<TextComponent>("TextComponent");
-    ComponentFactory::Register<SpriteComponent>("SpriteComponent");
-    ComponentFactory::Register<FPSComponent>("FPSComponent");
-    ComponentFactory::Register<CharacterControllerComponent>("CharacterControllerComponent");
-    ComponentFactory::Register<RotateComponent>("RotateComponent");
-    //game
+    //game components
     ComponentFactory::Register<ThrashCacheComponent>("ThrashCacheComponent");
     ComponentFactory::Register<LivesComponent>("LivesComponent");
     ComponentFactory::Register<ScoreComponent>("ScoreComponent");
     ComponentFactory::Register<LivesDisplayComponent>("LivesDisplayComponent");
     ComponentFactory::Register<ScoreDisplayComponent>("ScoreDisplayComponent");
+    ComponentFactory::Register<MenuManagerComponent>("MenuManagerComponent");
 
 
     auto &scene = SceneManager::GetInstance().CreateScene("Main");

@@ -166,7 +166,7 @@
             "go_id": 4,
             "parent_id": 27,
             "go_name": "LeaderBoard",
-            "enabled": false,
+            "enabled": true,
             "transform": {
                 "position": [
                     0.0,
@@ -1340,10 +1340,19 @@
                     0.0
                 ]
             },
-            "components": []
+            "components": [
+                {
+                    "comp_id": 111,
+                    "comp_name": "MenuManagerComponent",
+                    "active": true,
+                    "comp_data": {
+                        "wait_time": 5.0
+                    }
+                }
+            ]
         },
         {
-            "go_id": 29,
+            "go_id": 28,
             "parent_id": 27,
             "go_name": "Characters",
             "enabled": false,
@@ -1357,8 +1366,8 @@
             "components": []
         },
         {
-            "go_id": 30,
-            "parent_id": 29,
+            "go_id": 29,
+            "parent_id": 28,
             "go_name": "PeterPepper",
             "enabled": true,
             "transform": {
@@ -1370,7 +1379,7 @@
             },
             "components": [
                 {
-                    "comp_id": 77,
+                    "comp_id": 76,
                     "comp_name": "RenderComponent",
                     "active": true,
                     "comp_data": {
@@ -1379,7 +1388,7 @@
                     }
                 },
                 {
-                    "comp_id": 78,
+                    "comp_id": 77,
                     "comp_name": "SpriteComponent",
                     "active": true,
                     "comp_data": {
@@ -1422,8 +1431,8 @@
             ]
         },
         {
-            "go_id": 31,
-            "parent_id": 30,
+            "go_id": 30,
+            "parent_id": 29,
             "go_name": "Text",
             "enabled": true,
             "transform": {
@@ -1435,7 +1444,7 @@
             },
             "components": [
                 {
-                    "comp_id": 80,
+                    "comp_id": 79,
                     "comp_name": "RenderComponent",
                     "active": true,
                     "comp_data": {
@@ -1444,7 +1453,7 @@
                     }
                 },
                 {
-                    "comp_id": 81,
+                    "comp_id": 80,
                     "comp_name": "TextComponent",
                     "active": true,
                     "comp_data": {
@@ -1462,8 +1471,8 @@
             ]
         },
         {
-            "go_id": 32,
-            "parent_id": 31,
+            "go_id": 31,
+            "parent_id": 30,
             "go_name": "TM",
             "enabled": true,
             "transform": {
@@ -1475,7 +1484,7 @@
             },
             "components": [
                 {
-                    "comp_id": 83,
+                    "comp_id": 82,
                     "comp_name": "RenderComponent",
                     "active": true,
                     "comp_data": {
@@ -1484,7 +1493,7 @@
                     }
                 },
                 {
-                    "comp_id": 84,
+                    "comp_id": 83,
                     "comp_name": "TextComponent",
                     "active": true,
                     "comp_data": {
@@ -1502,8 +1511,8 @@
             ]
         },
         {
-            "go_id": 33,
-            "parent_id": 29,
+            "go_id": 32,
+            "parent_id": 28,
             "go_name": "MrHotDog",
             "enabled": true,
             "transform": {
@@ -1515,7 +1524,7 @@
             },
             "components": [
                 {
-                    "comp_id": 86,
+                    "comp_id": 85,
                     "comp_name": "SpriteComponent",
                     "active": true,
                     "comp_data": {
@@ -1556,7 +1565,7 @@
                     }
                 },
                 {
-                    "comp_id": 87,
+                    "comp_id": 86,
                     "comp_name": "RenderComponent",
                     "active": true,
                     "comp_data": {
@@ -1567,8 +1576,8 @@
             ]
         },
         {
-            "go_id": 34,
-            "parent_id": 33,
+            "go_id": 33,
+            "parent_id": 32,
             "go_name": "Text",
             "enabled": true,
             "transform": {
@@ -1580,7 +1589,7 @@
             },
             "components": [
                 {
-                    "comp_id": 89,
+                    "comp_id": 88,
                     "comp_name": "RenderComponent",
                     "active": true,
                     "comp_data": {
@@ -1589,7 +1598,7 @@
                     }
                 },
                 {
-                    "comp_id": 90,
+                    "comp_id": 89,
                     "comp_name": "TextComponent",
                     "active": true,
                     "comp_data": {
@@ -1607,8 +1616,8 @@
             ]
         },
         {
-            "go_id": 35,
-            "parent_id": 34,
+            "go_id": 34,
+            "parent_id": 33,
             "go_name": "TM",
             "enabled": true,
             "transform": {
@@ -1620,7 +1629,7 @@
             },
             "components": [
                 {
-                    "comp_id": 92,
+                    "comp_id": 91,
                     "comp_name": "RenderComponent",
                     "active": true,
                     "comp_data": {
@@ -1629,7 +1638,7 @@
                     }
                 },
                 {
-                    "comp_id": 93,
+                    "comp_id": 92,
                     "comp_name": "TextComponent",
                     "active": true,
                     "comp_data": {
@@ -1647,8 +1656,8 @@
             ]
         },
         {
-            "go_id": 36,
-            "parent_id": 29,
+            "go_id": 35,
+            "parent_id": 28,
             "go_name": "MrPickle",
             "enabled": true,
             "transform": {
@@ -1660,7 +1669,7 @@
             },
             "components": [
                 {
-                    "comp_id": 95,
+                    "comp_id": 94,
                     "comp_name": "RenderComponent",
                     "active": true,
                     "comp_data": {
@@ -1669,7 +1678,7 @@
                     }
                 },
                 {
-                    "comp_id": 96,
+                    "comp_id": 95,
                     "comp_name": "SpriteComponent",
                     "active": true,
                     "comp_data": {
@@ -1712,8 +1721,8 @@
             ]
         },
         {
-            "go_id": 37,
-            "parent_id": 36,
+            "go_id": 36,
+            "parent_id": 35,
             "go_name": "Text",
             "enabled": true,
             "transform": {
@@ -1725,7 +1734,7 @@
             },
             "components": [
                 {
-                    "comp_id": 98,
+                    "comp_id": 97,
                     "comp_name": "RenderComponent",
                     "active": true,
                     "comp_data": {
@@ -1734,7 +1743,7 @@
                     }
                 },
                 {
-                    "comp_id": 99,
+                    "comp_id": 98,
                     "comp_name": "TextComponent",
                     "active": true,
                     "comp_data": {
@@ -1752,8 +1761,8 @@
             ]
         },
         {
-            "go_id": 38,
-            "parent_id": 37,
+            "go_id": 37,
+            "parent_id": 36,
             "go_name": "TM",
             "enabled": true,
             "transform": {
@@ -1765,7 +1774,7 @@
             },
             "components": [
                 {
-                    "comp_id": 101,
+                    "comp_id": 100,
                     "comp_name": "RenderComponent",
                     "active": true,
                     "comp_data": {
@@ -1774,7 +1783,7 @@
                     }
                 },
                 {
-                    "comp_id": 102,
+                    "comp_id": 101,
                     "comp_name": "TextComponent",
                     "active": true,
                     "comp_data": {
@@ -1792,8 +1801,8 @@
             ]
         },
         {
-            "go_id": 39,
-            "parent_id": 29,
+            "go_id": 38,
+            "parent_id": 28,
             "go_name": "MrEgg",
             "enabled": true,
             "transform": {
@@ -1805,7 +1814,7 @@
             },
             "components": [
                 {
-                    "comp_id": 104,
+                    "comp_id": 103,
                     "comp_name": "RenderComponent",
                     "active": true,
                     "comp_data": {
@@ -1814,7 +1823,7 @@
                     }
                 },
                 {
-                    "comp_id": 105,
+                    "comp_id": 104,
                     "comp_name": "SpriteComponent",
                     "active": true,
                     "comp_data": {
@@ -1857,8 +1866,8 @@
             ]
         },
         {
-            "go_id": 40,
-            "parent_id": 39,
+            "go_id": 39,
+            "parent_id": 38,
             "go_name": "Text",
             "enabled": true,
             "transform": {
@@ -1870,7 +1879,7 @@
             },
             "components": [
                 {
-                    "comp_id": 107,
+                    "comp_id": 106,
                     "comp_name": "RenderComponent",
                     "active": true,
                     "comp_data": {
@@ -1879,7 +1888,7 @@
                     }
                 },
                 {
-                    "comp_id": 108,
+                    "comp_id": 107,
                     "comp_name": "TextComponent",
                     "active": true,
                     "comp_data": {
@@ -1897,8 +1906,8 @@
             ]
         },
         {
-            "go_id": 41,
-            "parent_id": 40,
+            "go_id": 40,
+            "parent_id": 39,
             "go_name": "TM",
             "enabled": true,
             "transform": {
@@ -1910,7 +1919,7 @@
             },
             "components": [
                 {
-                    "comp_id": 110,
+                    "comp_id": 109,
                     "comp_name": "RenderComponent",
                     "active": true,
                     "comp_data": {
@@ -1919,7 +1928,7 @@
                     }
                 },
                 {
-                    "comp_id": 111,
+                    "comp_id": 110,
                     "comp_name": "TextComponent",
                     "active": true,
                     "comp_data": {
