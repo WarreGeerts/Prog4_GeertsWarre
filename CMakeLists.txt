@@ -91,3 +91,35 @@ find_package(Steamworks QUIET)
 # --- 4. Add Subdirectories ---
 add_subdirectory(Minigin)
 add_subdirectory(Game)
+
+# --- 5. Install Rules for Release Packaging ---
+if (NOT EMSCRIPTEN)
+    # Install the executable
+    install(TARGETS ${TARGET_NAME}
+            RUNTIME DESTINATION .
+    )
+
+    # Install Data folder
+    install(DIRECTORY "${CMAKE_SOURCE_DIR}/Data"
+            DESTINATION .
+    )
+
+    # Install SDL3 DLLs
+    if (WIN32)
+        install(FILES $<TARGET_FILE:SDL3::SDL3>
+                DESTINATION .
+        )
+        install(FILES $<TARGET_FILE:SDL3_ttf::SDL3_ttf>
+                DESTINATION .
+        )
+    endif ()
+endif ()
+
+# --- 6. CPack Configuration for Creating Zip ---
+include(InstallRequiredSystemLibraries)
+set(CPACK_PACKAGE_NAME "BurgerTime")
+set(CPACK_PACKAGE_VENDOR "YourName")
+set(CPACK_PACKAGE_VERSION "1.0.0")
+set(CPACK_GENERATOR "ZIP")
+set(CPACK_PACKAGE_FILE_NAME "${CPACK_PACKAGE_NAME}-${CPACK_PACKAGE_VERSION}-${CMAKE_SYSTEM_NAME}")
+include(CPack)
