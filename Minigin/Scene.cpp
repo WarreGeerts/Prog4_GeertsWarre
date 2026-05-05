@@ -4,8 +4,7 @@
 #include <utility>
 #include "Components/Component.h"
 #include <stdexcept>
-
-#include "../cmake-build-release/_deps/sdl3-src/include/SDL3/SDL_log.h"
+#include <SDL3/SDL_log.h>
 using namespace dae;
 int Scene::s_NextId = 0;
 

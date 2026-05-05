@@ -7,6 +7,18 @@
         Components/ScoreComponent.cpp
 )
 
+set_target_properties(${TARGET_NAME} PROPERTIES
+        RUNTIME_OUTPUT_DIRECTORY_RELEASE "${CMAKE_BINARY_DIR}/Release"
+        RUNTIME_OUTPUT_DIRECTORY_DEBUG "${CMAKE_BINARY_DIR}/Debug"
+        # This removes the "Release/Debug" subfolder suffix in VS
+        OUTPUT_NAME ${TARGET_NAME}
+)
+
+# To force it to JUST one specific folder regardless of config:
+set_target_properties(${TARGET_NAME} PROPERTIES
+        RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
+)
+
 # Inherit everything from the Engine
 target_link_libraries(${TARGET_NAME} PRIVATE Minigin)
 target_compile_features(${TARGET_NAME} PUBLIC cxx_std_20)
@@ -29,7 +41,7 @@ if (EMSCRIPTEN)
     )
     set(CMAKE_EXECUTABLE_SUFFIX ".html")
 elseif (WIN32)
-    # Copy DLLs and Data
+  #[[  # Copy DLLs and Data
     foreach (dllTarget SDL3::SDL3 SDL3_ttf::SDL3_ttf)
         add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
                 COMMAND ${CMAKE_COMMAND} -E copy_if_different "$<TARGET_FILE:${dllTarget}>" "$<TARGET_FILE_DIR:${TARGET_NAME}>")
@@ -41,7 +53,26 @@ elseif (WIN32)
     if (Steamworks_FOUND)
         target_link_libraries(${TARGET_NAME} PUBLIC Steamworks::Steamworks)
         target_compile_definitions(${TARGET_NAME} PRIVATE USE_STEAMWORKS)
-    endif ()
+    endif ()]]
+  # 1. Force the EXE to a specific folder (e.g., bin/)
+  set_target_properties(${TARGET_NAME} PROPERTIES
+          RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
+          RUNTIME_OUTPUT_DIRECTORY_RELEASE "${CMAKE_BINARY_DIR}/bin"
+          RUNTIME_OUTPUT_DIRECTORY_DEBUG "${CMAKE_BINARY_DIR}/bin"
+  )
+
+  # 2. Copy DLLs and Data to that SAME folder
+  foreach (dllTarget SDL3::SDL3 SDL3_ttf::SDL3_ttf)
+      add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
+              COMMAND ${CMAKE_COMMAND} -E copy_if_different
+              "$<TARGET_FILE:${dllTarget}>"
+              "${CMAKE_BINARY_DIR}/bin")
+  endforeach ()
+
+  add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
+          COMMAND ${CMAKE_COMMAND} -E copy_directory
+          "${CMAKE_SOURCE_DIR}/Data"
+          "${CMAKE_BINARY_DIR}/bin/Data")
 endif ()
 
 if(WIN32 AND NOT MSVC)

@@ -2,7 +2,6 @@
 #include <algorithm>
 #include <cassert>
 #include <utility>
-#include "../cmake-build-release/_deps/sdl3-src/include/SDL3/SDL_log.h"
 #include "Components/Component.h"
 #include "Components/TransformComponent.h"
 using namespace dae;
