@@ -1,10 +1,10 @@
-﻿#include "sdl_sound_system.h"
+﻿#include "SdlSoundSystem.h"
 #include <SDL3/SDL.h>
 #include <map>
 #include <ranges>
 #include <string>
 
-struct sdl_sound_system::Impl {
+struct SdlSoundSystem::Impl {
     struct SoundData {
         uint8_t *buffer;
         uint32_t length;
@@ -100,50 +100,50 @@ struct sdl_sound_system::Impl {
     }
 };
 
-sdl_sound_system::sdl_sound_system()
+SdlSoundSystem::SdlSoundSystem()
     : pImpl(std::make_unique<Impl>())
-      , _running(true) {
-    _audio_thread = std::thread(&sdl_sound_system::process_queue, this);
+      , m_Running(true) {
+    m_AudioThread = std::thread(&SdlSoundSystem::ProcessQueue, this);
 }
 
-sdl_sound_system::~sdl_sound_system() {
+SdlSoundSystem::~SdlSoundSystem() {
     {
-        std::lock_guard<std::mutex> lock(_mutex);
-        _running = false;
+        std::lock_guard<std::mutex> lock(m_Mutex);
+        m_Running = false;
     }
-    _cv.notify_all();
-    if (_audio_thread.joinable()) {
-        _audio_thread.join();
+    m_CV.notify_all();
+    if (m_AudioThread.joinable()) {
+        m_AudioThread.join();
     }
 }
 
-void sdl_sound_system::play(const sound_id id, const float volume) {
-    std::lock_guard<std::mutex> lock(_mutex);
-    _queue.push({id, volume, false, false});
-    _cv.notify_one();
+void SdlSoundSystem::Play(const sound_id id, const float volume) {
+    std::lock_guard<std::mutex> lock(m_Mutex);
+    m_Queue.push({id, volume, false, false});
+    m_CV.notify_one();
 }
 
-void sdl_sound_system::play_music(const sound_id id, const float volume, const bool loop) {
-    std::lock_guard<std::mutex> lock(_mutex);
-    _queue.push({id, volume, true, loop});
-    _cv.notify_one();
+void SdlSoundSystem::PlayMusic(const sound_id id, const float volume, const bool loop) {
+    std::lock_guard<std::mutex> lock(m_Mutex);
+    m_Queue.push({id, volume, true, loop});
+    m_CV.notify_one();
 }
 
-void sdl_sound_system::process_queue() {
+void SdlSoundSystem::ProcessQueue() {
     while (true) {
         {
-            std::unique_lock<std::mutex> lock(_mutex);
+            std::unique_lock<std::mutex> lock(m_Mutex);
 
-            const bool got_request = _cv.wait_for(lock, std::chrono::milliseconds(100), [this] {
-                return !_queue.empty() || !_running;
+            const bool got_request = m_CV.wait_for(lock, std::chrono::milliseconds(100), [this] {
+                return !m_Queue.empty() || !m_Running;
             });
 
-            if (!_running && _queue.empty()) return;
+            if (!m_Running && m_Queue.empty()) return;
 
             if (got_request) {
                 SoundRequest request{};
-                request = _queue.front();
-                _queue.pop();
+                request = m_Queue.front();
+                m_Queue.pop();
 
                 if (request.is_music) pImpl->PlayMusic(request.id, request.volume, request.loop);
                 else pImpl->PlaySound(request.id, request.volume);

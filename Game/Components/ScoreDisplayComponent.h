@@ -1,40 +1,19 @@
 ﻿#pragma once
 #include "Components/Component.h"
-#include "Components/Components.h"
+#include "Components/EngineComponents.h"
 #include "Singletons/EventManager.h"
 
 namespace dae {
     class ScoreDisplayComponent final : public Component {
     public:
         explicit ScoreDisplayComponent(GameObject *go) : Component(go, "ScoreDisplayComponent") {}
-
-        explicit ScoreDisplayComponent(GameObject *go, const EventId eventId) : Component(go, "ScoreDisplayComponent"),
-            m_ListenEventId(eventId) {
-            SetHandle(m_ListenEventId);
-        };
-
-        ~ScoreDisplayComponent() override {
-            if (!EventManager::GetInstance().isAlive()) return;
-            EventManager::GetInstance().DetachEvent(m_Handle);
-        }
-
-        void SetHandle(const EventId eventId) {
-            if (m_Handle.valid) {
-                EventManager::GetInstance().DetachEvent(m_Handle);
-            }
-
-            m_Handle = EventManager::GetInstance().AttachEvent(
-                eventId,
-                [this](const Event &event) {
-                    OnScoreIncrease(std::get<int>(event.args[0]));
-                });
-        }
-
+        explicit ScoreDisplayComponent(GameObject *go, EventId eventId);
+        ~ScoreDisplayComponent() override;
+        void SetHandle(EventId eventId);
         void SetRefTextComponent(TextComponent *component) { m_TextComponentRef = component; }
         void Update() override;
         void Render() const override {};
         void InspectorGUI() override;
-
         [[nodiscard]] nlohmann::ordered_json Serialize() const override;
         void Deserialize(const nlohmann::ordered_json &data) override;
 

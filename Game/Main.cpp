@@ -1,7 +1,7 @@
 #include <iostream>
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_main.h>
-#include "Components/Components.h"
+#include "Components/EngineComponents.h"
 #if _DEBUG && __has_include(<vld.h>)
 #include <vld.h>
 #endif

@@ -1,69 +1,147 @@
 ﻿#include "LivesComponent.h"
 
-void dae::LivesComponent::InspectorGUI() {
-    auto &em = EventManager::GetInstance();
-
-    if (ImGui::InputInt("Lives", &m_Lives, 1, 1)) {
-        em.SendEvent(Event(m_SendEventId).AddInt(m_Lives));
-    }
-
-    ImGui::Text("Triggers (Listening to):");
-    if (ImGui::BeginListBox("##ListenList", ImVec2(-FLT_MIN, 150))) {
-        for (int i = 0; i < static_cast<int>(m_ListenEventIds.size()); ++i) {
-            std::string name = em.GetEventName(m_ListenEventIds[i]);
-
-            ImGui::PushID(i);
-
-            if (ImGui::Selectable(name.c_str(), false)) {}
-
-            if (ImGui::BeginPopupContextItem("ItemContext")) {
-                if (ImGui::MenuItem("Delete Listener")) {
-                    em.DetachEvent(m_Handles[i]);
-
-                    m_ListenEventIds.erase(m_ListenEventIds.begin() + i);
-                    m_Handles.erase(m_Handles.begin() + i);
-
-                    ImGui::EndPopup();
-                    ImGui::PopID();
-                    break;
+namespace dae {
+    LivesComponent::LivesComponent(GameObject *go, const std::vector<EventId> &listenEventIds,
+                                   const EventId sendEventId)
+        : Component(go, "LivesComponent"), m_ListenEventIds(listenEventIds), m_SendEventId{sendEventId} {
+        for (const auto &eventId: m_ListenEventIds) {
+            m_Handles.emplace_back(EventManager::GetInstance().AttachEvent(
+                eventId,
+                [this](const Event &) {
+                    PlayerDie();
                 }
-                ImGui::EndPopup();
-            }
-            ImGui::PopID();
-        }
-        ImGui::EndListBox();
-    }
-
-    static EventId idToAdd = 0;
-    const std::string previewName = em.GetEventName(idToAdd);
-
-    ImGui::SetNextItemWidth(150);
-    if (ImGui::BeginCombo("##AddEventCombo", previewName.c_str())) {
-        for (auto const &[id, name]: em.GetRegisteredEvents()) {
-            if (ImGui::Selectable(name.c_str(), id == idToAdd)) {
-                idToAdd = id;
-            }
-        }
-        ImGui::EndCombo();
-    }
-
-    ImGui::SameLine();
-    if (ImGui::Button("Add Trigger")) {
-        if (idToAdd != 0) {
-            m_ListenEventIds.push_back(idToAdd);
-            m_Handles.push_back(em.AttachEvent(idToAdd, [this](const Event &) {
-                PlayerDie();
-            }));
+            ));
         }
     }
 
-    const std::string broadcastName = em.GetEventName(m_SendEventId);
-    if (ImGui::BeginCombo("Broadcast Event", broadcastName.c_str())) {
-        for (auto const &[id, name]: em.GetRegisteredEvents()) {
-            if (ImGui::Selectable(name.c_str(), id == m_SendEventId)) {
-                m_SendEventId = id;
+    LivesComponent::LivesComponent(GameObject *go, const std::vector<EventId> &listenEventIds,
+                                   const EventId sendEventId, const int lives)
+        : Component(go, "LivesComponent"), m_ListenEventIds(listenEventIds), m_SendEventId{sendEventId},
+          m_Lives{lives} {
+        for (const auto &eventId: m_ListenEventIds) {
+            m_Handles.emplace_back(EventManager::GetInstance().AttachEvent(
+                eventId,
+                [this](const Event &) {
+                    PlayerDie();
+                }
+            ));
+        }
+    }
+
+    LivesComponent::~LivesComponent() {
+        if (!EventManager::GetInstance().isAlive()) return;
+        for (const auto &handle: m_Handles) {
+            EventManager::GetInstance().DetachEvent(handle);
+        }
+    }
+
+    void LivesComponent::InspectorGUI() {
+        auto &em = EventManager::GetInstance();
+
+        if (ImGui::InputInt("Lives", &m_Lives, 1, 1)) {
+            em.SendEvent(Event(m_SendEventId).AddInt(m_Lives));
+        }
+
+        ImGui::Text("Triggers (Listening to):");
+        if (ImGui::BeginListBox("##ListenList", ImVec2(-FLT_MIN, 150))) {
+            for (int i = 0; i < static_cast<int>(m_ListenEventIds.size()); ++i) {
+                std::string name = em.GetEventName(m_ListenEventIds[i]);
+
+                ImGui::PushID(i);
+
+                if (ImGui::Selectable(name.c_str(), false)) {}
+
+                if (ImGui::BeginPopupContextItem("ItemContext")) {
+                    if (ImGui::MenuItem("Delete Listener")) {
+                        em.DetachEvent(m_Handles[i]);
+
+                        m_ListenEventIds.erase(m_ListenEventIds.begin() + i);
+                        m_Handles.erase(m_Handles.begin() + i);
+
+                        ImGui::EndPopup();
+                        ImGui::PopID();
+                        break;
+                    }
+                    ImGui::EndPopup();
+                }
+                ImGui::PopID();
+            }
+            ImGui::EndListBox();
+        }
+
+        static EventId idToAdd = 0;
+        const std::string previewName = em.GetEventName(idToAdd);
+
+        ImGui::SetNextItemWidth(150);
+        if (ImGui::BeginCombo("##AddEventCombo", previewName.c_str())) {
+            for (auto const &[id, name]: em.GetRegisteredEvents()) {
+                if (ImGui::Selectable(name.c_str(), id == idToAdd)) {
+                    idToAdd = id;
+                }
+            }
+            ImGui::EndCombo();
+        }
+
+        ImGui::SameLine();
+        if (ImGui::Button("Add Trigger")) {
+            if (idToAdd != 0) {
+                m_ListenEventIds.push_back(idToAdd);
+                m_Handles.push_back(em.AttachEvent(idToAdd, [this](const Event &) {
+                    PlayerDie();
+                }));
             }
         }
-        ImGui::EndCombo();
+
+        const std::string broadcastName = em.GetEventName(m_SendEventId);
+        if (ImGui::BeginCombo("Broadcast Event", broadcastName.c_str())) {
+            for (auto const &[id, name]: em.GetRegisteredEvents()) {
+                if (ImGui::Selectable(name.c_str(), id == m_SendEventId)) {
+                    m_SendEventId = id;
+                }
+            }
+            ImGui::EndCombo();
+        }
+    }
+
+    nlohmann::ordered_json LivesComponent::Serialize() const {
+        nlohmann::ordered_json data;
+        data["handles"] = nlohmann::json::array();
+        data["event_ids"] = nlohmann::json::array();
+        for (auto [eventId, index, valid]: m_Handles) {
+            data["handles"].push_back({
+                {"event_id", eventId},
+                {"index", index},
+                {"valid", valid}
+            });
+        }
+        for (auto id: m_ListenEventIds) {
+            data["event_ids"].push_back(id);
+        }
+        return data;
+    }
+
+    void LivesComponent::Deserialize(const nlohmann::ordered_json &data) {
+        m_Handles.clear();
+        m_ListenEventIds.clear();
+
+        if (data.contains("handles") && data["handles"].is_array()) {
+            for (const auto &handleData: data["handles"]) {
+                int eventId = handleData.value("event_id", 0);
+                int index = handleData.value("index", 0);
+                bool valid = handleData.value("valid", false);
+                m_Handles.emplace_back(eventId, index, valid);
+            }
+        }
+
+        if (data.contains("event_ids") && data["event_ids"].is_array()) {
+            for (const auto &idData: data["event_ids"]) {
+                m_ListenEventIds.push_back(idData.get<int>());
+            }
+        }
+    }
+
+    void LivesComponent::PlayerDie() {
+        --m_Lives;
+        EventManager::GetInstance().SendEvent(Event(m_SendEventId).AddInt(m_Lives));
     }
 }

@@ -8,6 +8,21 @@
 #include <backends/imgui_impl_sdlrenderer3.h>
 #include "implot.h"
 using namespace dae;
+
+ThrashCacheComponent::ThrashCacheComponent(GameObject *go)
+    : Component(go, "ThrashCacheComponent") {
+    constexpr auto AmountSteps{11};
+    TimingsInt.reserve(AmountSteps);
+    TimingsGO.reserve(AmountSteps);
+    TimingsGOAlt.reserve(AmountSteps);
+
+    for (int i = 0; i < AmountSteps; i++) {
+        TimingsInt.push_back(0);
+        TimingsGO.push_back(0);
+        TimingsGOAlt.push_back(0);
+    }
+}
+
 nlohmann::ordered_json ThrashCacheComponent::Serialize() const {
     nlohmann::ordered_json data;
     data["iterations_int"] = m_AmountIterationsInt;
@@ -20,7 +35,6 @@ void ThrashCacheComponent::Deserialize(const nlohmann::ordered_json &data) {
     m_AmountIterationsInt = data.value("iterations_int", 10);
     m_AmountIterationsGO = data.value("iterations_go", 100);
     m_Size = data.value("size", 67108864);
-
 }
 
 void ThrashCacheComponent::InspectorGUI() {

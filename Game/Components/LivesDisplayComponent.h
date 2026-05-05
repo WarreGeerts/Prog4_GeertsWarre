@@ -1,38 +1,18 @@
 ﻿#pragma once
 #include "Components/Component.h"
 #include "Singletons/EventManager.h"
-#include "Components/Components.h"
+#include "Components/EngineComponents.h"
 
 namespace dae {
     class LivesDisplayComponent final : public Component {
     public:
         explicit LivesDisplayComponent(GameObject *go) : Component(go, "LivesDisplayComponent") {}
-
-        explicit LivesDisplayComponent(GameObject *go, const EventId eventId) : Component(go, "LivesDisplayComponent"),
-            m_ListenEventId(eventId) {
-            SetHandle(m_ListenEventId);
-        };
-
-        ~LivesDisplayComponent() override {
-            if (!EventManager::GetInstance().isAlive()) return;
-            EventManager::GetInstance().DetachEvent(m_Handle);
-        };
-
-        void SetHandle(const EventId eventId) {
-            if (m_Handle.valid) {
-                EventManager::GetInstance().DetachEvent(m_Handle);
-            }
-
-            m_Handle = EventManager::GetInstance().AttachEvent(
-                eventId,
-                [this](const Event &event) {
-                    OnPlayerDied(std::get<int>(event.args[0]));
-                });
-        }
-
+        explicit LivesDisplayComponent(GameObject *go, EventId eventId);
+        ~LivesDisplayComponent() override;
+        void SetHandle(EventId eventId);
         void SetRefTextComponent(TextComponent *component) { m_TextComponentRef = component; }
         void Update() override;
-        void Render() const override{};
+        void Render() const override {};
         void InspectorGUI() override;
         [[nodiscard]] nlohmann::ordered_json Serialize() const override;
         void Deserialize(const nlohmann::ordered_json &data) override;
@@ -40,7 +20,7 @@ namespace dae {
     private:
         void OnPlayerDied(const int lives) { m_Lives = lives; };
         int m_MaxLives{3};
-        int m_Lives{ m_MaxLives };
+        int m_Lives{m_MaxLives};
         int m_PrevLives{-1};
         TextComponent *m_TextComponentRef{};
         EventId m_ListenEventId{};

@@ -45,12 +45,16 @@ add_library(Minigin STATIC
 
         #sound
         Sound/servicelocator.cpp
-        Sound/sdl_sound_system.cpp
+        Sound/SdlSoundSystem.cpp
 
         # External Source
         ${implot_SOURCE_DIR}/implot.cpp
         ${implot_SOURCE_DIR}/implot_items.cpp
         Singletons/EventManager.cpp
+        Singletons/DeltaTime.cpp
+        Commands/GameActorCommand.cpp
+        Commands/MoveCommand.cpp
+        Sound/SoundSystem.cpp
 )
 
 # Propagate headers and dependencies to anyone who links to us (the Game)

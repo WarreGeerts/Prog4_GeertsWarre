@@ -1,5 +1,5 @@
 ﻿#include "EditorGui.h"
-#include "Components/Components.h"
+#include "Components/EngineComponents.h"
 //ImGui
 #include "imgui.h"
 //scene

@@ -7,8 +7,8 @@ namespace dae {
     public:
         explicit RotateComponent(GameObject *go) : Component(go,"RotateComponent") {}
 
-        RotateComponent(GameObject *go, const float radius, const float angularSpeed)
-            : Component(go,"RotateComponent"), m_Radius{radius}, m_AngularSpeed{angularSpeed}, m_CurrentAngle{0.f} {}
+        RotateComponent(GameObject *go, float radius, float angularSpeed);
+
 
         void Update() override;
         void Render() const override {}

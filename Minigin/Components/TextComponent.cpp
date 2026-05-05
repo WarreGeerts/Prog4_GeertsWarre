@@ -33,7 +33,6 @@ TextComponent::TextComponent(GameObject *go, std::string text, std::string fileN
 void TextComponent::Update() {
     if (!m_IsActive) return;
 
-
     if (NeedsUpdate()) {
         m_renderComponentRef = m_gameObject->GetComponent<RenderComponent>();
 
@@ -71,7 +70,6 @@ void TextComponent::Update() {
 
 void TextComponent::Render() const {
     if (!m_IsActive) return;
-
 
     if (m_renderComponentRef && m_textTexture) {
         m_renderComponentRef->SetTexture(m_textTexture);
@@ -204,7 +202,7 @@ void TextComponent::Deserialize(const nlohmann::ordered_json &data) {
     m_FontSize = data.value("font_size", 10);
     m_Text = data.value("text", " ");
     if (data.contains("color")) {
-        auto& posArray = data["color"];
+        auto &posArray = data["color"];
         m_color.r = posArray[0].get<float>();
         m_color.g = posArray[1].get<float>();
         m_color.b = posArray[2].get<float>();
@@ -212,4 +210,14 @@ void TextComponent::Deserialize(const nlohmann::ordered_json &data) {
     }
 
     m_font = ResourceManager::GetInstance().LoadFont(m_FontFileName, static_cast<uint8_t>(m_FontSize));
+}
+
+void TextComponent::SetText(const std::string &text) {
+    m_Text = text;
+    m_needsUpdate = true;
+}
+
+void TextComponent::SetColor(const SDL_Color &color) {
+    m_color = color;
+    m_needsUpdate = true;
 }

@@ -4,7 +4,7 @@
 #include <functional>
 #include "Components/Component.h"
 #include "Singletons/Singleton.h"
-#include "Components/Components.h"
+#include "Components/EngineComponents.h"
 
 namespace dae {
     class ComponentFactory final : public Singleton<ComponentFactory> {

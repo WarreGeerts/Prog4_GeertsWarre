@@ -27,18 +27,7 @@ namespace dae {
 
     class ThrashCacheComponent final : public Component {
     public:
-        explicit ThrashCacheComponent(GameObject *go) : Component(go,"ThrashCacheComponent") {
-            constexpr auto AmountSteps{11};
-            TimingsInt.reserve(AmountSteps);
-            TimingsGO.reserve(AmountSteps);
-            TimingsGOAlt.reserve(AmountSteps);
-
-            for (int i = 0; i < AmountSteps; i++) {
-                TimingsInt.push_back(0);
-                TimingsGO.push_back(0);
-                TimingsGOAlt.push_back(0);
-            }
-        }
+        explicit ThrashCacheComponent(GameObject *go);
         void Render() const override {};
         void RenderGUI() override{};
         [[nodiscard]] nlohmann::ordered_json Serialize() const override;

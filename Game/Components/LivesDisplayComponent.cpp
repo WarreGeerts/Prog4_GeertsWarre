@@ -2,9 +2,30 @@
 #include "GameObject.h"
 using namespace dae;
 
+LivesDisplayComponent::LivesDisplayComponent(GameObject *go, const EventId eventId)
+    : Component(go, "LivesDisplayComponent"), m_ListenEventId(eventId) {
+    SetHandle(m_ListenEventId);
+}
+
+LivesDisplayComponent::~LivesDisplayComponent() {
+    if (!EventManager::GetInstance().isAlive()) return;
+    EventManager::GetInstance().DetachEvent(m_Handle);
+}
+
+void LivesDisplayComponent::SetHandle(const EventId eventId) {
+    if (m_Handle.valid) {
+        EventManager::GetInstance().DetachEvent(m_Handle);
+    }
+
+    m_Handle = EventManager::GetInstance().AttachEvent(
+        eventId,
+        [this](const Event &event) {
+            OnPlayerDied(std::get<int>(event.args[0]));
+        });
+}
+
 void LivesDisplayComponent::Update() {
     if (!m_IsActive) return;
-
 
     if (NeedsUpdate()) {
         m_TextComponentRef = m_gameObject->GetComponent<TextComponent>();

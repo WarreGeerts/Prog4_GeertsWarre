@@ -15,10 +15,10 @@
 #include "Singletons/Renderer.h"
 #include "Singletons/ResourceManager.h"
 #include "Singletons/DeltaTime.h"
-#include "Components/Components.h"
+#include "Components/EngineComponents.h"
 #include "Singletons/RealTimeEditor/ComponentFactory.h"
-#include "Sound/sdl_sound_system.h"
-#include "Sound/servicelocator.h"
+#include "Sound/SdlSoundSystem.h"
+#include "Sound/ServiceLocator.h"
 SDL_Window *g_window{};
 
 
@@ -105,17 +105,17 @@ void dae::Minigin::Run(const std::function<void()> &load) {
     load(); //initialization (once run)
 
     //sound
-    auto sdl_ss{std::make_unique<sdl_sound_system>()};
+    auto sdl_ss{std::make_unique<SdlSoundSystem>()};
 
 #if DBG
-    auto logger_ss = std::make_unique<logging_sound_system>(std::move(sdl_ss));
-    servicelocator::RegisterSoundSystem(std::move(logger_ss));
+    auto logger_ss = std::make_unique<LoggingSoundSystem>(std::move(sdl_ss));
+    ServiceLocator::RegisterSoundSystem(std::move(logger_ss));
 #else
-    servicelocator::RegisterSoundSystem(std::move(sdl_ss));
+    ServiceLocator::RegisterSoundSystem(std::move(sdl_ss));
 #endif
 
     //TODO: put inside component for sounds and or music. And then make it so you can link sounds to events that happen instead of putting them inside code
-    servicelocator::GetSoundSystem().play_music(0, 0.5f, true);
+    ServiceLocator::GetSoundSystem().PlayMusic(0, 0.5f, true);
 
     //events
     EventRegistry::Initialize();
@@ -130,7 +130,7 @@ void dae::Minigin::Run(const std::function<void()> &load) {
         Update();
     }
 
-    servicelocator::Shutdown();
+    ServiceLocator::Shutdown();
 #else
     emscripten_set_main_loop_arg(&LoopCallback, this, 0, true);
 #endif

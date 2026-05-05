@@ -5,6 +5,7 @@
         Components/ScoreDisplayComponent.cpp
         Components/LivesComponent.cpp
         Components/ScoreComponent.cpp
+        Components/GameComponents.h
 )
 
 set_target_properties(${TARGET_NAME} PROPERTIES

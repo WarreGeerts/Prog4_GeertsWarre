@@ -2,9 +2,31 @@
 #include "GameObject.h"
 using namespace dae;
 
+ScoreDisplayComponent::ScoreDisplayComponent(GameObject *go, const EventId eventId)
+    : Component(go, "ScoreDisplayComponent"),
+      m_ListenEventId(eventId) {
+    SetHandle(m_ListenEventId);
+}
+
+ScoreDisplayComponent::~ScoreDisplayComponent() {
+    if (!EventManager::GetInstance().isAlive()) return;
+    EventManager::GetInstance().DetachEvent(m_Handle);
+}
+
+void ScoreDisplayComponent::SetHandle(const EventId eventId) {
+    if (m_Handle.valid) {
+        EventManager::GetInstance().DetachEvent(m_Handle);
+    }
+
+    m_Handle = EventManager::GetInstance().AttachEvent(
+        eventId,
+        [this](const Event &event) {
+            OnScoreIncrease(std::get<int>(event.args[0]));
+        });
+}
+
 void ScoreDisplayComponent::Update() {
     if (!m_IsActive) return;
-
 
     if (NeedsUpdate()) {
         m_TextComponentRef = m_gameObject->GetComponent<TextComponent>();

@@ -40,11 +40,7 @@ namespace dae {
         EventId id;
         static constexpr uint8_t MAX_ARGS{8};
         uint8_t numArgs{0};
-
-        //std::variant ipv union
         std::variant<int, float> args[MAX_ARGS];
-
-
         explicit Event(const EventId id) : id{id} {}
 
         Event &AddInt(const int value) {
@@ -62,52 +58,14 @@ namespace dae {
 
     class EventManager final : public Singleton<EventManager> {
     public:
-        EventHandle AttachEvent(const EventId eventId, const std::function<void(const Event &)> &callback) {
-            auto &vec = m_EventListeners[static_cast<unsigned int>(eventId)];
-            vec.push_back(callback);
-            return EventHandle{eventId, vec.size() - 1, true};
-        }
-
-        void DetachEvent(const EventHandle &handle) {
-            if (!handle.valid) return;
-            const auto it = m_EventListeners.find(static_cast<unsigned int>(handle.eventId));
-            if (it == m_EventListeners.end()) return;
-
-            auto &vec = it->second;
-            if (handle.index >= vec.size()) return;
-
-            vec[handle.index] = std::move(vec.back());
-            vec.pop_back();
-        }
-
-        void SendEvent(const Event &event) {
-            auto iterator = m_EventListeners.find(static_cast<unsigned int>(event.id));
-            if (iterator != m_EventListeners.end()) {
-                for (const auto &callback: iterator->second) {
-                    callback(event);
-                }
-            }
-        }
-
-        void RegisterEventName(const EventId id, const std::string &name) {
-            m_EventNames[id] = name;
-        }
-
-        const std::unordered_map<EventId, std::string> &GetRegisteredEvents() const {
-            return m_EventNames;
-        }
-
-        std::string GetEventName(const EventId id) const {
-            const auto it = m_EventNames.find(id);
-            return (it != m_EventNames.end()) ? it->second : "Unknown Event";
-        }
-
-        ~EventManager() override
-        {
-            s_IsDestroyed = true;
-        }
-
+        ~EventManager() override;
         static bool isAlive() { return !s_IsDestroyed; }
+        EventHandle AttachEvent(EventId eventId, const std::function<void(const Event &)> &callback);
+        void DetachEvent(const EventHandle &handle);
+        void SendEvent(const Event &event);
+        void RegisterEventName(EventId id, const std::string &name);
+        const std::unordered_map<EventId, std::string> &GetRegisteredEvents() const;
+        std::string GetEventName(EventId id) const;
 
     private:
         friend Singleton<EventManager>;
@@ -132,7 +90,7 @@ namespace dae {
         static constexpr EventId P2_ENEMY_KILL{make_sdbm_hash("P2EnemyKill")};
 
         static void Initialize() {
-            auto& em = EventManager::GetInstance();
+            auto &em = EventManager::GetInstance();
 
             em.RegisterEventName(P1_HEALTH_UPDATE, "P1HealthUpdate");
             em.RegisterEventName(P2_HEALTH_UPDATE, "P2HealthUpdate");
@@ -144,15 +102,8 @@ namespace dae {
             em.RegisterEventName(P2_BURGER_FALL, "P2BurgerFall");
             em.RegisterEventName(P1_ENEMY_KILL, "P1EnemyKill");
             em.RegisterEventName(P2_ENEMY_KILL, "P2EnemyKill");
-
         }
 
-        static std::vector<std::string> GetAllEventNames() {
-            std::vector<std::string> names;
-            for (const auto& [id, name] : EventManager::GetInstance().GetRegisteredEvents()) {
-                names.push_back(name);
-            }
-            return names;
-        }
+        static std::vector<std::string> GetAllEventNames();
     };
 }

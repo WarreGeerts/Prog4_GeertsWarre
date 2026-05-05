@@ -3,11 +3,14 @@
 #include "GameObject.h"
 using namespace dae;
 
+RotateComponent::RotateComponent(GameObject *go, const float radius, const float angularSpeed)
+    : Component(go, "RotateComponent"), m_Radius{radius},
+      m_AngularSpeed{angularSpeed}, m_CurrentAngle{0.f} {}
+
 void RotateComponent::Update() {
     if (!m_IsActive) return;
 
-
-    glm::vec3 parentWorldPos {0,0,0};
+    glm::vec3 parentWorldPos{0, 0, 0};
 
     if (m_gameObject->GetParent())
         parentWorldPos = m_gameObject->GetParent()->GetWorldPosition();
