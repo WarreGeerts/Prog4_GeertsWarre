@@ -1,0 +1,1940 @@
+{
+    "scene_id": 0,
+    "scene_name": "Menu",
+    "gameobjects": [
+        {
+            "go_id": 0,
+            "parent_id": -1,
+            "go_name": "TitleText",
+            "enabled": true,
+            "transform": {
+                "position": [
+                    400.3999938964844,
+                    71.30000305175781,
+                    0.0
+                ]
+            },
+            "components": [
+                {
+                    "comp_id": 1,
+                    "comp_name": "RenderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "file_name": "",
+                        "overwritten": true
+                    }
+                },
+                {
+                    "comp_id": 2,
+                    "comp_name": "TextComponent",
+                    "active": true,
+                    "comp_data": {
+                        "font_file_name": "ByteBounce.ttf",
+                        "font_size": 50,
+                        "text": "BURGERTIME",
+                        "color": [
+                            255,
+                            0,
+                            0,
+                            255
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "go_id": 1,
+            "parent_id": 0,
+            "go_name": "TM",
+            "enabled": true,
+            "transform": {
+                "position": [
+                    614.5999755859375,
+                    98.60000610351563,
+                    0.0
+                ]
+            },
+            "components": [
+                {
+                    "comp_id": 4,
+                    "comp_name": "RenderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "file_name": "",
+                        "overwritten": true
+                    }
+                },
+                {
+                    "comp_id": 5,
+                    "comp_name": "TextComponent",
+                    "active": true,
+                    "comp_data": {
+                        "font_file_name": "ByteBounce.ttf",
+                        "font_size": 25,
+                        "text": "TM",
+                        "color": [
+                            255,
+                            0,
+                            0,
+                            255
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "go_id": 2,
+            "parent_id": -1,
+            "go_name": "ExtraText",
+            "enabled": true,
+            "transform": {
+                "position": [
+                    320.29998779296875,
+                    124.30000305175781,
+                    0.0
+                ]
+            },
+            "components": [
+                {
+                    "comp_id": 7,
+                    "comp_name": "RenderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "file_name": "",
+                        "overwritten": true
+                    }
+                },
+                {
+                    "comp_id": 8,
+                    "comp_name": "TextComponent",
+                    "active": true,
+                    "comp_data": {
+                        "font_file_name": "ByteBounce.ttf",
+                        "font_size": 40,
+                        "text": "COPR. 1982 DATA EAST INC",
+                        "color": [
+                            255,
+                            0,
+                            0,
+                            255
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "go_id": 3,
+            "parent_id": 2,
+            "go_name": "BtmText",
+            "enabled": true,
+            "transform": {
+                "position": [
+                    276.29998779296875,
+                    144.6999969482422,
+                    0.0
+                ]
+            },
+            "components": [
+                {
+                    "comp_id": 10,
+                    "comp_name": "RenderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "file_name": "",
+                        "overwritten": true
+                    }
+                },
+                {
+                    "comp_id": 11,
+                    "comp_name": "TextComponent",
+                    "active": true,
+                    "comp_data": {
+                        "font_file_name": "ByteBounce.ttf",
+                        "font_size": 40,
+                        "text": "MFGD BY BALLY MIDWAY MFG. CO.",
+                        "color": [
+                            255,
+                            0,
+                            0,
+                            255
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "go_id": 4,
+            "parent_id": 27,
+            "go_name": "LeaderBoard",
+            "enabled": false,
+            "transform": {
+                "position": [
+                    0.0,
+                    0.0,
+                    0.0
+                ]
+            },
+            "components": []
+        },
+        {
+            "go_id": 5,
+            "parent_id": 4,
+            "go_name": "TitleText",
+            "enabled": true,
+            "transform": {
+                "position": [
+                    366.0,
+                    213.39999389648438,
+                    0.0
+                ]
+            },
+            "components": [
+                {
+                    "comp_id": 14,
+                    "comp_name": "RenderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "file_name": "",
+                        "overwritten": true
+                    }
+                },
+                {
+                    "comp_id": 15,
+                    "comp_name": "TextComponent",
+                    "active": true,
+                    "comp_data": {
+                        "font_file_name": "ByteBounce.ttf",
+                        "font_size": 40,
+                        "text": "BEST FIVE PLAYERS",
+                        "color": [
+                            236,
+                            223,
+                            193,
+                            255
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "go_id": 6,
+            "parent_id": 27,
+            "go_name": "ScoreHelper",
+            "enabled": false,
+            "transform": {
+                "position": [
+                    0.0,
+                    0.0,
+                    0.0
+                ]
+            },
+            "components": []
+        },
+        {
+            "go_id": 7,
+            "parent_id": 6,
+            "go_name": "ScoreText",
+            "enabled": true,
+            "transform": {
+                "position": [
+                    437.0,
+                    180.60000610351563,
+                    0.0
+                ]
+            },
+            "components": [
+                {
+                    "comp_id": 18,
+                    "comp_name": "RenderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "file_name": "",
+                        "overwritten": true
+                    }
+                },
+                {
+                    "comp_id": 19,
+                    "comp_name": "TextComponent",
+                    "active": true,
+                    "comp_data": {
+                        "font_file_name": "ByteBounce.ttf",
+                        "font_size": 40,
+                        "text": "- SCORE -",
+                        "color": [
+                            236,
+                            223,
+                            193,
+                            255
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "go_id": 8,
+            "parent_id": 6,
+            "go_name": "SpritesHamburger",
+            "enabled": true,
+            "transform": {
+                "position": [
+                    0.0,
+                    0.0,
+                    0.0
+                ]
+            },
+            "components": []
+        },
+        {
+            "go_id": 9,
+            "parent_id": 8,
+            "go_name": "TopBun",
+            "enabled": true,
+            "transform": {
+                "position": [
+                    317.1000061035156,
+                    226.10000610351563,
+                    0.0
+                ]
+            },
+            "components": [
+                {
+                    "comp_id": 22,
+                    "comp_name": "RenderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "file_name": "",
+                        "overwritten": true
+                    }
+                },
+                {
+                    "comp_id": 23,
+                    "comp_name": "SpriteComponent",
+                    "active": true,
+                    "comp_data": {
+                        "file_name": "Sprites.png",
+                        "source_rect": [
+                            112.0,
+                            48.0,
+                            32.0,
+                            8.0
+                        ],
+                        "dist_rect": [
+                            0.0,
+                            0.0,
+                            64.0,
+                            16.0
+                        ],
+                        "scale": [
+                            2.0,
+                            2.0
+                        ],
+                        "sprite_frame": {
+                            "columns": 1,
+                            "rows": 1,
+                            "frame_size": {
+                                "width": 32.0,
+                                "height": 8.0
+                            },
+                            "spacing": {
+                                "spacing_x": 0.0,
+                                "spacing_y": 0.0
+                            },
+                            "offset": {
+                                "offset_x": 112.0,
+                                "offset_y": 48.0
+                            }
+                        },
+                        "frame_index": 0
+                    }
+                }
+            ]
+        },
+        {
+            "go_id": 10,
+            "parent_id": 8,
+            "go_name": "Lettuce",
+            "enabled": true,
+            "transform": {
+                "position": [
+                    420.6000061035156,
+                    226.10000610351563,
+                    0.0
+                ]
+            },
+            "components": [
+                {
+                    "comp_id": 25,
+                    "comp_name": "RenderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "file_name": "",
+                        "overwritten": true
+                    }
+                },
+                {
+                    "comp_id": 26,
+                    "comp_name": "SpriteComponent",
+                    "active": true,
+                    "comp_data": {
+                        "file_name": "Sprites.png",
+                        "source_rect": [
+                            112.0,
+                            88.0,
+                            32.0,
+                            8.0
+                        ],
+                        "dist_rect": [
+                            0.0,
+                            0.0,
+                            64.0,
+                            16.0
+                        ],
+                        "scale": [
+                            2.0,
+                            2.0
+                        ],
+                        "sprite_frame": {
+                            "columns": 1,
+                            "rows": 1,
+                            "frame_size": {
+                                "width": 32.0,
+                                "height": 8.0
+                            },
+                            "spacing": {
+                                "spacing_x": 0.0,
+                                "spacing_y": 0.0
+                            },
+                            "offset": {
+                                "offset_x": 112.0,
+                                "offset_y": 88.0
+                            }
+                        },
+                        "frame_index": 0
+                    }
+                }
+            ]
+        },
+        {
+            "go_id": 11,
+            "parent_id": 8,
+            "go_name": "Cheese",
+            "enabled": true,
+            "transform": {
+                "position": [
+                    520.5,
+                    226.10000610351563,
+                    0.0
+                ]
+            },
+            "components": [
+                {
+                    "comp_id": 28,
+                    "comp_name": "RenderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "file_name": "",
+                        "overwritten": true
+                    }
+                },
+                {
+                    "comp_id": 29,
+                    "comp_name": "SpriteComponent",
+                    "active": true,
+                    "comp_data": {
+                        "file_name": "Sprites.png",
+                        "source_rect": [
+                            112.0,
+                            64.0,
+                            32.0,
+                            8.0
+                        ],
+                        "dist_rect": [
+                            0.0,
+                            0.0,
+                            64.0,
+                            16.0
+                        ],
+                        "scale": [
+                            2.0,
+                            2.0
+                        ],
+                        "sprite_frame": {
+                            "columns": 1,
+                            "rows": 1,
+                            "frame_size": {
+                                "width": 32.0,
+                                "height": 8.0
+                            },
+                            "spacing": {
+                                "spacing_x": 0.0,
+                                "spacing_y": 0.0
+                            },
+                            "offset": {
+                                "offset_x": 112.0,
+                                "offset_y": 64.0
+                            }
+                        },
+                        "frame_index": 0
+                    }
+                }
+            ]
+        },
+        {
+            "go_id": 12,
+            "parent_id": 8,
+            "go_name": "Patty",
+            "enabled": true,
+            "transform": {
+                "position": [
+                    315.8999938964844,
+                    263.5,
+                    0.0
+                ]
+            },
+            "components": [
+                {
+                    "comp_id": 31,
+                    "comp_name": "RenderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "file_name": "",
+                        "overwritten": true
+                    }
+                },
+                {
+                    "comp_id": 32,
+                    "comp_name": "SpriteComponent",
+                    "active": true,
+                    "comp_data": {
+                        "file_name": "Sprites.png",
+                        "source_rect": [
+                            112.0,
+                            72.0,
+                            32.0,
+                            8.0
+                        ],
+                        "dist_rect": [
+                            0.0,
+                            0.0,
+                            64.0,
+                            16.0
+                        ],
+                        "scale": [
+                            2.0,
+                            2.0
+                        ],
+                        "sprite_frame": {
+                            "columns": 1,
+                            "rows": 1,
+                            "frame_size": {
+                                "width": 32.0,
+                                "height": 8.0
+                            },
+                            "spacing": {
+                                "spacing_x": 0.0,
+                                "spacing_y": 0.0
+                            },
+                            "offset": {
+                                "offset_x": 112.0,
+                                "offset_y": 72.0
+                            }
+                        },
+                        "frame_index": 0
+                    }
+                }
+            ]
+        },
+        {
+            "go_id": 13,
+            "parent_id": 8,
+            "go_name": "Tomato",
+            "enabled": true,
+            "transform": {
+                "position": [
+                    419.20001220703125,
+                    263.5,
+                    0.0
+                ]
+            },
+            "components": [
+                {
+                    "comp_id": 34,
+                    "comp_name": "RenderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "file_name": "",
+                        "overwritten": true
+                    }
+                },
+                {
+                    "comp_id": 35,
+                    "comp_name": "SpriteComponent",
+                    "active": true,
+                    "comp_data": {
+                        "file_name": "Sprites.png",
+                        "source_rect": [
+                            112.0,
+                            80.0,
+                            32.0,
+                            8.0
+                        ],
+                        "dist_rect": [
+                            0.0,
+                            0.0,
+                            64.0,
+                            16.0
+                        ],
+                        "scale": [
+                            2.0,
+                            2.0
+                        ],
+                        "sprite_frame": {
+                            "columns": 1,
+                            "rows": 1,
+                            "frame_size": {
+                                "width": 32.0,
+                                "height": 8.0
+                            },
+                            "spacing": {
+                                "spacing_x": 0.0,
+                                "spacing_y": 0.0
+                            },
+                            "offset": {
+                                "offset_x": 112.0,
+                                "offset_y": 80.0
+                            }
+                        },
+                        "frame_index": 0
+                    }
+                }
+            ]
+        },
+        {
+            "go_id": 14,
+            "parent_id": 8,
+            "go_name": "BottomBun",
+            "enabled": true,
+            "transform": {
+                "position": [
+                    523.0,
+                    263.5,
+                    0.0
+                ]
+            },
+            "components": [
+                {
+                    "comp_id": 37,
+                    "comp_name": "RenderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "file_name": "",
+                        "overwritten": true
+                    }
+                },
+                {
+                    "comp_id": 38,
+                    "comp_name": "SpriteComponent",
+                    "active": true,
+                    "comp_data": {
+                        "file_name": "Sprites.png",
+                        "source_rect": [
+                            112.0,
+                            56.0,
+                            32.0,
+                            8.0
+                        ],
+                        "dist_rect": [
+                            0.0,
+                            0.0,
+                            64.0,
+                            16.0
+                        ],
+                        "scale": [
+                            2.0,
+                            2.0
+                        ],
+                        "sprite_frame": {
+                            "columns": 1,
+                            "rows": 1,
+                            "frame_size": {
+                                "width": 32.0,
+                                "height": 8.0
+                            },
+                            "spacing": {
+                                "spacing_x": 0.0,
+                                "spacing_y": 0.0
+                            },
+                            "offset": {
+                                "offset_x": 112.0,
+                                "offset_y": 56.0
+                            }
+                        },
+                        "frame_index": 0
+                    }
+                }
+            ]
+        },
+        {
+            "go_id": 15,
+            "parent_id": 6,
+            "go_name": "PtsText",
+            "enabled": true,
+            "transform": {
+                "position": [
+                    609.2000122070313,
+                    235.8000030517578,
+                    0.0
+                ]
+            },
+            "components": [
+                {
+                    "comp_id": 40,
+                    "comp_name": "RenderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "file_name": "",
+                        "overwritten": true
+                    }
+                },
+                {
+                    "comp_id": 41,
+                    "comp_name": "TextComponent",
+                    "active": true,
+                    "comp_data": {
+                        "font_file_name": "ByteBounce.ttf",
+                        "font_size": 40,
+                        "text": "50 PTS",
+                        "color": [
+                            236,
+                            223,
+                            193,
+                            255
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "go_id": 16,
+            "parent_id": 6,
+            "go_name": "Snacks",
+            "enabled": true,
+            "transform": {
+                "position": [
+                    319.20001220703125,
+                    307.0,
+                    0.0
+                ]
+            },
+            "components": []
+        },
+        {
+            "go_id": 17,
+            "parent_id": 16,
+            "go_name": "IceCream",
+            "enabled": true,
+            "transform": {
+                "position": [
+                    319.20001220703125,
+                    307.0,
+                    0.0
+                ]
+            },
+            "components": [
+                {
+                    "comp_id": 44,
+                    "comp_name": "RenderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "file_name": "",
+                        "overwritten": true
+                    }
+                },
+                {
+                    "comp_id": 45,
+                    "comp_name": "SpriteComponent",
+                    "active": true,
+                    "comp_data": {
+                        "file_name": "Sprites.png",
+                        "source_rect": [
+                            0.0,
+                            128.0,
+                            16.0,
+                            16.0
+                        ],
+                        "dist_rect": [
+                            0.0,
+                            0.0,
+                            32.0,
+                            32.0
+                        ],
+                        "scale": [
+                            2.0,
+                            2.0
+                        ],
+                        "sprite_frame": {
+                            "columns": 1,
+                            "rows": 1,
+                            "frame_size": {
+                                "width": 16.0,
+                                "height": 16.0
+                            },
+                            "spacing": {
+                                "spacing_x": 0.0,
+                                "spacing_y": 0.0
+                            },
+                            "offset": {
+                                "offset_x": 0.0,
+                                "offset_y": 128.0
+                            }
+                        },
+                        "frame_index": 0
+                    }
+                }
+            ]
+        },
+        {
+            "go_id": 18,
+            "parent_id": 17,
+            "go_name": "PTS",
+            "enabled": true,
+            "transform": {
+                "position": [
+                    319.20001220703125,
+                    339.0,
+                    0.0
+                ]
+            },
+            "components": [
+                {
+                    "comp_id": 47,
+                    "comp_name": "RenderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "file_name": "",
+                        "overwritten": true
+                    }
+                },
+                {
+                    "comp_id": 48,
+                    "comp_name": "SpriteComponent",
+                    "active": true,
+                    "comp_data": {
+                        "file_name": "Sprites.png",
+                        "source_rect": [
+                            48.0,
+                            144.0,
+                            16.0,
+                            16.0
+                        ],
+                        "dist_rect": [
+                            0.0,
+                            0.0,
+                            32.0,
+                            32.0
+                        ],
+                        "scale": [
+                            2.0,
+                            2.0
+                        ],
+                        "sprite_frame": {
+                            "columns": 1,
+                            "rows": 1,
+                            "frame_size": {
+                                "width": 16.0,
+                                "height": 16.0
+                            },
+                            "spacing": {
+                                "spacing_x": 0.0,
+                                "spacing_y": 0.0
+                            },
+                            "offset": {
+                                "offset_x": 48.0,
+                                "offset_y": 144.0
+                            }
+                        },
+                        "frame_index": 0
+                    }
+                }
+            ]
+        },
+        {
+            "go_id": 19,
+            "parent_id": 16,
+            "go_name": "Coffee",
+            "enabled": true,
+            "transform": {
+                "position": [
+                    379.20001220703125,
+                    307.0,
+                    0.0
+                ]
+            },
+            "components": [
+                {
+                    "comp_id": 50,
+                    "comp_name": "RenderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "file_name": "",
+                        "overwritten": true
+                    }
+                },
+                {
+                    "comp_id": 51,
+                    "comp_name": "SpriteComponent",
+                    "active": true,
+                    "comp_data": {
+                        "file_name": "Sprites.png",
+                        "source_rect": [
+                            16.0,
+                            128.0,
+                            16.0,
+                            16.0
+                        ],
+                        "dist_rect": [
+                            0.0,
+                            0.0,
+                            32.0,
+                            32.0
+                        ],
+                        "scale": [
+                            2.0,
+                            2.0
+                        ],
+                        "sprite_frame": {
+                            "columns": 1,
+                            "rows": 1,
+                            "frame_size": {
+                                "width": 16.0,
+                                "height": 16.0
+                            },
+                            "spacing": {
+                                "spacing_x": 0.0,
+                                "spacing_y": 0.0
+                            },
+                            "offset": {
+                                "offset_x": 16.0,
+                                "offset_y": 128.0
+                            }
+                        },
+                        "frame_index": 0
+                    }
+                }
+            ]
+        },
+        {
+            "go_id": 20,
+            "parent_id": 19,
+            "go_name": "PTS",
+            "enabled": true,
+            "transform": {
+                "position": [
+                    379.20001220703125,
+                    339.0,
+                    0.0
+                ]
+            },
+            "components": [
+                {
+                    "comp_id": 53,
+                    "comp_name": "RenderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "file_name": "",
+                        "overwritten": true
+                    }
+                },
+                {
+                    "comp_id": 54,
+                    "comp_name": "SpriteComponent",
+                    "active": true,
+                    "comp_data": {
+                        "file_name": "Sprites.png",
+                        "source_rect": [
+                            64.0,
+                            144.0,
+                            16.0,
+                            16.0
+                        ],
+                        "dist_rect": [
+                            0.0,
+                            0.0,
+                            32.0,
+                            32.0
+                        ],
+                        "scale": [
+                            2.0,
+                            2.0
+                        ],
+                        "sprite_frame": {
+                            "columns": 1,
+                            "rows": 1,
+                            "frame_size": {
+                                "width": 16.0,
+                                "height": 16.0
+                            },
+                            "spacing": {
+                                "spacing_x": 0.0,
+                                "spacing_y": 0.0
+                            },
+                            "offset": {
+                                "offset_x": 64.0,
+                                "offset_y": 144.0
+                            }
+                        },
+                        "frame_index": 0
+                    }
+                }
+            ]
+        },
+        {
+            "go_id": 21,
+            "parent_id": 16,
+            "go_name": "Fries",
+            "enabled": true,
+            "transform": {
+                "position": [
+                    439.20001220703125,
+                    307.0,
+                    0.0
+                ]
+            },
+            "components": [
+                {
+                    "comp_id": 56,
+                    "comp_name": "RenderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "file_name": "",
+                        "overwritten": true
+                    }
+                },
+                {
+                    "comp_id": 57,
+                    "comp_name": "SpriteComponent",
+                    "active": true,
+                    "comp_data": {
+                        "file_name": "Sprites.png",
+                        "source_rect": [
+                            32.0,
+                            128.0,
+                            16.0,
+                            16.0
+                        ],
+                        "dist_rect": [
+                            0.0,
+                            0.0,
+                            32.0,
+                            32.0
+                        ],
+                        "scale": [
+                            2.0,
+                            2.0
+                        ],
+                        "sprite_frame": {
+                            "columns": 1,
+                            "rows": 1,
+                            "frame_size": {
+                                "width": 16.0,
+                                "height": 16.0
+                            },
+                            "spacing": {
+                                "spacing_x": 0.0,
+                                "spacing_y": 0.0
+                            },
+                            "offset": {
+                                "offset_x": 32.0,
+                                "offset_y": 128.0
+                            }
+                        },
+                        "frame_index": 0
+                    }
+                }
+            ]
+        },
+        {
+            "go_id": 22,
+            "parent_id": 21,
+            "go_name": "PTS",
+            "enabled": true,
+            "transform": {
+                "position": [
+                    439.20001220703125,
+                    339.0,
+                    0.0
+                ]
+            },
+            "components": [
+                {
+                    "comp_id": 59,
+                    "comp_name": "RenderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "file_name": "",
+                        "overwritten": true
+                    }
+                },
+                {
+                    "comp_id": 60,
+                    "comp_name": "SpriteComponent",
+                    "active": true,
+                    "comp_data": {
+                        "file_name": "Sprites.png",
+                        "source_rect": [
+                            80.0,
+                            144.0,
+                            16.0,
+                            16.0
+                        ],
+                        "dist_rect": [
+                            0.0,
+                            0.0,
+                            32.0,
+                            32.0
+                        ],
+                        "scale": [
+                            2.0,
+                            2.0
+                        ],
+                        "sprite_frame": {
+                            "columns": 1,
+                            "rows": 1,
+                            "frame_size": {
+                                "width": 16.0,
+                                "height": 16.0
+                            },
+                            "spacing": {
+                                "spacing_x": 0.0,
+                                "spacing_y": 0.0
+                            },
+                            "offset": {
+                                "offset_x": 80.0,
+                                "offset_y": 144.0
+                            }
+                        },
+                        "frame_index": 0
+                    }
+                }
+            ]
+        },
+        {
+            "go_id": 23,
+            "parent_id": 16,
+            "go_name": "BonusText",
+            "enabled": true,
+            "transform": {
+                "position": [
+                    486.4000244140625,
+                    316.70001220703125,
+                    0.0
+                ]
+            },
+            "components": [
+                {
+                    "comp_id": 62,
+                    "comp_name": "RenderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "file_name": "",
+                        "overwritten": true
+                    }
+                },
+                {
+                    "comp_id": 63,
+                    "comp_name": "TextComponent",
+                    "active": true,
+                    "comp_data": {
+                        "font_file_name": "ByteBounce.ttf",
+                        "font_size": 40,
+                        "text": "- BONUS 1",
+                        "color": [
+                            236,
+                            223,
+                            193,
+                            255
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "go_id": 24,
+            "parent_id": 16,
+            "go_name": "PEPPER",
+            "enabled": true,
+            "transform": {
+                "position": [
+                    628.5,
+                    322.6000061035156,
+                    0.0
+                ]
+            },
+            "components": [
+                {
+                    "comp_id": 65,
+                    "comp_name": "RenderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "file_name": "",
+                        "overwritten": true
+                    }
+                },
+                {
+                    "comp_id": 66,
+                    "comp_name": "SpriteComponent",
+                    "active": true,
+                    "comp_data": {
+                        "file_name": "Sprites.png",
+                        "source_rect": [
+                            208.0,
+                            8.0,
+                            32.0,
+                            8.0
+                        ],
+                        "dist_rect": [
+                            0.0,
+                            0.0,
+                            64.0,
+                            19.200000762939453
+                        ],
+                        "scale": [
+                            2.0,
+                            2.4000000953674316
+                        ],
+                        "sprite_frame": {
+                            "columns": 1,
+                            "rows": 1,
+                            "frame_size": {
+                                "width": 32.0,
+                                "height": 8.0
+                            },
+                            "spacing": {
+                                "spacing_x": 0.0,
+                                "spacing_y": 0.0
+                            },
+                            "offset": {
+                                "offset_x": 208.0,
+                                "offset_y": 8.0
+                            }
+                        },
+                        "frame_index": 0
+                    }
+                }
+            ]
+        },
+        {
+            "go_id": 25,
+            "parent_id": 6,
+            "go_name": "BonusHealthText",
+            "enabled": true,
+            "transform": {
+                "position": [
+                    292.70001220703125,
+                    393.79998779296875,
+                    0.0
+                ]
+            },
+            "components": [
+                {
+                    "comp_id": 68,
+                    "comp_name": "RenderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "file_name": "",
+                        "overwritten": true
+                    }
+                },
+                {
+                    "comp_id": 69,
+                    "comp_name": "TextComponent",
+                    "active": true,
+                    "comp_data": {
+                        "font_file_name": "ByteBounce.ttf",
+                        "font_size": 40,
+                        "text": "BONUS    FOR EVERY 20000PTS",
+                        "color": [
+                            236,
+                            223,
+                            193,
+                            255
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "go_id": 26,
+            "parent_id": 25,
+            "go_name": "PlayerModel",
+            "enabled": true,
+            "transform": {
+                "position": [
+                    383.8000183105469,
+                    386.0999755859375,
+                    0.0
+                ]
+            },
+            "components": [
+                {
+                    "comp_id": 71,
+                    "comp_name": "RenderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "file_name": "",
+                        "overwritten": true
+                    }
+                },
+                {
+                    "comp_id": 72,
+                    "comp_name": "SpriteComponent",
+                    "active": true,
+                    "comp_data": {
+                        "file_name": "Sprites.png",
+                        "source_rect": [
+                            16.0,
+                            0.0,
+                            16.0,
+                            16.0
+                        ],
+                        "dist_rect": [
+                            0.0,
+                            0.0,
+                            32.0,
+                            32.0
+                        ],
+                        "scale": [
+                            2.0,
+                            2.0
+                        ],
+                        "sprite_frame": {
+                            "columns": 1,
+                            "rows": 1,
+                            "frame_size": {
+                                "width": 16.0,
+                                "height": 16.0
+                            },
+                            "spacing": {
+                                "spacing_x": 0.0,
+                                "spacing_y": 0.0
+                            },
+                            "offset": {
+                                "offset_x": 16.0,
+                                "offset_y": 0.0
+                            }
+                        },
+                        "frame_index": 0
+                    }
+                }
+            ]
+        },
+        {
+            "go_id": 27,
+            "parent_id": -1,
+            "go_name": "MenuManager",
+            "enabled": true,
+            "transform": {
+                "position": [
+                    0.0,
+                    0.0,
+                    0.0
+                ]
+            },
+            "components": []
+        },
+        {
+            "go_id": 29,
+            "parent_id": 27,
+            "go_name": "Characters",
+            "enabled": false,
+            "transform": {
+                "position": [
+                    0.0,
+                    0.0,
+                    0.0
+                ]
+            },
+            "components": []
+        },
+        {
+            "go_id": 30,
+            "parent_id": 29,
+            "go_name": "PeterPepper",
+            "enabled": true,
+            "transform": {
+                "position": [
+                    360.8999938964844,
+                    222.10000610351563,
+                    0.0
+                ]
+            },
+            "components": [
+                {
+                    "comp_id": 77,
+                    "comp_name": "RenderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "file_name": "",
+                        "overwritten": true
+                    }
+                },
+                {
+                    "comp_id": 78,
+                    "comp_name": "SpriteComponent",
+                    "active": true,
+                    "comp_data": {
+                        "file_name": "Sprites.png",
+                        "source_rect": [
+                            32.0,
+                            0.0,
+                            16.0,
+                            16.0
+                        ],
+                        "dist_rect": [
+                            0.0,
+                            0.0,
+                            32.0,
+                            32.0
+                        ],
+                        "scale": [
+                            2.0,
+                            2.0
+                        ],
+                        "sprite_frame": {
+                            "columns": 1,
+                            "rows": 1,
+                            "frame_size": {
+                                "width": 16.0,
+                                "height": 16.0
+                            },
+                            "spacing": {
+                                "spacing_x": 0.0,
+                                "spacing_y": 0.0
+                            },
+                            "offset": {
+                                "offset_x": 32.0,
+                                "offset_y": 0.0
+                            }
+                        },
+                        "frame_index": 0
+                    }
+                }
+            ]
+        },
+        {
+            "go_id": 31,
+            "parent_id": 30,
+            "go_name": "Text",
+            "enabled": true,
+            "transform": {
+                "position": [
+                    408.8999938964844,
+                    222.10000610351563,
+                    0.0
+                ]
+            },
+            "components": [
+                {
+                    "comp_id": 80,
+                    "comp_name": "RenderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "file_name": "",
+                        "overwritten": true
+                    }
+                },
+                {
+                    "comp_id": 81,
+                    "comp_name": "TextComponent",
+                    "active": true,
+                    "comp_data": {
+                        "font_file_name": "ByteBounce.ttf",
+                        "font_size": 40,
+                        "text": "PETER PEPPER",
+                        "color": [
+                            236,
+                            223,
+                            193,
+                            255
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "go_id": 32,
+            "parent_id": 31,
+            "go_name": "TM",
+            "enabled": true,
+            "transform": {
+                "position": [
+                    616.4000244140625,
+                    244.40000915527344,
+                    0.0
+                ]
+            },
+            "components": [
+                {
+                    "comp_id": 83,
+                    "comp_name": "RenderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "file_name": "",
+                        "overwritten": true
+                    }
+                },
+                {
+                    "comp_id": 84,
+                    "comp_name": "TextComponent",
+                    "active": true,
+                    "comp_data": {
+                        "font_file_name": "ByteBounce.ttf",
+                        "font_size": 20,
+                        "text": "TM",
+                        "color": [
+                            236,
+                            223,
+                            193,
+                            255
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "go_id": 33,
+            "parent_id": 29,
+            "go_name": "MrHotDog",
+            "enabled": true,
+            "transform": {
+                "position": [
+                    360.8999938964844,
+                    301.20001220703125,
+                    0.0
+                ]
+            },
+            "components": [
+                {
+                    "comp_id": 86,
+                    "comp_name": "SpriteComponent",
+                    "active": true,
+                    "comp_data": {
+                        "file_name": "Sprites.png",
+                        "source_rect": [
+                            16.0,
+                            32.0,
+                            16.0,
+                            16.0
+                        ],
+                        "dist_rect": [
+                            0.0,
+                            0.0,
+                            32.0,
+                            32.0
+                        ],
+                        "scale": [
+                            2.0,
+                            2.0
+                        ],
+                        "sprite_frame": {
+                            "columns": 1,
+                            "rows": 1,
+                            "frame_size": {
+                                "width": 16.0,
+                                "height": 16.0
+                            },
+                            "spacing": {
+                                "spacing_x": 0.0,
+                                "spacing_y": 0.0
+                            },
+                            "offset": {
+                                "offset_x": 16.0,
+                                "offset_y": 32.0
+                            }
+                        },
+                        "frame_index": 0
+                    }
+                },
+                {
+                    "comp_id": 87,
+                    "comp_name": "RenderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "file_name": "",
+                        "overwritten": true
+                    }
+                }
+            ]
+        },
+        {
+            "go_id": 34,
+            "parent_id": 33,
+            "go_name": "Text",
+            "enabled": true,
+            "transform": {
+                "position": [
+                    408.8999938964844,
+                    301.20001220703125,
+                    0.0
+                ]
+            },
+            "components": [
+                {
+                    "comp_id": 89,
+                    "comp_name": "RenderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "file_name": "",
+                        "overwritten": true
+                    }
+                },
+                {
+                    "comp_id": 90,
+                    "comp_name": "TextComponent",
+                    "active": true,
+                    "comp_data": {
+                        "font_file_name": "ByteBounce.ttf",
+                        "font_size": 40,
+                        "text": "MR HOT DOG",
+                        "color": [
+                            236,
+                            223,
+                            193,
+                            255
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "go_id": 35,
+            "parent_id": 34,
+            "go_name": "TM",
+            "enabled": true,
+            "transform": {
+                "position": [
+                    581.0,
+                    323.5,
+                    0.0
+                ]
+            },
+            "components": [
+                {
+                    "comp_id": 92,
+                    "comp_name": "RenderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "file_name": "",
+                        "overwritten": true
+                    }
+                },
+                {
+                    "comp_id": 93,
+                    "comp_name": "TextComponent",
+                    "active": true,
+                    "comp_data": {
+                        "font_file_name": "ByteBounce.ttf",
+                        "font_size": 20,
+                        "text": "TM",
+                        "color": [
+                            236,
+                            223,
+                            193,
+                            255
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "go_id": 36,
+            "parent_id": 29,
+            "go_name": "MrPickle",
+            "enabled": true,
+            "transform": {
+                "position": [
+                    360.8999938964844,
+                    352.3999938964844,
+                    0.0
+                ]
+            },
+            "components": [
+                {
+                    "comp_id": 95,
+                    "comp_name": "RenderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "file_name": "",
+                        "overwritten": true
+                    }
+                },
+                {
+                    "comp_id": 96,
+                    "comp_name": "SpriteComponent",
+                    "active": true,
+                    "comp_data": {
+                        "file_name": "Sprites.png",
+                        "source_rect": [
+                            32.0,
+                            64.0,
+                            16.0,
+                            16.0
+                        ],
+                        "dist_rect": [
+                            0.0,
+                            0.0,
+                            32.0,
+                            32.0
+                        ],
+                        "scale": [
+                            2.0,
+                            2.0
+                        ],
+                        "sprite_frame": {
+                            "columns": 1,
+                            "rows": 1,
+                            "frame_size": {
+                                "width": 16.0,
+                                "height": 16.0
+                            },
+                            "spacing": {
+                                "spacing_x": 0.0,
+                                "spacing_y": 0.0
+                            },
+                            "offset": {
+                                "offset_x": 32.0,
+                                "offset_y": 64.0
+                            }
+                        },
+                        "frame_index": 0
+                    }
+                }
+            ]
+        },
+        {
+            "go_id": 37,
+            "parent_id": 36,
+            "go_name": "Text",
+            "enabled": true,
+            "transform": {
+                "position": [
+                    408.8999938964844,
+                    352.3999938964844,
+                    0.0
+                ]
+            },
+            "components": [
+                {
+                    "comp_id": 98,
+                    "comp_name": "RenderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "file_name": "",
+                        "overwritten": true
+                    }
+                },
+                {
+                    "comp_id": 99,
+                    "comp_name": "TextComponent",
+                    "active": true,
+                    "comp_data": {
+                        "font_file_name": "ByteBounce.ttf",
+                        "font_size": 40,
+                        "text": "MR PICKLE",
+                        "color": [
+                            236,
+                            223,
+                            193,
+                            255
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "go_id": 38,
+            "parent_id": 37,
+            "go_name": "TM",
+            "enabled": true,
+            "transform": {
+                "position": [
+                    563.4000244140625,
+                    374.6999816894531,
+                    0.0
+                ]
+            },
+            "components": [
+                {
+                    "comp_id": 101,
+                    "comp_name": "RenderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "file_name": "",
+                        "overwritten": true
+                    }
+                },
+                {
+                    "comp_id": 102,
+                    "comp_name": "TextComponent",
+                    "active": true,
+                    "comp_data": {
+                        "font_file_name": "ByteBounce.ttf",
+                        "font_size": 20,
+                        "text": "TM",
+                        "color": [
+                            236,
+                            223,
+                            193,
+                            255
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "go_id": 39,
+            "parent_id": 29,
+            "go_name": "MrEgg",
+            "enabled": true,
+            "transform": {
+                "position": [
+                    360.8999938964844,
+                    402.79998779296875,
+                    0.0
+                ]
+            },
+            "components": [
+                {
+                    "comp_id": 104,
+                    "comp_name": "RenderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "file_name": "",
+                        "overwritten": true
+                    }
+                },
+                {
+                    "comp_id": 105,
+                    "comp_name": "SpriteComponent",
+                    "active": true,
+                    "comp_data": {
+                        "file_name": "Sprites.png",
+                        "source_rect": [
+                            48.0,
+                            96.0,
+                            16.0,
+                            16.0
+                        ],
+                        "dist_rect": [
+                            0.0,
+                            0.0,
+                            32.0,
+                            32.0
+                        ],
+                        "scale": [
+                            2.0,
+                            2.0
+                        ],
+                        "sprite_frame": {
+                            "columns": 1,
+                            "rows": 1,
+                            "frame_size": {
+                                "width": 16.0,
+                                "height": 16.0
+                            },
+                            "spacing": {
+                                "spacing_x": 0.0,
+                                "spacing_y": 0.0
+                            },
+                            "offset": {
+                                "offset_x": 48.0,
+                                "offset_y": 96.0
+                            }
+                        },
+                        "frame_index": 0
+                    }
+                }
+            ]
+        },
+        {
+            "go_id": 40,
+            "parent_id": 39,
+            "go_name": "Text",
+            "enabled": true,
+            "transform": {
+                "position": [
+                    408.8999938964844,
+                    402.79998779296875,
+                    0.0
+                ]
+            },
+            "components": [
+                {
+                    "comp_id": 107,
+                    "comp_name": "RenderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "file_name": "",
+                        "overwritten": true
+                    }
+                },
+                {
+                    "comp_id": 108,
+                    "comp_name": "TextComponent",
+                    "active": true,
+                    "comp_data": {
+                        "font_file_name": "ByteBounce.ttf",
+                        "font_size": 40,
+                        "text": "MR EGG",
+                        "color": [
+                            236,
+                            223,
+                            193,
+                            255
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "go_id": 41,
+            "parent_id": 40,
+            "go_name": "TM",
+            "enabled": true,
+            "transform": {
+                "position": [
+                    512.5,
+                    425.0999755859375,
+                    0.0
+                ]
+            },
+            "components": [
+                {
+                    "comp_id": 110,
+                    "comp_name": "RenderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "file_name": "",
+                        "overwritten": true
+                    }
+                },
+                {
+                    "comp_id": 111,
+                    "comp_name": "TextComponent",
+                    "active": true,
+                    "comp_data": {
+                        "font_file_name": "ByteBounce.ttf",
+                        "font_size": 20,
+                        "text": "TM",
+                        "color": [
+                            236,
+                            223,
+                            193,
+                            255
+                        ]
+                    }
+                }
+            ]
+        }
+    ]
+}

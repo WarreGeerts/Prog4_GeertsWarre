@@ -15,6 +15,7 @@ namespace dae {
         [[nodiscard]] const std::vector<std::unique_ptr<GameObject> > &GetGameObjects() const;
         [[nodiscard]] int GetSceneSize() const;
         [[nodiscard]] std::string GetName() const { return m_Name; }
+        void SetName(const std::string &name) { m_Name = name; }
         void Update();
         void Render() const;
         void RenderGUI() const;

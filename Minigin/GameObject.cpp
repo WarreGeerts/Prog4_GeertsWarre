@@ -4,6 +4,7 @@
 #include <utility>
 #include "Components/Component.h"
 #include "Components/TransformComponent.h"
+#include "Singletons/RealTimeEditor/ComponentFactory.h"
 using namespace dae;
 int GameObject::s_NextId = 0;
 GameObject::GameObject(std::string name) : m_Name(std::move(name)), m_Id(GenerateNextId()) {}
@@ -11,6 +12,21 @@ GameObject::~GameObject() = default;
 
 void GameObject::ClearIds() {
     s_NextId = 0;
+}
+
+std::unique_ptr<GameObject> GameObject::Clone() const {
+    auto clone = std::make_unique<GameObject>(m_Name + "_Copy");
+
+    clone->SetLocalPosition(this->m_LocalPosition);
+
+    for (const auto& comp : m_Components) {
+        auto newComp = ComponentFactory::Create(comp->GetName(), clone.get());
+        if (newComp) {
+            newComp->Deserialize(comp->Serialize());
+            clone->AddComponent(std::move(newComp));
+        }
+    }
+    return clone;
 }
 
 void GameObject::AddChild(GameObject *child) {
@@ -55,6 +71,16 @@ void GameObject::MarkForDeletion() {
     }
 
     m_Children.clear();
+}
+
+void GameObject::SetActive(const bool value) {
+    m_IsEnabled = value;
+}
+
+bool GameObject::IsActive() const {
+    if (!m_IsEnabled) return false;
+    if (m_Parent) return m_Parent->IsActive();
+    return true;
 }
 
 void GameObject::AddComponent(std::unique_ptr<Component> component) {

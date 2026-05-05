@@ -25,12 +25,7 @@ void RenderComponent::Update() {
     if (!m_IsActive) return;
 
     if (NeedsUpdate()) {
-        //check if components that make use of the render component/overwrite the usage exist
-        m_OverWritten = m_gameObject->HasComponent<SpriteComponent>() ||
-                        m_gameObject->HasComponent<TextComponent>();
-
-        m_transform = m_gameObject->GetTransform().get();
-        m_sprite = m_gameObject->GetComponent<SpriteComponent>();
+        SyncReferences();
     }
 }
 
@@ -65,6 +60,16 @@ void RenderComponent::Render() const {
     }
 }
 
+void RenderComponent::SyncReferences() {
+    if (!m_gameObject) return;
+
+    m_OverWritten = m_gameObject->HasComponent<SpriteComponent>() ||
+                    m_gameObject->HasComponent<TextComponent>();
+
+    m_transform = m_gameObject->GetTransform().get();
+    m_sprite = m_gameObject->GetComponent<SpriteComponent>();
+}
+
 nlohmann::ordered_json RenderComponent::Serialize() const {
     nlohmann::ordered_json data;
     data["file_name"] = m_FileName;
@@ -73,10 +78,12 @@ nlohmann::ordered_json RenderComponent::Serialize() const {
 }
 
 void RenderComponent::Deserialize(const nlohmann::ordered_json &data) {
-    m_FileName = data.value("file_name", " ");
+    m_FileName = data.value("file_name", "");
     m_OverWritten = data.value("overwritten", false);
-    if (!m_OverWritten)
+    if (!m_OverWritten && !m_FileName.empty())
         SetTexture(m_FileName);
+
+    SyncReferences();
 }
 
 void RenderComponent::InspectorGUI() {
@@ -135,8 +142,16 @@ void RenderComponent::InspectorGUI() {
 }
 
 void RenderComponent::SetTexture(const std::string &filename) {
-    m_texture = ResourceManager::GetInstance().LoadTexture(filename);
-}
+    if (filename.empty() || filename == " " || filename.empty()) {
+        m_texture = nullptr;
+        return;
+    }
+
+    if (std::filesystem::is_directory("./Data/" + filename)) {
+        return;
+    }
+
+    m_texture = ResourceManager::GetInstance().LoadTexture(filename);}
 
 std::vector<std::string> RenderComponent::GetTextureFiles(const std::string &directory, bool font) {
     std::vector<std::string> files;
@@ -150,7 +165,7 @@ std::vector<std::string> RenderComponent::GetTextureFiles(const std::string &dir
                     files.push_back(entry.path().filename().string());
                 }
             } else {
-                if (ext == ".otf") {
+                if (ext == ".otf" || ext == ".ttf") {
                     files.push_back(entry.path().filename().string());
                 }
             }

@@ -34,11 +34,7 @@ void TextComponent::Update() {
     if (!m_IsActive) return;
 
     if (NeedsUpdate()) {
-        m_renderComponentRef = m_gameObject->GetComponent<RenderComponent>();
-
-        //check if components that make use of the Text component/overwrite the usage exist
-        m_OverWriten = m_gameObject->HasComponent<LivesDisplayComponent>() ||
-                       m_gameObject->HasComponent<ScoreDisplayComponent>();
+        SyncReferences();
     }
 
     if (!m_renderComponentRef) return;
@@ -57,7 +53,9 @@ void TextComponent::Update() {
         auto texture = SDL_CreateTextureFromSurface(Renderer::GetInstance().GetSDLRenderer(), surf);
         SDL_DestroySurface(surf);
 
-        m_textTexture = std::make_shared<Texture2D>(texture);
+        if (texture) {
+            m_textTexture = std::make_shared<Texture2D>(texture);
+        }
         m_needsUpdate = false;
         m_GuiUpdated = false;
         m_prevText = m_Text;
@@ -198,7 +196,7 @@ nlohmann::ordered_json TextComponent::Serialize() const {
 }
 
 void TextComponent::Deserialize(const nlohmann::ordered_json &data) {
-    m_FontFileName = data.value("font_file_name", " ");
+    m_FontFileName = data.value("font_file_name", "");
     m_FontSize = data.value("font_size", 10);
     m_Text = data.value("text", " ");
     if (data.contains("color")) {
@@ -209,7 +207,20 @@ void TextComponent::Deserialize(const nlohmann::ordered_json &data) {
         m_color.a = posArray[3].get<float>();
     }
 
-    m_font = ResourceManager::GetInstance().LoadFont(m_FontFileName, static_cast<uint8_t>(m_FontSize));
+    if (!m_FontFileName.empty()) {
+        m_font = ResourceManager::GetInstance().LoadFont(m_FontFileName, static_cast<uint8_t>(m_FontSize));
+    }
+
+    m_needsUpdate = true;
+}
+
+void TextComponent::SyncReferences() {
+    if (!m_gameObject) return;
+
+    m_renderComponentRef = m_gameObject->GetComponent<RenderComponent>();
+
+    m_OverWriten = m_gameObject->HasComponent<LivesDisplayComponent>() ||
+                   m_gameObject->HasComponent<ScoreDisplayComponent>();
 }
 
 void TextComponent::SetText(const std::string &text) {

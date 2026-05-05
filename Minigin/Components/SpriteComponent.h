@@ -13,6 +13,7 @@ namespace dae {
         int columns{}, rows{};
         float frameWidth{}, frameHeight{};
         float spacingX = 0.f, spacingY = 0.f;
+        float offsetX = 0, offsetY = 0; // Added
     };
 
     class SpriteComponent final : public Component {

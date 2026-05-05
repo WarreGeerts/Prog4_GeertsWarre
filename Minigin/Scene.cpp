@@ -55,7 +55,7 @@ int Scene::GetSceneSize() const {
 void Scene::Update() {
     //update everything first
     for (const auto &object: m_objects) {
-        if (object->GetIsEnabled()) {
+        if (object->IsActive()) {
             object->Update();
         }
     }
@@ -74,7 +74,7 @@ void Scene::Update() {
 
 void Scene::Render() const {
     for (const auto &object: m_objects) {
-        if (object->GetIsEnabled()) {
+        if (object->IsActive()) {
             for (const auto &component: object->GetComponents()) {
                 component->Render();
             }
@@ -84,7 +84,7 @@ void Scene::Render() const {
 
 void Scene::RenderGUI() const {
     for (const auto &object: m_objects) {
-        if (object->GetIsEnabled()) {
+        if (object->IsActive()) {
             for (const auto &component: object->GetComponents()) {
                 component->RenderGUI();
             }

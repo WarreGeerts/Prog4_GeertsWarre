@@ -34,7 +34,6 @@ void EditorGui::RenderGUI() {
 //Scene Graph
 #pragma region SceneGraph
 //TODO: bug, selection change when making new name will change new selected one as well
-//TODO: Scene name change to file name
 
 void EditorGui::DrawSceneGraph() {
     ImGui::Begin("Scene Graph");
@@ -49,12 +48,33 @@ void EditorGui::DrawSceneGraph() {
     }
 
     for (auto &getScene: SceneManager::GetInstance().GetScenes()) {
-        ImGui::Text("%s", getScene->GetName().c_str());
+        std::string currentSceneName = getScene->GetName();
+        char sceneNameBuf[64] = {};
+        strncpy(sceneNameBuf, currentSceneName.c_str(), sizeof(sceneNameBuf) - 1);
+
+        ImGui::PushItemWidth(ImGui::GetContentRegionAvail().x);
+
+        if (ImGui::InputText("##SceneNameEdit", sceneNameBuf, sizeof(sceneNameBuf))) {
+            getScene->SetName(sceneNameBuf);
+        }
+
+        ImGui::PopItemWidth();
+
         for (auto &GO: getScene->GetGameObjects()) {
             if (GO->GetParent() == nullptr)
                 VisualizeSceneGraph(GO.get());
         }
     }
+
+    ImGui::Dummy(ImGui::GetContentRegionAvail());
+    if (ImGui::BeginDragDropTarget()) {
+        if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("GAMEOBJECT_HIERARCHY")) {
+            GameObject* draggedGO = *static_cast<GameObject **>(payload->Data);
+            draggedGO->SetParent(nullptr, true);
+        }
+        ImGui::EndDragDropTarget();
+    }
+
     ImGui::End();
 }
 
@@ -67,12 +87,35 @@ void EditorGui::VisualizeSceneGraph(GameObject *GO) {
 
     const bool opened = ImGui::TreeNodeEx((void *) GO, flags, "%s", GO->GetName().c_str());
 
+    if (ImGui::BeginDragDropSource()) {
+        ImGui::SetDragDropPayload("GAMEOBJECT_HIERARCHY", &GO, sizeof(GameObject*));
+
+        ImGui::Text("Moving %s", GO->GetName().c_str());
+        ImGui::EndDragDropSource();
+    }
+
+    if (ImGui::BeginDragDropTarget()) {
+        if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("GAMEOBJECT_HIERARCHY")) {
+            GameObject* draggedGO = *static_cast<GameObject **>(payload->Data);
+
+            if (draggedGO != GO && !GO->IsChild(draggedGO)) {
+                draggedGO->SetParent(GO, true);
+            }
+        }
+        ImGui::EndDragDropTarget();
+    }
+
+
     if (ImGui::IsItemClicked()) {
         selectedGO = GO;
     }
 
     if (ImGui::BeginPopupContextItem()) {
         selectedGO = GO;
+
+        if (ImGui::MenuItem("Duplicate")) {
+            DuplicateGameObject(GO,nullptr);
+        }
 
         if (ImGui::MenuItem("Create Child")) {
             auto child = std::make_unique<GameObject>("Empty GameObject");
@@ -104,23 +147,36 @@ void EditorGui::VisualizeSceneGraph(GameObject *GO) {
     }
 }
 
+void EditorGui::DuplicateGameObject(GameObject* original, GameObject* newParent) {
+    if (!original) return;
+
+    auto clone = original->Clone();
+    GameObject* clonePtr = clone.get();
+
+    auto& scene = SceneManager::GetInstance().GetSceneByIdx(0);
+    scene.Add(std::move(clone));
+
+    if (newParent) {
+        clonePtr->SetParent(newParent, false);
+    } else if (original->GetParent()) {
+        clonePtr->SetParent(original->GetParent(), false);
+    }
+
+    clonePtr->UpdateWorldPosition();
+
+    for (int i = 0; i < original->GetChildCount(); ++i) {
+        DuplicateGameObject(original->GetChildAt(i), clonePtr);
+    }
+
+    if (newParent == nullptr) {
+        selectedGO = clonePtr;
+    }
+}
+
 void EditorGui::ClearSelection() {
     selectedGO = nullptr;
 }
 
-template<typename T>
-void EditorGui::DrawAddComponentItem(GameObject *GO, const char *label) {
-    const bool hasComp = GO->HasComponent<T>();
-
-    if (ImGui::MenuItem(label, nullptr, false, !hasComp)) {
-        GO->AddComponent(std::make_unique<T>(GO));
-        ImGui::CloseCurrentPopup();
-    }
-
-    if (hasComp && ImGui::IsItemHovered(ImGuiHoveredFlags_AllowWhenDisabled)) {
-        ImGui::SetTooltip("Object already has this component.");
-    }
-}
 #pragma endregion SceneGraph
 //Inspector
 #pragma region InspectorGUI
@@ -144,9 +200,9 @@ void EditorGui::DrawInspector(GameObject *GO) {
     if (ImGui::InputText("##Name", nameBuffer, sizeof(nameBuffer))) {
         GO->SetName(nameBuffer);
     }
-    bool enabled = GO->GetIsEnabled();
+    bool enabled = GO->IsActive();
     if (ImGui::Checkbox("IsEnabled", &enabled)) {
-        GO->SetIsEnabled(enabled);
+        GO->SetActive(enabled);
     }
     ImGui::Separator();
 
@@ -211,38 +267,6 @@ void EditorGui::DrawInspector(GameObject *GO) {
 
     ImGui::End();
 }
-
-/*void EditorGui::DrawAddComponentPopup(GameObject *GO) {
-    if (ImGui::BeginPopup("AddComponentPopup")) {
-        ImGui::TextColored(ImVec4(0.7f, 0.7f, 0.7f, 1.0f), "Add Component");
-        ImGui::Separator();
-        if (ImGui::BeginMenu("Rendering")) {
-            DrawAddComponentItem<RenderComponent>(GO, "Render Component");
-            DrawAddComponentItem<SpriteComponent>(GO, "Sprite Component");
-            ImGui::EndMenu();
-        }
-        if (ImGui::BeginMenu("UI")) {
-            DrawAddComponentItem<TextComponent>(GO, "Text Component");
-            DrawAddComponentItem<FPSComponent>(GO, "FPS Component");
-            DrawAddComponentItem<LivesDisplayComponent>(GO, "Lives Display Component");
-            DrawAddComponentItem<ScoreDisplayComponent>(GO, "Score Display Component");
-            ImGui::EndMenu();
-        }
-        if (ImGui::BeginMenu("Controlling")) {
-            DrawAddComponentItem<CharacterControllerComponent>(GO, "Character Controller Component");
-            DrawAddComponentItem<RotateComponent>(GO, "Rotate Component");
-            DrawAddComponentItem<LivesComponent>(GO, "Lives Component");
-            DrawAddComponentItem<ScoreComponent>(GO, "Score Component");
-            ImGui::EndMenu();
-        }
-        if (ImGui::BeginMenu("UnListed")) {
-            DrawAddComponentItem<ThrashCacheComponent>(GO, "Thrash Cache Component");
-            ImGui::EndMenu();
-        }
-
-        ImGui::EndPopup();
-    }
-}*/
 
 void EditorGui::DrawAddComponentPopup(GameObject *GO) {
     if (ImGui::BeginPopup("AddComponentPopup")) {
@@ -361,11 +385,10 @@ void EditorGui::DrawFileBrowserPopup() {
 
 void EditorGui::SaveScene() {
     const std::filesystem::path scenesDir = std::filesystem::current_path() / "Data" / "Scenes";
-
-    // Create directory if it doesn't exist
     std::filesystem::create_directories(scenesDir);
 
     const std::string sceneName = SceneManager::GetInstance().GetSceneByIdx(0).GetName();
+
     const std::filesystem::path filePath = scenesDir / (sceneName + ".json");
 
     SceneSerializer::GetInstance().SaveScene(filePath.string(),
@@ -376,11 +399,10 @@ void EditorGui::SaveScene() {
 
 void EditorGui::SaveScene(const std::string &sceneName) {
     const std::filesystem::path scenesDir = std::filesystem::current_path() / "Data" / "Scenes";
-
-    // Create directory if it doesn't exist
     std::filesystem::create_directories(scenesDir);
 
     const std::filesystem::path filePath = scenesDir / (sceneName + ".json");
+    SceneManager::GetInstance().GetSceneByIdx(0).SetName(sceneName);
 
     SceneSerializer::GetInstance().SaveScene(filePath.string(),
                                              SceneManager::GetInstance().GetSceneByIdx(0));

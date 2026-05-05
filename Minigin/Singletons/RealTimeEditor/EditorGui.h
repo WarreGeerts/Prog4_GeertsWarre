@@ -17,11 +17,25 @@ namespace dae {
         //Scene Graph
         static void DrawSceneGraph();
         static void VisualizeSceneGraph(GameObject *GO);
+        static void DuplicateGameObject(GameObject *original, GameObject *newParent);
         //Inspector
-        void DrawInspector(GameObject *GO);
-        void DrawAddComponentPopup(GameObject *GO);
+        static void DrawInspector(GameObject *GO);
+        static void DrawAddComponentPopup(GameObject *GO);
+
         template<class T>
-        void DrawAddComponentItem(GameObject *GO, const char *label);
+        void DrawAddComponentItem(GameObject *GO, const char *label) {
+            const bool hasComp = GO->HasComponent<T>();
+
+            if (ImGui::MenuItem(label, nullptr, false, !hasComp)) {
+                GO->AddComponent(std::make_unique<T>(GO));
+                ImGui::CloseCurrentPopup();
+            }
+
+            if (hasComp && ImGui::IsItemHovered(ImGuiHoveredFlags_AllowWhenDisabled)) {
+                ImGui::SetTooltip("Object already has this component.");
+            }
+        }
+
         //top-bar
         void DrawTopBar();
         void DrawSaveAsPopup();

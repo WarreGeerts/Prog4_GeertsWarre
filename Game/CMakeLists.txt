@@ -6,6 +6,8 @@
         Components/LivesComponent.cpp
         Components/ScoreComponent.cpp
         Components/GameComponents.h
+        Components/MenuManagerComponent.cpp
+        Components/MenuManagerComponent.h
 )
 
 set_target_properties(${TARGET_NAME} PROPERTIES

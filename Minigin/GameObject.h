@@ -18,7 +18,8 @@ namespace dae {
         void MarkForDeletion();
         [[nodiscard]] const std::string &GetName() const { return m_Name; }
         void SetName(const std::string &name) { m_Name = name; };
-        void SetIsEnabled(const bool value) { m_IsEnabled = value; }
+        void SetActive(bool value);
+        [[nodiscard]] bool IsActive() const;
         [[nodiscard]] bool GetIsEnabled() const { return m_IsEnabled; }
         //components
         [[nodiscard]] const std::vector<std::unique_ptr<Component> > &GetComponents() const { return m_Components; }
@@ -46,6 +47,7 @@ namespace dae {
         [[nodiscard]] GameObject *GetParent() const { return m_Parent; }
         [[nodiscard]] int GetChildCount() const { return static_cast<int>(m_Children.size()); }
         [[nodiscard]] GameObject *GetChildAt(const int index) const { return m_Children[index]; }
+        bool IsChild(GameObject *object) const;
         //positions
         void SetLocalPosition(const glm::vec3 &position);
         const glm::vec3 &GetWorldPosition();
@@ -61,6 +63,8 @@ namespace dae {
         //id
         [[nodiscard]] int GetId() const { return m_Id; }
         static void ClearIds();
+        //editor
+        [[nodiscard]] std::unique_ptr<GameObject> Clone() const;
 
     private:
         //general vars
@@ -80,7 +84,6 @@ namespace dae {
         //parent-child functions
         void AddChild(GameObject *child);
         void RemoveChild(const GameObject *child);
-        bool IsChild(GameObject *object) const;
         //id
         int m_Id;
         static int s_NextId;

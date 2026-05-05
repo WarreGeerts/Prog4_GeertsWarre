@@ -22,6 +22,7 @@ namespace dae {
         void InspectorGUI() override;
         [[nodiscard]] nlohmann::ordered_json Serialize() const override;
         void Deserialize(const nlohmann::ordered_json &data) override;
+        void SyncReferences();
         //-
         void SetFont(std::shared_ptr<Font> font) { m_font = std::move(font); };
         void SetText(const std::string &text);

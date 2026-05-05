@@ -21,7 +21,14 @@ SpriteComponent::SpriteComponent(GameObject *go, const std::string &spritesheetP
 }
 
 void SpriteComponent::SetSpritesheetPath(const std::string &spritesheetPath) {
-    if (spritesheetPath.empty()) return;
+    if (spritesheetPath.empty() || spritesheetPath == " " || spritesheetPath.empty()) {
+        m_Spritesheet = nullptr;
+        return;
+    }
+
+    if (std::filesystem::is_directory("./Data/" + spritesheetPath)) {
+        return;
+    }
 
     auto texture = ResourceManager::GetInstance().LoadTexture(spritesheetPath);
     if (texture && texture->GetSDLTexture()) {
@@ -31,7 +38,6 @@ void SpriteComponent::SetSpritesheetPath(const std::string &spritesheetPath) {
         if (m_SpriteFrame.frameWidth <= 0) m_SpriteFrame.frameWidth = size.x;
         if (m_SpriteFrame.frameHeight <= 0) m_SpriteFrame.frameHeight = size.y;
 
-        //m_SrcRect = {0.f, 0.f, size.x, size.y};
         SDL_SetTextureScaleMode(m_Spritesheet->GetSDLTexture(), SDL_SCALEMODE_PIXELART);
 
         SetFrame(m_FrameIndex);
@@ -47,8 +53,10 @@ void SpriteComponent::SetFrame(const int) {
     const int col{m_FrameIndex % m_SpriteFrame.columns};
     const int row{m_FrameIndex / m_SpriteFrame.columns};
 
-    m_SrcRect.x = static_cast<float>(col) * (m_SpriteFrame.frameWidth + m_SpriteFrame.spacingX);
-    m_SrcRect.y = static_cast<float>(row) * (m_SpriteFrame.frameHeight + m_SpriteFrame.spacingY);
+    m_SrcRect.x = m_SpriteFrame.offsetX + static_cast<float>(col) * (m_SpriteFrame.frameWidth + m_SpriteFrame.spacingX);
+    m_SrcRect.y = m_SpriteFrame.offsetY + static_cast<float>(row) * (
+                      m_SpriteFrame.frameHeight + m_SpriteFrame.spacingY);
+
     m_SrcRect.w = m_SpriteFrame.frameWidth;
     m_SrcRect.h = m_SpriteFrame.frameHeight;
 
@@ -76,6 +84,12 @@ nlohmann::ordered_json SpriteComponent::Serialize() const {
                 {"spacing_x", m_SpriteFrame.spacingX},
                 {"spacing_y", m_SpriteFrame.spacingY},
             }
+        },
+        {
+            "offset", {
+                {"offset_x", m_SpriteFrame.offsetX},
+                {"offset_y", m_SpriteFrame.offsetY}
+            }
         }
     };
     data["frame_index"] = m_FrameIndex;
@@ -83,48 +97,56 @@ nlohmann::ordered_json SpriteComponent::Serialize() const {
 }
 
 void SpriteComponent::Deserialize(const nlohmann::ordered_json &data) {
-    m_FileName = data.value("file_name", " ");
+    m_FileName = data.value("file_name", "");
     if (data.contains("source_rect")) {
-        auto& posArray = data["source_rect"];
+        auto &posArray = data["source_rect"];
         m_SrcRect.x = posArray[0].get<float>();
         m_SrcRect.y = posArray[1].get<float>();
         m_SrcRect.w = posArray[2].get<float>();
         m_SrcRect.h = posArray[3].get<float>();
     }
     if (data.contains("dist_rect")) {
-        auto& posArray = data["dist_rect"];
+        auto &posArray = data["dist_rect"];
         m_DstRect.x = posArray[0].get<float>();
         m_DstRect.y = posArray[1].get<float>();
         m_DstRect.w = posArray[2].get<float>();
         m_DstRect.h = posArray[3].get<float>();
     }
     if (data.contains("scale")) {
-        auto& posArray = data["scale"];
+        auto &posArray = data["scale"];
         m_ScaleX = posArray[0].get<float>();
         m_ScaleY = posArray[1].get<float>();
     }
 
     if (data.contains("sprite_frame")) {
-        auto& frame = data["sprite_frame"];
+        auto &frame = data["sprite_frame"];
         m_SpriteFrame.columns = frame.value("columns", 1);
         m_SpriteFrame.rows = frame.value("rows", 1);
 
         if (frame.contains("frame_size")) {
-            auto& size = frame["frame_size"];
+            auto &size = frame["frame_size"];
             m_SpriteFrame.frameWidth = size.value("width", 16.0f);
             m_SpriteFrame.frameHeight = size.value("height", 16.0f);
         }
 
         if (frame.contains("spacing")) {
-            auto& spacing = frame["spacing"];
+            auto &spacing = frame["spacing"];
             m_SpriteFrame.spacingX = spacing.value("spacing_x", 0.0f);
             m_SpriteFrame.spacingY = spacing.value("spacing_y", 0.0f);
+        }
+
+        if (frame.contains("offset")) {
+            auto &offset = frame["offset"];
+            m_SpriteFrame.offsetX = offset.value("offset_x", 0.0f);
+            m_SpriteFrame.offsetY = offset.value("offset_y", 0.0f);
         }
     }
 
     m_FrameIndex = data.value("frame_index", 0);
 
-    SetSpritesheetPath(m_FileName);
+    if (!m_FileName.empty()) {
+        SetSpritesheetPath(m_FileName);
+    }
     SetFrame(m_FrameIndex);
 }
 
@@ -183,6 +205,14 @@ void SpriteComponent::InspectorGUI() {
     if (ImGui::DragFloat2("Frame Spacing X & Y", SpacingX_Y, 0.01f)) {
         m_SpriteFrame.spacingX = SpacingX_Y[0];
         m_SpriteFrame.spacingY = SpacingX_Y[1];
+        SetFrame(m_FrameIndex);
+    }
+
+    //sheet offset
+    float Offsets[2] = {m_SpriteFrame.offsetX, m_SpriteFrame.offsetY};
+    if (ImGui::DragFloat2("Grid Offset X & Y", Offsets, 1.0f)) {
+        m_SpriteFrame.offsetX = Offsets[0];
+        m_SpriteFrame.offsetY = Offsets[1];
         SetFrame(m_FrameIndex);
     }
 
