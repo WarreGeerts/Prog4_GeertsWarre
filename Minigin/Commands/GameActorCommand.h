@@ -35,7 +35,7 @@ namespace dae {
 
     class ScoreCommandHigh : public GameActorCommand {
     public:
-        explicit ScoreCommandHigh(GameObject *actor, const EventId playerScoreEvent);
+        explicit ScoreCommandHigh(GameObject *actor, EventId playerScoreEvent);
         void Execute() override;
 
     private:

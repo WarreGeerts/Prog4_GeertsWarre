@@ -90,13 +90,13 @@ dae::Minigin::~Minigin() {
 void dae::Minigin::Run(const std::function<void()> &load) {
 
     //engine components
-    ComponentFactory::Register<TransformComponent>("TransformComponent");
-    ComponentFactory::Register<RenderComponent>("RenderComponent");
-    ComponentFactory::Register<TextComponent>("TextComponent");
-    ComponentFactory::Register<SpriteComponent>("SpriteComponent");
-    ComponentFactory::Register<FPSComponent>("FPSComponent");
-    ComponentFactory::Register<CharacterControllerComponent>("CharacterControllerComponent");
-    ComponentFactory::Register<RotateComponent>("RotateComponent");
+    ComponentFactory::GetInstance().Register<TransformComponent>("TransformComponent");
+    ComponentFactory::GetInstance().Register<RenderComponent>("RenderComponent");
+    ComponentFactory::GetInstance().Register<TextComponent>("TextComponent");
+    ComponentFactory::GetInstance().Register<SpriteComponent>("SpriteComponent");
+    ComponentFactory::GetInstance().Register<FPSComponent>("FPSComponent");
+    ComponentFactory::GetInstance().Register<CharacterControllerComponent>("CharacterControllerComponent");
+    ComponentFactory::GetInstance().Register<RotateComponent>("RotateComponent");
 
     load(); //initialization (once run)
 

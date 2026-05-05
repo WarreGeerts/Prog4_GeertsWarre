@@ -8,16 +8,16 @@
 namespace dae {
     class ComponentFactory final : public Singleton<ComponentFactory> {
     public:
-        static std::unique_ptr<Component> Create(const std::string &type, GameObject *go);
+        std::unique_ptr<Component> Create(const std::string &type, GameObject *go);
 
         template<typename T>
-        static void Register(const std::string &name) {
+        void Register(const std::string &name) {
             GetFactory()[name] = [](GameObject *go) {
                 return std::make_unique<T>(go);
             };
         }
 
-        static std::vector<std::string> GetRegisteredTypeNames();
+        std::vector<std::string> GetRegisteredTypeNames();
 
     private:
         friend Singleton<ComponentFactory>;

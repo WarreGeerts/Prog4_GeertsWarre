@@ -8,6 +8,10 @@
         Components/GameComponents.h
         Components/MenuManagerComponent.cpp
         Components/MenuManagerComponent.h
+        Commands/GameCommands.cpp
+        Commands/GameCommands.h
+        Components/SceneSwitchComponent.cpp
+        Components/SceneSwitchComponent.h
 )
 
 set_target_properties(${TARGET_NAME} PROPERTIES

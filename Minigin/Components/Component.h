@@ -21,7 +21,7 @@ namespace dae {
         void ChangeActive(const bool active) { m_IsActive = active; }
         [[nodiscard]] bool GetActive() const { return m_IsActive; }
         //Functions for EditorGui Inspector
-        virtual void InspectorGUI() {}
+        virtual void InspectorGUI() = 0;
         std::string GetName() { return m_Name; }
         [[nodiscard]] bool HasWarning() const { return m_HasWarning; }
         //save/load

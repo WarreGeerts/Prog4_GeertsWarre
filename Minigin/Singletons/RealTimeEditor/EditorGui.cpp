@@ -273,7 +273,7 @@ void EditorGui::DrawAddComponentPopup(GameObject *GO) {
         ImGui::TextColored(ImVec4(0.7f, 0.7f, 0.7f, 1.0f), "Available Components");
         ImGui::Separator();
 
-        auto componentNames = ComponentFactory::GetRegisteredTypeNames();
+        auto componentNames = ComponentFactory::GetInstance().GetRegisteredTypeNames();
 
         for (const std::string& name : componentNames) {
             if (ImGui::MenuItem(name.c_str())) {

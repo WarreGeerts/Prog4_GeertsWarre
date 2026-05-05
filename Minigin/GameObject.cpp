@@ -20,7 +20,7 @@ std::unique_ptr<GameObject> GameObject::Clone() const {
     clone->SetLocalPosition(this->m_LocalPosition);
 
     for (const auto& comp : m_Components) {
-        auto newComp = ComponentFactory::Create(comp->GetName(), clone.get());
+        auto newComp = ComponentFactory::GetInstance().Create(comp->GetName(), clone.get());
         if (newComp) {
             newComp->Deserialize(comp->Serialize());
             clone->AddComponent(std::move(newComp));

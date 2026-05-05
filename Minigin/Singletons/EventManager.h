@@ -89,6 +89,8 @@ namespace dae {
         static constexpr EventId P1_ENEMY_KILL{make_sdbm_hash("P1EnemyKill")};
         static constexpr EventId P2_ENEMY_KILL{make_sdbm_hash("P2EnemyKill")};
 
+        static constexpr EventId GO_TO_LOBBY{make_sdbm_hash("GoToLobby")};
+
         static void Initialize() {
             auto &em = EventManager::GetInstance();
 
@@ -102,6 +104,7 @@ namespace dae {
             em.RegisterEventName(P2_BURGER_FALL, "P2BurgerFall");
             em.RegisterEventName(P1_ENEMY_KILL, "P1EnemyKill");
             em.RegisterEventName(P2_ENEMY_KILL, "P2EnemyKill");
+            em.RegisterEventName(GO_TO_LOBBY, "GoToLobby");
         }
 
         static std::vector<std::string> GetAllEventNames();

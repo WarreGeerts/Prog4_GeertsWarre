@@ -33,9 +33,11 @@ namespace dae {
     nlohmann::ordered_json MenuManagerComponent::Serialize() const {
         nlohmann::ordered_json data;
         data["wait_time"] = m_WaitTime;
+        data["current_child_index"] = m_CurrentChildIndex;
         return data;
     }
     void MenuManagerComponent::Deserialize(const nlohmann::ordered_json &data) {
         m_WaitTime = data.value("wait_time", 3.0f);
+        m_CurrentChildIndex = data.value("current_child_index", 0);
     }
 }

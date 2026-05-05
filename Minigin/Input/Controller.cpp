@@ -130,7 +130,8 @@ namespace dae {
 #endif
 
 namespace dae {
-    Controller::Controller() : m_pImpl(std::make_unique<ControllerImpl>(0)) {}
+    Controller::Controller(uint32_t controllerIndex) : m_pImpl(std::make_unique<ControllerImpl>(controllerIndex)) {}
+    //Controller::Controller() : m_pImpl(std::make_unique<ControllerImpl>(0)) {}
     Controller::~Controller() = default;
     bool Controller::IsConnected() const { return m_pImpl->IsConnected(); }
     void Controller::Update() { m_pImpl->Update(); }

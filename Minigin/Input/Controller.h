@@ -1,11 +1,11 @@
 ﻿#pragma once
-#include <cstdint>
 #include <memory>
 
 namespace dae {
     class Controller {
     public:
-        Controller();
+        explicit Controller(uint32_t controllerIndex);
+        //Controller();
         ~Controller();
 
         [[nodiscard]] bool IsConnected() const;

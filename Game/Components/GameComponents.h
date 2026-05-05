@@ -7,3 +7,4 @@
 #include "LivesDisplayComponent.h"
 #include "ScoreDisplayComponent.h"
 #include "MenuManagerComponent.h"
+#include "SceneSwitchComponent.h"

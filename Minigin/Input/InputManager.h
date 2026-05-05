@@ -2,11 +2,9 @@
 #include <memory>
 #include <utility>
 #include <vector>
-#include <SDL3/SDL.h>
 #include "Commands/Command.h"
 #include "Controller.h"
 #include "Singletons/Singleton.h"
-#include <cstdint>
 
 namespace dae {
     enum class KeyState { Pressed, Down, Up };
@@ -15,17 +13,11 @@ namespace dae {
     using Button = int;
 
     struct Binding {
-        KeyState state;
-        int inputId;
-        bool isKeyboard;
+        KeyState state{};
+        int inputId{};
+        bool isKeyboard{};
         int controllerIdx{0};
-
-        bool operator==(const Binding &other) const {
-            return state == other.state &&
-                   inputId == other.inputId &&
-                   isKeyboard == other.isKeyboard &&
-                   controllerIdx == other.controllerIdx;
-        }
+        bool operator==(const Binding &other) const;
     };
 
     class InputManager final : public Singleton<InputManager> {
@@ -37,10 +29,11 @@ namespace dae {
 
     private:
         std::vector<std::pair<Binding, std::unique_ptr<Command> > > m_Bindings;
-        Controller m_Controller;
+        std::vector<std::unique_ptr<Controller> > m_Controllers;
         const bool *m_KeyboardState{nullptr};
         void CheckControllerBindings();
         void CheckKeyboardBindings(KeyState state);
         void UpdateKeyboardState();
+        void AddController(uint32_t idx);
     };
 }

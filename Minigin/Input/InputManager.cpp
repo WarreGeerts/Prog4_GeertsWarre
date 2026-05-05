@@ -5,6 +5,13 @@
 #include <functional>
 using namespace dae;
 
+bool Binding::operator==(const Binding &other) const {
+    return state == other.state &&
+           inputId == other.inputId &&
+           isKeyboard == other.isKeyboard &&
+           controllerIdx == other.controllerIdx;
+}
+
 bool InputManager::ProcessInput() {
     SDL_Event e;
     while (SDL_PollEvent(&e)) {
@@ -21,8 +28,9 @@ bool InputManager::ProcessInput() {
         ImGui_ImplSDL3_ProcessEvent(&e);
     }
 
-    m_Controller.Update();
-
+    for (const auto &controller: m_Controllers) {
+        controller->Update();
+    }
     CheckControllerBindings();
     CheckKeyboardBindings(KeyState::Pressed);
 
@@ -48,18 +56,19 @@ void InputManager::ClearBindings() {
 }
 
 void InputManager::CheckControllerBindings() {
-    for (int controllerIdx = 0; controllerIdx < 4; ++controllerIdx) {
-        Controller tempController;
-        tempController.SetControllerIndex(controllerIdx);
-        tempController.Update();
-        for (const auto &[binding, pCommand]: m_Bindings) {
-            if (binding.isKeyboard || binding.controllerIdx != controllerIdx) continue;
+    for (size_t i = 0; i < m_Controllers.size(); ++i) {
+        const auto &controller = m_Controllers[i];
+        if (!controller->IsConnected()) continue;
 
-            if (binding.state == KeyState::Pressed && m_Controller.IsPressed(binding.inputId)) {
+        for (const auto &[binding, pCommand]: m_Bindings) {
+            // Check if this binding is meant for THIS specific controller index
+            if (binding.isKeyboard || binding.controllerIdx != static_cast<int>(i)) continue;
+
+            if (binding.state == KeyState::Pressed && controller->IsPressed(binding.inputId)) {
                 pCommand->Execute();
-            } else if (binding.state == KeyState::Down && m_Controller.IsDownThisFrame(binding.inputId)) {
+            } else if (binding.state == KeyState::Down && controller->IsDownThisFrame(binding.inputId)) {
                 pCommand->Execute();
-            } else if (binding.state == KeyState::Up && m_Controller.IsUpThisFrame(binding.inputId)) {
+            } else if (binding.state == KeyState::Up && controller->IsUpThisFrame(binding.inputId)) {
                 pCommand->Execute();
             }
         }
@@ -85,4 +94,8 @@ void InputManager::CheckKeyboardBindings(const KeyState state) {
 
 void InputManager::UpdateKeyboardState() {
     m_KeyboardState = SDL_GetKeyboardState(nullptr);
+}
+
+void InputManager::AddController(uint32_t idx) {
+    m_Controllers.push_back(std::make_unique<Controller>(idx));
 }

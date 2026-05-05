@@ -107,7 +107,7 @@ namespace dae {
                 bool compEnabled = compData["active"];
                 auto compDataJson = compData["comp_data"];
 
-                auto comp = ComponentFactory::Create(compName, go.get());
+                auto comp = ComponentFactory::GetInstance().Create(compName, go.get());
                 comp->ChangeActive(compEnabled);
                 if (comp) {
                     comp->ChangeActive(compEnabled);

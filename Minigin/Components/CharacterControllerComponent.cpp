@@ -87,7 +87,6 @@ void CharacterControllerComponent::AddControlBindings(float speed, bool keyboard
 void CharacterControllerComponent::RemoveControlBindings() {
     if (!m_Bound) return;
     auto &Input{InputManager::GetInstance()};
-    Input.RemoveBinding({KeyState::Pressed, static_cast<int>(SDL_SCANCODE_W), true});
 
     if (m_Keyboard) {
         //movement
