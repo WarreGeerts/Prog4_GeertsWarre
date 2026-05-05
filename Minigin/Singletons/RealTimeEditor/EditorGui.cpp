@@ -4,9 +4,12 @@
 #include "imgui.h"
 //scene
 #include <SDL3/SDL_log.h>
+
+#include "ComponentFactory.h"
 #include "SceneSerializer.h"
 #include "Input/InputManager.h"
 #include "Singletons/SceneManager.h"
+
 using namespace dae;
 static GameObject *selectedGO = nullptr;
 
@@ -209,7 +212,7 @@ void EditorGui::DrawInspector(GameObject *GO) {
     ImGui::End();
 }
 
-void EditorGui::DrawAddComponentPopup(GameObject *GO) {
+/*void EditorGui::DrawAddComponentPopup(GameObject *GO) {
     if (ImGui::BeginPopup("AddComponentPopup")) {
         ImGui::TextColored(ImVec4(0.7f, 0.7f, 0.7f, 1.0f), "Add Component");
         ImGui::Separator();
@@ -239,7 +242,29 @@ void EditorGui::DrawAddComponentPopup(GameObject *GO) {
 
         ImGui::EndPopup();
     }
+}*/
+
+void EditorGui::DrawAddComponentPopup(GameObject *GO) {
+    if (ImGui::BeginPopup("AddComponentPopup")) {
+        ImGui::TextColored(ImVec4(0.7f, 0.7f, 0.7f, 1.0f), "Available Components");
+        ImGui::Separator();
+
+        auto componentNames = ComponentFactory::GetRegisteredTypeNames();
+
+        for (const std::string& name : componentNames) {
+            if (ImGui::MenuItem(name.c_str())) {
+                auto newComp = ComponentFactory::GetInstance().Create(name, GO);
+                if (newComp) {
+                    GO->AddComponent(std::move(newComp));
+                }
+                ImGui::CloseCurrentPopup();
+            }
+        }
+
+        ImGui::EndPopup();
+    }
 }
+
 #pragma endregion InspectorGUI
 //Top Bar
 #pragma region TopBarGUI

@@ -4,7 +4,6 @@
 #include <functional>
 #include "Components/Component.h"
 #include "Singletons/Singleton.h"
-#include "Components/EngineComponents.h"
 
 namespace dae {
     class ComponentFactory final : public Singleton<ComponentFactory> {
@@ -17,6 +16,8 @@ namespace dae {
                 return std::make_unique<T>(go);
             };
         }
+
+        static std::vector<std::string> GetRegisteredTypeNames();
 
     private:
         friend Singleton<ComponentFactory>;

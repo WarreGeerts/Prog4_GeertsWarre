@@ -8,7 +8,9 @@ namespace dae {
     public:
         void StartDeltaTime();
         void ReCalcLag();
-        [[nodiscard]] auto CalcSleepTime() const;
+        [[nodiscard]] auto CalcSleepTime() const{
+            return m_CurrentTime + std::chrono::milliseconds(static_cast<int>(m_Ms_Per_Frame * 1000)) - Clock::now();
+        }
         [[nodiscard]] float Time() const { return m_DeltaTime; }
         [[nodiscard]] float FixedTime() const { return m_FixedDeltaTime; }
         [[nodiscard]] float Lag() const { return m_Lag; }

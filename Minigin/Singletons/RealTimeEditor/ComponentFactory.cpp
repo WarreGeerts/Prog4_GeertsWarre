@@ -1,11 +1,9 @@
 ﻿#include "ComponentFactory.h"
-#include <iostream>
 #include <SDL3/SDL_log.h>
-
-
 using namespace dae;
+
 std::unique_ptr<Component> ComponentFactory::Create(const std::string &type, GameObject *go) {
-    auto& factory = GetFactory();
+    auto &factory = GetFactory();
     auto it = factory.find(type);
     if (it != factory.end()) {
         return it->second(go);
@@ -14,9 +12,16 @@ std::unique_ptr<Component> ComponentFactory::Create(const std::string &type, Gam
     return nullptr;
 }
 
-std::unordered_map<std::string, std::function<std::unique_ptr<Component>(GameObject *)>> & ComponentFactory::
-GetFactory() {
-    static std::unordered_map<std::string, std::function<std::unique_ptr<Component>(GameObject *)>> factory;
-    return factory;
+std::vector<std::string> ComponentFactory::GetRegisteredTypeNames() {
+    std::vector<std::string> names;
+    for (const auto &[name, creator]: GetFactory()) {
+        names.push_back(name);
+    }
+    return names;
 }
 
+std::unordered_map<std::string, std::function<std::unique_ptr<Component>(GameObject *)> > &ComponentFactory::
+GetFactory() {
+    static std::unordered_map<std::string, std::function<std::unique_ptr<Component>(GameObject *)> > factory;
+    return factory;
+}
