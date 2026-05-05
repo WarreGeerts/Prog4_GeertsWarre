@@ -14,6 +14,7 @@ namespace dae {
         };
 
         ~ScoreDisplayComponent() override {
+            if (!EventManager::GetInstance().isAlive()) return;
             EventManager::GetInstance().DetachEvent(m_Handle);
         }
 

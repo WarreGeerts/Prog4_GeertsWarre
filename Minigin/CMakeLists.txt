@@ -50,6 +50,7 @@ add_library(Minigin STATIC
         # External Source
         ${implot_SOURCE_DIR}/implot.cpp
         ${implot_SOURCE_DIR}/implot_items.cpp
+        Singletons/EventManager.cpp
 )
 
 # Propagate headers and dependencies to anyone who links to us (the Game)

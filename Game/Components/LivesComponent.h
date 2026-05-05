@@ -34,6 +34,7 @@ namespace dae {
         }
 
         ~LivesComponent() override {
+            if (!EventManager::GetInstance().isAlive()) return;
             for (const auto &handle: m_Handles) {
                 EventManager::GetInstance().DetachEvent(handle);
             }

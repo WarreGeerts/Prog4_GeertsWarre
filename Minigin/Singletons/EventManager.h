@@ -53,10 +53,6 @@ namespace dae {
         }
     };
 
-
-
-
-
     //Event Manager
     struct EventHandle {
         EventId eventId{};
@@ -106,9 +102,17 @@ namespace dae {
             return (it != m_EventNames.end()) ? it->second : "Unknown Event";
         }
 
+        ~EventManager() override
+        {
+            s_IsDestroyed = true;
+        }
+
+        static bool isAlive() { return !s_IsDestroyed; }
+
     private:
         friend Singleton<EventManager>;
         EventManager() = default;
+        static bool s_IsDestroyed;
         std::unordered_map<unsigned int, std::vector<std::function<void(const Event &)> > > m_EventListeners;
         std::unordered_map<EventId, std::string> m_EventNames;
     };

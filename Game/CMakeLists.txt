@@ -41,19 +41,6 @@ if (EMSCRIPTEN)
     )
     set(CMAKE_EXECUTABLE_SUFFIX ".html")
 elseif (WIN32)
-  #[[  # Copy DLLs and Data
-    foreach (dllTarget SDL3::SDL3 SDL3_ttf::SDL3_ttf)
-        add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
-                COMMAND ${CMAKE_COMMAND} -E copy_if_different "$<TARGET_FILE:${dllTarget}>" "$<TARGET_FILE_DIR:${TARGET_NAME}>")
-    endforeach ()
-
-    add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
-            COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_SOURCE_DIR}/Data" "$<TARGET_FILE_DIR:${TARGET_NAME}>/Data")
-
-    if (Steamworks_FOUND)
-        target_link_libraries(${TARGET_NAME} PUBLIC Steamworks::Steamworks)
-        target_compile_definitions(${TARGET_NAME} PRIVATE USE_STEAMWORKS)
-    endif ()]]
   # 1. Force the EXE to a specific folder (e.g., bin/)
   set_target_properties(${TARGET_NAME} PROPERTIES
           RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
