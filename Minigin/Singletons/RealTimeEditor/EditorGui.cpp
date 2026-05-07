@@ -4,12 +4,10 @@
 #include "imgui.h"
 //scene
 #include <SDL3/SDL_log.h>
-
 #include "ComponentFactory.h"
 #include "SceneSerializer.h"
 #include "Input/InputManager.h"
 #include "Singletons/SceneManager.h"
-
 using namespace dae;
 static GameObject *selectedGO = nullptr;
 
@@ -34,42 +32,40 @@ void EditorGui::RenderGUI() {
 //Scene Graph
 #pragma region SceneGraph
 //TODO: bug, selection change when making new name will change new selected one as well
-
 void EditorGui::DrawSceneGraph() {
     ImGui::Begin("Scene Graph");
 
     if (ImGui::BeginPopupContextWindow("SceneGraphContext",
                                        ImGuiPopupFlags_MouseButtonRight | ImGuiPopupFlags_NoOpenOverItems)) {
         if (ImGui::MenuItem("Create Empty GameObject")) {
-            auto &scene = SceneManager::GetInstance().GetSceneByIdx(0);
+            auto &scene = SceneManager::GetInstance().GetSceneByIdx(SceneManager::GetInstance().GetCurrentSceneIdx());
             scene.Add(std::make_unique<GameObject>("Empty GameObject"));
         }
         ImGui::EndPopup();
     }
 
-    for (auto &getScene: SceneManager::GetInstance().GetScenes()) {
-        std::string currentSceneName = getScene->GetName();
-        char sceneNameBuf[64] = {};
-        strncpy(sceneNameBuf, currentSceneName.c_str(), sizeof(sceneNameBuf) - 1);
+    auto& currentScene = SceneManager::GetInstance().GetSceneByIdx(SceneManager::GetInstance().GetCurrentSceneIdx());
+    const std::string currentSceneName = currentScene.GetName();
+    char sceneNameBuf[64] = {};
+    strncpy(sceneNameBuf, currentSceneName.c_str(), sizeof(sceneNameBuf) - 1);
 
-        ImGui::PushItemWidth(ImGui::GetContentRegionAvail().x);
+    ImGui::PushItemWidth(ImGui::GetContentRegionAvail().x);
 
-        if (ImGui::InputText("##SceneNameEdit", sceneNameBuf, sizeof(sceneNameBuf))) {
-            getScene->SetName(sceneNameBuf);
-        }
+    if (ImGui::InputText("##SceneNameEdit", sceneNameBuf, sizeof(sceneNameBuf))) {
+        currentScene.SetName(sceneNameBuf);
+    }
 
-        ImGui::PopItemWidth();
+    ImGui::PopItemWidth();
 
-        for (auto &GO: getScene->GetGameObjects()) {
-            if (GO->GetParent() == nullptr)
-                VisualizeSceneGraph(GO.get());
-        }
+    for (auto &GO: currentScene.GetGameObjects()) {
+        if (GO->GetParent() == nullptr)
+            VisualizeSceneGraph(GO.get());
     }
 
     ImGui::Dummy(ImGui::GetContentRegionAvail());
     if (ImGui::BeginDragDropTarget()) {
-        if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("GAMEOBJECT_HIERARCHY")) {
-            GameObject* draggedGO = *static_cast<GameObject **>(payload->Data);
+        if (const ImGuiPayload *payload = ImGui::AcceptDragDropPayload("GAMEOBJECT_HIERARCHY")) {
+            GameObject *draggedGO = *static_cast<GameObject **>(payload->Data);
             draggedGO->SetParent(nullptr, true);
         }
         ImGui::EndDragDropTarget();
@@ -88,15 +84,15 @@ void EditorGui::VisualizeSceneGraph(GameObject *GO) {
     const bool opened = ImGui::TreeNodeEx((void *) GO, flags, "%s", GO->GetName().c_str());
 
     if (ImGui::BeginDragDropSource()) {
-        ImGui::SetDragDropPayload("GAMEOBJECT_HIERARCHY", &GO, sizeof(GameObject*));
+        ImGui::SetDragDropPayload("GAMEOBJECT_HIERARCHY", &GO, sizeof(GameObject *));
 
         ImGui::Text("Moving %s", GO->GetName().c_str());
         ImGui::EndDragDropSource();
     }
 
     if (ImGui::BeginDragDropTarget()) {
-        if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("GAMEOBJECT_HIERARCHY")) {
-            GameObject* draggedGO = *static_cast<GameObject **>(payload->Data);
+        if (const ImGuiPayload *payload = ImGui::AcceptDragDropPayload("GAMEOBJECT_HIERARCHY")) {
+            GameObject *draggedGO = *static_cast<GameObject **>(payload->Data);
 
             if (draggedGO != GO && !GO->IsChild(draggedGO)) {
                 draggedGO->SetParent(GO, true);
@@ -104,7 +100,6 @@ void EditorGui::VisualizeSceneGraph(GameObject *GO) {
         }
         ImGui::EndDragDropTarget();
     }
-
 
     if (ImGui::IsItemClicked()) {
         selectedGO = GO;
@@ -114,7 +109,7 @@ void EditorGui::VisualizeSceneGraph(GameObject *GO) {
         selectedGO = GO;
 
         if (ImGui::MenuItem("Duplicate")) {
-            DuplicateGameObject(GO,nullptr);
+            DuplicateGameObject(GO, nullptr);
         }
 
         if (ImGui::MenuItem("Create Child")) {
@@ -130,7 +125,7 @@ void EditorGui::VisualizeSceneGraph(GameObject *GO) {
         ImGui::Separator();
 
         if (ImGui::MenuItem("Delete", "Del")) {
-            GameObject* toDelete = selectedGO;
+            GameObject *toDelete = selectedGO;
 
             selectedGO = nullptr;
             toDelete->MarkForDeletion();
@@ -147,13 +142,13 @@ void EditorGui::VisualizeSceneGraph(GameObject *GO) {
     }
 }
 
-void EditorGui::DuplicateGameObject(GameObject* original, GameObject* newParent) {
+void EditorGui::DuplicateGameObject(GameObject *original, GameObject *newParent) {
     if (!original) return;
 
     auto clone = original->Clone();
-    GameObject* clonePtr = clone.get();
+    GameObject *clonePtr = clone.get();
 
-    auto& scene = SceneManager::GetInstance().GetSceneByIdx(0);
+    auto &scene = SceneManager::GetInstance().GetSceneByIdx(0);
     scene.Add(std::move(clone));
 
     if (newParent) {
@@ -176,7 +171,6 @@ void EditorGui::DuplicateGameObject(GameObject* original, GameObject* newParent)
 void EditorGui::ClearSelection() {
     selectedGO = nullptr;
 }
-
 #pragma endregion SceneGraph
 //Inspector
 #pragma region InspectorGUI
@@ -275,7 +269,7 @@ void EditorGui::DrawAddComponentPopup(GameObject *GO) {
 
         auto componentNames = ComponentFactory::GetInstance().GetRegisteredTypeNames();
 
-        for (const std::string& name : componentNames) {
+        for (const std::string &name: componentNames) {
             if (ImGui::MenuItem(name.c_str())) {
                 auto newComp = ComponentFactory::GetInstance().Create(name, GO);
                 if (newComp) {
@@ -288,7 +282,6 @@ void EditorGui::DrawAddComponentPopup(GameObject *GO) {
         ImGui::EndPopup();
     }
 }
-
 #pragma endregion InspectorGUI
 //Top Bar
 #pragma region TopBarGUI

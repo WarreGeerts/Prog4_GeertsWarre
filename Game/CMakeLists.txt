@@ -6,12 +6,19 @@
         Components/LivesComponent.cpp
         Components/ScoreComponent.cpp
         Components/GameComponents.h
-        Components/MenuManagerComponent.cpp
-        Components/MenuManagerComponent.h
+        Components/UiAutoCycleComponent.cpp
+        Components/UiAutoCycleComponent.h
         Commands/GameCommands.cpp
         Commands/GameCommands.h
-        Components/SceneSwitchComponent.cpp
-        Components/SceneSwitchComponent.h
+        States/GameState.h
+        States/MainMenuState.cpp
+        States/MainMenuState.h
+        States/GameStateManager.cpp
+        States/GameStateManager.h
+        States/LobbyState.cpp
+        States/LobbyState.h
+        Components/GameInputComponent.cpp
+        Components/GameInputComponent.h
 )
 
 set_target_properties(${TARGET_NAME} PROPERTIES

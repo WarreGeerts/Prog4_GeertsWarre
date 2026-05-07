@@ -6,5 +6,4 @@
 #include "ScoreComponent.h"
 #include "LivesDisplayComponent.h"
 #include "ScoreDisplayComponent.h"
-#include "MenuManagerComponent.h"
-#include "SceneSwitchComponent.h"
+#include "UiAutoCycleComponent.h"

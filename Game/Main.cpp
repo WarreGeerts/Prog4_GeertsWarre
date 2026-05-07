@@ -2,7 +2,9 @@
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_main.h>
 #include "Components/EngineComponents.h"
+#include "Components/GameInputComponent.h"
 #include "Singletons/RealTimeEditor/ComponentFactory.h"
+#include "Singletons/RealTimeEditor/SceneSerializer.h"
 #if _DEBUG && __has_include(<vld.h>)
 #include <vld.h>
 #endif
@@ -22,15 +24,22 @@ static void load() //loads once
     ComponentFactory::GetInstance().Register<ScoreComponent>("ScoreComponent");
     ComponentFactory::GetInstance().Register<LivesDisplayComponent>("LivesDisplayComponent");
     ComponentFactory::GetInstance().Register<ScoreDisplayComponent>("ScoreDisplayComponent");
-    ComponentFactory::GetInstance().Register<MenuManagerComponent>("MenuManagerComponent");
-    ComponentFactory::GetInstance().Register<SceneSwitchComponent>("SceneSwitchComponent");
+    ComponentFactory::GetInstance().Register<UiAutoCycleComponent>("UiAutoCycleComponent");
+    ComponentFactory::GetInstance().Register<GameInputComponent>("GameInputComponent");
 
+    //load in all scenes at start
+    SceneManager::GetInstance().CreateScene("Main");
+    int sceneIdx {0};
+    const std::filesystem::path scenesDir = std::filesystem::current_path() / "Data" / "Scenes";
 
-    auto &scene = SceneManager::GetInstance().CreateScene("Main");
-    auto go = std::make_unique<GameObject>("Background");
-    go->SetLocalPosition({0, 0, 0});
-    go->AddComponent(std::make_unique<RenderComponent>(go.get(), "background.png"));
-    scene.Add(std::move(go));
+    const std::filesystem::path menuPath = scenesDir / ("Menu.json");
+    SceneSerializer::LoadScene(menuPath.string(), SceneManager::GetInstance().GetSceneByIdx(sceneIdx));
+    ++sceneIdx;
+
+    SceneManager::GetInstance().CreateScene("Lobby");
+    const std::filesystem::path lobbyPath = scenesDir / ("Lobby.json");
+    SceneSerializer::LoadScene(lobbyPath.string(), SceneManager::GetInstance().GetSceneByIdx(sceneIdx));
+    ++sceneIdx;
 }
 
 int main(int, char *[]) {

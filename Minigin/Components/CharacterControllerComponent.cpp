@@ -8,16 +8,16 @@ constexpr int GAMEPAD_DPAD_DOWN{0x0002};
 constexpr int GAMEPAD_DPAD_LEFT{0x0004};
 constexpr int GAMEPAD_DPAD_RIGHT{0x0008};
 constexpr int BUTTON_X{0x4000};
-constexpr int BUTTON_A{0x1000};
-constexpr int BUTTON_B{0x2000};
+/*constexpr int BUTTON_A{0x1000};
+constexpr int BUTTON_B{0x2000};*/
 #else
 constexpr int GAMEPAD_DPAD_UP{SDL_GAMEPAD_BUTTON_DPAD_UP};
 constexpr int GAMEPAD_DPAD_DOWN{SDL_GAMEPAD_BUTTON_DPAD_DOWN};
 constexpr int GAMEPAD_DPAD_LEFT{SDL_GAMEPAD_BUTTON_DPAD_LEFT};
 constexpr int GAMEPAD_DPAD_RIGHT{SDL_GAMEPAD_BUTTON_DPAD_RIGHT};
-constexpr int BUTTON_A{SDL_GAMEPAD_BUTTON_SOUTH};
-constexpr int BUTTON_B{SDL_GAMEPAD_BUTTON_EAST};
 constexpr int BUTTON_X{SDL_GAMEPAD_BUTTON_WEST};
+/*constexpr int BUTTON_A{SDL_GAMEPAD_BUTTON_SOUTH};
+constexpr int BUTTON_B{SDL_GAMEPAD_BUTTON_EAST};*/
 #endif
 //TODO:: Make comprehensive guide on how to do this, like being able to add commands, add keybinds, look for commands/keybinds out of a list
 //TODO:: Visualise button/keyboard presses
@@ -58,10 +58,6 @@ void CharacterControllerComponent::AddControlBindings(float speed, bool keyboard
         //other keys
         Input.AddBinding({KeyState::Down, static_cast<int>(SDL_SCANCODE_C), true},
                          std::make_unique<DieCommand>(m_gameObject, EventRegistry::P1_DMG));
-        Input.AddBinding({KeyState::Down, static_cast<int>(SDL_SCANCODE_Z), true},
-                         std::make_unique<ScoreCommandLow>(m_gameObject, EventRegistry::P1_BURGER_FALL));
-        Input.AddBinding({KeyState::Down, static_cast<int>(SDL_SCANCODE_X), true},
-                         std::make_unique<ScoreCommandHigh>(m_gameObject, EventRegistry::P1_ENEMY_KILL));
     } else {
         //movement
         Input.AddBinding({KeyState::Pressed, GAMEPAD_DPAD_UP, false},
@@ -76,10 +72,6 @@ void CharacterControllerComponent::AddControlBindings(float speed, bool keyboard
         //other buttons
         Input.AddBinding({KeyState::Down, BUTTON_X, false},
                          std::make_unique<DieCommand>(m_gameObject, EventRegistry::P2_DMG));
-        Input.AddBinding({KeyState::Down, BUTTON_A, false},
-                         std::make_unique<ScoreCommandLow>(m_gameObject, EventRegistry::P2_BURGER_FALL));
-        Input.AddBinding({KeyState::Down, BUTTON_B, false},
-                         std::make_unique<ScoreCommandHigh>(m_gameObject, EventRegistry::P2_ENEMY_KILL));
     }
     m_Bound = true;
 }
@@ -108,8 +100,6 @@ void CharacterControllerComponent::RemoveControlBindings() {
 
         //other buttons
         Input.RemoveBinding({KeyState::Down, BUTTON_X, false});
-        Input.RemoveBinding({KeyState::Down, BUTTON_A, false});
-        Input.RemoveBinding({KeyState::Down, BUTTON_B, false});
     }
 
     m_Bound = false;

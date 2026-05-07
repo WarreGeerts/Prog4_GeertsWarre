@@ -4,22 +4,30 @@
 #include <stdexcept>
 
 void dae::SceneManager::Update() {
-    for (auto &scene: m_scenes) {
+    m_scenes.at(m_SceneIdx)->Update();
+
+    /*for (auto &scene: m_scenes) {
         scene->Update();
-    }
+    }*/
 }
 
 void dae::SceneManager::Render() const {
-    for (const auto &scene: m_scenes) {
+    m_scenes.at(m_SceneIdx)->Render();
+
+    /*for (const auto &scene: m_scenes) {
         scene->Render();
-    }
+    }*/
 }
 
 void dae::SceneManager::RenderGUI() const {
-    for (const auto &scene: m_scenes) {
+    m_scenes.at(m_SceneIdx)->RenderGUI();
+
+    /*for (const auto &scene: m_scenes) {
         scene->RenderGUI();
-    }
+    }*/
 }
+
+int dae::SceneManager::GetCurrentSceneIdx() const { return m_SceneIdx; }
 
 dae::Scene &dae::SceneManager::CreateScene(std::string name) {
     m_scenes.emplace_back(new Scene(std::move(name)));
@@ -50,6 +58,24 @@ std::vector<int> dae::SceneManager::GetSceneSizes() const {
     return sizes;
 }
 
-const std::vector<std::unique_ptr<dae::Scene>> &dae::SceneManager::GetScenes() const {
+const std::vector<std::unique_ptr<dae::Scene> > &dae::SceneManager::GetScenes() const {
     return m_scenes;
+}
+
+void dae::SceneManager::SelectSceneByIndex(const int idx) {
+    if (idx < m_scenes.size()) {
+        m_SceneIdx = idx;
+    } else {
+        throw std::runtime_error("Idx: '" + std::to_string(idx) + "' is Invalid");
+    }
+}
+
+void dae::SceneManager::SelectSceneByName(const std::string &name) {
+    for (int idx{0}; idx < m_scenes.size(); ++idx) {
+        if (m_scenes[idx]->GetName() == name) {
+            m_SceneIdx = idx;
+            return;
+        }
+    }
+    throw std::runtime_error("Name: '" + name + "' is Invalid");
 }

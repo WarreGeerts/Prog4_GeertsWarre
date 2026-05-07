@@ -82,13 +82,8 @@ namespace dae {
         static constexpr EventId P2_HEALTH_UPDATE{make_sdbm_hash("P2HealthUpdate")};
         static constexpr EventId P1_DMG{make_sdbm_hash("P1Dmg")};
         static constexpr EventId P2_DMG{make_sdbm_hash("P2Dmg")};
-        static constexpr EventId P1_SCORE_UPDATE{make_sdbm_hash("P1ScoreUpdate")};
-        static constexpr EventId P2_SCORE_UPDATE{make_sdbm_hash("P2ScoreUpdate")};
-        static constexpr EventId P1_BURGER_FALL{make_sdbm_hash("P1BurgerFall")};
-        static constexpr EventId P2_BURGER_FALL{make_sdbm_hash("P2BurgerFall")};
-        static constexpr EventId P1_ENEMY_KILL{make_sdbm_hash("P1EnemyKill")};
-        static constexpr EventId P2_ENEMY_KILL{make_sdbm_hash("P2EnemyKill")};
-
+        static constexpr EventId SCORE_UPDATE{make_sdbm_hash("ScoreUpdate")};
+        static constexpr EventId BURGER_FALL{make_sdbm_hash("BurgerFall")};
         static constexpr EventId GO_TO_LOBBY{make_sdbm_hash("GoToLobby")};
 
         static void Initialize() {
@@ -98,12 +93,8 @@ namespace dae {
             em.RegisterEventName(P2_HEALTH_UPDATE, "P2HealthUpdate");
             em.RegisterEventName(P1_DMG, "P1Dmg");
             em.RegisterEventName(P2_DMG, "P2Dmg");
-            em.RegisterEventName(P1_SCORE_UPDATE, "P1ScoreUpdate");
-            em.RegisterEventName(P2_SCORE_UPDATE, "P2ScoreUpdate");
-            em.RegisterEventName(P1_BURGER_FALL, "P1BurgerFall");
-            em.RegisterEventName(P2_BURGER_FALL, "P2BurgerFall");
-            em.RegisterEventName(P1_ENEMY_KILL, "P1EnemyKill");
-            em.RegisterEventName(P2_ENEMY_KILL, "P2EnemyKill");
+            em.RegisterEventName(SCORE_UPDATE, "ScoreUpdate");
+            em.RegisterEventName(BURGER_FALL, "BurgerFall");
             em.RegisterEventName(GO_TO_LOBBY, "GoToLobby");
         }
 

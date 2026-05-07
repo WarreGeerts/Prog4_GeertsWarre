@@ -1,0 +1,30 @@
+{
+    "scene_id": 0,
+    "scene_name": "Lobby",
+    "gameobjects": [
+        {
+            "go_id": 0,
+            "parent_id": -1,
+            "go_name": "Background",
+            "enabled": true,
+            "transform": {
+                "position": [
+                    0.0,
+                    0.0,
+                    0.0
+                ]
+            },
+            "components": [
+                {
+                    "comp_id": 1,
+                    "comp_name": "RenderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "file_name": "background.png",
+                        "overwritten": false
+                    }
+                }
+            ]
+        }
+    ]
+}

@@ -7,6 +7,7 @@
 #include "ComponentFactory.h"
 #include "EditorGui.h"
 #include "Input/InputManager.h"
+#include "Singletons/SceneManager.h"
 
 namespace dae {
     void SceneSerializer::SaveScene(const std::string &filePath, const Scene &scene) {
@@ -61,7 +62,7 @@ namespace dae {
         }
     }
 
-    void SceneSerializer::LoadScene(const std::string &filePath, Scene &scene) {
+    void SceneSerializer::LoadScene(const std::string &filePath, Scene& scene) {
         std::ifstream file(filePath);
         if (!file.is_open()) {
             SDL_Log("Failed to open scene file: %s", filePath.c_str());
@@ -77,10 +78,10 @@ namespace dae {
             return;
         }
 
-        InputManager::GetInstance().ClearBindings();
+        //InputManager::GetInstance().ClearBindings();
         EditorGui::ClearSelection();
-        Component::ClearIds();
-        GameObject::ClearIds();
+        //Component::ClearIds();
+        //GameObject::ClearIds();
         scene.ClearGameObjects();
 
         std::unordered_map<int, GameObject *> goMap;
@@ -102,10 +103,10 @@ namespace dae {
             go->GetTransform()->Deserialize(goData);
 
             for (const auto &compData: goData["components"]) {
-                int compId = compData["comp_id"];
+                //int compId = compData["comp_id"];
                 std::string compName = compData["comp_name"];
                 bool compEnabled = compData["active"];
-                auto compDataJson = compData["comp_data"];
+                const auto& compDataJson = compData["comp_data"];
 
                 auto comp = ComponentFactory::GetInstance().Create(compName, go.get());
                 comp->ChangeActive(compEnabled);
@@ -121,7 +122,7 @@ namespace dae {
             if (goData.contains("parent_id")) {
                 int pId = goData["parent_id"];
                 if (pId != -1) {
-                    parentRequests.push_back({goPtr, pId});
+                    parentRequests.emplace_back(goPtr, pId);
                 }
             }
 

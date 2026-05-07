@@ -1,10 +1,13 @@
-﻿#include "MenuManagerComponent.h"
-
+﻿#include "UiAutoCycleComponent.h"
 #include "GameObject.h"
 #include "Singletons/DeltaTime.h"
 
 namespace dae {
-    void MenuManagerComponent::SwitchInfo() {
+    UiAutoCycleComponent::UiAutoCycleComponent(GameObject *go, const float waitTime)
+        : Component(go, "UiAutoCycleComponent"), m_WaitTime(waitTime) {
+    }
+
+    void UiAutoCycleComponent::SwitchInfo() {
         m_gameObject->GetChildAt(m_CurrentChildIndex)->SetActive(false);
 
         ++m_CurrentChildIndex;
@@ -13,7 +16,7 @@ namespace dae {
         m_gameObject->GetChildAt(m_CurrentChildIndex)->SetActive(true);
     }
 
-    void MenuManagerComponent::Update() {
+    void UiAutoCycleComponent::Update() {
         m_AccTime += DeltaTime::GetInstance().Time();
 
         if (m_AccTime >= m_WaitTime) {
@@ -22,7 +25,7 @@ namespace dae {
         }
     }
 
-    void MenuManagerComponent::InspectorGUI() {
+    void UiAutoCycleComponent::InspectorGUI() {
         float waitTime[1] = {m_WaitTime};
 
         if (ImGui::InputFloat("Wait Time", waitTime)) {
@@ -30,13 +33,14 @@ namespace dae {
         }
     }
 
-    nlohmann::ordered_json MenuManagerComponent::Serialize() const {
+    nlohmann::ordered_json UiAutoCycleComponent::Serialize() const {
         nlohmann::ordered_json data;
         data["wait_time"] = m_WaitTime;
         data["current_child_index"] = m_CurrentChildIndex;
         return data;
     }
-    void MenuManagerComponent::Deserialize(const nlohmann::ordered_json &data) {
+
+    void UiAutoCycleComponent::Deserialize(const nlohmann::ordered_json &data) {
         m_WaitTime = data.value("wait_time", 3.0f);
         m_CurrentChildIndex = data.value("current_child_index", 0);
     }
