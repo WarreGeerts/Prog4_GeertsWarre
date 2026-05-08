@@ -37,7 +37,7 @@ SDL_Window *g_window{};
 #ifdef __EMSCRIPTEN__
 #include "emscripten.h"
     void LoopCallback(void *arg) {
-        static_cast<dae::Minigin *>(arg)->Update();
+        static_cast<ge::Minigin *>(arg)->Update();
     }
 #endif
     // Why bother with this? Because sometimes students have a different SDL version installed on their pc.

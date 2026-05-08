@@ -1,3 +1,4 @@
+#include <SDL3/SDL_main.h>
 #include "Singletons/RealTimeEditor/ComponentFactory.h"
 #include "Singletons/RealTimeEditor/SceneSerializer.h"
 #include "States/GSManager.h"
