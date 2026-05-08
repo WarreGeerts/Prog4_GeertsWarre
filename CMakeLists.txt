@@ -11,8 +11,8 @@ if (EMSCRIPTEN)
             "-sUSE_FREETYPE=1"
             "-sUSE_HARFBUZZ=1"
             "-sASSERTIONS=1"
-            "-sDEMANGLE_SUPPORT=1"
-            "-sSTACK_OVERFLOW_CHECK=2"
+            "-sSTACK_SIZE=5MB"
+            "--profiling-funcs"
             "--preload-file" "${CMAKE_SOURCE_DIR}/Data@/Data"
     )
 else ()
