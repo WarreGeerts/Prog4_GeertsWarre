@@ -52,11 +52,18 @@ jobs:
           cd build-web
           cmake --build . --config Release
 
+      #- name: Prepare Artifact
+   #     run: |
+   #       mkdir -p dist
+  #        cp build-web/Game/BurgerTime_web.* dist/          
+   #       cp web/*.html dist/
       - name: Prepare Artifact
         run: |
-          mkdir -p dist
-          cp build-web/Game/BurgerTime_web.* dist/          
-          cp web/*.html dist/
+         mkdir -p dist
+         echo "Checking directory structure..."
+         find build-web -name "BurgerTime_web.*"          
+         find build-web -name "BurgerTime_web.*" -exec cp {} dist/ \;          
+         cp web/*.html dist/ || echo "No HTML files found in web/"   
 
       - name: Upload Pages Artifact
         uses: actions/upload-pages-artifact@v3
