@@ -54,7 +54,7 @@ namespace ge {
     };
 }
 #else
-namespace dae {
+namespace ge {
     class Controller::ControllerImpl {
         int m_ControllerIndex{0};
         SDL_Gamepad *m_pController{nullptr};

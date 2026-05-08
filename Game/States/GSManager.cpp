@@ -3,16 +3,15 @@
 
 namespace game {
     void GSManager::Initialize() {
-        ChangeState(new GSMainMenu);
+        ChangeState(std::make_unique<GSMainMenu>());
     }
 
-    void GSManager::ChangeState(GameState *newState) {
+    void GSManager::ChangeState(std::unique_ptr<GameState> newState) {
         if (m_CurrentGameState) {
             m_CurrentGameState->OnExit();
-            delete m_CurrentGameState;
         }
 
-        m_CurrentGameState = newState;
+        m_CurrentGameState = std::move(newState);
         m_CurrentGameState->OnEnter();
     }
 

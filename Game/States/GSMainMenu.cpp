@@ -10,7 +10,6 @@ namespace game {
         HandleInput();
     }
 
-
     void GSMainMenu::OnExit() {
         //detach when leaving the scene
         ge::EventManager::GetInstance().DetachEvent(m_Handle);
@@ -20,7 +19,7 @@ namespace game {
         m_Handle = ge::EventManager::GetInstance().AttachEvent(
            ge::EventRegistry::A_BUTTON_PRESSED,
            [](const ge::Event &) {
-              GSManager::GetInstance().ChangeState(new GSLobby());
+              GSManager::GetInstance().ChangeState(std::make_unique<GSLobby>());
            });
     }
 }
