@@ -2,11 +2,11 @@
 #include "Components/Component.h"
 #include "Singletons/EventManager.h"
 
-namespace dae {
-    class UiAutoCycleComponent final : public Component {
+namespace game {
+    class UiAutoCycleComponent final : public ge::Component {
     public:
-        explicit UiAutoCycleComponent(GameObject *go) : Component(go, "UiAutoCycleComponent") {}
-        UiAutoCycleComponent(GameObject *go, float waitTime);
+        explicit UiAutoCycleComponent(ge::GameObject *go) : Component(go, "UiAutoCycleComponent") {}
+        UiAutoCycleComponent(ge::GameObject *go, float waitTime);
         ~UiAutoCycleComponent() override = default;
         void SwitchInfo();
         void Update() override;

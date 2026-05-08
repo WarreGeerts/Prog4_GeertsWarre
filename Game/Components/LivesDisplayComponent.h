@@ -3,28 +3,29 @@
 #include "Singletons/EventManager.h"
 #include "Components/EngineComponents.h"
 
-namespace dae {
-    class LivesDisplayComponent final : public Component {
+namespace game {
+    class LivesDisplayComponent final : public ge::Component {
     public:
-        explicit LivesDisplayComponent(GameObject *go) : Component(go, "LivesDisplayComponent") {}
-        explicit LivesDisplayComponent(GameObject *go, EventId eventId);
+        explicit LivesDisplayComponent(ge::GameObject *go) : Component(go, "LivesDisplayComponent") {}
+        explicit LivesDisplayComponent(ge::GameObject *go, ge::EventId eventId);
         ~LivesDisplayComponent() override;
-        void SetHandle(EventId eventId);
-        void SetRefTextComponent(TextComponent *component) { m_TextComponentRef = component; }
+        void SetHandle(ge::EventId eventId);
+        void SetRefTextComponent(ge::TextComponent *component) { m_TextComponentRef = component; }
         void Update() override;
         void Render() const override {};
         void InspectorGUI() override;
         [[nodiscard]] nlohmann::ordered_json Serialize() const override;
         void Deserialize(const nlohmann::ordered_json &data) override;
+        bool IsOverwritingText() override {return true;}
 
     private:
         void OnPlayerDied(const int lives) { m_Lives = lives; };
         int m_MaxLives{3};
         int m_Lives{m_MaxLives};
         int m_PrevLives{-1};
-        TextComponent *m_TextComponentRef{};
-        EventId m_ListenEventId{};
-        EventHandle m_Handle{};
+        ge::TextComponent *m_TextComponentRef{};
+        ge::EventId m_ListenEventId{};
+        ge::EventHandle m_Handle{};
         std::string m_Text{"# Lives: "};
     };
 }

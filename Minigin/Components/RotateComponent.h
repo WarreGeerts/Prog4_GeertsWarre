@@ -2,7 +2,7 @@
 #include "Component.h"
 #include <glm/glm.hpp>
 
-namespace dae {
+namespace ge {
     class RotateComponent final : public Component {
     public:
         explicit RotateComponent(GameObject *go) : Component(go,"RotateComponent") {}

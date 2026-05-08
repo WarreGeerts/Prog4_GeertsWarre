@@ -1,8 +1,7 @@
 ﻿#pragma once
 #include "GameModeState.h"
-#include "Singletons/EventManager.h"
 
-namespace dae {
+namespace game {
     class GMSSinglePlayer final : public GameModeState {
     public:
         void OnEnter() override;

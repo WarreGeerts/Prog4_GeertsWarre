@@ -1,0 +1,46 @@
+{
+    "scene_id": 1,
+    "scene_name": "Game_SinglePlayer",
+    "gameobjects": [
+        {
+            "go_id": 49,
+            "parent_id": -1,
+            "go_name": "PLACE_HOLDER",
+            "enabled": true,
+            "transform": {
+                "position": [
+                    92.69999694824219,
+                    87.0999984741211,
+                    0.0
+                ]
+            },
+            "components": [
+                {
+                    "comp_id": 135,
+                    "comp_name": "RenderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "file_name": "",
+                        "overwritten": true
+                    }
+                },
+                {
+                    "comp_id": 136,
+                    "comp_name": "TextComponent",
+                    "active": true,
+                    "comp_data": {
+                        "font_file_name": "ByteBounce.ttf",
+                        "font_size": 70,
+                        "text": "PLACE HOLDER : SINGLE PLAYER",
+                        "color": [
+                            255,
+                            255,
+                            255,
+                            255
+                        ]
+                    }
+                }
+            ]
+        }
+    ]
+}

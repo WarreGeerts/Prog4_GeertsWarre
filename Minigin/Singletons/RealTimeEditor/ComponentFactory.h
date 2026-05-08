@@ -5,7 +5,7 @@
 #include "Components/Component.h"
 #include "Singletons/Singleton.h"
 
-namespace dae {
+namespace ge {
     class ComponentFactory final : public Singleton<ComponentFactory> {
     public:
         std::unique_ptr<Component> Create(const std::string &type, GameObject *go);

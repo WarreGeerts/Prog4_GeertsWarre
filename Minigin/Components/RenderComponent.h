@@ -3,7 +3,7 @@
 #include <string>
 #include <vector>
 
-namespace dae {
+namespace ge {
     class TextComponent;
     class SpriteComponent;
     class TransformComponent;

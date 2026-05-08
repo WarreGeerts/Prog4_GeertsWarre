@@ -3,9 +3,9 @@
 #include "GSLobby.h"
 #include "Singletons/SceneManager.h"
 
-namespace dae {
+namespace game {
     void GSMainMenu::OnEnter() {
-        SceneManager::GetInstance().SelectSceneByName("Menu");
+        ge::SceneManager::GetInstance().SelectSceneByName("Menu");
 
         HandleInput();
     }
@@ -13,13 +13,13 @@ namespace dae {
 
     void GSMainMenu::OnExit() {
         //detach when leaving the scene
-        EventManager::GetInstance().DetachEvent(m_Handle);
+        ge::EventManager::GetInstance().DetachEvent(m_Handle);
     }
 
     void GSMainMenu::HandleInput() {
-        m_Handle = EventManager::GetInstance().AttachEvent(
-           EventRegistry::GO_TO_LOBBY,
-           [](const Event &) {
+        m_Handle = ge::EventManager::GetInstance().AttachEvent(
+           ge::EventRegistry::A_BUTTON_PRESSED,
+           [](const ge::Event &) {
               GSManager::GetInstance().ChangeState(new GSLobby());
            });
     }

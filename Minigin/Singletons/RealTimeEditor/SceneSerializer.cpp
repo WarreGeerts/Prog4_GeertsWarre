@@ -9,7 +9,7 @@
 #include "Input/InputManager.h"
 #include "Singletons/SceneManager.h"
 
-namespace dae {
+namespace ge {
     void SceneSerializer::SaveScene(const std::string &filePath, const Scene &scene) {
         std::filesystem::path path{filePath};
         if (path.has_parent_path()) {

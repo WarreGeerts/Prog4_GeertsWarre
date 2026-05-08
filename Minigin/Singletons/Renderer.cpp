@@ -11,93 +11,95 @@
 #include <implot.h>
 #include "RealTimeEditor/EditorGui.h"
 
-void dae::Renderer::Init(SDL_Window *window) {
-    m_window = window;
+namespace ge {
+    void Renderer::Init(SDL_Window *window) {
+        m_window = window;
 
-    SDL_SetHint(SDL_HINT_RENDER_VSYNC, "1");
+        SDL_SetHint(SDL_HINT_RENDER_VSYNC, "1");
 
-    //ImGui
-    IMGUI_CHECKVERSION();
-    ImGui::CreateContext();
-    ImPlot::CreateContext();
-    ImGuiIO &io = ImGui::GetIO();
-    (void) io;
-    io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard; // Enable Keyboard Controls
-    io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad; // Enable Gamepad Controls
-    io.ConfigFlags |= ImGuiConfigFlags_DockingEnable; // Enable docking
-    //io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable; // Enable Multi-Viewport
+        //ImGui
+        IMGUI_CHECKVERSION();
+        ImGui::CreateContext();
+        ImPlot::CreateContext();
+        ImGuiIO &io = ImGui::GetIO();
+        (void) io;
+        io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard; // Enable Keyboard Controls
+        io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad; // Enable Gamepad Controls
+        io.ConfigFlags |= ImGuiConfigFlags_DockingEnable; // Enable docking
+        //io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable; // Enable Multi-Viewport
 
 #if defined(__EMSCRIPTEN__)
-    m_renderer = SDL_CreateRenderer(window, nullptr);
+        m_renderer = SDL_CreateRenderer(window, nullptr);
 #else
-    m_renderer = SDL_CreateRenderer(window, nullptr);
+        m_renderer = SDL_CreateRenderer(window, nullptr);
 #endif
 
-    if (m_renderer == nullptr) {
-        std::cout << "Failed to create the renderer: " << SDL_GetError() << "\n";
-        throw std::runtime_error(std::string("SDL_CreateRenderer Error: ") + SDL_GetError());
+        if (m_renderer == nullptr) {
+            std::cout << "Failed to create the renderer: " << SDL_GetError() << "\n";
+            throw std::runtime_error(std::string("SDL_CreateRenderer Error: ") + SDL_GetError());
+        }
+
+        ImGui_ImplSDL3_InitForSDLRenderer(window, m_renderer);
+        ImGui_ImplSDLRenderer3_Init(m_renderer);
     }
 
-    ImGui_ImplSDL3_InitForSDLRenderer(window, m_renderer);
-    ImGui_ImplSDLRenderer3_Init(m_renderer);
-}
+    void Renderer::Render() const {
+        ImGui_ImplSDLRenderer3_NewFrame();
+        ImGui_ImplSDL3_NewFrame();
 
-void dae::Renderer::Render() const {
-    ImGui_ImplSDLRenderer3_NewFrame();
-    ImGui_ImplSDL3_NewFrame();
+        ImGui::NewFrame();
 
-    ImGui::NewFrame();
+        ImGuiDockNodeFlags dockFlags = ImGuiDockNodeFlags_PassthruCentralNode;
+        ImGui::DockSpaceOverViewport(0, ImGui::GetMainViewport(), dockFlags);
 
-    ImGuiDockNodeFlags dockFlags = ImGuiDockNodeFlags_PassthruCentralNode;
-    ImGui::DockSpaceOverViewport(0, ImGui::GetMainViewport(), dockFlags);
+        SceneManager::GetInstance().RenderGUI();
+        EditorGui::GetInstance().RenderGUI();
 
-    SceneManager::GetInstance().RenderGUI();
-    EditorGui::GetInstance().RenderGUI();
+        ImGui::Render();
 
-    ImGui::Render();
+        const auto &color = GetBackgroundColor();
+        SDL_SetRenderDrawColor(m_renderer, color.r, color.g, color.b, color.a);
+        SDL_RenderClear(m_renderer);
 
-    const auto &color = GetBackgroundColor();
-    SDL_SetRenderDrawColor(m_renderer, color.r, color.g, color.b, color.a);
-    SDL_RenderClear(m_renderer);
+        SceneManager::GetInstance().Render();
 
-    SceneManager::GetInstance().Render();
-
-    ImGui_ImplSDLRenderer3_RenderDrawData(ImGui::GetDrawData(), m_renderer);
-    SDL_RenderPresent(m_renderer);
-}
-
-void dae::Renderer::Destroy() {
-    ImGui_ImplSDLRenderer3_Shutdown();
-    ImGui_ImplSDL3_Shutdown();
-    ImPlot::DestroyContext();
-    ImGui::DestroyContext();
-
-    if (m_renderer != nullptr) {
-        SDL_DestroyRenderer(m_renderer);
-        m_renderer = nullptr;
+        ImGui_ImplSDLRenderer3_RenderDrawData(ImGui::GetDrawData(), m_renderer);
+        SDL_RenderPresent(m_renderer);
     }
-}
 
-void dae::Renderer::RenderTexture(const Texture2D &texture, const float x, const float y) const {
-    SDL_FRect dst{};
-    dst.x = x;
-    dst.y = y;
-    SDL_GetTextureSize(texture.GetSDLTexture(), &dst.w, &dst.h);
-    SDL_RenderTexture(GetSDLRenderer(), texture.GetSDLTexture(), nullptr, &dst);
-}
+    void Renderer::Destroy() {
+        ImGui_ImplSDLRenderer3_Shutdown();
+        ImGui_ImplSDL3_Shutdown();
+        ImPlot::DestroyContext();
+        ImGui::DestroyContext();
 
-void dae::Renderer::RenderTexture(const Texture2D &texture, const float x, const float y, const float width,
-                                  const float height) const {
-    SDL_FRect dst{};
-    dst.x = x;
-    dst.y = y;
-    dst.w = width;
-    dst.h = height;
-    SDL_RenderTexture(GetSDLRenderer(), texture.GetSDLTexture(), nullptr, &dst);
-}
+        if (m_renderer != nullptr) {
+            SDL_DestroyRenderer(m_renderer);
+            m_renderer = nullptr;
+        }
+    }
 
-SDL_Renderer *dae::Renderer::GetSDLRenderer() const { return m_renderer; }
+    void Renderer::RenderTexture(const Texture2D &texture, const float x, const float y) const {
+        SDL_FRect dst{};
+        dst.x = x;
+        dst.y = y;
+        SDL_GetTextureSize(texture.GetSDLTexture(), &dst.w, &dst.h);
+        SDL_RenderTexture(GetSDLRenderer(), texture.GetSDLTexture(), nullptr, &dst);
+    }
 
-void dae::Renderer::RenderTextureRegion(const Texture2D &texture, const SDL_FRect *src, const SDL_FRect *dst) const {
-    SDL_RenderTexture(GetSDLRenderer(), texture.GetSDLTexture(), src, dst);
+    void Renderer::RenderTexture(const Texture2D &texture, const float x, const float y, const float width,
+                                      const float height) const {
+        SDL_FRect dst{};
+        dst.x = x;
+        dst.y = y;
+        dst.w = width;
+        dst.h = height;
+        SDL_RenderTexture(GetSDLRenderer(), texture.GetSDLTexture(), nullptr, &dst);
+    }
+
+    SDL_Renderer *Renderer::GetSDLRenderer() const { return m_renderer; }
+
+    void Renderer::RenderTextureRegion(const Texture2D &texture, const SDL_FRect *src, const SDL_FRect *dst) const {
+        SDL_RenderTexture(GetSDLRenderer(), texture.GetSDLTexture(), src, dst);
+    }
 }

@@ -3,7 +3,7 @@
 #include <glm/glm.hpp>
 #include "Singletons/DeltaTime.h"
 
-namespace dae {
+namespace ge {
     class MoveCommand final : public GameActorCommand {
     public:
         MoveCommand(GameObject *pActor, const glm::vec2 &direction, const float speed);

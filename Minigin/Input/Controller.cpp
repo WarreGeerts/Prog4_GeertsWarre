@@ -6,7 +6,7 @@
 #include <windows.h>
 #include <XInput.h>
 
-namespace dae {
+namespace ge {
     class Controller::ControllerImpl {
         DWORD m_ControllerIndex{0};
         XINPUT_STATE m_PreviousState{};
@@ -129,7 +129,7 @@ namespace dae {
 }
 #endif
 
-namespace dae {
+namespace ge {
     Controller::Controller(uint32_t controllerIndex) : m_pImpl(std::make_unique<ControllerImpl>(controllerIndex)) {}
     //Controller::Controller() : m_pImpl(std::make_unique<ControllerImpl>(0)) {}
     Controller::~Controller() = default;

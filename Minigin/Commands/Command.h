@@ -1,5 +1,5 @@
 ﻿#pragma once
-namespace dae {
+namespace ge {
     class Command {
     public:
         virtual ~Command() = default;

@@ -1,8 +1,7 @@
 ﻿#include "GSManager.h"
-#include <SDL3/SDL_log.h>
 #include "GSMainMenu.h"
 
-namespace dae {
+namespace game {
     void GSManager::Initialize() {
         ChangeState(new GSMainMenu);
     }

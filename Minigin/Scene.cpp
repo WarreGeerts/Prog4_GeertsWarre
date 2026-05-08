@@ -5,93 +5,94 @@
 #include "Components/Component.h"
 #include <stdexcept>
 #include <SDL3/SDL_log.h>
-using namespace dae;
-int Scene::s_NextId = 0;
+namespace ge {
+    int Scene::s_NextId = 0;
 
-void Scene::Add(std::unique_ptr<GameObject> object) {
-    assert(object != nullptr && "Cannot add a null GameObject to the scene.");
-    m_objects.emplace_back(std::move(object));
-}
+    void Scene::Add(std::unique_ptr<GameObject> object) {
+        assert(object != nullptr && "Cannot add a null GameObject to the scene.");
+        m_objects.emplace_back(std::move(object));
+    }
 
-void Scene::Remove(const GameObject &object) {
-    m_objects.erase(
-        std::remove_if(
-            m_objects.begin(),
-            m_objects.end(),
-            [&object](const auto &ptr) { return ptr.get() == &object; }
-        ),
-        m_objects.end()
-    );
-}
+    void Scene::Remove(const GameObject &object) {
+        m_objects.erase(
+            std::remove_if(
+                m_objects.begin(),
+                m_objects.end(),
+                [&object](const auto &ptr) { return ptr.get() == &object; }
+            ),
+            m_objects.end()
+        );
+    }
 
-void Scene::RemoveAll() {
-    m_objects.clear();
-}
+    void Scene::RemoveAll() {
+        m_objects.clear();
+    }
 
-GameObject &Scene::GetGameObjectByName(const std::string &name) const {
-    for (const auto &object: m_objects) {
-        if (object->GetName() == name) {
-            return *object;
+    GameObject &Scene::GetGameObjectByName(const std::string &name) const {
+        for (const auto &object: m_objects) {
+            if (object->GetName() == name) {
+                return *object;
+            }
         }
+        throw std::runtime_error("GameObject '" + name + "' not found");
     }
-    throw std::runtime_error("GameObject '" + name + "' not found");
-}
 
-GameObject &Scene::GetGameObjectByIndex(const int idx) const {
-    if (m_objects[idx] != nullptr) {
-        return *m_objects[idx];
-    }
-    throw std::runtime_error("GameObject at idx: '" + std::to_string(idx) + "' not found");
-}
-
-const std::vector<std::unique_ptr<GameObject> > &Scene::GetGameObjects() const {
-    return m_objects;
-}
-
-int Scene::GetSceneSize() const {
-    return static_cast<int>(m_objects.size());
-}
-
-void Scene::Update() {
-    //update everything first
-    for (const auto &object: m_objects) {
-        if (object->IsActive()) {
-            object->Update();
+    GameObject &Scene::GetGameObjectByIndex(const int idx) const {
+        if (m_objects[idx] != nullptr) {
+            return *m_objects[idx];
         }
+        throw std::runtime_error("GameObject at idx: '" + std::to_string(idx) + "' not found");
     }
-    //after update look through all objects to delete those who are marked
-    m_objects.erase(
-        std::remove_if(m_objects.begin(), m_objects.end(),
-            [](const std::unique_ptr<GameObject>& object) {
-                if (object->MarkedForDeletion()) {
-                    SDL_Log("deleted %s", object->GetName().c_str());
+
+    const std::vector<std::unique_ptr<GameObject> > &Scene::GetGameObjects() const {
+        return m_objects;
+    }
+
+    int Scene::GetSceneSize() const {
+        return static_cast<int>(m_objects.size());
+    }
+
+    void Scene::Update() {
+        //update everything first
+        for (const auto &object: m_objects) {
+            if (object->IsActive()) {
+                object->Update();
+            }
+        }
+        //after update look through all objects to delete those who are marked
+        m_objects.erase(
+            std::remove_if(m_objects.begin(), m_objects.end(),
+                [](const std::unique_ptr<GameObject>& object) {
+                    if (object->MarkedForDeletion()) {
+                        SDL_Log("deleted %s", object->GetName().c_str());
+                    }
+                    return object->MarkedForDeletion();
+                }),
+            m_objects.end()
+        );
+    }
+
+    void Scene::Render() const {
+        for (const auto &object: m_objects) {
+            if (object->IsActive()) {
+                for (const auto &component: object->GetComponents()) {
+                    component->Render();
                 }
-                return object->MarkedForDeletion();
-            }),
-        m_objects.end()
-    );
-}
-
-void Scene::Render() const {
-    for (const auto &object: m_objects) {
-        if (object->IsActive()) {
-            for (const auto &component: object->GetComponents()) {
-                component->Render();
             }
         }
     }
-}
 
-void Scene::RenderGUI() const {
-    for (const auto &object: m_objects) {
-        if (object->IsActive()) {
-            for (const auto &component: object->GetComponents()) {
-                component->RenderGUI();
+    void Scene::RenderGUI() const {
+        for (const auto &object: m_objects) {
+            if (object->IsActive()) {
+                for (const auto &component: object->GetComponents()) {
+                    component->RenderGUI();
+                }
             }
         }
     }
-}
 
-void Scene::ClearGameObjects() {
-    m_objects.clear();
+    void Scene::ClearGameObjects() {
+        m_objects.clear();
+    }
 }

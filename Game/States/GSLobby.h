@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include "GameState.h"
 
-namespace dae {
+namespace game {
     class GSLobby final : public GameState {
     public:
         void OnEnter() override;

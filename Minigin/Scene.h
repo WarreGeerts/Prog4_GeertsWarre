@@ -4,7 +4,7 @@
 #include <vector>
 #include "GameObject.h"
 
-namespace dae {
+namespace ge {
     class Scene final {
     public:
         void Add(std::unique_ptr<GameObject> object);

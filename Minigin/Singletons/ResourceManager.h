@@ -5,8 +5,7 @@
 #include <map>
 #include "Singleton.h"
 
-namespace dae
-{
+namespace ge {
 	class Texture2D;
 	class Font;
 	class ResourceManager final : public Singleton<ResourceManager>

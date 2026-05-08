@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include <memory>
 
-namespace dae {
+namespace ge {
     class Controller {
     public:
         explicit Controller(uint32_t controllerIndex);

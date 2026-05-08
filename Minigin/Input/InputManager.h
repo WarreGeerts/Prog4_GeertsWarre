@@ -6,7 +6,7 @@
 #include "Controller.h"
 #include "Singletons/Singleton.h"
 
-namespace dae {
+namespace ge {
     enum class KeyState { Pressed, Down, Up };
 
     using Key = int;
@@ -26,6 +26,7 @@ namespace dae {
         void AddBinding(const Binding &binding, std::unique_ptr<Command> pCommand);
         void RemoveBinding(const Binding &binding);
         void ClearBindings();
+        void AddController(uint32_t idx);
 
     private:
         std::vector<std::pair<Binding, std::unique_ptr<Command> > > m_Bindings;
@@ -34,6 +35,5 @@ namespace dae {
         void CheckControllerBindings();
         void CheckKeyboardBindings(KeyState state);
         void UpdateKeyboardState();
-        void AddController(uint32_t idx);
     };
 }

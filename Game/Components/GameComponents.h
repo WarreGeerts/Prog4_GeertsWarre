@@ -7,3 +7,5 @@
 #include "LivesDisplayComponent.h"
 #include "ScoreDisplayComponent.h"
 #include "UiAutoCycleComponent.h"
+#include "GameInputComponent.h"
+#include "UiGameModeSelector.h"

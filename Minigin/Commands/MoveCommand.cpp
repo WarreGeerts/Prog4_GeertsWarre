@@ -1,6 +1,6 @@
 ﻿#include "MoveCommand.h"
 
-namespace dae {
+namespace ge {
     MoveCommand::MoveCommand(GameObject *pActor, const glm::vec2 &direction, const float speed)
         : GameActorCommand(pActor), m_Direction(direction), m_Speed(speed) {}
 

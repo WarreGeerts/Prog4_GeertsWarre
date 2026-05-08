@@ -1,6 +1,6 @@
 ﻿#include "EventManager.h"
 
-namespace dae {
+namespace ge {
     bool EventManager::s_IsDestroyed = false;
 
     EventManager::~EventManager() {

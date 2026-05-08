@@ -5,7 +5,7 @@
 #include <utility>
 #include <nlohmann/json.hpp>
 
-namespace dae {
+namespace ge {
     class GameObject;
 
     class Component {
@@ -20,14 +20,15 @@ namespace dae {
         virtual void RenderGUI() {}
         void ChangeActive(const bool active) { m_IsActive = active; }
         [[nodiscard]] bool GetActive() const { return m_IsActive; }
+        //overrides
+        virtual bool IsOverwritingText() { return false; };
         //Functions for EditorGui Inspector
         virtual void InspectorGUI() = 0;
         std::string GetName() { return m_Name; }
         [[nodiscard]] bool HasWarning() const { return m_HasWarning; }
         //save/load
         [[nodiscard]] virtual nlohmann::ordered_json Serialize() const = 0;
-        virtual void Deserialize(const nlohmann::ordered_json& data) = 0;
-
+        virtual void Deserialize(const nlohmann::ordered_json &data) = 0;
         //id
         [[nodiscard]] int GetId() const { return m_Id; }
         static void ClearIds() { s_NextId = 0; }
@@ -36,7 +37,9 @@ namespace dae {
         void EndCheckActive() const;
 
     protected:
-        explicit Component(GameObject *go, std::string name) : m_gameObject(go), m_Name(std::move(name)), m_Id(GenerateNextId()) {}
+        explicit Component(GameObject *go, std::string name) : m_gameObject(go), m_Name(std::move(name)),
+                                                               m_Id(GenerateNextId()) {}
+
         GameObject *m_gameObject;
         std::string m_Name{"_UNKNOWN_COMPONENT_"};
         uint32_t m_LastSeenVersion{0xFFFFFFFF};
@@ -48,6 +51,5 @@ namespace dae {
         static int GenerateNextId() { return s_NextId++; }
         //active
         bool m_IsActive{true};
-
     };
 }

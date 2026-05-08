@@ -1,6 +1,6 @@
 ﻿#include "DeltaTime.h"
 
-namespace dae {
+namespace ge {
     auto DeltaTime::StartDeltaTime() -> void {
         m_CurrentTime = Clock::now();
         m_DeltaTime = std::chrono::duration<float>(m_CurrentTime - m_LastTime).count();

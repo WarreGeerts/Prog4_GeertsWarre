@@ -1,7 +1,7 @@
 ﻿#include "TransformComponent.h"
 #include "GameObject.h"
 
-namespace dae {
+namespace ge {
     void TransformComponent::InspectorGUI() {
         if (ImGui::CollapsingHeader("Transform", ImGuiTreeNodeFlags_DefaultOpen)) {
             const glm::vec3 localPos = m_gameObject->GetLocalPosition();

@@ -2,11 +2,11 @@
 #include "Components/Component.h"
 #include "Singletons/EventManager.h"
 
-namespace dae {
-    class ScoreComponent final : public Component {
+namespace game {
+    class ScoreComponent final : public ge::Component {
     public:
-        explicit ScoreComponent(GameObject *go) : Component(go, "ScoreComponent") {}
-        explicit ScoreComponent(GameObject *go, const std::vector<EventId> &listenEventIds, EventId sendEventId);
+        explicit ScoreComponent(ge::GameObject *go) : Component(go, "ScoreComponent") {}
+        explicit ScoreComponent(ge::GameObject *go, const std::vector<ge::EventId> &listenEventIds, ge::EventId sendEventId);
         ~ScoreComponent() override;
         void Update() override {};
         void Render() const override {};
@@ -16,9 +16,9 @@ namespace dae {
         void IncreaseScore(int amount);
 
     private:
-        std::vector<EventId> m_ListenEventIds{};
-        EventId m_SendEventId{};
-        std::vector<EventHandle> m_Handles;
+        std::vector<ge::EventId> m_ListenEventIds{};
+        ge::EventId m_SendEventId{};
+        std::vector<ge::EventHandle> m_Handles;
         int m_Score{};
     };
 }

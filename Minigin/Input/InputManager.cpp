@@ -3,99 +3,99 @@
 #include "InputManager.h"
 #include <algorithm>
 #include <functional>
-using namespace dae;
-
-bool Binding::operator==(const Binding &other) const {
-    return state == other.state &&
-           inputId == other.inputId &&
-           isKeyboard == other.isKeyboard &&
-           controllerIdx == other.controllerIdx;
-}
-
-bool InputManager::ProcessInput() {
-    SDL_Event e;
-    while (SDL_PollEvent(&e)) {
-        if (e.type == SDL_EVENT_QUIT) {
-            return false;
-        }
-        if (e.type == SDL_EVENT_KEY_DOWN) {
-            CheckKeyboardBindings(KeyState::Down);
-        }
-        if (e.type == SDL_EVENT_KEY_UP) {
-            CheckKeyboardBindings(KeyState::Up);
-        }
-        if (e.type == SDL_EVENT_MOUSE_BUTTON_DOWN) {}
-        ImGui_ImplSDL3_ProcessEvent(&e);
+namespace ge {
+    bool Binding::operator==(const Binding &other) const {
+        return state == other.state &&
+               inputId == other.inputId &&
+               isKeyboard == other.isKeyboard &&
+               controllerIdx == other.controllerIdx;
     }
 
-    for (const auto &controller: m_Controllers) {
-        controller->Update();
+    bool InputManager::ProcessInput() {
+        SDL_Event e;
+        while (SDL_PollEvent(&e)) {
+            if (e.type == SDL_EVENT_QUIT) {
+                return false;
+            }
+            if (e.type == SDL_EVENT_KEY_DOWN) {
+                CheckKeyboardBindings(KeyState::Down);
+            }
+            if (e.type == SDL_EVENT_KEY_UP) {
+                CheckKeyboardBindings(KeyState::Up);
+            }
+            if (e.type == SDL_EVENT_MOUSE_BUTTON_DOWN) {}
+            ImGui_ImplSDL3_ProcessEvent(&e);
+        }
+
+        for (const auto &controller: m_Controllers) {
+            controller->Update();
+        }
+        CheckControllerBindings();
+        CheckKeyboardBindings(KeyState::Pressed);
+
+        return true;
     }
-    CheckControllerBindings();
-    CheckKeyboardBindings(KeyState::Pressed);
 
-    return true;
-}
+    void InputManager::AddBinding(const Binding &binding, std::unique_ptr<Command> pCommand) {
+        m_Bindings.emplace_back(binding, std::move(pCommand));
+    }
 
-void InputManager::AddBinding(const Binding &binding, std::unique_ptr<Command> pCommand) {
-    m_Bindings.emplace_back(binding, std::move(pCommand));
-}
+    void InputManager::RemoveBinding(const Binding &binding) {
+        m_Bindings.erase(
+            std::remove_if(m_Bindings.begin(), m_Bindings.end(),
+                           [&](const auto &pair) {
+                               return pair.first == binding;
+                           }),
+            m_Bindings.end()
+        );
+    }
 
-void InputManager::RemoveBinding(const Binding &binding) {
-    m_Bindings.erase(
-        std::remove_if(m_Bindings.begin(), m_Bindings.end(),
-                       [&](const auto &pair) {
-                           return pair.first == binding;
-                       }),
-        m_Bindings.end()
-    );
-}
+    void InputManager::ClearBindings() {
+        m_Bindings.clear();
+    }
 
-void InputManager::ClearBindings() {
-    m_Bindings.clear();
-}
+    void InputManager::CheckControllerBindings() {
+        for (size_t i = 0; i < m_Controllers.size(); ++i) {
+            const auto &controller = m_Controllers[i];
+            if (!controller->IsConnected()) continue;
 
-void InputManager::CheckControllerBindings() {
-    for (size_t i = 0; i < m_Controllers.size(); ++i) {
-        const auto &controller = m_Controllers[i];
-        if (!controller->IsConnected()) continue;
+            for (const auto &[binding, pCommand]: m_Bindings) {
+                // Check if this binding is meant for THIS specific controller index
+                if (binding.isKeyboard || binding.controllerIdx != static_cast<int>(i)) continue;
+
+                if (binding.state == KeyState::Pressed && controller->IsPressed(binding.inputId)) {
+                    pCommand->Execute();
+                } else if (binding.state == KeyState::Down && controller->IsDownThisFrame(binding.inputId)) {
+                    pCommand->Execute();
+                } else if (binding.state == KeyState::Up && controller->IsUpThisFrame(binding.inputId)) {
+                    pCommand->Execute();
+                }
+            }
+        }
+    }
+
+    void InputManager::CheckKeyboardBindings(const KeyState state) {
+        UpdateKeyboardState();
 
         for (const auto &[binding, pCommand]: m_Bindings) {
-            // Check if this binding is meant for THIS specific controller index
-            if (binding.isKeyboard || binding.controllerIdx != static_cast<int>(i)) continue;
+            if (!binding.isKeyboard) continue;
 
-            if (binding.state == KeyState::Pressed && controller->IsPressed(binding.inputId)) {
-                pCommand->Execute();
-            } else if (binding.state == KeyState::Down && controller->IsDownThisFrame(binding.inputId)) {
-                pCommand->Execute();
-            } else if (binding.state == KeyState::Up && controller->IsUpThisFrame(binding.inputId)) {
+            bool isActive{false};
+            if (binding.state == state) {
+                isActive = m_KeyboardState[binding.inputId] != 0;
+            }
+
+            if (isActive) {
                 pCommand->Execute();
             }
         }
     }
-}
 
-void InputManager::CheckKeyboardBindings(const KeyState state) {
-    UpdateKeyboardState();
-
-    for (const auto &[binding, pCommand]: m_Bindings) {
-        if (!binding.isKeyboard) continue;
-
-        bool isActive{false};
-        if (binding.state == state) {
-            isActive = m_KeyboardState[binding.inputId] != 0;
-        }
-
-        if (isActive) {
-            pCommand->Execute();
-        }
+    void InputManager::UpdateKeyboardState() {
+        m_KeyboardState = SDL_GetKeyboardState(nullptr);
     }
-}
 
-void InputManager::UpdateKeyboardState() {
-    m_KeyboardState = SDL_GetKeyboardState(nullptr);
-}
-
-void InputManager::AddController(uint32_t idx) {
-    m_Controllers.push_back(std::make_unique<Controller>(idx));
+    void InputManager::AddController(uint32_t idx) {
+        m_Controllers.push_back(std::make_unique<Controller>(idx));
+    }
 }

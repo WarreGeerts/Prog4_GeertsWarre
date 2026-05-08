@@ -7,7 +7,7 @@
 #include <vector>
 #include "Singleton.h"
 
-namespace dae {
+namespace ge {
     //sdbm_hash maker
     template<int length>
     struct sdbm_hash {
@@ -84,7 +84,9 @@ namespace dae {
         static constexpr EventId P2_DMG{make_sdbm_hash("P2Dmg")};
         static constexpr EventId SCORE_UPDATE{make_sdbm_hash("ScoreUpdate")};
         static constexpr EventId BURGER_FALL{make_sdbm_hash("BurgerFall")};
-        static constexpr EventId GO_TO_LOBBY{make_sdbm_hash("GoToLobby")};
+        static constexpr EventId A_BUTTON_PRESSED{make_sdbm_hash("APressed")};
+        static constexpr EventId UI_SELECTION_UP{make_sdbm_hash("UISelectionUp")};
+        static constexpr EventId UI_SELECTION_DOWN{make_sdbm_hash("UISelectionDown")};
 
         static void Initialize() {
             auto &em = EventManager::GetInstance();
@@ -95,7 +97,9 @@ namespace dae {
             em.RegisterEventName(P2_DMG, "P2Dmg");
             em.RegisterEventName(SCORE_UPDATE, "ScoreUpdate");
             em.RegisterEventName(BURGER_FALL, "BurgerFall");
-            em.RegisterEventName(GO_TO_LOBBY, "GoToLobby");
+            em.RegisterEventName(A_BUTTON_PRESSED, "APressed");
+            em.RegisterEventName(UI_SELECTION_UP, "UISelectionUp");
+            em.RegisterEventName(UI_SELECTION_DOWN, "UISelectionDown");
         }
 
         static std::vector<std::string> GetAllEventNames();

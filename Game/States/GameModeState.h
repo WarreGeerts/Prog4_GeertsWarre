@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-namespace dae {
+namespace game {
     class GameModeState {
     public:
         virtual ~GameModeState() = default;

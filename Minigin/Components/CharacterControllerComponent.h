@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include "Component.h"
 
-namespace dae {
+namespace ge {
     class CharacterControllerComponent final : public Component {
     public:
         explicit CharacterControllerComponent(GameObject *go);
@@ -16,8 +16,9 @@ namespace dae {
         void Deserialize(const nlohmann::ordered_json &data) override;
 
     private:
-        bool m_Keyboard;
+        bool m_Keyboard{true};
         float m_Speed{50.f};
         bool m_Bound{false};
+        int m_ControllerIndex{0};
     };
 }

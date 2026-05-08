@@ -2,8 +2,8 @@
 #include "GameObject.h"
 #include "Singletons/DeltaTime.h"
 
-namespace dae {
-    UiAutoCycleComponent::UiAutoCycleComponent(GameObject *go, const float waitTime)
+namespace game {
+    UiAutoCycleComponent::UiAutoCycleComponent(ge::GameObject *go, const float waitTime)
         : Component(go, "UiAutoCycleComponent"), m_WaitTime(waitTime) {
     }
 
@@ -17,7 +17,7 @@ namespace dae {
     }
 
     void UiAutoCycleComponent::Update() {
-        m_AccTime += DeltaTime::GetInstance().Time();
+        m_AccTime += ge::DeltaTime::GetInstance().Time();
 
         if (m_AccTime >= m_WaitTime) {
             m_AccTime = 0.0f;

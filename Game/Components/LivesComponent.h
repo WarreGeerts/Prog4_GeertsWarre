@@ -2,12 +2,12 @@
 #include "Components/Component.h"
 #include "Singletons/EventManager.h"
 
-namespace dae {
-    class LivesComponent final : public Component {
+namespace game {
+    class LivesComponent final : public ge::Component {
     public:
-        explicit LivesComponent(GameObject *go) : Component(go, "LivesComponent") {}
-        explicit LivesComponent(GameObject *go, const std::vector<EventId> &listenEventIds, EventId sendEventId);
-        LivesComponent(GameObject *go, const std::vector<EventId> &listenEventIds, EventId sendEventId, int lives);
+        explicit LivesComponent(ge::GameObject *go) : Component(go, "LivesComponent") {}
+        explicit LivesComponent(ge::GameObject *go, const std::vector<ge::EventId> &listenEventIds, ge::EventId sendEventId);
+        LivesComponent(ge::GameObject *go, const std::vector<ge::EventId> &listenEventIds, ge::EventId sendEventId, int lives);
         ~LivesComponent() override;
         void Update() override {};
         void Render() const override {};
@@ -17,9 +17,9 @@ namespace dae {
         void PlayerDie();
 
     private:
-        std::vector<EventId> m_ListenEventIds{};
-        std::vector<EventHandle> m_Handles{};
-        EventId m_SendEventId{};
+        std::vector<ge::EventId> m_ListenEventIds{};
+        std::vector<ge::EventHandle> m_Handles{};
+        ge::EventId m_SendEventId{};
         int m_Lives{3};
     };
 }

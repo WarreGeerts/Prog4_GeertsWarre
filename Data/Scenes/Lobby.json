@@ -1,22 +1,22 @@
 {
-    "scene_id": 0,
+    "scene_id": 1,
     "scene_name": "Lobby",
     "gameobjects": [
         {
-            "go_id": 46,
+            "go_id": 44,
             "parent_id": -1,
             "go_name": "TitleText",
             "enabled": true,
             "transform": {
                 "position": [
-                    335.3999938964844,
+                    310.20001220703125,
                     81.30000305175781,
                     0.0
                 ]
             },
             "components": [
                 {
-                    "comp_id": 125,
+                    "comp_id": 121,
                     "comp_name": "RenderComponent",
                     "active": true,
                     "comp_data": {
@@ -25,13 +25,13 @@
                     }
                 },
                 {
-                    "comp_id": 126,
+                    "comp_id": 122,
                     "comp_name": "TextComponent",
                     "active": true,
                     "comp_data": {
                         "font_file_name": "ByteBounce.ttf",
                         "font_size": 50,
-                        "text": "SELET A GAMEMODE",
+                        "text": "SELECT A GAMEMODE",
                         "color": [
                             236,
                             223,
@@ -43,7 +43,7 @@
             ]
         },
         {
-            "go_id": 47,
+            "go_id": 45,
             "parent_id": -1,
             "go_name": "GamemodeSelect",
             "enabled": true,
@@ -54,11 +54,18 @@
                     0.0
                 ]
             },
-            "components": []
+            "components": [
+                {
+                    "comp_id": 124,
+                    "comp_name": "UiGameModeSelector",
+                    "active": true,
+                    "comp_data": null
+                }
+            ]
         },
         {
-            "go_id": 48,
-            "parent_id": 47,
+            "go_id": 46,
+            "parent_id": 45,
             "go_name": "Singleplayer",
             "enabled": true,
             "transform": {
@@ -70,7 +77,7 @@
             },
             "components": [
                 {
-                    "comp_id": 131,
+                    "comp_id": 126,
                     "comp_name": "RenderComponent",
                     "active": true,
                     "comp_data": {
@@ -79,7 +86,7 @@
                     }
                 },
                 {
-                    "comp_id": 132,
+                    "comp_id": 127,
                     "comp_name": "TextComponent",
                     "active": true,
                     "comp_data": {
@@ -97,8 +104,8 @@
             ]
         },
         {
-            "go_id": 51,
-            "parent_id": 47,
+            "go_id": 47,
+            "parent_id": 45,
             "go_name": "Coop",
             "enabled": true,
             "transform": {
@@ -110,7 +117,7 @@
             },
             "components": [
                 {
-                    "comp_id": 134,
+                    "comp_id": 129,
                     "comp_name": "RenderComponent",
                     "active": true,
                     "comp_data": {
@@ -119,7 +126,7 @@
                     }
                 },
                 {
-                    "comp_id": 135,
+                    "comp_id": 130,
                     "comp_name": "TextComponent",
                     "active": true,
                     "comp_data": {
@@ -137,8 +144,8 @@
             ]
         },
         {
-            "go_id": 52,
-            "parent_id": 47,
+            "go_id": 48,
+            "parent_id": 45,
             "go_name": "Versus",
             "enabled": true,
             "transform": {
@@ -150,7 +157,7 @@
             },
             "components": [
                 {
-                    "comp_id": 137,
+                    "comp_id": 132,
                     "comp_name": "RenderComponent",
                     "active": true,
                     "comp_data": {
@@ -159,7 +166,7 @@
                     }
                 },
                 {
-                    "comp_id": 138,
+                    "comp_id": 133,
                     "comp_name": "TextComponent",
                     "active": true,
                     "comp_data": {
@@ -168,8 +175,8 @@
                         "text": "VERSUS",
                         "color": [
                             255,
-                            255,
-                            255,
+                            0,
+                            0,
                             255
                         ]
                     }

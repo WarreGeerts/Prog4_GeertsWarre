@@ -3,7 +3,7 @@
 #include "Components/Component.h"
 #include "imgui.h"
 
-namespace dae {
+namespace game {
     struct Transform {
         float matrix[16] = {
             1, 0, 0, 0,
@@ -25,9 +25,9 @@ namespace dae {
         int ID;
     };
 
-    class ThrashCacheComponent final : public Component {
+    class ThrashCacheComponent final : public ge::Component {
     public:
-        explicit ThrashCacheComponent(GameObject *go);
+        explicit ThrashCacheComponent(ge::GameObject *go);
         void Render() const override {};
         void RenderGUI() override{};
         [[nodiscard]] nlohmann::ordered_json Serialize() const override;

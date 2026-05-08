@@ -5,7 +5,7 @@
 #include "Components/TransformComponent.h"
 #include "imfilebrowser.h"
 
-namespace dae {
+namespace ge {
     class EditorGui : public Singleton<EditorGui> {
     public:
         void RenderGUI();

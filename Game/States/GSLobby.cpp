@@ -1,8 +1,8 @@
 ﻿#include "GSLobby.h"
 #include "Singletons/SceneManager.h"
 
-namespace dae {
+namespace game {
     void GSLobby::OnEnter() {
-        SceneManager::GetInstance().SelectSceneByName("Lobby");
+        ge::SceneManager::GetInstance().SelectSceneByName("Lobby");
     }
 }

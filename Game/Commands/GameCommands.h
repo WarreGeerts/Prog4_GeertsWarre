@@ -3,12 +3,28 @@
 #include "Commands/Command.h"
 #include "Singletons/EventManager.h"
 
-namespace dae {
-    class GoToLobbyCommand final : public Command {
+namespace game {
+    class GoToLobbyCommand final : public ge::Command {
     public:
-        explicit GoToLobbyCommand(EventId goToLobbyEvent);
+        explicit GoToLobbyCommand(ge::EventId goToLobbyEvent);
     private:
         void Execute() override;
-        EventId m_GoToLobbyEvent;
+        ge::EventId m_GoToLobbyEvent;
+    };
+
+    class UISelectionUpCommand final : public ge::Command {
+    public:
+        explicit UISelectionUpCommand(ge::EventId uiSelectionEvent);
+    private:
+        void Execute() override;
+        ge::EventId m_upEvent;
+    };
+
+    class UISelectionDownCommand final : public ge::Command {
+    public:
+        explicit UISelectionDownCommand(ge::EventId uiSelectionEvent);
+    private:
+        void Execute() override;
+        ge::EventId m_downEvent;
     };
 }

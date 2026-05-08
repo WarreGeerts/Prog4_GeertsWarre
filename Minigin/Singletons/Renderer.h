@@ -2,8 +2,8 @@
 #include <SDL3/SDL.h>
 #include "Singleton.h"
 
-namespace dae
-{
+namespace ge {
+
 	class Texture2D;
 	/**
 	 * Simple RAII wrapper for the SDL renderer

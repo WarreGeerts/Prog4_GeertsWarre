@@ -1,27 +1,27 @@
 ﻿#include "LivesComponent.h"
 
-namespace dae {
-    LivesComponent::LivesComponent(GameObject *go, const std::vector<EventId> &listenEventIds,
-                                   const EventId sendEventId)
-        : Component(go, "LivesComponent"), m_ListenEventIds(listenEventIds), m_SendEventId{sendEventId} {
+namespace game {
+    LivesComponent::LivesComponent(ge::GameObject *go, const std::vector<ge::EventId> &listenEventIds,
+                                   const ge::EventId sendEventId)
+        : ge::Component(go, "LivesComponent"), m_ListenEventIds(listenEventIds), m_SendEventId{sendEventId} {
         for (const auto &eventId: m_ListenEventIds) {
-            m_Handles.emplace_back(EventManager::GetInstance().AttachEvent(
+            m_Handles.emplace_back(ge::EventManager::GetInstance().AttachEvent(
                 eventId,
-                [this](const Event &) {
+                [this](const ge::Event &) {
                     PlayerDie();
                 }
             ));
         }
     }
 
-    LivesComponent::LivesComponent(GameObject *go, const std::vector<EventId> &listenEventIds,
-                                   const EventId sendEventId, const int lives)
-        : Component(go, "LivesComponent"), m_ListenEventIds(listenEventIds), m_SendEventId{sendEventId},
+    LivesComponent::LivesComponent(ge::GameObject *go, const std::vector<ge::EventId> &listenEventIds,
+                                   const ge::EventId sendEventId, const int lives)
+        : ge::Component(go, "LivesComponent"), m_ListenEventIds(listenEventIds), m_SendEventId{sendEventId},
           m_Lives{lives} {
         for (const auto &eventId: m_ListenEventIds) {
-            m_Handles.emplace_back(EventManager::GetInstance().AttachEvent(
+            m_Handles.emplace_back(ge::EventManager::GetInstance().AttachEvent(
                 eventId,
-                [this](const Event &) {
+                [this](const ge::Event &) {
                     PlayerDie();
                 }
             ));
@@ -29,17 +29,17 @@ namespace dae {
     }
 
     LivesComponent::~LivesComponent() {
-        if (!EventManager::GetInstance().isAlive()) return;
+        if (!ge::EventManager::GetInstance().isAlive()) return;
         for (const auto &handle: m_Handles) {
-            EventManager::GetInstance().DetachEvent(handle);
+            ge::EventManager::GetInstance().DetachEvent(handle);
         }
     }
 
     void LivesComponent::InspectorGUI() {
-        auto &em = EventManager::GetInstance();
+        auto &em = ge::EventManager::GetInstance();
 
         if (ImGui::InputInt("Lives", &m_Lives, 1, 1)) {
-            em.SendEvent(Event(m_SendEventId).AddInt(m_Lives));
+            em.SendEvent(ge::Event(m_SendEventId).AddInt(m_Lives));
         }
 
         ImGui::Text("Triggers (Listening to):");
@@ -69,7 +69,7 @@ namespace dae {
             ImGui::EndListBox();
         }
 
-        static EventId idToAdd = 0;
+        static ge::EventId idToAdd = 0;
         const std::string previewName = em.GetEventName(idToAdd);
 
         ImGui::SetNextItemWidth(150);
@@ -86,7 +86,7 @@ namespace dae {
         if (ImGui::Button("Add Trigger")) {
             if (idToAdd != 0) {
                 m_ListenEventIds.push_back(idToAdd);
-                m_Handles.push_back(em.AttachEvent(idToAdd, [this](const Event &) {
+                m_Handles.push_back(em.AttachEvent(idToAdd, [this](const ge::Event &) {
                     PlayerDie();
                 }));
             }
@@ -142,6 +142,6 @@ namespace dae {
 
     void LivesComponent::PlayerDie() {
         --m_Lives;
-        EventManager::GetInstance().SendEvent(Event(m_SendEventId).AddInt(m_Lives));
+        ge::EventManager::GetInstance().SendEvent(ge::Event(m_SendEventId).AddInt(m_Lives));
     }
 }

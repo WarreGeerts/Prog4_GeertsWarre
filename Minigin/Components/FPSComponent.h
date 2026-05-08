@@ -2,7 +2,7 @@
 #include "Component.h"
 #include "TextComponent.h"
 
-namespace dae {
+namespace ge {
     class FPSComponent final : public Component {
     public:
         explicit FPSComponent(GameObject *go);

@@ -1,11 +1,9 @@
 ﻿#pragma once
 #include "GameState.h"
-#include "GSLobby.h"
-#include "GSMainMenu.h"
 #include "Singletons/Singleton.h"
 
-namespace dae {
-    class GSManager final : public Singleton<GSManager> {
+namespace game {
+    class GSManager final : public ge::Singleton<GSManager> {
     public:
         void Initialize();
 

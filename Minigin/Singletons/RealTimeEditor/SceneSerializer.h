@@ -2,7 +2,7 @@
 #include <string>
 #include "Singletons/Singleton.h"
 
-namespace dae {
+namespace ge {
     class Scene;
 
     class SceneSerializer final : public Singleton<SceneSerializer> {

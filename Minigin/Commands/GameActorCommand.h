@@ -4,7 +4,7 @@
 #include "Singletons/EventManager.h"
 #include "Sound/ServiceLocator.h"
 
-namespace dae {
+namespace ge {
     class GameActorCommand : public Command {
     public:
         explicit GameActorCommand(GameObject *actor);

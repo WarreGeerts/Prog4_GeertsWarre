@@ -1,8 +1,3 @@
-#include <iostream>
-#include <SDL3/SDL.h>
-#include <SDL3/SDL_main.h>
-#include "Components/EngineComponents.h"
-#include "Components/GameInputComponent.h"
 #include "Singletons/RealTimeEditor/ComponentFactory.h"
 #include "Singletons/RealTimeEditor/SceneSerializer.h"
 #include "States/GSManager.h"
@@ -11,55 +6,53 @@
 #endif
 #include "Minigin.h"
 #include "Singletons/SceneManager.h"
-#include "Scene.h"
 #include <filesystem>
 #include "Components/GameComponents.h"
 namespace fs = std::filesystem;
-using namespace dae;
 
-static void load() //loads once
-{
-    //game components
-    ComponentFactory::GetInstance().Register<ThrashCacheComponent>("ThrashCacheComponent");
-    ComponentFactory::GetInstance().Register<LivesComponent>("LivesComponent");
-    ComponentFactory::GetInstance().Register<ScoreComponent>("ScoreComponent");
-    ComponentFactory::GetInstance().Register<LivesDisplayComponent>("LivesDisplayComponent");
-    ComponentFactory::GetInstance().Register<ScoreDisplayComponent>("ScoreDisplayComponent");
-    ComponentFactory::GetInstance().Register<UiAutoCycleComponent>("UiAutoCycleComponent");
-    ComponentFactory::GetInstance().Register<GameInputComponent>("GameInputComponent");
+namespace game {
+    static void load() //loads once
+    {
+        //game components
+        ge::ComponentFactory::GetInstance().Register<ThrashCacheComponent>("ThrashCacheComponent");
+        ge::ComponentFactory::GetInstance().Register<LivesComponent>("LivesComponent");
+        ge::ComponentFactory::GetInstance().Register<ScoreComponent>("ScoreComponent");
+        ge::ComponentFactory::GetInstance().Register<LivesDisplayComponent>("LivesDisplayComponent");
+        ge::ComponentFactory::GetInstance().Register<ScoreDisplayComponent>("ScoreDisplayComponent");
+        ge::ComponentFactory::GetInstance().Register<UiAutoCycleComponent>("UiAutoCycleComponent");
+        ge::ComponentFactory::GetInstance().Register<GameInputComponent>("GameInputComponent");
+        ge::ComponentFactory::GetInstance().Register<UiGameModeSelector>("UiGameModeSelector");
 
-    //load in all scenes at start
-    SceneManager::GetInstance().CreateScene("Main");
-    int sceneIdx {0};
-    const std::filesystem::path scenesDir = std::filesystem::current_path() / "Data" / "Scenes";
+        //load in all scenes at start
+        ge::SceneManager::GetInstance().CreateScene("Main");
+        int sceneIdx{0};
+        const std::filesystem::path scenesDir = std::filesystem::current_path() / "Data" / "Scenes";
 
-    const std::filesystem::path menuPath = scenesDir / ("Menu.json");
-    SceneSerializer::LoadScene(menuPath.string(), SceneManager::GetInstance().GetSceneByIdx(sceneIdx));
-    ++sceneIdx;
+        const std::filesystem::path menuPath = scenesDir / ("Menu.json");
+        ge::SceneSerializer::LoadScene(menuPath.string(), ge::SceneManager::GetInstance().GetSceneByIdx(sceneIdx));
+        ++sceneIdx;
 
-    SceneManager::GetInstance().CreateScene("Lobby");
-    const std::filesystem::path lobbyPath = scenesDir / ("Lobby.json");
-    SceneSerializer::LoadScene(lobbyPath.string(), SceneManager::GetInstance().GetSceneByIdx(sceneIdx));
-    ++sceneIdx;
+        ge::SceneManager::GetInstance().CreateScene("Lobby");
+        const std::filesystem::path lobbyPath = scenesDir / ("Lobby.json");
+        ge::SceneSerializer::LoadScene(lobbyPath.string(), ge::SceneManager::GetInstance().GetSceneByIdx(sceneIdx));
+        ++sceneIdx;
 
-
-    //load game state machine
-    auto& gameStateManager = GSManager::GetInstance();
-    gameStateManager.Initialize();
+        //load game state machine
+        auto &gameStateManager = GSManager::GetInstance();
+        gameStateManager.Initialize();
+    }
 }
 
-int main(int, char *[]) {
-
-
+    int main(int, char *[]) {
 #if __EMSCRIPTEN__
-    fs::path data_location = "";
+        fs::path data_location = "";
 #else
-    fs::path data_location = "./Data/";
-    if (!fs::exists(data_location))
-        data_location = "../Data/";
+        fs::path data_location = "./Data/";
+        if (!fs::exists(data_location))
+            data_location = "../Data/";
 #endif
-    Minigin engine(data_location);
-    engine.Run(load);
+        ge::Minigin engine(data_location);
+        engine.Run(game::load);
 
-    return 0;
-}
+        return 0;
+    }

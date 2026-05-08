@@ -3,7 +3,7 @@
 #include <iostream>
 #include "Singleton.h"
 
-namespace dae {
+namespace ge {
     class DeltaTime final : public Singleton<DeltaTime> {
     public:
         void StartDeltaTime();

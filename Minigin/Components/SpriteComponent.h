@@ -2,7 +2,7 @@
 #include <string>
 #include "Component.h"
 
-namespace dae {
+namespace ge {
     class Texture2D;
 
     struct Rectf {

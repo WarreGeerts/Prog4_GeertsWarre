@@ -5,7 +5,7 @@
 #include "Components/TransformComponent.h"
 #include "glm/vec3.hpp"
 
-namespace dae {
+namespace ge {
     class Texture2D;
     class Component;
 

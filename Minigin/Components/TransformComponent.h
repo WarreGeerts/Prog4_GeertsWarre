@@ -2,7 +2,7 @@
 #include "Component.h"
 #include <glm/glm.hpp>
 
-namespace dae {
+namespace ge {
     class TransformComponent final : public Component {
     public:
         explicit TransformComponent(GameObject *go) : Component(go,"TransformComponent"), m_position(0, 0, 0) {}

@@ -22,136 +22,141 @@
 #include "Sound/ServiceLocator.h"
 SDL_Window *g_window{};
 
-
-//visualize debugging for sounds
+    //visualize debugging for sounds
 #define DBG true
 
-void LogSDLVersion(const std::string &message, int major, int minor, int patch) {
+    void LogSDLVersion(const std::string &message, int major, int minor, int patch) {
 #if WIN32
-    std::stringstream ss;
-    ss << message << major << "." << minor << "." << patch << "\n";
-    OutputDebugString(ss.str().c_str());
+        std::stringstream ss;
+        ss << message << major << "." << minor << "." << patch << "\n";
+        OutputDebugString(ss.str().c_str());
 #else
-    std::cout << message << major << "." << minor << "." << patch << "\n";
+        std::cout << message << major << "." << minor << "." << patch << "\n";
 #endif
-}
+    }
 #ifdef __EMSCRIPTEN__
 #include "emscripten.h"
-void LoopCallback(void *arg) {
-    static_cast<dae::Minigin *>(arg)->Update();
-}
+    void LoopCallback(void *arg) {
+        static_cast<dae::Minigin *>(arg)->Update();
+    }
 #endif
-// Why bother with this? Because sometimes students have a different SDL version installed on their pc.
-// That is not a problem unless for some reason the dll's from this project are not copied next to the exe.
-// These entries in the debug output help to identify that issue.
-void PrintSDLVersion() {
-    LogSDLVersion("Compiled with SDL", SDL_MAJOR_VERSION, SDL_MINOR_VERSION, SDL_MICRO_VERSION);
-    int version = SDL_GetVersion();
-    LogSDLVersion("Linked with SDL ", SDL_VERSIONNUM_MAJOR(version), SDL_VERSIONNUM_MINOR(version),
-                  SDL_VERSIONNUM_MICRO(version));
-    // LogSDLVersion("Compiled with SDL_image ",SDL_IMAGE_MAJOR_VERSION, SDL_IMAGE_MINOR_VERSION, SDL_IMAGE_MICRO_VERSION);
-    // version = IMG_Version();
-    // LogSDLVersion("Linked with SDL_image ", SDL_VERSIONNUM_MAJOR(version), SDL_VERSIONNUM_MINOR(version), SDL_VERSIONNUM_MICRO(version));
-    LogSDLVersion("Compiled with SDL_ttf ", SDL_TTF_MAJOR_VERSION, SDL_TTF_MINOR_VERSION,SDL_TTF_MICRO_VERSION);
-    version = TTF_Version();
-    LogSDLVersion("Linked with SDL_ttf ", SDL_VERSIONNUM_MAJOR(version), SDL_VERSIONNUM_MINOR(version),
-                  SDL_VERSIONNUM_MICRO(version));
-}
-
-dae::Minigin::Minigin(const std::filesystem::path &dataPath) {
-    PrintSDLVersion();
-
-    if (!SDL_InitSubSystem(SDL_INIT_VIDEO | SDL_INIT_GAMEPAD | SDL_INIT_AUDIO)) {
-        SDL_Log("Renderer error: %s", SDL_GetError());
-        throw std::runtime_error(std::string("SDL_Init Error: ") + SDL_GetError());
+    // Why bother with this? Because sometimes students have a different SDL version installed on their pc.
+    // That is not a problem unless for some reason the dll's from this project are not copied next to the exe.
+    // These entries in the debug output help to identify that issue.
+    void PrintSDLVersion() {
+        LogSDLVersion("Compiled with SDL", SDL_MAJOR_VERSION, SDL_MINOR_VERSION, SDL_MICRO_VERSION);
+        int version = SDL_GetVersion();
+        LogSDLVersion("Linked with SDL ", SDL_VERSIONNUM_MAJOR(version), SDL_VERSIONNUM_MINOR(version),
+                      SDL_VERSIONNUM_MICRO(version));
+        // LogSDLVersion("Compiled with SDL_image ",SDL_IMAGE_MAJOR_VERSION, SDL_IMAGE_MINOR_VERSION, SDL_IMAGE_MICRO_VERSION);
+        // version = IMG_Version();
+        // LogSDLVersion("Linked with SDL_image ", SDL_VERSIONNUM_MAJOR(version), SDL_VERSIONNUM_MINOR(version), SDL_VERSIONNUM_MICRO(version));
+        LogSDLVersion("Compiled with SDL_ttf ", SDL_TTF_MAJOR_VERSION, SDL_TTF_MINOR_VERSION,SDL_TTF_MICRO_VERSION);
+        version = TTF_Version();
+        LogSDLVersion("Linked with SDL_ttf ", SDL_VERSIONNUM_MAJOR(version), SDL_VERSIONNUM_MINOR(version),
+                      SDL_VERSIONNUM_MICRO(version));
     }
 
-    g_window = SDL_CreateWindow(
-        "Burger Time",
-        1024,
-        576,
-        SDL_WINDOW_OPENGL
-    );
-    if (g_window == nullptr) {
-        throw std::runtime_error(std::string("SDL_CreateWindow Error: ") + SDL_GetError());
+namespace ge {
+    Minigin::Minigin(const std::filesystem::path &dataPath) {
+        PrintSDLVersion();
+
+        if (!SDL_InitSubSystem(SDL_INIT_VIDEO | SDL_INIT_GAMEPAD | SDL_INIT_AUDIO)) {
+            SDL_Log("Renderer error: %s", SDL_GetError());
+            throw std::runtime_error(std::string("SDL_Init Error: ") + SDL_GetError());
+        }
+
+        g_window = SDL_CreateWindow(
+            "Burger Time",
+            1024,
+            576,
+            SDL_WINDOW_OPENGL
+        );
+        if (g_window == nullptr) {
+            throw std::runtime_error(std::string("SDL_CreateWindow Error: ") + SDL_GetError());
+        }
+
+        Renderer::GetInstance().Init(g_window);
+        ResourceManager::GetInstance().Init(dataPath);
     }
 
-    Renderer::GetInstance().Init(g_window);
-    ResourceManager::GetInstance().Init(dataPath);
-}
+    Minigin::~Minigin() {
+        Renderer::GetInstance().Destroy();
+        SDL_DestroyWindow(g_window);
+        g_window = nullptr;
+        SDL_Quit();
+    }
 
-dae::Minigin::~Minigin() {
-    Renderer::GetInstance().Destroy();
-    SDL_DestroyWindow(g_window);
-    g_window = nullptr;
-    SDL_Quit();
-}
+    void Minigin::Run(const std::function<void()> &load) {
 
-void dae::Minigin::Run(const std::function<void()> &load) {
+        //engine components
+        ComponentFactory::GetInstance().Register<TransformComponent>("TransformComponent");
+        ComponentFactory::GetInstance().Register<RenderComponent>("RenderComponent");
+        ComponentFactory::GetInstance().Register<TextComponent>("TextComponent");
+        ComponentFactory::GetInstance().Register<SpriteComponent>("SpriteComponent");
+        ComponentFactory::GetInstance().Register<FPSComponent>("FPSComponent");
+        ComponentFactory::GetInstance().Register<CharacterControllerComponent>("CharacterControllerComponent");
+        ComponentFactory::GetInstance().Register<RotateComponent>("RotateComponent");
 
-    //engine components
-    ComponentFactory::GetInstance().Register<TransformComponent>("TransformComponent");
-    ComponentFactory::GetInstance().Register<RenderComponent>("RenderComponent");
-    ComponentFactory::GetInstance().Register<TextComponent>("TextComponent");
-    ComponentFactory::GetInstance().Register<SpriteComponent>("SpriteComponent");
-    ComponentFactory::GetInstance().Register<FPSComponent>("FPSComponent");
-    ComponentFactory::GetInstance().Register<CharacterControllerComponent>("CharacterControllerComponent");
-    ComponentFactory::GetInstance().Register<RotateComponent>("RotateComponent");
+        load(); //initialization (once run)
 
-    load(); //initialization (once run)
+        //controllers
+        InputManager::GetInstance().AddController(0);
+        InputManager::GetInstance().AddController(1);
 
-    //sound
-    auto sdl_ss{std::make_unique<SdlSoundSystem>()};
+        //sound
+        auto sdl_ss{std::make_unique<SdlSoundSystem>()};
 
 #if DBG
-    auto logger_ss = std::make_unique<LoggingSoundSystem>(std::move(sdl_ss));
-    ServiceLocator::RegisterSoundSystem(std::move(logger_ss));
+        auto logger_ss = std::make_unique<LoggingSoundSystem>(std::move(sdl_ss));
+        ServiceLocator::RegisterSoundSystem(std::move(logger_ss));
 #else
-    ServiceLocator::RegisterSoundSystem(std::move(sdl_ss));
+        ServiceLocator::RegisterSoundSystem(std::move(sdl_ss));
 #endif
 
-    //TODO: put inside component for sounds and or music. And then make it so you can link sounds to events that happen instead of putting them inside code
-    ServiceLocator::GetSoundSystem().PlayMusic(0, 0.5f, true);
+        //TODO: put inside component for sounds and or music. And then make it so you can link sounds to events that happen instead of putting them inside code
+        ServiceLocator::GetSoundSystem().PlayMusic(0, 0.5f, true);
 
-    //events
-    EventRegistry::Initialize();
+        //events
+        EventRegistry::Initialize();
 
-    //Time
-    DeltaTime::GetInstance().SetFPS(60);
+        //Time
+        DeltaTime::GetInstance().SetFPS(60);
 
 #ifndef __EMSCRIPTEN__
-    while (!m_quit) //main loop
-    {
-        //input process
-        Update();
-    }
+        while (!m_quit) //main loop
+        {
+            //input process
+            Update();
+        }
 
-    ServiceLocator::Shutdown();
+        ServiceLocator::Shutdown();
 #else
-    emscripten_set_main_loop_arg(&LoopCallback, this, 0, true);
+        emscripten_set_main_loop_arg(&LoopCallback, this, 0, true);
 #endif
-}
-
-//uses DeltaTime
-void dae::Minigin::Update() //main loop
-{
-    //Inputs
-    m_quit = !InputManager::GetInstance().ProcessInput();
-    //DeltaTime
-    DeltaTime::GetInstance().StartDeltaTime();
-
-    while (DeltaTime::GetInstance().Lag() >= DeltaTime::GetInstance().FixedTime()) {
-        FixedUpdate(); //Loop has to use FixedDeltaTime
-        DeltaTime::GetInstance().ReCalcLag();
     }
 
-    std::this_thread::sleep_for(DeltaTime::GetInstance().CalcSleepTime());
+    //uses DeltaTime
+    void Minigin::Update() //main loop
+    {
+        //Inputs
+        m_quit = !InputManager::GetInstance().ProcessInput();
+        //DeltaTime
+        DeltaTime::GetInstance().StartDeltaTime();
 
-    //scene update
-    SceneManager::GetInstance().Update();
-    //render update
-    Renderer::GetInstance().Render();
+        while (DeltaTime::GetInstance().Lag() >= DeltaTime::GetInstance().FixedTime()) {
+            FixedUpdate(); //Loop has to use FixedDeltaTime
+            DeltaTime::GetInstance().ReCalcLag();
+        }
+
+        std::this_thread::sleep_for(DeltaTime::GetInstance().CalcSleepTime());
+
+        //scene update
+        SceneManager::GetInstance().Update();
+        //render update
+        Renderer::GetInstance().Render();
+    }
+
+    //uses FixedDeltaTime
+    void Minigin::FixedUpdate() {}
 }
-
-//uses FixedDeltaTime
-void dae::Minigin::FixedUpdate() {}

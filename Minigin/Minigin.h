@@ -2,7 +2,7 @@
 #include <functional>
 #include <filesystem>
 
-namespace dae {
+namespace ge {
     class GameObject;
     class Scene;
 

@@ -4,7 +4,7 @@
 #include <SDL3/SDL_pixels.h>
 #include "RenderComponent.h"
 
-namespace dae {
+namespace ge {
     class Font;
     class Texture2D;
     class GameObject;

@@ -1,6 +1,6 @@
 ﻿#include "GameActorCommand.h"
 
-namespace dae {
+namespace ge {
     GameActorCommand::GameActorCommand(GameObject *actor)
         : m_pActor(actor) {}
 

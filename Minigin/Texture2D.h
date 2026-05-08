@@ -3,8 +3,7 @@
 #include <string>
 
 struct SDL_Texture;
-namespace dae
-{
+namespace ge {
 	/**
 	 * Simple RAII wrapper for an SDL_Texture
 	 */
