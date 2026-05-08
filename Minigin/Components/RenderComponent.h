@@ -23,6 +23,8 @@ namespace ge {
         void SetTexture(const std::shared_ptr<Texture2D> &texture) { m_texture = texture; }
         static std::vector<std::string> GetTextureFiles(const std::string& directory, bool font = false);
 
+        void SetLayer(const int layer) { m_Layer = layer; }
+        int GetLayer() const { return m_Layer; }
     private:
         std::shared_ptr<Texture2D> m_texture;
         TransformComponent* m_transform{};
@@ -30,5 +32,6 @@ namespace ge {
         std::string m_FileName{};
 
         bool m_OverWritten{false};
+        int m_Layer{ 0 };
     };
 }

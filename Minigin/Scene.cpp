@@ -3,8 +3,10 @@
 #include <cassert>
 #include <utility>
 #include "Components/Component.h"
+#include "Components/RenderComponent.h"
 #include <stdexcept>
 #include <SDL3/SDL_log.h>
+
 namespace ge {
     int Scene::s_NextId = 0;
 
@@ -62,23 +64,44 @@ namespace ge {
         //after update look through all objects to delete those who are marked
         m_objects.erase(
             std::remove_if(m_objects.begin(), m_objects.end(),
-                [](const std::unique_ptr<GameObject>& object) {
-                    if (object->MarkedForDeletion()) {
-                        SDL_Log("deleted %s", object->GetName().c_str());
-                    }
-                    return object->MarkedForDeletion();
-                }),
+                           [](const std::unique_ptr<GameObject> &object) {
+                               if (object->MarkedForDeletion()) {
+                                   SDL_Log("deleted %s", object->GetName().c_str());
+                               }
+                               return object->MarkedForDeletion();
+                           }),
             m_objects.end()
         );
     }
 
     void Scene::Render() const {
-        for (const auto &object: m_objects) {
-            if (object->IsActive()) {
-                for (const auto &component: object->GetComponents()) {
-                    component->Render();
-                }
+        // 1. Create a pair of (Component, Layer)
+        std::vector<std::pair<Component*, int>> sortedComponents;
+
+        for (const auto& object : m_objects) {
+            if (!object->IsActive()) continue;
+
+            // Determine the layer: check if this object has a RenderComponent
+            int layer = 0;
+            if (auto rc = object->GetComponent<RenderComponent>()) {
+                layer = rc->GetLayer();
             }
+
+            // Add all components of this object to the list with that layer
+            for (const auto& component : object->GetComponents()) {
+                sortedComponents.push_back({ component.get(), layer });
+            }
+        }
+
+        // 2. Sort the pairs by the layer value
+        std::stable_sort(sortedComponents.begin(), sortedComponents.end(),
+            [](const std::pair<Component*, int>& a, const std::pair<Component*, int>& b) {
+                return a.second < b.second;
+            });
+
+        // 3. Render in order
+        for (const auto& pair : sortedComponents) {
+            pair.first->Render();
         }
     }
 

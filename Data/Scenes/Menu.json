@@ -21,7 +21,8 @@
                     "active": true,
                     "comp_data": {
                         "file_name": "",
-                        "overwritten": true
+                        "overwritten": true,
+                        "render_layer": 0
                     }
                 },
                 {
@@ -61,7 +62,8 @@
                     "active": true,
                     "comp_data": {
                         "file_name": "",
-                        "overwritten": true
+                        "overwritten": true,
+                        "render_layer": 0
                     }
                 },
                 {
@@ -101,7 +103,8 @@
                     "active": true,
                     "comp_data": {
                         "file_name": "",
-                        "overwritten": true
+                        "overwritten": true,
+                        "render_layer": 0
                     }
                 },
                 {
@@ -141,7 +144,8 @@
                     "active": true,
                     "comp_data": {
                         "file_name": "",
-                        "overwritten": true
+                        "overwritten": true,
+                        "render_layer": 0
                     }
                 },
                 {
@@ -195,7 +199,8 @@
                     "active": true,
                     "comp_data": {
                         "file_name": "",
-                        "overwritten": true
+                        "overwritten": false,
+                        "render_layer": 0
                     }
                 },
                 {
@@ -220,7 +225,7 @@
             "go_id": 6,
             "parent_id": 27,
             "go_name": "ScoreHelper",
-            "enabled": false,
+            "enabled": true,
             "transform": {
                 "position": [
                     0.0,
@@ -249,7 +254,8 @@
                     "active": true,
                     "comp_data": {
                         "file_name": "",
-                        "overwritten": true
+                        "overwritten": true,
+                        "render_layer": 0
                     }
                 },
                 {
@@ -303,7 +309,8 @@
                     "active": true,
                     "comp_data": {
                         "file_name": "",
-                        "overwritten": true
+                        "overwritten": true,
+                        "render_layer": 0
                     }
                 },
                 {
@@ -368,7 +375,8 @@
                     "active": true,
                     "comp_data": {
                         "file_name": "",
-                        "overwritten": true
+                        "overwritten": true,
+                        "render_layer": 0
                     }
                 },
                 {
@@ -433,7 +441,8 @@
                     "active": true,
                     "comp_data": {
                         "file_name": "",
-                        "overwritten": true
+                        "overwritten": true,
+                        "render_layer": 0
                     }
                 },
                 {
@@ -498,7 +507,8 @@
                     "active": true,
                     "comp_data": {
                         "file_name": "",
-                        "overwritten": true
+                        "overwritten": true,
+                        "render_layer": 0
                     }
                 },
                 {
@@ -563,7 +573,8 @@
                     "active": true,
                     "comp_data": {
                         "file_name": "",
-                        "overwritten": true
+                        "overwritten": true,
+                        "render_layer": 0
                     }
                 },
                 {
@@ -628,7 +639,8 @@
                     "active": true,
                     "comp_data": {
                         "file_name": "",
-                        "overwritten": true
+                        "overwritten": true,
+                        "render_layer": 0
                     }
                 },
                 {
@@ -693,7 +705,8 @@
                     "active": true,
                     "comp_data": {
                         "file_name": "",
-                        "overwritten": true
+                        "overwritten": true,
+                        "render_layer": 0
                     }
                 },
                 {
@@ -747,7 +760,8 @@
                     "active": true,
                     "comp_data": {
                         "file_name": "",
-                        "overwritten": true
+                        "overwritten": true,
+                        "render_layer": 0
                     }
                 },
                 {
@@ -812,7 +826,8 @@
                     "active": true,
                     "comp_data": {
                         "file_name": "",
-                        "overwritten": true
+                        "overwritten": true,
+                        "render_layer": 0
                     }
                 },
                 {
@@ -877,7 +892,8 @@
                     "active": true,
                     "comp_data": {
                         "file_name": "",
-                        "overwritten": true
+                        "overwritten": true,
+                        "render_layer": 0
                     }
                 },
                 {
@@ -942,7 +958,8 @@
                     "active": true,
                     "comp_data": {
                         "file_name": "",
-                        "overwritten": true
+                        "overwritten": true,
+                        "render_layer": 0
                     }
                 },
                 {
@@ -1007,7 +1024,8 @@
                     "active": true,
                     "comp_data": {
                         "file_name": "",
-                        "overwritten": true
+                        "overwritten": true,
+                        "render_layer": 0
                     }
                 },
                 {
@@ -1072,7 +1090,8 @@
                     "active": true,
                     "comp_data": {
                         "file_name": "",
-                        "overwritten": true
+                        "overwritten": true,
+                        "render_layer": 0
                     }
                 },
                 {
@@ -1137,7 +1156,8 @@
                     "active": true,
                     "comp_data": {
                         "file_name": "",
-                        "overwritten": true
+                        "overwritten": true,
+                        "render_layer": 0
                     }
                 },
                 {
@@ -1177,7 +1197,8 @@
                     "active": true,
                     "comp_data": {
                         "file_name": "",
-                        "overwritten": true
+                        "overwritten": true,
+                        "render_layer": 0
                     }
                 },
                 {
@@ -1242,7 +1263,8 @@
                     "active": true,
                     "comp_data": {
                         "file_name": "",
-                        "overwritten": true
+                        "overwritten": true,
+                        "render_layer": 0
                     }
                 },
                 {
@@ -1282,7 +1304,8 @@
                     "active": true,
                     "comp_data": {
                         "file_name": "",
-                        "overwritten": true
+                        "overwritten": true,
+                        "render_layer": 0
                     }
                 },
                 {
@@ -1347,13 +1370,7 @@
                     "active": true,
                     "comp_data": {
                         "wait_time": 5.0,
-                        "current_child_index": 2,
-                        "event_id": 2875781075,
-                        "handle": {
-                            "event_id": 2875781075,
-                            "index": 0,
-                            "valid": true
-                        }
+                        "current_child_index": 1
                     }
                 }
             ]
@@ -1362,7 +1379,7 @@
             "go_id": 28,
             "parent_id": 27,
             "go_name": "Characters",
-            "enabled": true,
+            "enabled": false,
             "transform": {
                 "position": [
                     0.0,
@@ -1391,7 +1408,8 @@
                     "active": true,
                     "comp_data": {
                         "file_name": "",
-                        "overwritten": true
+                        "overwritten": false,
+                        "render_layer": 0
                     }
                 },
                 {
@@ -1456,7 +1474,8 @@
                     "active": true,
                     "comp_data": {
                         "file_name": "",
-                        "overwritten": true
+                        "overwritten": false,
+                        "render_layer": 0
                     }
                 },
                 {
@@ -1496,7 +1515,8 @@
                     "active": true,
                     "comp_data": {
                         "file_name": "",
-                        "overwritten": true
+                        "overwritten": false,
+                        "render_layer": 0
                     }
                 },
                 {
@@ -1577,7 +1597,8 @@
                     "active": true,
                     "comp_data": {
                         "file_name": "",
-                        "overwritten": true
+                        "overwritten": true,
+                        "render_layer": 0
                     }
                 }
             ]
@@ -1601,7 +1622,8 @@
                     "active": true,
                     "comp_data": {
                         "file_name": "",
-                        "overwritten": true
+                        "overwritten": false,
+                        "render_layer": 0
                     }
                 },
                 {
@@ -1641,7 +1663,8 @@
                     "active": true,
                     "comp_data": {
                         "file_name": "",
-                        "overwritten": true
+                        "overwritten": false,
+                        "render_layer": 0
                     }
                 },
                 {
@@ -1681,7 +1704,8 @@
                     "active": true,
                     "comp_data": {
                         "file_name": "",
-                        "overwritten": true
+                        "overwritten": false,
+                        "render_layer": 0
                     }
                 },
                 {
@@ -1746,7 +1770,8 @@
                     "active": true,
                     "comp_data": {
                         "file_name": "",
-                        "overwritten": true
+                        "overwritten": false,
+                        "render_layer": 0
                     }
                 },
                 {
@@ -1786,7 +1811,8 @@
                     "active": true,
                     "comp_data": {
                         "file_name": "",
-                        "overwritten": true
+                        "overwritten": false,
+                        "render_layer": 0
                     }
                 },
                 {
@@ -1826,7 +1852,8 @@
                     "active": true,
                     "comp_data": {
                         "file_name": "",
-                        "overwritten": true
+                        "overwritten": false,
+                        "render_layer": 0
                     }
                 },
                 {
@@ -1891,7 +1918,8 @@
                     "active": true,
                     "comp_data": {
                         "file_name": "",
-                        "overwritten": true
+                        "overwritten": false,
+                        "render_layer": 0
                     }
                 },
                 {
@@ -1931,7 +1959,8 @@
                     "active": true,
                     "comp_data": {
                         "file_name": "",
-                        "overwritten": true
+                        "overwritten": false,
+                        "render_layer": 0
                     }
                 },
                 {
@@ -1971,7 +2000,8 @@
                     "active": true,
                     "comp_data": {
                         "file_name": "",
-                        "overwritten": true
+                        "overwritten": true,
+                        "render_layer": 0
                     }
                 },
                 {
@@ -2011,7 +2041,8 @@
                     "active": true,
                     "comp_data": {
                         "file_name": "",
-                        "overwritten": true
+                        "overwritten": true,
+                        "render_layer": 0
                     }
                 },
                 {
@@ -2050,6 +2081,31 @@
                     "comp_name": "GameInputComponent",
                     "active": true,
                     "comp_data": null
+                }
+            ]
+        },
+        {
+            "go_id": 44,
+            "parent_id": -1,
+            "go_name": "Background",
+            "enabled": true,
+            "transform": {
+                "position": [
+                    0.0,
+                    0.0,
+                    0.0
+                ]
+            },
+            "components": [
+                {
+                    "comp_id": 121,
+                    "comp_name": "RenderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "file_name": "Background_BT.png",
+                        "overwritten": false,
+                        "render_layer": -100
+                    }
                 }
             ]
         }

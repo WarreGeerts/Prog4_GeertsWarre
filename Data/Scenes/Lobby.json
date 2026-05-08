@@ -21,7 +21,8 @@
                     "active": true,
                     "comp_data": {
                         "file_name": "",
-                        "overwritten": true
+                        "overwritten": true,
+                        "render_layer": 0
                     }
                 },
                 {
@@ -82,7 +83,8 @@
                     "active": true,
                     "comp_data": {
                         "file_name": "",
-                        "overwritten": true
+                        "overwritten": true,
+                        "render_layer": 0
                     }
                 },
                 {
@@ -95,8 +97,8 @@
                         "text": "SINGLE PLAYER",
                         "color": [
                             255,
-                            255,
-                            255,
+                            0,
+                            0,
                             255
                         ]
                     }
@@ -122,7 +124,8 @@
                     "active": true,
                     "comp_data": {
                         "file_name": "",
-                        "overwritten": true
+                        "overwritten": true,
+                        "render_layer": 0
                     }
                 },
                 {
@@ -162,7 +165,8 @@
                     "active": true,
                     "comp_data": {
                         "file_name": "",
-                        "overwritten": true
+                        "overwritten": true,
+                        "render_layer": 0
                     }
                 },
                 {
@@ -179,6 +183,31 @@
                             255,
                             255
                         ]
+                    }
+                }
+            ]
+        },
+        {
+            "go_id": 50,
+            "parent_id": -1,
+            "go_name": "Background",
+            "enabled": true,
+            "transform": {
+                "position": [
+                    0.0,
+                    0.0,
+                    0.0
+                ]
+            },
+            "components": [
+                {
+                    "comp_id": 137,
+                    "comp_name": "RenderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "file_name": "Background_BT.png",
+                        "overwritten": false,
+                        "render_layer": -100
                     }
                 }
             ]

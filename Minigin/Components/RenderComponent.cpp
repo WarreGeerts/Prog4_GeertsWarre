@@ -73,12 +73,14 @@ namespace ge {
         nlohmann::ordered_json data;
         data["file_name"] = m_FileName;
         data["overwritten"] = m_OverWritten;
+        data["render_layer"] = m_Layer;
         return data;
     }
 
     void RenderComponent::Deserialize(const nlohmann::ordered_json &data) {
         m_FileName = data.value("file_name", "");
         m_OverWritten = data.value("overwritten", false);
+        m_Layer = data.value("render_layer", 0);
         if (!m_OverWritten && !m_FileName.empty())
             SetTexture(m_FileName);
 
@@ -107,6 +109,13 @@ namespace ge {
                 if (isSelected) ImGui::SetItemDefaultFocus();
             }
             ImGui::EndCombo();
+        }
+
+        //render layer
+        int renderLayer[1] = {m_Layer};
+
+        if (ImGui::InputInt("Render Layer", renderLayer)) {
+            m_Layer = renderLayer[0];
         }
 
         if (ImGui::Button("Reset Textures##RC")) {
