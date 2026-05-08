@@ -5,14 +5,14 @@ project(MiniginWorkspace)
 if (EMSCRIPTEN)
     set(TARGET_NAME BurgerTime_web)
 
-    # 1. Standard Emscripten Settings
     add_compile_options("-sUSE_FREETYPE=1" "-sUSE_HARFBUZZ=1")
 
-    # 2. Linker Settings (Including the Data Preload)
-    # The --preload-file flag tells Emscripten to bundle your Data folder
     add_link_options(
             "-sUSE_FREETYPE=1"
             "-sUSE_HARFBUZZ=1"
+            "-sASSERTIONS=1"
+            "-sDEMANGLE_SUPPORT=1"
+            "-sSTACK_OVERFLOW_CHECK=2"
             "--preload-file" "${CMAKE_SOURCE_DIR}/Data@/Data"
     )
 else ()
