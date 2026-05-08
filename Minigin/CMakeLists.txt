@@ -29,9 +29,13 @@ add_library(Minigin STATIC
         Singletons/ResourceManager.cpp
         Singletons/SceneManager.cpp
         Singletons/RealTimeEditor/SceneSerializer.cpp
-        Singletons/RealTimeEditor/SceneSerializer.h
         Singletons/RealTimeEditor/ComponentFactory.cpp
-        Singletons/RealTimeEditor/ComponentFactory.h
+        Singletons/EventManager.cpp
+        Singletons/DeltaTime.cpp
+
+        #Commands
+        Commands/GameActorCommand.cpp
+        Commands/MoveCommand.cpp
 
         #components
         Components/TransformComponent.cpp
@@ -44,17 +48,13 @@ add_library(Minigin STATIC
         Components/Component.cpp
 
         #sound
-        Sound/servicelocator.cpp
+        Sound/ServiceLocator.cpp
         Sound/SdlSoundSystem.cpp
+        Sound/SoundSystem.cpp
 
         # External Source
         ${implot_SOURCE_DIR}/implot.cpp
         ${implot_SOURCE_DIR}/implot_items.cpp
-        Singletons/EventManager.cpp
-        Singletons/DeltaTime.cpp
-        Commands/GameActorCommand.cpp
-        Commands/MoveCommand.cpp
-        Sound/SoundSystem.cpp
 )
 
 # Propagate headers and dependencies to anyone who links to us (the Game)

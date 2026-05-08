@@ -1,33 +1,28 @@
 ﻿add_executable(${TARGET_NAME} ${TARGET_PARAM}
+
+        #Core files
         Main.cpp
+
+        #Components
         Components/ThrashCacheComponent.cpp
         Components/LivesDisplayComponent.cpp
         Components/ScoreDisplayComponent.cpp
         Components/LivesComponent.cpp
         Components/ScoreComponent.cpp
-        Components/GameComponents.h
         Components/UiAutoCycleComponent.cpp
-        Components/UiAutoCycleComponent.h
-        Commands/GameCommands.cpp
-        Commands/GameCommands.h
-        States/GameState.h
-        States/GSMainMenu.cpp
-        States/GSMainMenu.h
-        States/GSManager.cpp
-        States/GSManager.h
-        States/GSLobby.cpp
-        States/GSLobby.h
         Components/GameInputComponent.cpp
-        Components/GameInputComponent.h
-        States/GameModeState.h
-        States/GMSSinglePlayer.cpp
-        States/GMSSinglePlayer.h
-        States/GMSCoop.cpp
-        States/GMSCoop.h
-        States/GMSVersus.cpp
-        States/GMSVersus.h
         Components/UiGameModeSelector.cpp
-        Components/UiGameModeSelector.h
+
+        #Commands
+        Commands/GameCommands.cpp
+
+        #States
+        States/GSMainMenu.cpp
+        States/GSManager.cpp
+        States/GSLobby.cpp
+        States/GMSSinglePlayer.cpp
+        States/GMSCoop.cpp
+        States/GMSVersus.cpp
 )
 
 set_target_properties(${TARGET_NAME} PROPERTIES
