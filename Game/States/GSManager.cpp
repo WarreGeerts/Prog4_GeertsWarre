@@ -1,7 +1,13 @@
-﻿#include "GameStateManager.h"
+﻿#include "GSManager.h"
+#include <SDL3/SDL_log.h>
+#include "GSMainMenu.h"
 
 namespace dae {
-    void GameStateManager::ChangeState(GameState *newState) {
+    void GSManager::Initialize() {
+        ChangeState(new GSMainMenu);
+    }
+
+    void GSManager::ChangeState(GameState *newState) {
         if (m_CurrentGameState) {
             m_CurrentGameState->OnExit();
             delete m_CurrentGameState;
@@ -11,11 +17,7 @@ namespace dae {
         m_CurrentGameState->OnEnter();
     }
 
-    void GameStateManager::Update() {
+    void GSManager::Update() {
         if (m_CurrentGameState) m_CurrentGameState->Update();
-    }
-
-    void GameStateManager::Render() const {
-        if (m_CurrentGameState) m_CurrentGameState->Render();
     }
 }

@@ -3,9 +3,49 @@
     "scene_name": "Lobby",
     "gameobjects": [
         {
-            "go_id": 0,
+            "go_id": 46,
             "parent_id": -1,
-            "go_name": "Background",
+            "go_name": "TitleText",
+            "enabled": true,
+            "transform": {
+                "position": [
+                    335.3999938964844,
+                    81.30000305175781,
+                    0.0
+                ]
+            },
+            "components": [
+                {
+                    "comp_id": 125,
+                    "comp_name": "RenderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "file_name": "",
+                        "overwritten": true
+                    }
+                },
+                {
+                    "comp_id": 126,
+                    "comp_name": "TextComponent",
+                    "active": true,
+                    "comp_data": {
+                        "font_file_name": "ByteBounce.ttf",
+                        "font_size": 50,
+                        "text": "SELET A GAMEMODE",
+                        "color": [
+                            236,
+                            223,
+                            193,
+                            255
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "go_id": 47,
+            "parent_id": -1,
+            "go_name": "GamemodeSelect",
             "enabled": true,
             "transform": {
                 "position": [
@@ -14,14 +54,124 @@
                     0.0
                 ]
             },
+            "components": []
+        },
+        {
+            "go_id": 48,
+            "parent_id": 47,
+            "go_name": "Singleplayer",
+            "enabled": true,
+            "transform": {
+                "position": [
+                    395.1000061035156,
+                    188.1999969482422,
+                    0.0
+                ]
+            },
             "components": [
                 {
-                    "comp_id": 1,
+                    "comp_id": 131,
                     "comp_name": "RenderComponent",
                     "active": true,
                     "comp_data": {
-                        "file_name": "background.png",
-                        "overwritten": false
+                        "file_name": "",
+                        "overwritten": true
+                    }
+                },
+                {
+                    "comp_id": 132,
+                    "comp_name": "TextComponent",
+                    "active": true,
+                    "comp_data": {
+                        "font_file_name": "ByteBounce.ttf",
+                        "font_size": 40,
+                        "text": "SINGLE PLAYER",
+                        "color": [
+                            255,
+                            255,
+                            255,
+                            255
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "go_id": 51,
+            "parent_id": 47,
+            "go_name": "Coop",
+            "enabled": true,
+            "transform": {
+                "position": [
+                    456.8999938964844,
+                    238.5,
+                    0.0
+                ]
+            },
+            "components": [
+                {
+                    "comp_id": 134,
+                    "comp_name": "RenderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "file_name": "",
+                        "overwritten": true
+                    }
+                },
+                {
+                    "comp_id": 135,
+                    "comp_name": "TextComponent",
+                    "active": true,
+                    "comp_data": {
+                        "font_file_name": "ByteBounce.ttf",
+                        "font_size": 40,
+                        "text": "CO-OP",
+                        "color": [
+                            255,
+                            255,
+                            255,
+                            255
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "go_id": 52,
+            "parent_id": 47,
+            "go_name": "Versus",
+            "enabled": true,
+            "transform": {
+                "position": [
+                    446.70001220703125,
+                    286.20001220703125,
+                    0.0
+                ]
+            },
+            "components": [
+                {
+                    "comp_id": 137,
+                    "comp_name": "RenderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "file_name": "",
+                        "overwritten": true
+                    }
+                },
+                {
+                    "comp_id": 138,
+                    "comp_name": "TextComponent",
+                    "active": true,
+                    "comp_data": {
+                        "font_file_name": "ByteBounce.ttf",
+                        "font_size": 40,
+                        "text": "VERSUS",
+                        "color": [
+                            255,
+                            255,
+                            255,
+                            255
+                        ]
                     }
                 }
             ]

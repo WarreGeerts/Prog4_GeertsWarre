@@ -5,6 +5,7 @@
 #include "Components/GameInputComponent.h"
 #include "Singletons/RealTimeEditor/ComponentFactory.h"
 #include "Singletons/RealTimeEditor/SceneSerializer.h"
+#include "States/GSManager.h"
 #if _DEBUG && __has_include(<vld.h>)
 #include <vld.h>
 #endif
@@ -40,9 +41,16 @@ static void load() //loads once
     const std::filesystem::path lobbyPath = scenesDir / ("Lobby.json");
     SceneSerializer::LoadScene(lobbyPath.string(), SceneManager::GetInstance().GetSceneByIdx(sceneIdx));
     ++sceneIdx;
+
+
+    //load game state machine
+    auto& gameStateManager = GSManager::GetInstance();
+    gameStateManager.Initialize();
 }
 
 int main(int, char *[]) {
+
+
 #if __EMSCRIPTEN__
     fs::path data_location = "";
 #else

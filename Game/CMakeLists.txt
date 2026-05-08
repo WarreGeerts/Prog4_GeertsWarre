@@ -11,14 +11,23 @@
         Commands/GameCommands.cpp
         Commands/GameCommands.h
         States/GameState.h
-        States/MainMenuState.cpp
-        States/MainMenuState.h
-        States/GameStateManager.cpp
-        States/GameStateManager.h
-        States/LobbyState.cpp
-        States/LobbyState.h
+        States/GSMainMenu.cpp
+        States/GSMainMenu.h
+        States/GSManager.cpp
+        States/GSManager.h
+        States/GSLobby.cpp
+        States/GSLobby.h
         Components/GameInputComponent.cpp
         Components/GameInputComponent.h
+        States/GameModeState.h
+        States/GMSSinglePlayer.cpp
+        States/GMSSinglePlayer.h
+        States/GMSCoop.cpp
+        States/GMSCoop.h
+        States/GMSVersus.cpp
+        States/GMSVersus.h
+        Components/UiGameModeSelector.cpp
+        Components/UiGameModeSelector.h
 )
 
 set_target_properties(${TARGET_NAME} PROPERTIES
