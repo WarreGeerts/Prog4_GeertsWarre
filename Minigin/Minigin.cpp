@@ -141,6 +141,10 @@ namespace ge {
     {
         //Inputs
         m_quit = !InputManager::GetInstance().ProcessInput();
+
+        // 2. Sound System Service (Crucial for Web!)
+        ServiceLocator::GetSoundSystem().Update();
+
         //DeltaTime
         DeltaTime::GetInstance().StartDeltaTime();
 
@@ -149,8 +153,9 @@ namespace ge {
             DeltaTime::GetInstance().ReCalcLag();
         }
 
+#ifndef __EMSCRIPTEN__
         std::this_thread::sleep_for(DeltaTime::GetInstance().CalcSleepTime());
-
+#endif
         //scene update
         SceneManager::GetInstance().Update();
         //render update

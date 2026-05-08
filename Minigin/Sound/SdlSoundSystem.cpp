@@ -7,6 +7,9 @@
 #include <thread>
 #include <mutex>
 #include <condition_variable>
+#ifdef __EMSCRIPTEN__
+#include <emscripten.h>
+#endif
 namespace ge {
     struct SdlSoundSystem::Impl {
         struct SoundData {
@@ -33,13 +36,16 @@ namespace ge {
         sound_id currentMusicId{0};
         bool isLooping{false};
         std::mutex mutex;
-        std::condition_variable CV;
         std::queue<SoundRequest> queue;
-        std::thread audioThread;
         bool running{true};
-
+#ifndef __EMSCRIPTEN__
+        std::condition_variable CV;
+        std::thread audioThread;
+#endif
         Impl() {
+#ifndef __EMSCRIPTEN__
             audioThread = std::thread(&Impl::ProcessQueue, this);
+#endif
         }
 
         ~Impl() {
@@ -47,11 +53,13 @@ namespace ge {
                 std::lock_guard<std::mutex> lock(mutex);
                 running = false;
             }
+#ifndef __EMSCRIPTEN__
             CV.notify_all();
 
             if (audioThread.joinable()) {
                 audioThread.join();
             }
+#endif
 
             if (musicStream) {
                 SDL_DestroyAudioStream(musicStream);
@@ -61,33 +69,29 @@ namespace ge {
             }
         }
 
-        static void SDLCALL MusicCallback(void* userdata, SDL_AudioStream* stream, int additional_amount, int total_amount) {
-            auto* impl = static_cast<SdlSoundSystem::Impl*>(userdata);
+        static void SDLCALL MusicCallback(void *userdata, SDL_AudioStream *stream, int additional_amount,
+                                          int total_amount) {
+            auto *impl = static_cast<SdlSoundSystem::Impl *>(userdata);
             impl->RefillMusic(stream);
         }
 
-        void RefillMusic(SDL_AudioStream* stream) {
+        void RefillMusic(SDL_AudioStream *stream) {
             std::lock_guard<std::mutex> lock(mutex);
             if (isLooping && sounds.contains(currentMusicId)) {
-                const auto& data = sounds[currentMusicId];
+                const auto &data = sounds[currentMusicId];
                 SDL_PutAudioStreamData(stream, data.buffer, static_cast<int>(data.length));
             }
         }
 
-        void ProcessQueue() {
+        void ProcessQueueOnce() {
             while (true) {
                 SoundRequest request{};
-
-                std::unique_lock<std::mutex> lock(mutex);
-                CV.wait(lock, [this] {
-                    return !queue.empty() || !running;
-                });
-
-                if (!running && queue.empty()) return;
-
-                request = queue.front();
-                queue.pop();
-                lock.unlock();
+                {
+                    std::lock_guard<std::mutex> lock(mutex);
+                    if (queue.empty()) return;
+                    request = queue.front();
+                    queue.pop();
+                }
 
                 if (request.is_music) {
                     PlayMusicInternal(request.id, request.volume, request.loop);
@@ -97,11 +101,24 @@ namespace ge {
             }
         }
 
+#ifndef __EMSCRIPTEN__
+        void ProcessQueue() {
+            while (true) {
+                std::unique_lock<std::mutex> lock(mutex);
+                CV.wait(lock, [this] { return !queue.empty() || !running; });
+                if (!running && queue.empty()) return;
+                lock.unlock();
+                ProcessQueueOnce();
+            }
+        }
+#endif
+
         void PlaySoundInternal(const sound_id id, const float volume) {
             if (!sounds.contains(id)) Load(id);
             const auto &[buffer, length, spec] = sounds[id];
 
-            SDL_AudioStream *stream = SDL_OpenAudioDeviceStream(SDL_AUDIO_DEVICE_DEFAULT_PLAYBACK, &spec, nullptr, nullptr);
+            SDL_AudioStream *stream = SDL_OpenAudioDeviceStream(
+                SDL_AUDIO_DEVICE_DEFAULT_PLAYBACK, &spec, nullptr, nullptr);
             if (stream) {
                 SDL_SetAudioStreamGain(stream, volume);
                 SDL_PutAudioStreamData(stream, buffer, static_cast<int>(length));
@@ -111,7 +128,7 @@ namespace ge {
 
         void PlayMusicInternal(const sound_id id, const float volume, const bool loop) {
             if (!sounds.contains(id)) Load(id);
-            const auto&[buffer, length, spec] = sounds[id];
+            const auto &[buffer, length, spec] = sounds[id];
 
             if (musicStream) {
                 SDL_DestroyAudioStream(musicStream);
@@ -168,12 +185,23 @@ namespace ge {
     void SdlSoundSystem::Play(const sound_id id, const float volume) {
         std::lock_guard<std::mutex> lock(pImpl->mutex);
         pImpl->queue.push({id, volume, false, false});
+#ifndef __EMSCRIPTEN__
         pImpl->CV.notify_one();
-    }
+#endif
+        }
 
     void SdlSoundSystem::PlayMusic(const sound_id id, const float volume, const bool loop) {
         std::lock_guard<std::mutex> lock(pImpl->mutex);
         pImpl->queue.push({id, volume, true, loop});
+#ifndef __EMSCRIPTEN__
         pImpl->CV.notify_one();
+#endif
+        }
+
+    void SdlSoundSystem::Update() {
+#ifdef __EMSCRIPTEN__
+        pImpl->ProcessQueueOnce();
+        pImpl->UpdateMusicLoop();
+#endif
     }
 }
