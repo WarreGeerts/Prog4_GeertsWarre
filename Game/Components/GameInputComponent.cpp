@@ -1,9 +1,9 @@
 ﻿#include "GameInputComponent.h"
-#include "../Commands/GameCommands.h"
+#include "Commands/GameCommands.h"
 #include "Input/InputManager.h"
 #include <SDL3/SDL.h>
 
-#include "../Events.h"
+#include "Events.h"
 #ifdef WIN32
 constexpr int GAMEPAD_DPAD_UP{0x0001};
 constexpr int GAMEPAD_DPAD_DOWN{0x0002};

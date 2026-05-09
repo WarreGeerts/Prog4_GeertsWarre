@@ -1,6 +1,6 @@
 ﻿#include "UiGameModeSelector.h"
 #include "GameObject.h"
-#include "../Events.h"
+#include "Events.h"
 #include "Components/TextComponent.h"
 
 namespace game {

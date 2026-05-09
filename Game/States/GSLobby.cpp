@@ -6,7 +6,7 @@
 #include "GMSVersus.h"
 #include "GSGame.h"
 #include "GSManager.h"
-#include "../Events.h"
+#include "Events.h"
 #include "Singletons/SceneManager.h"
 
 namespace game {

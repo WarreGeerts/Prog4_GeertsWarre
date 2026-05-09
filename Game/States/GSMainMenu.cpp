@@ -1,7 +1,7 @@
 ﻿#include "GSMainMenu.h"
 #include "GSManager.h"
 #include "GSLobby.h"
-#include "../Events.h"
+#include "Events.h"
 #include "Singletons/SceneManager.h"
 
 namespace game {

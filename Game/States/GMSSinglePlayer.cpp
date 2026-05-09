@@ -3,6 +3,6 @@
 #include "Singletons/SceneManager.h"
 
 void game::GMSSinglePlayer::OnEnter() {
-    ge::SceneManager::GetInstance().SelectSceneByName("Game_SinglePlayer");
+    ge::SceneManager::GetInstance().SelectSceneByName("Level_1");
 }
 void game::GMSSinglePlayer::OnExit() {}

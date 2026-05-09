@@ -42,19 +42,19 @@ namespace game {
         ge::SceneSerializer::LoadScene(lobbyPath.string(), ge::SceneManager::GetInstance().GetSceneByIdx(sceneIdx));
         ++sceneIdx;
 
-        ge::SceneManager::GetInstance().CreateScene("Game_SinglePlayer");
-        const std::filesystem::path SPPath = scenesDir / ("Game_SinglePlayer.json");
-        ge::SceneSerializer::LoadScene(SPPath.string(), ge::SceneManager::GetInstance().GetSceneByIdx(sceneIdx));
+        ge::SceneManager::GetInstance().CreateScene("Level_1");
+        const std::filesystem::path L1Path = scenesDir / ("Level_1.json");
+        ge::SceneSerializer::LoadScene(L1Path.string(), ge::SceneManager::GetInstance().GetSceneByIdx(sceneIdx));
         ++sceneIdx;
 
-        ge::SceneManager::GetInstance().CreateScene("Game_Coop");
-        const std::filesystem::path COPath = scenesDir / ("Game_Coop.json");
-        ge::SceneSerializer::LoadScene(COPath.string(), ge::SceneManager::GetInstance().GetSceneByIdx(sceneIdx));
+        ge::SceneManager::GetInstance().CreateScene("Level_2");
+        const std::filesystem::path L2Path = scenesDir / ("Level_2.json");
+        ge::SceneSerializer::LoadScene(L2Path.string(), ge::SceneManager::GetInstance().GetSceneByIdx(sceneIdx));
         ++sceneIdx;
 
-        ge::SceneManager::GetInstance().CreateScene("Game_Versus");
-        const std::filesystem::path VSPath = scenesDir / ("Game_Versus.json");
-        ge::SceneSerializer::LoadScene(VSPath.string(), ge::SceneManager::GetInstance().GetSceneByIdx(sceneIdx));
+        ge::SceneManager::GetInstance().CreateScene("Level_3");
+        const std::filesystem::path L3Path = scenesDir / ("Level_3.json");
+        ge::SceneSerializer::LoadScene(L3Path.string(), ge::SceneManager::GetInstance().GetSceneByIdx(sceneIdx));
         ++sceneIdx;
 
         //events

@@ -3,6 +3,6 @@
 #include "Singletons/SceneManager.h"
 
 void GMSVersus::OnEnter() {
-    ge::SceneManager::GetInstance().SelectSceneByName("Game_Versus");
+    ge::SceneManager::GetInstance().SelectSceneByName("Level_1");
 }
 void GMSVersus::OnExit() {}
