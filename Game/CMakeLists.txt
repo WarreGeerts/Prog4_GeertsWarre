@@ -24,6 +24,11 @@
         States/GMSSinglePlayer.cpp
         States/GMSCoop.cpp
         States/GMSVersus.cpp
+        Events.h
+        States/GSGame.cpp
+        States/GSGame.h
+        States/GMSManager.cpp
+        States/GMSManager.h
 )
 
 set_target_properties(${TARGET_NAME} PROPERTIES

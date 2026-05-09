@@ -1,6 +1,9 @@
 #include <SDL3/SDL_main.h>
+
+#include "Events.h"
 #include "Singletons/RealTimeEditor/ComponentFactory.h"
 #include "Singletons/RealTimeEditor/SceneSerializer.h"
+#include "States/GMSManager.h"
 #include "States/GSManager.h"
 #if _DEBUG && __has_include(<vld.h>)
 #include <vld.h>
@@ -39,9 +42,30 @@ namespace game {
         ge::SceneSerializer::LoadScene(lobbyPath.string(), ge::SceneManager::GetInstance().GetSceneByIdx(sceneIdx));
         ++sceneIdx;
 
+        ge::SceneManager::GetInstance().CreateScene("Game_SinglePlayer");
+        const std::filesystem::path SPPath = scenesDir / ("Game_SinglePlayer.json");
+        ge::SceneSerializer::LoadScene(SPPath.string(), ge::SceneManager::GetInstance().GetSceneByIdx(sceneIdx));
+        ++sceneIdx;
+
+        ge::SceneManager::GetInstance().CreateScene("Game_Coop");
+        const std::filesystem::path COPath = scenesDir / ("Game_Coop.json");
+        ge::SceneSerializer::LoadScene(COPath.string(), ge::SceneManager::GetInstance().GetSceneByIdx(sceneIdx));
+        ++sceneIdx;
+
+        ge::SceneManager::GetInstance().CreateScene("Game_Versus");
+        const std::filesystem::path VSPath = scenesDir / ("Game_Versus.json");
+        ge::SceneSerializer::LoadScene(VSPath.string(), ge::SceneManager::GetInstance().GetSceneByIdx(sceneIdx));
+        ++sceneIdx;
+
+        //events
+        EventRegistry::Initialize();
+
         //load game state machine
         auto &gameStateManager = GSManager::GetInstance();
         gameStateManager.Initialize();
+
+        auto &gameModeStateManager = GMSManager::GetInstance();
+        gameModeStateManager.Initialize();
     }
 }
 

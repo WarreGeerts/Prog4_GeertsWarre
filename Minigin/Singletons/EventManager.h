@@ -40,10 +40,15 @@ namespace ge {
         EventId id;
         static constexpr uint8_t MAX_ARGS{8};
         uint8_t numArgs{0};
-        std::variant<int, float> args[MAX_ARGS];
+        std::variant<int, float, std::string> args[MAX_ARGS];
         explicit Event(const EventId id) : id{id} {}
 
         Event &AddInt(const int value) {
+            args[numArgs++] = value;
+            return *this;
+        }
+
+        Event &AddString(const std::string &value) {
             args[numArgs++] = value;
             return *this;
         }
@@ -73,35 +78,5 @@ namespace ge {
         static bool s_IsDestroyed;
         std::unordered_map<unsigned int, std::vector<std::function<void(const Event &)> > > m_EventListeners;
         std::unordered_map<EventId, std::string> m_EventNames;
-    };
-
-    class EventRegistry {
-    public:
-        //Event Id's
-        static constexpr EventId P1_HEALTH_UPDATE{make_sdbm_hash("P1HealthUpdate")};
-        static constexpr EventId P2_HEALTH_UPDATE{make_sdbm_hash("P2HealthUpdate")};
-        static constexpr EventId P1_DMG{make_sdbm_hash("P1Dmg")};
-        static constexpr EventId P2_DMG{make_sdbm_hash("P2Dmg")};
-        static constexpr EventId SCORE_UPDATE{make_sdbm_hash("ScoreUpdate")};
-        static constexpr EventId BURGER_FALL{make_sdbm_hash("BurgerFall")};
-        static constexpr EventId A_BUTTON_PRESSED{make_sdbm_hash("APressed")};
-        static constexpr EventId UI_SELECTION_UP{make_sdbm_hash("UISelectionUp")};
-        static constexpr EventId UI_SELECTION_DOWN{make_sdbm_hash("UISelectionDown")};
-
-        static void Initialize() {
-            auto &em = EventManager::GetInstance();
-
-            em.RegisterEventName(P1_HEALTH_UPDATE, "P1HealthUpdate");
-            em.RegisterEventName(P2_HEALTH_UPDATE, "P2HealthUpdate");
-            em.RegisterEventName(P1_DMG, "P1Dmg");
-            em.RegisterEventName(P2_DMG, "P2Dmg");
-            em.RegisterEventName(SCORE_UPDATE, "ScoreUpdate");
-            em.RegisterEventName(BURGER_FALL, "BurgerFall");
-            em.RegisterEventName(A_BUTTON_PRESSED, "APressed");
-            em.RegisterEventName(UI_SELECTION_UP, "UISelectionUp");
-            em.RegisterEventName(UI_SELECTION_DOWN, "UISelectionDown");
-        }
-
-        static std::vector<std::string> GetAllEventNames();
     };
 }

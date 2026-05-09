@@ -6,9 +6,9 @@ namespace game {
     public:
         void OnEnter() override;
         void OnExit() override;
-        void Update() override;
-        void HandleInput() override;
-        void Render() override;
+        void Update() override{};
+        void HandleInput() override{};
+        void Render() override{};
 
     private:
     };

@@ -1,6 +1,7 @@
 ﻿#include "GSMainMenu.h"
 #include "GSManager.h"
 #include "GSLobby.h"
+#include "../Events.h"
 #include "Singletons/SceneManager.h"
 
 namespace game {
@@ -17,7 +18,7 @@ namespace game {
 
     void GSMainMenu::HandleInput() {
         m_Handle = ge::EventManager::GetInstance().AttachEvent(
-           ge::EventRegistry::A_BUTTON_PRESSED,
+           EventRegistry::A_BUTTON_PRESSED,
            [](const ge::Event &) {
               GSManager::GetInstance().ChangeState(std::make_unique<GSLobby>());
            });

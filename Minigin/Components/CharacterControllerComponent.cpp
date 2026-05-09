@@ -66,10 +66,6 @@ namespace ge {
                              std::make_unique<MoveCommand>(m_gameObject, glm::vec2(-1, 0), speed));
             Input.AddBinding({KeyState::Pressed, static_cast<int>(SDL_SCANCODE_D), true},
                              std::make_unique<MoveCommand>(m_gameObject, glm::vec2(1, 0), speed));
-
-            //other keys
-            Input.AddBinding({KeyState::Down, static_cast<int>(SDL_SCANCODE_C), true},
-                             std::make_unique<DieCommand>(m_gameObject, EventRegistry::P1_DMG));
         } else {
             //movement
             Input.AddBinding({KeyState::Pressed, GAMEPAD_DPAD_UP, false, m_ControllerIndex},
@@ -80,10 +76,6 @@ namespace ge {
                              std::make_unique<MoveCommand>(m_gameObject, glm::vec2(-1, 0), speed));
             Input.AddBinding({KeyState::Pressed, GAMEPAD_DPAD_RIGHT, false, m_ControllerIndex},
                              std::make_unique<MoveCommand>(m_gameObject, glm::vec2(1, 0), speed));
-
-            //other buttons
-            Input.AddBinding({KeyState::Down, BUTTON_X, false, m_ControllerIndex},
-                             std::make_unique<DieCommand>(m_gameObject, EventRegistry::P2_DMG));
         }
         m_Bound = true;
     }
@@ -98,20 +90,12 @@ namespace ge {
             Input.RemoveBinding({KeyState::Pressed, static_cast<int>(SDL_SCANCODE_S), true});
             Input.RemoveBinding({KeyState::Pressed, static_cast<int>(SDL_SCANCODE_A), true});
             Input.RemoveBinding({KeyState::Pressed, static_cast<int>(SDL_SCANCODE_D), true});
-
-            //other keys
-            Input.RemoveBinding({KeyState::Down, static_cast<int>(SDL_SCANCODE_C), true});
-            Input.RemoveBinding({KeyState::Down, static_cast<int>(SDL_SCANCODE_Z), true});
-            Input.RemoveBinding({KeyState::Down, static_cast<int>(SDL_SCANCODE_X), true});
         } else {
             //movement
             Input.RemoveBinding({KeyState::Pressed, GAMEPAD_DPAD_UP, false, m_ControllerIndex});
             Input.RemoveBinding({KeyState::Pressed, GAMEPAD_DPAD_DOWN, false, m_ControllerIndex});
             Input.RemoveBinding({KeyState::Pressed, GAMEPAD_DPAD_LEFT, false, m_ControllerIndex});
             Input.RemoveBinding({KeyState::Pressed, GAMEPAD_DPAD_RIGHT, false, m_ControllerIndex});
-
-            //other buttons
-            Input.RemoveBinding({KeyState::Down, BUTTON_X, false, m_ControllerIndex});
         }
 
         m_Bound = false;

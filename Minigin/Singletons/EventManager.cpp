@@ -46,12 +46,4 @@ namespace ge {
         const auto it = m_EventNames.find(id);
         return (it != m_EventNames.end()) ? it->second : "Unknown Event";
     }
-
-    std::vector<std::string> EventRegistry::GetAllEventNames() {
-        std::vector<std::string> names;
-        for (const auto &[id, name]: EventManager::GetInstance().GetRegisteredEvents()) {
-            names.push_back(name);
-        }
-        return names;
-    }
 }

@@ -17,6 +17,5 @@ namespace game {
 
     private:
         bool m_Bound{false};
-        ge::EventHandle m_Handle;
     };
 }

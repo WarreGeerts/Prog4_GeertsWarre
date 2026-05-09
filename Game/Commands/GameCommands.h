@@ -4,13 +4,37 @@
 #include "Singletons/EventManager.h"
 
 namespace game {
-    class GoToLobbyCommand final : public ge::Command {
+    class SelectionCommand final : public ge::Command {
     public:
-        explicit GoToLobbyCommand(ge::EventId goToLobbyEvent);
+        explicit SelectionCommand(ge::EventId selectionEvent);
     private:
         void Execute() override;
-        ge::EventId m_GoToLobbyEvent;
+        ge::EventId m_SelectionEvent;
     };
+
+    /*class SinglePlayerCommand final : public ge::Command {
+    public:
+        explicit SinglePlayerCommand(ge::EventId SinglePlayerEvent);
+    private:
+        void Execute() override;
+        ge::EventId m_SinglePlayerEvent;
+    };
+
+    class CoopCommand final : public ge::Command {
+    public:
+        explicit CoopCommand(ge::EventId CoopEvent);
+    private:
+        void Execute() override;
+        ge::EventId m_CoopEvent;
+    };
+
+    class VersusCommand final : public ge::Command {
+    public:
+        explicit VersusCommand(ge::EventId VersusEvent);
+    private:
+        void Execute() override;
+        ge::EventId m_VersusEvent;
+    };*/
 
     class UISelectionUpCommand final : public ge::Command {
     public:

@@ -1,5 +1,6 @@
 ﻿#include "UiGameModeSelector.h"
 #include "GameObject.h"
+#include "../Events.h"
 #include "Components/TextComponent.h"
 
 namespace game {
@@ -56,7 +57,7 @@ namespace game {
             ge::EventManager::GetInstance().DetachEvent(m_HandleDown);
         }
         m_HandleDown = ge::EventManager::GetInstance().AttachEvent(
-            ge::EventRegistry::UI_SELECTION_DOWN,
+            EventRegistry::UI_SELECTION_DOWN,
             [this](const ge::Event &) {
                 this->SelectionDown();
             });
@@ -65,10 +66,16 @@ namespace game {
             ge::EventManager::GetInstance().DetachEvent(m_HandleUp);
         }
         m_HandleUp = ge::EventManager::GetInstance().AttachEvent(
-            ge::EventRegistry::UI_SELECTION_UP,
+            EventRegistry::UI_SELECTION_UP,
             [this](const ge::Event &) {
                 this->SelectionUp();
             });
+
+        m_HandleSelected = ge::EventManager::GetInstance().AttachEvent(
+          EventRegistry::A_BUTTON_PRESSED,
+          [this](const ge::Event &) {
+              this->MakeChoice();
+          });
     }
 
     void UiGameModeSelector::SwitchSelection() {
@@ -89,5 +96,17 @@ namespace game {
     void UiGameModeSelector::SelectionUp() {
         ++m_CurrentOption;
         SwitchSelection();
+    }
+
+    void UiGameModeSelector::MakeChoice() const {
+        if (m_CurrentOption == 0) {
+            ge::EventManager::GetInstance().SendEvent(ge::Event(EventRegistry::LOBBY_SINGLEPLAYER_SELECTED));
+        }
+        if (m_CurrentOption == 1) {
+            ge::EventManager::GetInstance().SendEvent(ge::Event(EventRegistry::LOBBY_COOP_SELECTED));
+        }
+        if (m_CurrentOption == 2) {
+            ge::EventManager::GetInstance().SendEvent(ge::Event(EventRegistry::LOBBY_VERSUS_SELECTED));
+        }
     }
 }

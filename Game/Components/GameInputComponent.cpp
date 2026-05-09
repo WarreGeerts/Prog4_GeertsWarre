@@ -3,6 +3,7 @@
 #include "Input/InputManager.h"
 #include <SDL3/SDL.h>
 
+#include "../Events.h"
 #ifdef WIN32
 constexpr int GAMEPAD_DPAD_UP{0x0001};
 constexpr int GAMEPAD_DPAD_DOWN{0x0002};
@@ -28,19 +29,19 @@ namespace game {
 
         //keyboard
         Input.AddBinding({ge::KeyState::Down, static_cast<int>(SDL_SCANCODE_A), true},
-                         std::make_unique<GoToLobbyCommand>(ge::EventRegistry::A_BUTTON_PRESSED));
+                         std::make_unique<SelectionCommand>(EventRegistry::A_BUTTON_PRESSED));
         Input.AddBinding({ge::KeyState::Down, static_cast<int>(SDL_SCANCODE_W), true},
-                         std::make_unique<UISelectionDownCommand>(ge::EventRegistry::UI_SELECTION_DOWN));
+                         std::make_unique<UISelectionDownCommand>(EventRegistry::UI_SELECTION_DOWN));
         Input.AddBinding({ge::KeyState::Down, static_cast<int>(SDL_SCANCODE_S), true},
-                        std::make_unique<UISelectionUpCommand>(ge::EventRegistry::UI_SELECTION_UP));
+                        std::make_unique<UISelectionUpCommand>(EventRegistry::UI_SELECTION_UP));
 
         //controller
         Input.AddBinding({ge::KeyState::Down, BUTTON_A, false},
-                         std::make_unique<GoToLobbyCommand>(ge::EventRegistry::A_BUTTON_PRESSED));
+                         std::make_unique<SelectionCommand>(EventRegistry::A_BUTTON_PRESSED));
         Input.AddBinding({ge::KeyState::Down, GAMEPAD_DPAD_UP, false},
-                         std::make_unique<UISelectionDownCommand>(ge::EventRegistry::UI_SELECTION_DOWN));
+                         std::make_unique<UISelectionDownCommand>(EventRegistry::UI_SELECTION_DOWN));
         Input.AddBinding({ge::KeyState::Down, GAMEPAD_DPAD_DOWN, false},
-                        std::make_unique<UISelectionUpCommand>(ge::EventRegistry::UI_SELECTION_UP));
+                        std::make_unique<UISelectionUpCommand>(EventRegistry::UI_SELECTION_UP));
 
         m_Bound = true;
     }

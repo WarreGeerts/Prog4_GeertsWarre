@@ -21,6 +21,9 @@ namespace game {
         void SwitchSelection();
         void SelectionDown();
         void SelectionUp();
+
+        void MakeChoice() const;
+
         int m_CurrentOption{0};
         int m_PrevOption{0};
 
@@ -28,5 +31,6 @@ namespace game {
 
         ge::EventHandle m_HandleUp;
         ge::EventHandle m_HandleDown;
+        ge::EventHandle m_HandleSelected;
     };
 }

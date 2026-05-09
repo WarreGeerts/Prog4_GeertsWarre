@@ -117,9 +117,6 @@ namespace ge {
         //TODO: put inside component for sounds and or music. And then make it so you can link sounds to events that happen instead of putting them inside code
         ServiceLocator::GetSoundSystem().PlayMusic(0, 0.5f, true);
 
-        //events
-        EventRegistry::Initialize();
-
         //Time
         DeltaTime::GetInstance().SetFPS(60);
 
