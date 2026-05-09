@@ -3,6 +3,7 @@
 #include "InputManager.h"
 #include <algorithm>
 #include <functional>
+
 namespace ge {
     bool Binding::operator==(const Binding &other) const {
         return state == other.state &&
@@ -13,25 +14,37 @@ namespace ge {
 
     bool InputManager::ProcessInput() {
         SDL_Event e;
+        const ImGuiIO &io = ImGui::GetIO();
+
         while (SDL_PollEvent(&e)) {
+            ImGui_ImplSDL3_ProcessEvent(&e);
+
             if (e.type == SDL_EVENT_QUIT) {
                 return false;
             }
-            if (e.type == SDL_EVENT_KEY_DOWN) {
-                CheckKeyboardBindings(KeyState::Down);
+
+            if (!io.WantCaptureKeyboard) {
+                if (e.type == SDL_EVENT_KEY_DOWN) {
+                    CheckKeyboardBindings(KeyState::Down);
+                }
+                if (e.type == SDL_EVENT_KEY_UP) {
+                    CheckKeyboardBindings(KeyState::Up);
+                }
             }
-            if (e.type == SDL_EVENT_KEY_UP) {
-                CheckKeyboardBindings(KeyState::Up);
+
+            if (!io.WantCaptureMouse) {
+                if (e.type == SDL_EVENT_MOUSE_BUTTON_DOWN) {}
             }
-            if (e.type == SDL_EVENT_MOUSE_BUTTON_DOWN) {}
-            ImGui_ImplSDL3_ProcessEvent(&e);
         }
 
         for (const auto &controller: m_Controllers) {
             controller->Update();
         }
         CheckControllerBindings();
-        CheckKeyboardBindings(KeyState::Pressed);
+
+        if (!io.WantCaptureKeyboard) {
+            CheckKeyboardBindings(KeyState::Pressed);
+        }
 
         return true;
     }

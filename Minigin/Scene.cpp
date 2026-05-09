@@ -75,31 +75,27 @@ namespace ge {
     }
 
     void Scene::Render() const {
-        // 1. Create a pair of (Component, Layer)
+        //layer sorting so that backgrounds dont render in front of other gameObject elements
         std::vector<std::pair<Component*, int>> sortedComponents;
 
         for (const auto& object : m_objects) {
             if (!object->IsActive()) continue;
 
-            // Determine the layer: check if this object has a RenderComponent
             int layer = 0;
-            if (auto rc = object->GetComponent<RenderComponent>()) {
+            if (const auto rc = object->GetComponent<RenderComponent>()) {
                 layer = rc->GetLayer();
             }
 
-            // Add all components of this object to the list with that layer
             for (const auto& component : object->GetComponents()) {
-                sortedComponents.push_back({ component.get(), layer });
+                sortedComponents.emplace_back( component.get(), layer );
             }
         }
 
-        // 2. Sort the pairs by the layer value
         std::stable_sort(sortedComponents.begin(), sortedComponents.end(),
             [](const std::pair<Component*, int>& a, const std::pair<Component*, int>& b) {
                 return a.second < b.second;
             });
 
-        // 3. Render in order
         for (const auto& pair : sortedComponents) {
             pair.first->Render();
         }

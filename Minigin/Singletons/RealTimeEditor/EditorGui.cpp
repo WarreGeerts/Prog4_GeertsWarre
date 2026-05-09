@@ -325,6 +325,13 @@ namespace ge {
                 ImGui::EndMenu();
             }
 
+            const ImGuiIO &io = ImGui::GetIO();
+
+            if (io.WantCaptureKeyboard) {
+                ImGui::Separator();
+                ImGui::TextColored(ImVec4(1.f, 0.8f, 0.f, 1.0f), "(You are tabbed out of the game)");
+            }
+
             ImGui::EndMainMenuBar();
         }
     }
