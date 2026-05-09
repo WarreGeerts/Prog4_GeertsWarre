@@ -17,6 +17,10 @@ namespace game {
         int m_Columns{1};
         int m_Rows{1};
 
+        float m_Scale{1};
+        bool m_DebugLines{false};
+        int m_CurrentBrush{0};
+
         int GetIndex(int x, int y) const;
         void ResizeGrid();
     };
