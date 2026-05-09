@@ -127,7 +127,7 @@ endif ()
 # --- 6. CPack Configuration for Creating Zip ---
 include(InstallRequiredSystemLibraries)
 set(CPACK_PACKAGE_NAME "BurgerTime")
-set(CPACK_PACKAGE_VENDOR "YourName")
+set(CPACK_PACKAGE_VENDOR "Geerts Warre")
 set(CPACK_PACKAGE_VERSION "1.0.0")
 set(CPACK_GENERATOR "ZIP")
 set(CPACK_PACKAGE_FILE_NAME "${CPACK_PACKAGE_NAME}-${CPACK_PACKAGE_VERSION}-${CMAKE_SYSTEM_NAME}")

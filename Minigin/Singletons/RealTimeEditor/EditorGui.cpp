@@ -32,7 +32,6 @@ namespace ge {
 
     //Scene Graph
 #pragma region SceneGraph
-    //TODO: bug, selection change when making new name will change new selected one as well
     void EditorGui::DrawSceneGraph() {
         ImGui::Begin("Scene Graph");
 

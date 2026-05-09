@@ -12,6 +12,7 @@
         Components/UiAutoCycleComponent.cpp
         Components/GameInputComponent.cpp
         Components/UiGameModeSelector.cpp
+        Components/CollisionGridComponent.cpp
 
         #Commands
         Commands/GameCommands.cpp
@@ -28,7 +29,6 @@
 set_target_properties(${TARGET_NAME} PROPERTIES
         RUNTIME_OUTPUT_DIRECTORY_RELEASE "${CMAKE_BINARY_DIR}/Release"
         RUNTIME_OUTPUT_DIRECTORY_DEBUG "${CMAKE_BINARY_DIR}/Debug"
-        # This removes the "Release/Debug" subfolder suffix in VS
         OUTPUT_NAME ${TARGET_NAME}
 )
 
@@ -59,14 +59,12 @@ if (EMSCRIPTEN)
     )
     set(CMAKE_EXECUTABLE_SUFFIX ".html")
 elseif (WIN32)
-  # 1. Force the EXE to a specific folder (e.g., bin/)
   set_target_properties(${TARGET_NAME} PROPERTIES
           RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
           RUNTIME_OUTPUT_DIRECTORY_RELEASE "${CMAKE_BINARY_DIR}/bin"
           RUNTIME_OUTPUT_DIRECTORY_DEBUG "${CMAKE_BINARY_DIR}/bin"
   )
 
-  # 2. Copy DLLs and Data to that SAME folder
   foreach (dllTarget SDL3::SDL3 SDL3_ttf::SDL3_ttf)
       add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
               COMMAND ${CMAKE_COMMAND} -E copy_if_different

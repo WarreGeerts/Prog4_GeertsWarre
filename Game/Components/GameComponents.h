@@ -9,3 +9,4 @@
 #include "UiAutoCycleComponent.h"
 #include "GameInputComponent.h"
 #include "UiGameModeSelector.h"
+#include "CollisionGridComponent.h"
