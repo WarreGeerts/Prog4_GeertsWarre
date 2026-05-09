@@ -185,7 +185,7 @@ namespace ge {
             ImGui::End();
             return;
         }
-
+        ImGui::PushID(GO);
         char nameBuffer[128];
 #if defined(_WIN32) || defined(_WIN64)
         strcpy_s(nameBuffer, sizeof(nameBuffer), GO->GetName().c_str());
@@ -220,6 +220,7 @@ namespace ge {
             bool isActive{Comp->GetActive()};
 
             ImGui::PushID(Comp.get());
+
             const bool open = ImGui::CollapsingHeader("##ComponentHeader",
                                                       ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_AllowOverlap);
 
@@ -262,6 +263,7 @@ namespace ge {
 
         DrawAddComponentPopup(GO);
 
+        ImGui::PopID();
         ImGui::End();
     }
 
