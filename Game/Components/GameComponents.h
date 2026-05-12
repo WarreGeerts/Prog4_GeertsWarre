@@ -10,3 +10,4 @@
 #include "GameInputComponent.h"
 #include "UiGameModeSelector.h"
 #include "CollisionGridComponent.h"
+#include "PlayerCollisionComponent.h"

@@ -10,7 +10,7 @@ namespace ge {
         void Update() override{};
         void Render() const override;
         void InspectorGUI() override;
-        [[nodiscard]] nlohmann::ordered_json Serialize() const override{return {};};
+        [[nodiscard]] nlohmann::ordered_json Serialize() const override;
         void Deserialize(const nlohmann::ordered_json &data) override;
 
         [[nodiscard]] glm::vec4 GetWorldBounds() const;

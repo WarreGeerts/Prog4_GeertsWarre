@@ -423,8 +423,8 @@
             "enabled": true,
             "transform": {
                 "position": [
-                    467.9699401855469,
-                    394.6645812988281,
+                    258.716552734375,
+                    397.3577575683594,
                     0.0
                 ]
             },
@@ -505,6 +505,19 @@
                 {
                     "comp_id": 147,
                     "comp_name": "ColliderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "offset": {
+                            "x": 0.0,
+                            "y": 0.0
+                        },
+                        "width": 40.0,
+                        "height": 40.0
+                    }
+                },
+                {
+                    "comp_id": 148,
+                    "comp_name": "PlayerCollisionComponent",
                     "active": true,
                     "comp_data": null
                 }

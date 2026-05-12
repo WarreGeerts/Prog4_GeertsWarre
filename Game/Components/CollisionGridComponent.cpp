@@ -187,14 +187,14 @@ namespace game {
 
         if (data.contains("grid_rle")) {
             for (auto &[key, value]: data["grid_rle"].items()) {
-                const int startIdx { std::stoi(key)};
-                auto rawStr { value.get<std::string>()};
+                const int startIdx{std::stoi(key)};
+                auto rawStr{value.get<std::string>()};
 
                 int count;
                 int tileType;
                 if (sscanf(rawStr.c_str(), "[%d,%d]", &count, &tileType) == 2) {
                     for (int i = 0; i < count; ++i) {
-                        const int targetIdx { startIdx + i};
+                        const int targetIdx{startIdx + i};
                         if (targetIdx < static_cast<int>(m_GridData.size())) {
                             m_GridData[targetIdx] = tileType;
                         }
@@ -206,6 +206,20 @@ namespace game {
 
     std::vector<int> &CollisionGridComponent::GetMapCollisionGrid() {
         return m_GridData;
+    }
+
+    int CollisionGridComponent::GetTileTypeAtWorldPosition(const float worldX, const float worldY) const {
+        const float localX{worldX - m_gameObject->GetTransform()->GetPosition().x};
+        const float localY{worldY - m_gameObject->GetTransform()->GetPosition().y};
+
+        const float finalTileSize{static_cast<float>(m_CurrentTileSize) * m_Scale};
+        const int x{static_cast<int>(std::floor(localX / finalTileSize))};
+        const int y{static_cast<int>(std::floor(localY / finalTileSize))};
+
+        if (x >= 0 && x < m_Columns && y >= 0 && y < m_Rows) {
+            return m_GridData[GetIndex(x,y)];
+        }
+        return 0;
     }
 
     int CollisionGridComponent::GetIndex(const int x, const int y) const {

@@ -27,6 +27,7 @@ namespace game {
         ge::ComponentFactory::GetInstance().Register<GameInputComponent>("GameInputComponent");
         ge::ComponentFactory::GetInstance().Register<UiGameModeSelector>("UiGameModeSelector");
         ge::ComponentFactory::GetInstance().Register<CollisionGridComponent>("CollisionGridComponent");
+        ge::ComponentFactory::GetInstance().Register<PlayerCollisionComponent>("PlayerCollisionComponent");
 
         //load in all scenes at start
         ge::SceneManager::GetInstance().CreateScene("Main");

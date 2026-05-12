@@ -32,9 +32,28 @@ namespace ge {
         ImGui::InputFloat("Width##CC", &m_Width);
         ImGui::InputFloat("Height##CC", &m_Height);
     }
-    void ColliderComponent::Deserialize(const nlohmann::ordered_json &) {}
+
+    nlohmann::ordered_json ColliderComponent::Serialize() const {
+        nlohmann::ordered_json data;
+        data["offset"] = {
+            {"x", m_Offset.x},
+            {"y", m_Offset.y}
+        };
+        data["width"] = m_Width;
+        data["height"] = m_Height;
+        return data;
+    }
+    void ColliderComponent::Deserialize(const nlohmann::ordered_json &data) {
+        if (data.contains("offset")) {
+            auto &offset = data["offset"];
+            m_Offset.x = offset.value("x", 0.0f);
+            m_Offset.y = offset.value("y", 0.0f);
+        }
+        m_Width = data.value("width", 0.f);
+        m_Height = data.value("height", 0.f);
+    }
     glm::vec4 ColliderComponent::GetWorldBounds() const {
-        const auto pos = m_gameObject->GetTransform()->GetPosition();
+        const glm::vec2 pos = m_gameObject->GetTransform()->GetPosition();
         return {pos.x + m_Offset.x, pos.y + m_Offset.y, m_Width, m_Height};
     }
 

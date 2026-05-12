@@ -12,6 +12,7 @@ namespace game {
         void Deserialize(const nlohmann::ordered_json &data) override;
 
         std::vector<int>& GetMapCollisionGrid();
+        [[nodiscard]] int GetTileTypeAtWorldPosition(float worldX, float worldY) const;
 
     private:
         std::vector<int> m_GridData;
