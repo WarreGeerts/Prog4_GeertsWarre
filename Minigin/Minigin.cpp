@@ -97,6 +97,7 @@ namespace ge {
         ComponentFactory::GetInstance().Register<FPSComponent>("FPSComponent");
         ComponentFactory::GetInstance().Register<CharacterControllerComponent>("CharacterControllerComponent");
         ComponentFactory::GetInstance().Register<RotateComponent>("RotateComponent");
+        ComponentFactory::GetInstance().Register<ColliderComponent>("ColliderComponent");
 
         load(); //initialization (once run)
 

@@ -73,7 +73,6 @@ namespace ge {
             if (!controller->IsConnected()) continue;
 
             for (const auto &[binding, pCommand]: m_Bindings) {
-                // Check if this binding is meant for THIS specific controller index
                 if (binding.isKeyboard || binding.controllerIdx != static_cast<int>(i)) continue;
 
                 if (binding.state == KeyState::Pressed && controller->IsPressed(binding.inputId)) {

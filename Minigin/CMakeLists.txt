@@ -55,6 +55,8 @@ add_library(Minigin STATIC
         # External Source
         ${implot_SOURCE_DIR}/implot.cpp
         ${implot_SOURCE_DIR}/implot_items.cpp
+        Components/ColliderComponent.cpp
+        Components/ColliderComponent.h
 )
 
 # Propagate headers and dependencies to anyone who links to us (the Game)

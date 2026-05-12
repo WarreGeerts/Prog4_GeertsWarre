@@ -56,18 +56,18 @@ namespace ge {
         m_SrcRect.y = m_SpriteFrame.offsetY + static_cast<float>(row) * (
                           m_SpriteFrame.frameHeight + m_SpriteFrame.spacingY);
 
-        m_SrcRect.w = m_SpriteFrame.frameWidth;
-        m_SrcRect.h = m_SpriteFrame.frameHeight;
+        m_SrcRect.z = m_SpriteFrame.frameWidth;
+        m_SrcRect.w = m_SpriteFrame.frameHeight;
 
-        m_DstRect.w = m_SpriteFrame.frameWidth * m_ScaleX;
-        m_DstRect.h = m_SpriteFrame.frameHeight * m_ScaleY;
+        m_DstRect.z = m_SpriteFrame.frameWidth * m_ScaleX;
+        m_DstRect.w = m_SpriteFrame.frameHeight * m_ScaleY;
     }
 
     nlohmann::ordered_json SpriteComponent::Serialize() const {
         nlohmann::ordered_json data;
         data["file_name"] = m_FileName;
-        data["source_rect"] = {m_SrcRect.x, m_SrcRect.y, m_SrcRect.w, m_SrcRect.h};
-        data["dist_rect"] = {m_DstRect.x, m_DstRect.y, m_DstRect.w, m_DstRect.h};
+        data["source_rect"] = {m_SrcRect.x, m_SrcRect.y, m_SrcRect.z, m_SrcRect.w};
+        data["dist_rect"] = {m_DstRect.x, m_DstRect.y, m_DstRect.z, m_DstRect.w};
         data["scale"] = {m_ScaleX, m_ScaleY};
         data["sprite_frame"] = {
             {"columns", m_SpriteFrame.columns},
@@ -101,15 +101,15 @@ namespace ge {
             auto &posArray = data["source_rect"];
             m_SrcRect.x = posArray[0].get<float>();
             m_SrcRect.y = posArray[1].get<float>();
-            m_SrcRect.w = posArray[2].get<float>();
-            m_SrcRect.h = posArray[3].get<float>();
+            m_SrcRect.z = posArray[2].get<float>();
+            m_SrcRect.w = posArray[3].get<float>();
         }
         if (data.contains("dist_rect")) {
             auto &posArray = data["dist_rect"];
             m_DstRect.x = posArray[0].get<float>();
             m_DstRect.y = posArray[1].get<float>();
-            m_DstRect.w = posArray[2].get<float>();
-            m_DstRect.h = posArray[3].get<float>();
+            m_DstRect.z = posArray[2].get<float>();
+            m_DstRect.w = posArray[3].get<float>();
         }
         if (data.contains("scale")) {
             auto &posArray = data["scale"];
@@ -267,7 +267,7 @@ namespace ge {
     void SpriteComponent::SetScale(const float scaleX, const float scaleY) {
         m_ScaleX = scaleX;
         m_ScaleY = scaleY;
-        m_DstRect.w = m_SpriteFrame.frameWidth * m_ScaleX;
-        m_DstRect.h = m_SpriteFrame.frameHeight * m_ScaleY;
+        m_DstRect.z = m_SpriteFrame.frameWidth * m_ScaleX;
+        m_DstRect.w = m_SpriteFrame.frameHeight * m_ScaleY;
     }
 }

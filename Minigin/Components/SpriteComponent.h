@@ -1,13 +1,10 @@
 ﻿#pragma once
 #include <string>
 #include "Component.h"
+#include "glm/vec4.hpp"
 
 namespace ge {
     class Texture2D;
-
-    struct Rectf {
-        float x{}, y{}, w{}, h{};
-    };
 
     struct SpriteFraming {
         int columns{}, rows{};
@@ -28,8 +25,8 @@ namespace ge {
         void Deserialize(const nlohmann::ordered_json &data) override;
         void InspectorGUI() override;
 
-        [[nodiscard]] const Rectf &GetSrcRect() const { return m_SrcRect; }
-        [[nodiscard]] const Rectf &GetDstRect() const { return m_DstRect; }
+        [[nodiscard]] const glm::vec4 &GetSrcRect() const { return m_SrcRect; }
+        [[nodiscard]] const glm::vec4 &GetDstRect() const { return m_DstRect; }
         std::shared_ptr<Texture2D> &GetTexture() { return m_Spritesheet; }
         void SetScale(float scaleX, float scaleY);
         void SetScale(const float uniformScale) { SetScale(uniformScale, uniformScale); }
@@ -39,8 +36,8 @@ namespace ge {
         std::string m_FileName{};
         bool m_HasRenderComponent{false};
 
-        Rectf m_SrcRect{0.f, 0.f, 0.f, 0.f};
-        Rectf m_DstRect{0.f, 0.f, 0.f, 0.f};
+        glm::vec4 m_SrcRect{0.f, 0.f, 0.f, 0.f};
+        glm::vec4 m_DstRect{0.f, 0.f, 0.f, 0.f};
         float m_ScaleX = 1.0f;
         float m_ScaleY = 1.0f;
         SpriteFraming m_SpriteFrame;

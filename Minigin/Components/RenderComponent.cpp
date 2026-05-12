@@ -44,11 +44,11 @@ namespace ge {
             if (pTexture && pTexture->GetSDLTexture()) {
                 const SDL_FRect src{
                     m_sprite->GetSrcRect().x, m_sprite->GetSrcRect().y,
-                    m_sprite->GetSrcRect().w, m_sprite->GetSrcRect().h
+                    m_sprite->GetSrcRect().z, m_sprite->GetSrcRect().w
                 };
                 const SDL_FRect dst{
                     posX + m_sprite->GetDstRect().x, posY + m_sprite->GetDstRect().y,
-                    m_sprite->GetDstRect().w, m_sprite->GetDstRect().h
+                    m_sprite->GetDstRect().z, m_sprite->GetDstRect().w
                 };
                 Renderer::GetInstance().RenderTextureRegion(*pTexture, &src, &dst);
             }

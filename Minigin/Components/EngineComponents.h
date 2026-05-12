@@ -1,9 +1,9 @@
 ﻿#pragma once
 // Header file used to include all components
-
 //Engine Components
 #include "TransformComponent.h"
 #include "RotateComponent.h"
+#include "ColliderComponent.h"
 
 #include "RenderComponent.h"
 #include "SpriteComponent.h"

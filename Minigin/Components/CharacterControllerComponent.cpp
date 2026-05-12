@@ -21,7 +21,7 @@ constexpr int BUTTON_B{SDL_GAMEPAD_BUTTON_EAST};*/
 #endif
 namespace ge {
     CharacterControllerComponent::CharacterControllerComponent(GameObject *go)
-        : Component(go, "CharacterControllerComponent"){}
+        : Component(go, "CharacterControllerComponent") {}
 
     CharacterControllerComponent::CharacterControllerComponent(GameObject *go, const float speed, const bool keyboard)
         : Component(go, "CharacterControllerComponent")
@@ -30,26 +30,22 @@ namespace ge {
     }
 
     void CharacterControllerComponent::InspectorGUI() {
-
         //Keyboard
-        bool keyboard[1] = {m_Keyboard};
-
-        if (ImGui::Checkbox("Keyboard", keyboard)) {
-            m_Keyboard = keyboard[0];
+        if (ImGui::Checkbox("Keyboard", &m_Keyboard)) {
+            RemoveControlBindings();
+            AddControlBindings(m_Speed, m_Keyboard);
         }
 
         //Controller index
-        int controllerIdx[1] = {m_ControllerIndex};
-
-        if (ImGui::InputInt("Controller Index", controllerIdx)) {
-            m_ControllerIndex = controllerIdx[0];
+        if (ImGui::InputInt("Controller Index", &m_ControllerIndex)) {
+            RemoveControlBindings();
+            AddControlBindings(m_Speed, m_Keyboard);
         }
 
         //speed
-        float speed[1] = {m_Speed};
-
-        if (ImGui::InputFloat("Movement Speed", speed)) {
-            m_Speed = speed[0];
+        if (ImGui::InputFloat("Movement Speed", &m_Speed)) {
+            RemoveControlBindings();
+            AddControlBindings(m_Speed, m_Keyboard);
         }
     }
 
