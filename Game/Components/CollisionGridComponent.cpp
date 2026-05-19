@@ -11,6 +11,7 @@ namespace game {
     void CollisionGridComponent::Update() {}
 
     void CollisionGridComponent::Render() const {
+        if (!m_IsActive) return;
         if (!m_DebugLines) return;
         SDL_Renderer *renderer{ge::Renderer::GetInstance().GetSDLRenderer()};
         SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
@@ -73,6 +74,7 @@ namespace game {
 
         ImGui::BeginChild("GridRegion", ImVec2(300, 300), true,
                           ImGuiWindowFlags_NoMove | ImGuiWindowFlags_HorizontalScrollbar);
+
         const ImVec2 canvasSz(static_cast<float>(m_Columns) * m_VisualScale,
                               static_cast<float>(m_Rows) * m_VisualScale);
 

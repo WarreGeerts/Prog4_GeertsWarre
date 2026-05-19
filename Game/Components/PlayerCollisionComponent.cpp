@@ -11,6 +11,8 @@ namespace game {
         go, "PlayerCollisionComponent") {}
 
     void PlayerCollisionComponent::Update() {
+        if (!m_IsActive) return;
+
         if (!m_Collider) m_Collider = m_gameObject->GetComponent<ge::ColliderComponent>();
         if (!m_Grid) {
             m_Grid = ge::SceneManager::GetInstance().GetSceneByIdx(ge::SceneManager::GetInstance().GetCurrentSceneIdx())

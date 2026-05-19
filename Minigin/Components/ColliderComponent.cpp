@@ -4,6 +4,8 @@
 namespace ge {
     ColliderComponent::ColliderComponent(GameObject *go) : Component(go, "ColliderComponent") {}
     void ColliderComponent::Render() const {
+        if (!m_IsActive) return;
+
         if (!m_Debug) return;
 
         SDL_Renderer *renderer{Renderer::GetInstance().GetSDLRenderer()};
@@ -58,6 +60,8 @@ namespace ge {
     }
 
     bool ColliderComponent::IsColliding(const float worldX, const float worldY) const {
+        if (!m_IsActive) return false;
+
         const auto pos = GetWorldBounds();
         return (worldX >= pos.x && worldX <= pos.x + pos.z &&
                 worldY >= pos.y && worldY <= pos.y + pos.w);

@@ -5,16 +5,16 @@ namespace ge {
 
     void Component::CheckActive() const {
         if (!m_IsActive) {
-            ImGui::BeginDisabled();
+            ImGui::BeginDisabled(true);
         }
     }
 
     void Component::EndCheckActive() const {
         if (!m_IsActive) {
-            ImGui::EndDisabled();
             if (ImGui::IsItemHovered(ImGuiHoveredFlags_AllowWhenDisabled)) {
                 ImGui::SetTooltip("Component not active");
             }
+            ImGui::EndDisabled();
         }
     }
 
