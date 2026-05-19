@@ -132,10 +132,13 @@ namespace ge {
             if (ImGui::IsItemHovered()) ImGui::SetTooltip("Texture is managed by other Component.");
         }
 
-
-#if !defined(_WIN32) && !defined(_WIN64)
-        ImGui::BeginDisabled();
+#if defined(_WIN32) || defined(_WIN64)
+        constexpr bool isWebTarget = false;
+#else
+        constexpr bool isWebTarget = true;
 #endif
+
+        ImGui::BeginDisabled(isWebTarget);
 
         if (ImGui::Button("Open Folder##RC")) {
 #if defined(_WIN32) || defined(_WIN64)
@@ -145,12 +148,11 @@ namespace ge {
 #endif
         }
 
-#if !defined(_WIN32) && !defined(_WIN64)
         ImGui::EndDisabled();
-        if (ImGui::IsItemHovered(ImGuiHoveredFlags_AllowWhenDisabled)) {
+        if (GetActive() && isWebTarget && ImGui::IsItemHovered(ImGuiHoveredFlags_AllowWhenDisabled)) {
             ImGui::SetTooltip("Opening folder is only supported on Windows.");
         }
-#endif
+
     }
 
     void RenderComponent::SetTexture(const std::string &filename) {

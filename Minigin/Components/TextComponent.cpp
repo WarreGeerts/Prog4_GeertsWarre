@@ -165,9 +165,13 @@ namespace ge {
             availableTextures = RenderComponent::GetTextureFiles(path, true);
         }
 
-#if !defined(_WIN32) && !defined(_WIN64)
-        ImGui::BeginDisabled();
+#if defined(_WIN32) || defined(_WIN64)
+        constexpr bool isWebTarget = false;
+#else
+        constexpr bool isWebTarget = true;
 #endif
+
+        ImGui::BeginDisabled(isWebTarget);
 
         if (ImGui::Button("Open Folder##TC")) {
 #if defined(_WIN32) || defined(_WIN64)
@@ -175,13 +179,11 @@ namespace ge {
             const std::string windowsPath = absPath.make_preferred().string();
             ShellExecuteA(nullptr, "open", windowsPath.c_str(), nullptr, nullptr, SW_SHOWDEFAULT);
 #endif
+        }
 
-#if !defined(_WIN32) && !defined(_WIN64)
-            ImGui::EndDisabled();
-            if (ImGui::IsItemHovered(ImGuiHoveredFlags_AllowWhenDisabled)) {
-                ImGui::SetTooltip("Opening folder is only supported on Windows.");
-            }
-#endif
+        ImGui::EndDisabled();
+        if (GetActive() && isWebTarget && ImGui::IsItemHovered(ImGuiHoveredFlags_AllowWhenDisabled)) {
+            ImGui::SetTooltip("Opening folder is only supported on Windows.");
         }
     }
 

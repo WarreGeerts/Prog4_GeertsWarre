@@ -5,7 +5,7 @@ namespace ge {
 
     void Component::CheckActive() const {
         if (!m_IsActive) {
-            ImGui::BeginDisabled(true);
+            ImGui::BeginDisabled();
         }
     }
 
