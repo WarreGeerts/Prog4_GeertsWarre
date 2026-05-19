@@ -16,7 +16,7 @@ namespace ge {
 
         void Play(sound_id id, float volume) override;
         void PlayMusic(sound_id id, float volume, bool loop) override;
-        void Update();
+        void Update() override;
 
     private:
         struct Impl;

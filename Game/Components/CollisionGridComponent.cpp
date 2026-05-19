@@ -1,6 +1,7 @@
 ﻿#include "CollisionGridComponent.h"
 #include "GameObject.h"
 #include "Singletons/Renderer.h"
+#include <sstream>
 
 namespace game {
     CollisionGridComponent::CollisionGridComponent(ge::GameObject *go) : Component(go, "CollisionGridComponent") {
