@@ -204,7 +204,7 @@
                             "2081": "[3,2]",
                             "2088": "[4,2]",
                             "2096": "[3,2]",
-                            "210": "[5,3]",
+                            "211": "[3,3]",
                             "2111": "[3,2]",
                             "2126": "[3,2]",
                             "2133": "[4,2]",
@@ -423,8 +423,8 @@
             "enabled": true,
             "transform": {
                 "position": [
-                    258.716552734375,
-                    397.3577575683594,
+                    235.3229217529297,
+                    392.59869384765625,
                     0.0
                 ]
             },
@@ -520,6 +520,31 @@
                     "comp_name": "PlayerCollisionComponent",
                     "active": true,
                     "comp_data": null
+                }
+            ]
+        },
+        {
+            "go_id": 53,
+            "parent_id": -1,
+            "go_name": "Background",
+            "enabled": true,
+            "transform": {
+                "position": [
+                    0.0,
+                    0.0,
+                    0.0
+                ]
+            },
+            "components": [
+                {
+                    "comp_id": 150,
+                    "comp_name": "RenderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "file_name": "Background_BT.png",
+                        "overwritten": false,
+                        "render_layer": -1
+                    }
                 }
             ]
         }

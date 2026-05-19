@@ -67,6 +67,8 @@ namespace game {
 
         ImGui::Spacing();
 
+        ImGui::BeginGroup();
+
         ImGui::Text("Canvas (Drag to paint, Right-click to erase):");
 
         ImGui::BeginChild("GridRegion", ImVec2(300, 300), true,
@@ -138,6 +140,7 @@ namespace game {
         }
 
         ImGui::EndChild();
+        ImGui::EndGroup();
     }
 
     nlohmann::ordered_json CollisionGridComponent::Serialize() const {
