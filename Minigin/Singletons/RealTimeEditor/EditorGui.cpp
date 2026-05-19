@@ -5,6 +5,7 @@
 //scene
 #include <SDL3/SDL_log.h>
 #include "ComponentFactory.h"
+#include "imgui_internal.h"
 #include "SceneSerializer.h"
 #include "Input/InputManager.h"
 #include "Singletons/SceneManager.h"
@@ -238,7 +239,12 @@ namespace ge {
                 ImGui::EndPopup();
             }
 
+            bool didDisableComponent{false};
             Comp->CheckActive();
+
+            if (!isActive) {
+                didDisableComponent = true;
+            }
 
             if (open) {
                 Comp->InspectorGUI();
@@ -246,6 +252,11 @@ namespace ge {
             }
 
             Comp->EndCheckActive();
+
+            if (didDisableComponent && componentToPendingRemoval == Comp.get()) {
+                ImGui::EndDisabled();
+            }
+
             ImGui::PopID();
             if (hasWarning) {
                 ImGui::PopStyleColor(2);

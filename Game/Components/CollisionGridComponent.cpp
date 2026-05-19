@@ -190,9 +190,12 @@ namespace game {
                 const int startIdx{std::stoi(key)};
                 auto rawStr{value.get<std::string>()};
 
-                int count;
-                int tileType;
-                if (sscanf(rawStr.c_str(), "[%d,%d]", &count, &tileType) == 2) {
+                int count{0};
+                int tileType{0};
+                char discardBracket;
+                char discardComma;
+                std::stringstream ss(rawStr);
+                if (ss >> discardBracket >> count >> discardComma >> tileType) {
                     for (int i = 0; i < count; ++i) {
                         const int targetIdx{startIdx + i};
                         if (targetIdx < static_cast<int>(m_GridData.size())) {
@@ -217,7 +220,7 @@ namespace game {
         const int y{static_cast<int>(std::floor(localY / finalTileSize))};
 
         if (x >= 0 && x < m_Columns && y >= 0 && y < m_Rows) {
-            return m_GridData[GetIndex(x,y)];
+            return m_GridData[GetIndex(x, y)];
         }
         return 0;
     }
