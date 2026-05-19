@@ -31,6 +31,15 @@
         States/GMSManager.h
         Components/PlayerCollisionComponent.cpp
         Components/PlayerCollisionComponent.h
+        States/PlayerState.h
+        States/PSWalking.cpp
+        States/PSWalking.h
+        States/PSClimbing.cpp
+        States/PSClimbing.h
+        States/PSIdle.cpp
+        States/PSIdle.h
+        Components/PlayerStateControllerComponent.cpp
+        Components/PlayerStateControllerComponent.h
 )
 
 target_include_directories(${TARGET_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})

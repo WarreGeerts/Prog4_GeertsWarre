@@ -11,7 +11,7 @@ namespace ge {
         std::unique_ptr<Component> Create(const std::string &type, GameObject *go);
 
         template<typename T>
-        void Register(const std::string &name) {
+        void Register(const std::string &name) const {
             GetFactory()[name] = [](GameObject *go) {
                 return std::make_unique<T>(go);
             };

@@ -11,3 +11,4 @@
 #include "UiGameModeSelector.h"
 #include "CollisionGridComponent.h"
 #include "PlayerCollisionComponent.h"
+#include "PlayerStateControllerComponent.h"
