@@ -144,7 +144,7 @@ namespace ge {
         }
     }
 
-    void EditorGui::DuplicateGameObject(GameObject *original, GameObject *newParent) {
+    void EditorGui::DuplicateGameObject(const GameObject *original, GameObject *newParent) {
         if (!original) return;
 
         auto clone = original->Clone();

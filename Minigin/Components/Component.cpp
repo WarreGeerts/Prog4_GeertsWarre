@@ -11,10 +11,11 @@ namespace ge {
 
     void Component::EndCheckActive() const {
         if (!m_IsActive) {
-            if (ImGui::IsItemHovered(ImGuiHoveredFlags_AllowWhenDisabled)) {
+            const bool isHovered = ImGui::IsItemHovered(ImGuiHoveredFlags_AllowWhenDisabled);
+            ImGui::EndDisabled();
+            if (isHovered) {
                 ImGui::SetTooltip("Component not active");
             }
-            ImGui::EndDisabled();
         }
     }
 

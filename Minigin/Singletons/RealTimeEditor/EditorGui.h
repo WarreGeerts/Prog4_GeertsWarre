@@ -17,7 +17,7 @@ namespace ge {
         //Scene Graph
         static void DrawSceneGraph();
         static void VisualizeSceneGraph(GameObject *GO);
-        static void DuplicateGameObject(GameObject *original, GameObject *newParent);
+        static void DuplicateGameObject(const GameObject *original, GameObject *newParent);
         //Inspector
         static void DrawInspector(GameObject *GO);
         static void DrawAddComponentPopup(GameObject *GO);

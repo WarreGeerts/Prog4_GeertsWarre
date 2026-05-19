@@ -19,6 +19,8 @@ namespace game {
                     .GetGameObjectByName("Map").GetComponent<CollisionGridComponent>();
         }
 
+        if (!m_Collider || !m_Grid) return;
+
         //platform collision
         const auto bounds = m_Collider->GetWorldBounds();
         const int currentTileRight{m_Grid->GetTileTypeAtWorldPosition(bounds.x+ bounds.z, bounds.y + bounds.w)};

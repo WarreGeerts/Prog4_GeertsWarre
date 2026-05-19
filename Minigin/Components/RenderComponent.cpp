@@ -90,13 +90,22 @@ namespace ge {
     void RenderComponent::InspectorGUI() {
         const std::string path{"./Data/"};
 
-        std::vector<std::string> availableTextures{GetTextureFiles(path)};
 
-        const char *currentLabel{m_FileName.empty() ? "None Selected" : m_FileName.c_str()};
+        //render layer
+        int renderLayer[1] = {m_Layer};
+
+        if (ImGui::InputInt("Render Layer", renderLayer)) {
+            m_Layer = renderLayer[0];
+        }
 
         if (m_OverWritten) {
             ImGui::BeginDisabled();
         }
+
+        std::vector<std::string> availableTextures{GetTextureFiles(path)};
+
+        const char *currentLabel{m_FileName.empty() ? "None Selected" : m_FileName.c_str()};
+
         if (ImGui::BeginCombo("Texture##RC", currentLabel)) {
             for (const auto &file: availableTextures) {
                 const bool isSelected = (m_FileName == file);
@@ -111,12 +120,6 @@ namespace ge {
             ImGui::EndCombo();
         }
 
-        //render layer
-        int renderLayer[1] = {m_Layer};
-
-        if (ImGui::InputInt("Render Layer", renderLayer)) {
-            m_Layer = renderLayer[0];
-        }
 
         if (ImGui::Button("Reset Textures##RC")) {
             availableTextures = GetTextureFiles(path);
@@ -128,6 +131,7 @@ namespace ge {
             ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "(?)");
             if (ImGui::IsItemHovered()) ImGui::SetTooltip("Texture is managed by other Component.");
         }
+
 
 #if !defined(_WIN32) && !defined(_WIN64)
         ImGui::BeginDisabled();
@@ -161,7 +165,7 @@ namespace ge {
 
         m_texture = ResourceManager::GetInstance().LoadTexture(filename);}
 
-    std::vector<std::string> RenderComponent::GetTextureFiles(const std::string &directory, bool font) {
+    std::vector<std::string> RenderComponent::GetTextureFiles(const std::string &directory, const bool font) {
         std::vector<std::string> files;
         if (!std::filesystem::exists(directory)) return files;
 
