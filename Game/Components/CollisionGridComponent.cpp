@@ -38,6 +38,8 @@ namespace game {
                     SDL_SetRenderDrawColor(renderer, 0, 255, 255, 100);
                 } else if (m_GridData[idx] == 4) {
                     SDL_SetRenderDrawColor(renderer, 0, 0, 255, 100);
+                } else if (m_GridData[idx] == 5) {
+                    SDL_SetRenderDrawColor(renderer, 255, 0, 255, 100);
                 }
 
                 SDL_RenderFillRect(renderer, &rect);
@@ -59,11 +61,12 @@ namespace game {
         ImGui::SliderFloat("Editor Zoom", &m_VisualScale, 2.0f, 30.0f);
 
         ImGui::SeparatorText("Brushes");
-        const char *brushNames[]{"Empty", "Ground", "Ladder", "Ladder (Down)", "Intersection"};
-        constexpr int amountBrushes{5};
+        const char *brushNames[]{"Empty", "Ground", "Ladder", "Ladder (Down)", "Ladder (Up)", "Intersection"};
+        constexpr int amountBrushes{6};
         for (int i = 0; i < amountBrushes; i++) {
             if (ImGui::RadioButton(brushNames[i], m_CurrentBrush == i)) { m_CurrentBrush = i; }
-            if (i < amountBrushes - 1) ImGui::SameLine();
+            if (i < amountBrushes / 2 - 1) ImGui::SameLine();
+            if (i > amountBrushes / 2 - 1 && i < amountBrushes - 1) ImGui::SameLine();
         }
 
         ImGui::Spacing();
@@ -118,7 +121,9 @@ namespace game {
                 if (val == 1) cellCol = IM_COL32(50, 200, 50, 255);
                 else if (val == 2) cellCol = IM_COL32(200, 150, 50, 255);
                 else if (val == 3) cellCol = IM_COL32(50, 150, 200, 255);
-                else cellCol = IM_COL32(50, 0, 200, 255);
+                else if (val == 4) cellCol = IM_COL32(150, 150, 200, 255);
+                else if (val == 5) cellCol = IM_COL32(255, 50, 255, 255);
+                else cellCol = IM_COL32(255, 0, 0, 255);
 
                 auto cellP0{
                     ImVec2(canvasP0.x + static_cast<float>(x) * m_VisualScale,

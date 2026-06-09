@@ -54,6 +54,9 @@ namespace ge {
         [[nodiscard]] const glm::vec3 &GetLocalPosition() const { return m_LocalPosition; }
         void UpdateWorldPosition();
         void SetPositionDirty();
+        void AddIntendedMovement(const glm::vec3& displacement) { m_IntendedMovement += displacement; }
+        [[nodiscard]] const glm::vec3& GetIntendedMovement() const { return m_IntendedMovement; }
+        void ClearIntendedMovement() { m_IntendedMovement = glm::vec3(0.0f); }
         //default constructor stuff
         ~GameObject();
         GameObject(const GameObject &other) = delete;
@@ -81,6 +84,7 @@ namespace ge {
         glm::vec3 m_LocalPosition{};
         glm::vec3 m_WorldPosition{};
         bool m_PositionIsDirty{true};
+        glm::vec3 m_IntendedMovement{0.f, 0.f, 0.f};
         //parent-child functions
         void AddChild(GameObject *child);
         void RemoveChild(const GameObject *child);

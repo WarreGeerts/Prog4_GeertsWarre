@@ -13,6 +13,7 @@ namespace game {
     public:
         explicit PlayerCollisionComponent(ge::GameObject *go);
         void Update() override;
+        [[nodiscard]] float GetTrueLadderCenter(float pivotX, float currentY) const;
         void Render() const override {};
         void InspectorGUI() override;
         [[nodiscard]] nlohmann::ordered_json Serialize() const override;
@@ -20,7 +21,7 @@ namespace game {
     private:
         ge::ColliderComponent* m_Collider{nullptr};
         CollisionGridComponent* m_Grid{nullptr};
-
+        bool m_IsClimbing{false};
         [[nodiscard]] glm::vec2 getPivotPoint() const;
     };
 }

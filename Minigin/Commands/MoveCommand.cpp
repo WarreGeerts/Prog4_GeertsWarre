@@ -9,7 +9,7 @@ namespace ge {
     void MoveCommand::Execute() {
         if (!m_pActor) return;
 
-        m_pActor->SetLocalPosition(
-            m_pActor->GetWorldPosition() + glm::vec3(m_Direction, 0) * m_Speed * DeltaTime::GetInstance().Time());
+        glm::vec3 displacement = glm::vec3(m_Direction, 0) * m_Speed * DeltaTime::GetInstance().Time();
+        m_pActor->AddIntendedMovement(displacement);
     }
 }
