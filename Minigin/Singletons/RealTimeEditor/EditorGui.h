@@ -45,6 +45,8 @@ namespace ge {
         bool m_ShowSceneGraph{true};
         bool m_ShowInspector{true};
         bool m_RequestSaveAsPopup{false};
+        bool m_MenuBarPinned = true;
+        bool m_ShowMenuBarToggle = false;
         ImGui::FileBrowser m_FileBrowser;
     };
 }

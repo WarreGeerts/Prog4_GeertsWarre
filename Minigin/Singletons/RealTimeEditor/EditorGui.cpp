@@ -293,47 +293,80 @@ namespace ge {
         DrawSaveAsPopup();
         DrawFileBrowserPopup();
 
-        if (ImGui::BeginMainMenuBar()) {
-            // File Menu
-            if (ImGui::BeginMenu("File")) {
-                if (ImGui::MenuItem("New Scene", "Ctrl+N")) {
-                    // Clear current scene
-                    InputManager::GetInstance().ClearBindings();
-                    ClearSelection();
-                    Component::ClearIds();
-                    GameObject::ClearIds();
-                    SceneManager::GetInstance().GetSceneByIdx(0).ClearGameObjects();
+        if (m_MenuBarPinned) {
+            if (ImGui::BeginMainMenuBar()) {
+                if (ImGui::BeginMenu("File")) {
+                    if (ImGui::MenuItem("New Scene", "Ctrl+N")) {
+                        InputManager::GetInstance().ClearBindings();
+                        ClearSelection();
+                        Component::ClearIds();
+                        GameObject::ClearIds();
+                        SceneManager::GetInstance().GetSceneByIdx(0).ClearGameObjects();
+                    }
+                    if (ImGui::MenuItem("Open Scene...", "Ctrl+O")) {
+                        m_FileBrowser.Open();
+                    }
+                    ImGui::Separator();
+                    if (ImGui::MenuItem("Save Scene", "Ctrl+S")) {
+                        SaveScene();
+                    }
+                    if (ImGui::MenuItem("Save Scene As...", "Ctrl+Shift+S")) {
+                        m_RequestSaveAsPopup = true;
+                    }
+                    ImGui::EndMenu();
                 }
-                if (ImGui::MenuItem("Open Scene...", "Ctrl+O")) {
-                    m_FileBrowser.Open();
-                }
-                ImGui::Separator();
-                if (ImGui::MenuItem("Save Scene", "Ctrl+S")) {
-                    SaveScene();
-                }
-                if (ImGui::MenuItem("Save Scene As...", "Ctrl+Shift+S")) {
-                    m_RequestSaveAsPopup = true;
-                }
-                ImGui::EndMenu();
-            }
 
-            // View Menu
-            if (ImGui::BeginMenu("View")) {
-                ImGui::MenuItem("Scene Graph", "", &m_ShowSceneGraph);
-                ImGui::MenuItem("Inspector", "", &m_ShowInspector);
-                ImGui::Separator();
-                if (ImGui::MenuItem("Reset Layout")) {}
-                ImGui::EndMenu();
-            }
+                if (ImGui::BeginMenu("View")) {
+                    ImGui::MenuItem("Scene Graph", "", &m_ShowSceneGraph);
+                    ImGui::MenuItem("Inspector", "", &m_ShowInspector);
+                    ImGui::Separator();
+                    if (ImGui::MenuItem("Reset Layout")) {}
+                    ImGui::EndMenu();
+                }
 
+                const ImGuiIO &io = ImGui::GetIO();
+                if (io.WantCaptureKeyboard) {
+                    ImGui::Separator();
+                    ImGui::TextColored(ImVec4(1.f, 0.8f, 0.f, 1.0f), "(You are tabbed out of the game)");
+                }
+
+                const float buttonWidth = 22.f;
+                ImGui::SetCursorPosX(ImGui::GetContentRegionMax().x - buttonWidth);
+                if (ImGui::SmallButton("X##unpin")) {
+                    m_MenuBarPinned = false;
+                }
+                if (ImGui::IsItemHovered(ImGuiHoveredFlags_AllowWhenBlockedByActiveItem)) {
+                    ImGui::SetTooltip("Hide menu bar");
+                }
+
+                ImGui::EndMainMenuBar();
+            }
+        } else {
             const ImGuiIO &io = ImGui::GetIO();
+            const bool mouseNearTop = io.MousePos.y < 20.f;
+            const float alpha = mouseNearTop ? 0.85f : 0.0f;
 
-            if (io.WantCaptureKeyboard) {
-                ImGui::Separator();
-                ImGui::TextColored(ImVec4(1.f, 0.8f, 0.f, 1.0f), "(You are tabbed out of the game)");
+            if (alpha > 0.f) {
+                ImGui::SetNextWindowPos(ImVec2(io.DisplaySize.x - 36.f, 2.f), ImGuiCond_Always);
+                ImGui::SetNextWindowSize(ImVec2(32.f, 22.f), ImGuiCond_Always);
+                ImGui::SetNextWindowBgAlpha(alpha);
+
+                constexpr ImGuiWindowFlags overlayFlags =
+                    ImGuiWindowFlags_NoDecoration  |
+                    ImGuiWindowFlags_NoNav         |
+                    ImGuiWindowFlags_NoMove        |
+                    ImGuiWindowFlags_NoTitleBar    |
+                    ImGuiWindowFlags_NoSavedSettings;
+
+                ImGui::Begin("##PinOverlay", nullptr, overlayFlags);
+                if (ImGui::SmallButton("=##pin")) {
+                    m_MenuBarPinned = true;
+                }
+                if (ImGui::IsItemHovered()) {
+                    ImGui::SetTooltip("Show menu bar");
+                }
+                ImGui::End();
             }
-
-            ImGui::EndMainMenuBar();
         }
     }
 
