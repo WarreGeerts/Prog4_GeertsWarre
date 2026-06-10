@@ -28,7 +28,8 @@ namespace game {
         ge::ComponentFactory::GetInstance().Register<UiGameModeSelector>("UiGameModeSelector");
         ge::ComponentFactory::GetInstance().Register<CollisionGridComponent>("CollisionGridComponent");
         ge::ComponentFactory::GetInstance().Register<PlayerCollisionComponent>("PlayerCollisionComponent");
-        ge::ComponentFactory::GetInstance().Register<PlayerStateControllerComponent>("PlayerStateControllerComponent");
+        ge::ComponentFactory::GetInstance().Register<HamburgerMovementComponent>("HamburgerMovementComponent");
+        ge::ComponentFactory::GetInstance().Register<HamburgerHolderComponent>("HamburgerHolderComponent");
 
         //load in all scenes at start
         ge::SceneManager::GetInstance().CreateScene("Main");

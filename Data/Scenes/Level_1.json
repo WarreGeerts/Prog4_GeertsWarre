@@ -434,7 +434,7 @@
             "enabled": true,
             "transform": {
                 "position": [
-                    201.2123260498047,
+                    468.5,
                     392.0,
                     0.0
                 ]
@@ -447,7 +447,7 @@
                     "comp_data": {
                         "file_name": "",
                         "overwritten": true,
-                        "render_layer": 0
+                        "render_layer": 1
                     }
                 },
                 {
@@ -555,6 +555,2305 @@
                         "file_name": "Background_BT.png",
                         "overwritten": false,
                         "render_layer": -1
+                    }
+                }
+            ]
+        },
+        {
+            "go_id": 54,
+            "parent_id": 63,
+            "go_name": "Bun_Top_01",
+            "enabled": true,
+            "transform": {
+                "position": [
+                    267.79998779296875,
+                    130.89999389648438,
+                    0.0
+                ]
+            },
+            "components": [
+                {
+                    "comp_id": 152,
+                    "comp_name": "RenderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "file_name": "",
+                        "overwritten": true,
+                        "render_layer": 0
+                    }
+                },
+                {
+                    "comp_id": 153,
+                    "comp_name": "SpriteComponent",
+                    "active": true,
+                    "comp_data": {
+                        "file_name": "Sprites.png",
+                        "source_rect": [
+                            112.0,
+                            48.0,
+                            32.0,
+                            8.0
+                        ],
+                        "dist_rect": [
+                            0.0,
+                            0.0,
+                            80.0,
+                            20.0
+                        ],
+                        "scale": [
+                            2.5,
+                            2.5
+                        ],
+                        "sprite_frame": {
+                            "columns": 1,
+                            "rows": 1,
+                            "frame_size": {
+                                "width": 32.0,
+                                "height": 8.0
+                            },
+                            "spacing": {
+                                "spacing_x": 0.0,
+                                "spacing_y": 0.0
+                            },
+                            "offset": {
+                                "offset_x": 112.0,
+                                "offset_y": 48.0
+                            }
+                        },
+                        "frame_index": 0
+                    }
+                },
+                {
+                    "comp_id": 154,
+                    "comp_name": "ColliderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "offset": {
+                            "x": 0.0,
+                            "y": 0.0
+                        },
+                        "width": 80.0,
+                        "height": 20.0
+                    }
+                },
+                {
+                    "comp_id": 155,
+                    "comp_name": "HamburgerMovementComponent",
+                    "active": true,
+                    "comp_data": {
+                        "fallSpeed": 100.0
+                    }
+                }
+            ]
+        },
+        {
+            "go_id": 55,
+            "parent_id": 63,
+            "go_name": "Holder_01",
+            "enabled": true,
+            "transform": {
+                "position": [
+                    267.79998779296875,
+                    148.60000610351563,
+                    0.0
+                ]
+            },
+            "components": [
+                {
+                    "comp_id": 157,
+                    "comp_name": "ColliderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "offset": {
+                            "x": 27.0,
+                            "y": 0.0
+                        },
+                        "width": 25.0,
+                        "height": 16.0
+                    }
+                },
+                {
+                    "comp_id": 158,
+                    "comp_name": "HamburgerHolderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "linkedPart": "Bun_Top_01",
+                        "fallThrough": true
+                    }
+                }
+            ]
+        },
+        {
+            "go_id": 56,
+            "parent_id": 63,
+            "go_name": "Holder_02",
+            "enabled": true,
+            "transform": {
+                "position": [
+                    267.79998779296875,
+                    228.89999389648438,
+                    0.0
+                ]
+            },
+            "components": [
+                {
+                    "comp_id": 160,
+                    "comp_name": "ColliderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "offset": {
+                            "x": 27.0,
+                            "y": 0.0
+                        },
+                        "width": 25.0,
+                        "height": 16.0
+                    }
+                },
+                {
+                    "comp_id": 161,
+                    "comp_name": "HamburgerHolderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "linkedPart": "Lettuce_01",
+                        "fallThrough": true
+                    }
+                }
+            ]
+        },
+        {
+            "go_id": 57,
+            "parent_id": 63,
+            "go_name": "Holder_03",
+            "enabled": true,
+            "transform": {
+                "position": [
+                    267.79998779296875,
+                    349.29998779296875,
+                    0.0
+                ]
+            },
+            "components": [
+                {
+                    "comp_id": 163,
+                    "comp_name": "ColliderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "offset": {
+                            "x": 27.0,
+                            "y": 0.0
+                        },
+                        "width": 25.0,
+                        "height": 16.0
+                    }
+                },
+                {
+                    "comp_id": 164,
+                    "comp_name": "HamburgerHolderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "linkedPart": "Burger_01",
+                        "fallThrough": true
+                    }
+                }
+            ]
+        },
+        {
+            "go_id": 58,
+            "parent_id": 63,
+            "go_name": "Holder_04",
+            "enabled": true,
+            "transform": {
+                "position": [
+                    267.79998779296875,
+                    428.79998779296875,
+                    0.0
+                ]
+            },
+            "components": [
+                {
+                    "comp_id": 166,
+                    "comp_name": "ColliderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "offset": {
+                            "x": 27.0,
+                            "y": 0.0
+                        },
+                        "width": 25.0,
+                        "height": 16.0
+                    }
+                },
+                {
+                    "comp_id": 167,
+                    "comp_name": "HamburgerHolderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "linkedPart": "Bun_Bottom_01",
+                        "fallThrough": true
+                    }
+                }
+            ]
+        },
+        {
+            "go_id": 59,
+            "parent_id": 63,
+            "go_name": "Plate_01",
+            "enabled": true,
+            "transform": {
+                "position": [
+                    267.79998779296875,
+                    535.0,
+                    0.0
+                ]
+            },
+            "components": [
+                {
+                    "comp_id": 169,
+                    "comp_name": "ColliderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "offset": {
+                            "x": 0.0,
+                            "y": 0.0
+                        },
+                        "width": 80.0,
+                        "height": 8.0
+                    }
+                },
+                {
+                    "comp_id": 170,
+                    "comp_name": "HamburgerHolderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "linkedPart": "",
+                        "fallThrough": false
+                    }
+                }
+            ]
+        },
+        {
+            "go_id": 60,
+            "parent_id": 63,
+            "go_name": "Lettuce_01",
+            "enabled": true,
+            "transform": {
+                "position": [
+                    267.79998779296875,
+                    211.3000030517578,
+                    0.0
+                ]
+            },
+            "components": [
+                {
+                    "comp_id": 172,
+                    "comp_name": "RenderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "file_name": "",
+                        "overwritten": true,
+                        "render_layer": 0
+                    }
+                },
+                {
+                    "comp_id": 173,
+                    "comp_name": "SpriteComponent",
+                    "active": true,
+                    "comp_data": {
+                        "file_name": "Sprites.png",
+                        "source_rect": [
+                            112.0,
+                            88.0,
+                            32.0,
+                            8.0
+                        ],
+                        "dist_rect": [
+                            0.0,
+                            0.0,
+                            80.0,
+                            20.0
+                        ],
+                        "scale": [
+                            2.5,
+                            2.5
+                        ],
+                        "sprite_frame": {
+                            "columns": 1,
+                            "rows": 1,
+                            "frame_size": {
+                                "width": 32.0,
+                                "height": 8.0
+                            },
+                            "spacing": {
+                                "spacing_x": 0.0,
+                                "spacing_y": 0.0
+                            },
+                            "offset": {
+                                "offset_x": 112.0,
+                                "offset_y": 88.0
+                            }
+                        },
+                        "frame_index": 0
+                    }
+                },
+                {
+                    "comp_id": 174,
+                    "comp_name": "ColliderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "offset": {
+                            "x": 0.0,
+                            "y": 0.0
+                        },
+                        "width": 80.0,
+                        "height": 20.0
+                    }
+                },
+                {
+                    "comp_id": 175,
+                    "comp_name": "HamburgerMovementComponent",
+                    "active": true,
+                    "comp_data": {
+                        "fallSpeed": 100.0
+                    }
+                }
+            ]
+        },
+        {
+            "go_id": 61,
+            "parent_id": 63,
+            "go_name": "Burger_01",
+            "enabled": true,
+            "transform": {
+                "position": [
+                    267.79998779296875,
+                    330.3999938964844,
+                    0.0
+                ]
+            },
+            "components": [
+                {
+                    "comp_id": 177,
+                    "comp_name": "RenderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "file_name": "",
+                        "overwritten": true,
+                        "render_layer": 0
+                    }
+                },
+                {
+                    "comp_id": 178,
+                    "comp_name": "SpriteComponent",
+                    "active": true,
+                    "comp_data": {
+                        "file_name": "Sprites.png",
+                        "source_rect": [
+                            112.0,
+                            72.0,
+                            32.0,
+                            8.0
+                        ],
+                        "dist_rect": [
+                            0.0,
+                            0.0,
+                            80.0,
+                            20.0
+                        ],
+                        "scale": [
+                            2.5,
+                            2.5
+                        ],
+                        "sprite_frame": {
+                            "columns": 1,
+                            "rows": 1,
+                            "frame_size": {
+                                "width": 32.0,
+                                "height": 8.0
+                            },
+                            "spacing": {
+                                "spacing_x": 0.0,
+                                "spacing_y": 0.0
+                            },
+                            "offset": {
+                                "offset_x": 112.0,
+                                "offset_y": 72.0
+                            }
+                        },
+                        "frame_index": 0
+                    }
+                },
+                {
+                    "comp_id": 179,
+                    "comp_name": "ColliderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "offset": {
+                            "x": 0.0,
+                            "y": 0.0
+                        },
+                        "width": 80.0,
+                        "height": 20.0
+                    }
+                },
+                {
+                    "comp_id": 180,
+                    "comp_name": "HamburgerMovementComponent",
+                    "active": true,
+                    "comp_data": {
+                        "fallSpeed": 100.0
+                    }
+                }
+            ]
+        },
+        {
+            "go_id": 62,
+            "parent_id": 63,
+            "go_name": "Bun_Bottom_01",
+            "enabled": true,
+            "transform": {
+                "position": [
+                    267.79998779296875,
+                    411.3999938964844,
+                    0.0
+                ]
+            },
+            "components": [
+                {
+                    "comp_id": 182,
+                    "comp_name": "RenderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "file_name": "",
+                        "overwritten": true,
+                        "render_layer": 0
+                    }
+                },
+                {
+                    "comp_id": 183,
+                    "comp_name": "SpriteComponent",
+                    "active": true,
+                    "comp_data": {
+                        "file_name": "Sprites.png",
+                        "source_rect": [
+                            112.0,
+                            56.0,
+                            32.0,
+                            8.0
+                        ],
+                        "dist_rect": [
+                            0.0,
+                            0.0,
+                            80.0,
+                            20.0
+                        ],
+                        "scale": [
+                            2.5,
+                            2.5
+                        ],
+                        "sprite_frame": {
+                            "columns": 1,
+                            "rows": 1,
+                            "frame_size": {
+                                "width": 32.0,
+                                "height": 8.0
+                            },
+                            "spacing": {
+                                "spacing_x": 0.0,
+                                "spacing_y": 0.0
+                            },
+                            "offset": {
+                                "offset_x": 112.0,
+                                "offset_y": 56.0
+                            }
+                        },
+                        "frame_index": 0
+                    }
+                },
+                {
+                    "comp_id": 184,
+                    "comp_name": "ColliderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "offset": {
+                            "x": 0.0,
+                            "y": 0.0
+                        },
+                        "width": 80.0,
+                        "height": 20.0
+                    }
+                },
+                {
+                    "comp_id": 185,
+                    "comp_name": "HamburgerMovementComponent",
+                    "active": true,
+                    "comp_data": {
+                        "fallSpeed": 100.0
+                    }
+                }
+            ]
+        },
+        {
+            "go_id": 63,
+            "parent_id": -1,
+            "go_name": "Row_0",
+            "enabled": true,
+            "transform": {
+                "position": [
+                    0.0,
+                    0.0,
+                    0.0
+                ]
+            },
+            "components": []
+        },
+        {
+            "go_id": 64,
+            "parent_id": 70,
+            "go_name": "Holder_11",
+            "enabled": true,
+            "transform": {
+                "position": [
+                    388.0,
+                    68.9000015258789,
+                    0.0
+                ]
+            },
+            "components": [
+                {
+                    "comp_id": 188,
+                    "comp_name": "ColliderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "offset": {
+                            "x": 27.0,
+                            "y": 0.0
+                        },
+                        "width": 25.0,
+                        "height": 16.0
+                    }
+                },
+                {
+                    "comp_id": 189,
+                    "comp_name": "HamburgerHolderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "linkedPart": "Bun_Top_11",
+                        "fallThrough": true
+                    }
+                }
+            ]
+        },
+        {
+            "go_id": 65,
+            "parent_id": 70,
+            "go_name": "Holder_12",
+            "enabled": true,
+            "transform": {
+                "position": [
+                    388.0,
+                    189.3000030517578,
+                    0.0
+                ]
+            },
+            "components": [
+                {
+                    "comp_id": 191,
+                    "comp_name": "ColliderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "offset": {
+                            "x": 27.0,
+                            "y": 0.0
+                        },
+                        "width": 25.0,
+                        "height": 16.0
+                    }
+                },
+                {
+                    "comp_id": 192,
+                    "comp_name": "HamburgerHolderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "linkedPart": "",
+                        "fallThrough": true
+                    }
+                }
+            ]
+        },
+        {
+            "go_id": 66,
+            "parent_id": 70,
+            "go_name": "Holder_13",
+            "enabled": true,
+            "transform": {
+                "position": [
+                    388.0,
+                    269.3999938964844,
+                    0.0
+                ]
+            },
+            "components": [
+                {
+                    "comp_id": 194,
+                    "comp_name": "ColliderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "offset": {
+                            "x": 27.0,
+                            "y": 0.0
+                        },
+                        "width": 25.0,
+                        "height": 16.0
+                    }
+                },
+                {
+                    "comp_id": 195,
+                    "comp_name": "HamburgerHolderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "linkedPart": "Lettuce_11",
+                        "fallThrough": true
+                    }
+                }
+            ]
+        },
+        {
+            "go_id": 67,
+            "parent_id": 70,
+            "go_name": "Holder_14",
+            "enabled": true,
+            "transform": {
+                "position": [
+                    388.0,
+                    348.79998779296875,
+                    0.0
+                ]
+            },
+            "components": [
+                {
+                    "comp_id": 197,
+                    "comp_name": "ColliderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "offset": {
+                            "x": 27.0,
+                            "y": 0.0
+                        },
+                        "width": 25.0,
+                        "height": 16.0
+                    }
+                },
+                {
+                    "comp_id": 198,
+                    "comp_name": "HamburgerHolderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "linkedPart": "Burger_11",
+                        "fallThrough": true
+                    }
+                }
+            ]
+        },
+        {
+            "go_id": 68,
+            "parent_id": 70,
+            "go_name": "Holder_15",
+            "enabled": true,
+            "transform": {
+                "position": [
+                    388.0,
+                    428.79998779296875,
+                    0.0
+                ]
+            },
+            "components": [
+                {
+                    "comp_id": 200,
+                    "comp_name": "ColliderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "offset": {
+                            "x": 27.0,
+                            "y": 0.0
+                        },
+                        "width": 25.0,
+                        "height": 16.0
+                    }
+                },
+                {
+                    "comp_id": 201,
+                    "comp_name": "HamburgerHolderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "linkedPart": "Bun_Bottom_11",
+                        "fallThrough": true
+                    }
+                }
+            ]
+        },
+        {
+            "go_id": 69,
+            "parent_id": 70,
+            "go_name": "Plate_11",
+            "enabled": true,
+            "transform": {
+                "position": [
+                    388.0,
+                    535.0,
+                    0.0
+                ]
+            },
+            "components": [
+                {
+                    "comp_id": 203,
+                    "comp_name": "ColliderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "offset": {
+                            "x": 0.0,
+                            "y": 0.0
+                        },
+                        "width": 80.0,
+                        "height": 8.0
+                    }
+                },
+                {
+                    "comp_id": 204,
+                    "comp_name": "HamburgerHolderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "linkedPart": "",
+                        "fallThrough": false
+                    }
+                }
+            ]
+        },
+        {
+            "go_id": 70,
+            "parent_id": -1,
+            "go_name": "Row_1",
+            "enabled": true,
+            "transform": {
+                "position": [
+                    0.0,
+                    0.0,
+                    0.0
+                ]
+            },
+            "components": []
+        },
+        {
+            "go_id": 71,
+            "parent_id": 70,
+            "go_name": "Bun_Top_11",
+            "enabled": true,
+            "transform": {
+                "position": [
+                    389.29998779296875,
+                    48.900001525878906,
+                    0.0
+                ]
+            },
+            "components": [
+                {
+                    "comp_id": 207,
+                    "comp_name": "RenderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "file_name": "",
+                        "overwritten": true,
+                        "render_layer": 0
+                    }
+                },
+                {
+                    "comp_id": 208,
+                    "comp_name": "SpriteComponent",
+                    "active": true,
+                    "comp_data": {
+                        "file_name": "Sprites.png",
+                        "source_rect": [
+                            112.0,
+                            48.0,
+                            32.0,
+                            8.0
+                        ],
+                        "dist_rect": [
+                            0.0,
+                            0.0,
+                            80.0,
+                            20.0
+                        ],
+                        "scale": [
+                            2.5,
+                            2.5
+                        ],
+                        "sprite_frame": {
+                            "columns": 1,
+                            "rows": 1,
+                            "frame_size": {
+                                "width": 32.0,
+                                "height": 8.0
+                            },
+                            "spacing": {
+                                "spacing_x": 0.0,
+                                "spacing_y": 0.0
+                            },
+                            "offset": {
+                                "offset_x": 112.0,
+                                "offset_y": 48.0
+                            }
+                        },
+                        "frame_index": 0
+                    }
+                },
+                {
+                    "comp_id": 209,
+                    "comp_name": "ColliderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "offset": {
+                            "x": 0.0,
+                            "y": 0.0
+                        },
+                        "width": 80.0,
+                        "height": 20.0
+                    }
+                },
+                {
+                    "comp_id": 210,
+                    "comp_name": "HamburgerMovementComponent",
+                    "active": true,
+                    "comp_data": {
+                        "fallSpeed": 100.0
+                    }
+                }
+            ]
+        },
+        {
+            "go_id": 72,
+            "parent_id": 70,
+            "go_name": "Lettuce_11",
+            "enabled": true,
+            "transform": {
+                "position": [
+                    389.29998779296875,
+                    250.1999969482422,
+                    0.0
+                ]
+            },
+            "components": [
+                {
+                    "comp_id": 212,
+                    "comp_name": "RenderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "file_name": "",
+                        "overwritten": true,
+                        "render_layer": 0
+                    }
+                },
+                {
+                    "comp_id": 213,
+                    "comp_name": "SpriteComponent",
+                    "active": true,
+                    "comp_data": {
+                        "file_name": "Sprites.png",
+                        "source_rect": [
+                            112.0,
+                            88.0,
+                            32.0,
+                            8.0
+                        ],
+                        "dist_rect": [
+                            0.0,
+                            0.0,
+                            80.0,
+                            20.0
+                        ],
+                        "scale": [
+                            2.5,
+                            2.5
+                        ],
+                        "sprite_frame": {
+                            "columns": 1,
+                            "rows": 1,
+                            "frame_size": {
+                                "width": 32.0,
+                                "height": 8.0
+                            },
+                            "spacing": {
+                                "spacing_x": 0.0,
+                                "spacing_y": 0.0
+                            },
+                            "offset": {
+                                "offset_x": 112.0,
+                                "offset_y": 88.0
+                            }
+                        },
+                        "frame_index": 0
+                    }
+                },
+                {
+                    "comp_id": 214,
+                    "comp_name": "ColliderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "offset": {
+                            "x": 0.0,
+                            "y": 0.0
+                        },
+                        "width": 80.0,
+                        "height": 20.0
+                    }
+                },
+                {
+                    "comp_id": 215,
+                    "comp_name": "HamburgerMovementComponent",
+                    "active": true,
+                    "comp_data": {
+                        "fallSpeed": 100.0
+                    }
+                }
+            ]
+        },
+        {
+            "go_id": 73,
+            "parent_id": 70,
+            "go_name": "Burger_11",
+            "enabled": true,
+            "transform": {
+                "position": [
+                    389.29998779296875,
+                    330.3999938964844,
+                    0.0
+                ]
+            },
+            "components": [
+                {
+                    "comp_id": 217,
+                    "comp_name": "RenderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "file_name": "",
+                        "overwritten": true,
+                        "render_layer": 0
+                    }
+                },
+                {
+                    "comp_id": 218,
+                    "comp_name": "SpriteComponent",
+                    "active": true,
+                    "comp_data": {
+                        "file_name": "Sprites.png",
+                        "source_rect": [
+                            112.0,
+                            72.0,
+                            32.0,
+                            8.0
+                        ],
+                        "dist_rect": [
+                            0.0,
+                            0.0,
+                            80.0,
+                            20.0
+                        ],
+                        "scale": [
+                            2.5,
+                            2.5
+                        ],
+                        "sprite_frame": {
+                            "columns": 1,
+                            "rows": 1,
+                            "frame_size": {
+                                "width": 32.0,
+                                "height": 8.0
+                            },
+                            "spacing": {
+                                "spacing_x": 0.0,
+                                "spacing_y": 0.0
+                            },
+                            "offset": {
+                                "offset_x": 112.0,
+                                "offset_y": 72.0
+                            }
+                        },
+                        "frame_index": 0
+                    }
+                },
+                {
+                    "comp_id": 219,
+                    "comp_name": "ColliderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "offset": {
+                            "x": 0.0,
+                            "y": 0.0
+                        },
+                        "width": 80.0,
+                        "height": 20.0
+                    }
+                },
+                {
+                    "comp_id": 220,
+                    "comp_name": "HamburgerMovementComponent",
+                    "active": true,
+                    "comp_data": {
+                        "fallSpeed": 100.0
+                    }
+                }
+            ]
+        },
+        {
+            "go_id": 74,
+            "parent_id": 70,
+            "go_name": "Bun_Bottom_11",
+            "enabled": true,
+            "transform": {
+                "position": [
+                    389.29998779296875,
+                    411.3999938964844,
+                    0.0
+                ]
+            },
+            "components": [
+                {
+                    "comp_id": 222,
+                    "comp_name": "RenderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "file_name": "",
+                        "overwritten": true,
+                        "render_layer": 0
+                    }
+                },
+                {
+                    "comp_id": 223,
+                    "comp_name": "SpriteComponent",
+                    "active": true,
+                    "comp_data": {
+                        "file_name": "Sprites.png",
+                        "source_rect": [
+                            112.0,
+                            56.0,
+                            32.0,
+                            8.0
+                        ],
+                        "dist_rect": [
+                            0.0,
+                            0.0,
+                            80.0,
+                            20.0
+                        ],
+                        "scale": [
+                            2.5,
+                            2.5
+                        ],
+                        "sprite_frame": {
+                            "columns": 1,
+                            "rows": 1,
+                            "frame_size": {
+                                "width": 32.0,
+                                "height": 8.0
+                            },
+                            "spacing": {
+                                "spacing_x": 0.0,
+                                "spacing_y": 0.0
+                            },
+                            "offset": {
+                                "offset_x": 112.0,
+                                "offset_y": 56.0
+                            }
+                        },
+                        "frame_index": 0
+                    }
+                },
+                {
+                    "comp_id": 224,
+                    "comp_name": "ColliderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "offset": {
+                            "x": 0.0,
+                            "y": 0.0
+                        },
+                        "width": 80.0,
+                        "height": 20.0
+                    }
+                },
+                {
+                    "comp_id": 225,
+                    "comp_name": "HamburgerMovementComponent",
+                    "active": true,
+                    "comp_data": {
+                        "fallSpeed": 100.0
+                    }
+                }
+            ]
+        },
+        {
+            "go_id": 75,
+            "parent_id": 81,
+            "go_name": "Holder_21",
+            "enabled": true,
+            "transform": {
+                "position": [
+                    508.0,
+                    68.9000015258789,
+                    0.0
+                ]
+            },
+            "components": [
+                {
+                    "comp_id": 227,
+                    "comp_name": "ColliderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "offset": {
+                            "x": 27.0,
+                            "y": 0.0
+                        },
+                        "width": 25.0,
+                        "height": 16.0
+                    }
+                },
+                {
+                    "comp_id": 228,
+                    "comp_name": "HamburgerHolderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "linkedPart": "Bun_Top_21",
+                        "fallThrough": true
+                    }
+                }
+            ]
+        },
+        {
+            "go_id": 76,
+            "parent_id": 81,
+            "go_name": "Holder_22",
+            "enabled": true,
+            "transform": {
+                "position": [
+                    508.0,
+                    149.1999969482422,
+                    0.0
+                ]
+            },
+            "components": [
+                {
+                    "comp_id": 230,
+                    "comp_name": "ColliderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "offset": {
+                            "x": 27.0,
+                            "y": 0.0
+                        },
+                        "width": 25.0,
+                        "height": 16.0
+                    }
+                },
+                {
+                    "comp_id": 231,
+                    "comp_name": "HamburgerHolderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "linkedPart": "Lettuce_21",
+                        "fallThrough": true
+                    }
+                }
+            ]
+        },
+        {
+            "go_id": 77,
+            "parent_id": 81,
+            "go_name": "Holder_23",
+            "enabled": true,
+            "transform": {
+                "position": [
+                    508.0,
+                    268.3999938964844,
+                    0.0
+                ]
+            },
+            "components": [
+                {
+                    "comp_id": 233,
+                    "comp_name": "ColliderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "offset": {
+                            "x": 27.0,
+                            "y": 0.0
+                        },
+                        "width": 25.0,
+                        "height": 16.0
+                    }
+                },
+                {
+                    "comp_id": 234,
+                    "comp_name": "HamburgerHolderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "linkedPart": "Burger_21",
+                        "fallThrough": true
+                    }
+                }
+            ]
+        },
+        {
+            "go_id": 78,
+            "parent_id": 81,
+            "go_name": "Holder_24",
+            "enabled": true,
+            "transform": {
+                "position": [
+                    508.0,
+                    349.0,
+                    0.0
+                ]
+            },
+            "components": [
+                {
+                    "comp_id": 236,
+                    "comp_name": "ColliderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "offset": {
+                            "x": 27.0,
+                            "y": 0.0
+                        },
+                        "width": 25.0,
+                        "height": 16.0
+                    }
+                },
+                {
+                    "comp_id": 237,
+                    "comp_name": "HamburgerHolderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "linkedPart": "",
+                        "fallThrough": true
+                    }
+                }
+            ]
+        },
+        {
+            "go_id": 79,
+            "parent_id": 81,
+            "go_name": "Holder_25",
+            "enabled": true,
+            "transform": {
+                "position": [
+                    508.0,
+                    429.29998779296875,
+                    0.0
+                ]
+            },
+            "components": [
+                {
+                    "comp_id": 239,
+                    "comp_name": "ColliderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "offset": {
+                            "x": 27.0,
+                            "y": 0.0
+                        },
+                        "width": 25.0,
+                        "height": 16.0
+                    }
+                },
+                {
+                    "comp_id": 240,
+                    "comp_name": "HamburgerHolderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "linkedPart": "Bun_Bottom_21",
+                        "fallThrough": true
+                    }
+                }
+            ]
+        },
+        {
+            "go_id": 80,
+            "parent_id": 81,
+            "go_name": "Plate_21",
+            "enabled": true,
+            "transform": {
+                "position": [
+                    508.0,
+                    535.0,
+                    0.0
+                ]
+            },
+            "components": [
+                {
+                    "comp_id": 242,
+                    "comp_name": "ColliderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "offset": {
+                            "x": 0.0,
+                            "y": 0.0
+                        },
+                        "width": 80.0,
+                        "height": 8.0
+                    }
+                },
+                {
+                    "comp_id": 243,
+                    "comp_name": "HamburgerHolderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "linkedPart": "",
+                        "fallThrough": false
+                    }
+                }
+            ]
+        },
+        {
+            "go_id": 81,
+            "parent_id": -1,
+            "go_name": "Row_2",
+            "enabled": true,
+            "transform": {
+                "position": [
+                    0.0,
+                    0.0,
+                    0.0
+                ]
+            },
+            "components": []
+        },
+        {
+            "go_id": 82,
+            "parent_id": 81,
+            "go_name": "Bun_Top_21",
+            "enabled": true,
+            "transform": {
+                "position": [
+                    508.0,
+                    48.900001525878906,
+                    0.0
+                ]
+            },
+            "components": [
+                {
+                    "comp_id": 246,
+                    "comp_name": "RenderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "file_name": "",
+                        "overwritten": true,
+                        "render_layer": 0
+                    }
+                },
+                {
+                    "comp_id": 247,
+                    "comp_name": "SpriteComponent",
+                    "active": true,
+                    "comp_data": {
+                        "file_name": "Sprites.png",
+                        "source_rect": [
+                            112.0,
+                            48.0,
+                            32.0,
+                            8.0
+                        ],
+                        "dist_rect": [
+                            0.0,
+                            0.0,
+                            80.0,
+                            20.0
+                        ],
+                        "scale": [
+                            2.5,
+                            2.5
+                        ],
+                        "sprite_frame": {
+                            "columns": 1,
+                            "rows": 1,
+                            "frame_size": {
+                                "width": 32.0,
+                                "height": 8.0
+                            },
+                            "spacing": {
+                                "spacing_x": 0.0,
+                                "spacing_y": 0.0
+                            },
+                            "offset": {
+                                "offset_x": 112.0,
+                                "offset_y": 48.0
+                            }
+                        },
+                        "frame_index": 0
+                    }
+                },
+                {
+                    "comp_id": 248,
+                    "comp_name": "ColliderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "offset": {
+                            "x": 0.0,
+                            "y": 0.0
+                        },
+                        "width": 80.0,
+                        "height": 20.0
+                    }
+                },
+                {
+                    "comp_id": 249,
+                    "comp_name": "HamburgerMovementComponent",
+                    "active": true,
+                    "comp_data": {
+                        "fallSpeed": 100.0
+                    }
+                }
+            ]
+        },
+        {
+            "go_id": 83,
+            "parent_id": 81,
+            "go_name": "Lettuce_21",
+            "enabled": true,
+            "transform": {
+                "position": [
+                    508.0,
+                    130.1999969482422,
+                    0.0
+                ]
+            },
+            "components": [
+                {
+                    "comp_id": 251,
+                    "comp_name": "RenderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "file_name": "",
+                        "overwritten": true,
+                        "render_layer": 0
+                    }
+                },
+                {
+                    "comp_id": 252,
+                    "comp_name": "SpriteComponent",
+                    "active": true,
+                    "comp_data": {
+                        "file_name": "Sprites.png",
+                        "source_rect": [
+                            112.0,
+                            88.0,
+                            32.0,
+                            8.0
+                        ],
+                        "dist_rect": [
+                            0.0,
+                            0.0,
+                            80.0,
+                            20.0
+                        ],
+                        "scale": [
+                            2.5,
+                            2.5
+                        ],
+                        "sprite_frame": {
+                            "columns": 1,
+                            "rows": 1,
+                            "frame_size": {
+                                "width": 32.0,
+                                "height": 8.0
+                            },
+                            "spacing": {
+                                "spacing_x": 0.0,
+                                "spacing_y": 0.0
+                            },
+                            "offset": {
+                                "offset_x": 112.0,
+                                "offset_y": 88.0
+                            }
+                        },
+                        "frame_index": 0
+                    }
+                },
+                {
+                    "comp_id": 253,
+                    "comp_name": "ColliderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "offset": {
+                            "x": 0.0,
+                            "y": 0.0
+                        },
+                        "width": 80.0,
+                        "height": 20.0
+                    }
+                },
+                {
+                    "comp_id": 254,
+                    "comp_name": "HamburgerMovementComponent",
+                    "active": true,
+                    "comp_data": {
+                        "fallSpeed": 100.0
+                    }
+                }
+            ]
+        },
+        {
+            "go_id": 84,
+            "parent_id": 81,
+            "go_name": "Bun_Bottom_21",
+            "enabled": true,
+            "transform": {
+                "position": [
+                    508.0,
+                    411.3999938964844,
+                    0.0
+                ]
+            },
+            "components": [
+                {
+                    "comp_id": 256,
+                    "comp_name": "RenderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "file_name": "",
+                        "overwritten": true,
+                        "render_layer": 0
+                    }
+                },
+                {
+                    "comp_id": 257,
+                    "comp_name": "SpriteComponent",
+                    "active": true,
+                    "comp_data": {
+                        "file_name": "Sprites.png",
+                        "source_rect": [
+                            112.0,
+                            56.0,
+                            32.0,
+                            8.0
+                        ],
+                        "dist_rect": [
+                            0.0,
+                            0.0,
+                            80.0,
+                            20.0
+                        ],
+                        "scale": [
+                            2.5,
+                            2.5
+                        ],
+                        "sprite_frame": {
+                            "columns": 1,
+                            "rows": 1,
+                            "frame_size": {
+                                "width": 32.0,
+                                "height": 8.0
+                            },
+                            "spacing": {
+                                "spacing_x": 0.0,
+                                "spacing_y": 0.0
+                            },
+                            "offset": {
+                                "offset_x": 112.0,
+                                "offset_y": 56.0
+                            }
+                        },
+                        "frame_index": 0
+                    }
+                },
+                {
+                    "comp_id": 258,
+                    "comp_name": "ColliderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "offset": {
+                            "x": 0.0,
+                            "y": 0.0
+                        },
+                        "width": 80.0,
+                        "height": 20.0
+                    }
+                },
+                {
+                    "comp_id": 259,
+                    "comp_name": "HamburgerMovementComponent",
+                    "active": true,
+                    "comp_data": {
+                        "fallSpeed": 100.0
+                    }
+                }
+            ]
+        },
+        {
+            "go_id": 85,
+            "parent_id": 81,
+            "go_name": "Burger_21",
+            "enabled": true,
+            "transform": {
+                "position": [
+                    508.0,
+                    250.1999969482422,
+                    0.0
+                ]
+            },
+            "components": [
+                {
+                    "comp_id": 261,
+                    "comp_name": "RenderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "file_name": "",
+                        "overwritten": true,
+                        "render_layer": 0
+                    }
+                },
+                {
+                    "comp_id": 262,
+                    "comp_name": "SpriteComponent",
+                    "active": true,
+                    "comp_data": {
+                        "file_name": "Sprites.png",
+                        "source_rect": [
+                            112.0,
+                            72.0,
+                            32.0,
+                            8.0
+                        ],
+                        "dist_rect": [
+                            0.0,
+                            0.0,
+                            80.0,
+                            20.0
+                        ],
+                        "scale": [
+                            2.5,
+                            2.5
+                        ],
+                        "sprite_frame": {
+                            "columns": 1,
+                            "rows": 1,
+                            "frame_size": {
+                                "width": 32.0,
+                                "height": 8.0
+                            },
+                            "spacing": {
+                                "spacing_x": 0.0,
+                                "spacing_y": 0.0
+                            },
+                            "offset": {
+                                "offset_x": 112.0,
+                                "offset_y": 72.0
+                            }
+                        },
+                        "frame_index": 0
+                    }
+                },
+                {
+                    "comp_id": 263,
+                    "comp_name": "ColliderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "offset": {
+                            "x": 0.0,
+                            "y": 0.0
+                        },
+                        "width": 80.0,
+                        "height": 20.0
+                    }
+                },
+                {
+                    "comp_id": 264,
+                    "comp_name": "HamburgerMovementComponent",
+                    "active": true,
+                    "comp_data": {
+                        "fallSpeed": 100.0
+                    }
+                }
+            ]
+        },
+        {
+            "go_id": 86,
+            "parent_id": 92,
+            "go_name": "Holder_31",
+            "enabled": true,
+            "transform": {
+                "position": [
+                    628.0,
+                    68.9000015258789,
+                    0.0
+                ]
+            },
+            "components": [
+                {
+                    "comp_id": 266,
+                    "comp_name": "ColliderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "offset": {
+                            "x": 27.0,
+                            "y": 0.0
+                        },
+                        "width": 25.0,
+                        "height": 16.0
+                    }
+                },
+                {
+                    "comp_id": 267,
+                    "comp_name": "HamburgerHolderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "linkedPart": "Bun_Top_31",
+                        "fallThrough": true
+                    }
+                }
+            ]
+        },
+        {
+            "go_id": 87,
+            "parent_id": 92,
+            "go_name": "Holder_32",
+            "enabled": true,
+            "transform": {
+                "position": [
+                    628.0,
+                    148.0,
+                    0.0
+                ]
+            },
+            "components": [
+                {
+                    "comp_id": 269,
+                    "comp_name": "ColliderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "offset": {
+                            "x": 27.0,
+                            "y": 0.0
+                        },
+                        "width": 25.0,
+                        "height": 16.0
+                    }
+                },
+                {
+                    "comp_id": 270,
+                    "comp_name": "HamburgerHolderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "linkedPart": "Lettuce_31",
+                        "fallThrough": true
+                    }
+                }
+            ]
+        },
+        {
+            "go_id": 88,
+            "parent_id": 92,
+            "go_name": "Holder_33",
+            "enabled": true,
+            "transform": {
+                "position": [
+                    628.0,
+                    228.1999969482422,
+                    0.0
+                ]
+            },
+            "components": [
+                {
+                    "comp_id": 272,
+                    "comp_name": "ColliderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "offset": {
+                            "x": 27.0,
+                            "y": 0.0
+                        },
+                        "width": 25.0,
+                        "height": 16.0
+                    }
+                },
+                {
+                    "comp_id": 273,
+                    "comp_name": "HamburgerHolderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "linkedPart": "Burger_31",
+                        "fallThrough": true
+                    }
+                }
+            ]
+        },
+        {
+            "go_id": 89,
+            "parent_id": 92,
+            "go_name": "Holder_34",
+            "enabled": true,
+            "transform": {
+                "position": [
+                    628.0,
+                    307.29998779296875,
+                    0.0
+                ]
+            },
+            "components": [
+                {
+                    "comp_id": 275,
+                    "comp_name": "ColliderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "offset": {
+                            "x": 27.0,
+                            "y": 0.0
+                        },
+                        "width": 25.0,
+                        "height": 16.0
+                    }
+                },
+                {
+                    "comp_id": 276,
+                    "comp_name": "HamburgerHolderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "linkedPart": "Bun_Bottom_31",
+                        "fallThrough": true
+                    }
+                }
+            ]
+        },
+        {
+            "go_id": 90,
+            "parent_id": 92,
+            "go_name": "Holder_35",
+            "enabled": true,
+            "transform": {
+                "position": [
+                    628.0,
+                    426.79998779296875,
+                    0.0
+                ]
+            },
+            "components": [
+                {
+                    "comp_id": 278,
+                    "comp_name": "ColliderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "offset": {
+                            "x": 27.0,
+                            "y": 0.0
+                        },
+                        "width": 25.0,
+                        "height": 16.0
+                    }
+                },
+                {
+                    "comp_id": 279,
+                    "comp_name": "HamburgerHolderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "linkedPart": "",
+                        "fallThrough": true
+                    }
+                }
+            ]
+        },
+        {
+            "go_id": 91,
+            "parent_id": 92,
+            "go_name": "Plate_31",
+            "enabled": true,
+            "transform": {
+                "position": [
+                    628.0,
+                    535.0,
+                    0.0
+                ]
+            },
+            "components": [
+                {
+                    "comp_id": 281,
+                    "comp_name": "ColliderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "offset": {
+                            "x": 0.0,
+                            "y": 0.0
+                        },
+                        "width": 80.0,
+                        "height": 8.0
+                    }
+                },
+                {
+                    "comp_id": 282,
+                    "comp_name": "HamburgerHolderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "linkedPart": "",
+                        "fallThrough": false
+                    }
+                }
+            ]
+        },
+        {
+            "go_id": 92,
+            "parent_id": -1,
+            "go_name": "Row_3",
+            "enabled": true,
+            "transform": {
+                "position": [
+                    0.0,
+                    0.0,
+                    0.0
+                ]
+            },
+            "components": []
+        },
+        {
+            "go_id": 93,
+            "parent_id": 92,
+            "go_name": "Bun_Top_31",
+            "enabled": true,
+            "transform": {
+                "position": [
+                    628.0,
+                    48.900001525878906,
+                    0.0
+                ]
+            },
+            "components": [
+                {
+                    "comp_id": 285,
+                    "comp_name": "RenderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "file_name": "",
+                        "overwritten": true,
+                        "render_layer": 0
+                    }
+                },
+                {
+                    "comp_id": 286,
+                    "comp_name": "SpriteComponent",
+                    "active": true,
+                    "comp_data": {
+                        "file_name": "Sprites.png",
+                        "source_rect": [
+                            112.0,
+                            48.0,
+                            32.0,
+                            8.0
+                        ],
+                        "dist_rect": [
+                            0.0,
+                            0.0,
+                            80.0,
+                            20.0
+                        ],
+                        "scale": [
+                            2.5,
+                            2.5
+                        ],
+                        "sprite_frame": {
+                            "columns": 1,
+                            "rows": 1,
+                            "frame_size": {
+                                "width": 32.0,
+                                "height": 8.0
+                            },
+                            "spacing": {
+                                "spacing_x": 0.0,
+                                "spacing_y": 0.0
+                            },
+                            "offset": {
+                                "offset_x": 112.0,
+                                "offset_y": 48.0
+                            }
+                        },
+                        "frame_index": 0
+                    }
+                },
+                {
+                    "comp_id": 287,
+                    "comp_name": "ColliderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "offset": {
+                            "x": 0.0,
+                            "y": 0.0
+                        },
+                        "width": 80.0,
+                        "height": 20.0
+                    }
+                },
+                {
+                    "comp_id": 288,
+                    "comp_name": "HamburgerMovementComponent",
+                    "active": true,
+                    "comp_data": {
+                        "fallSpeed": 100.0
+                    }
+                }
+            ]
+        },
+        {
+            "go_id": 94,
+            "parent_id": 92,
+            "go_name": "Lettuce_31",
+            "enabled": true,
+            "transform": {
+                "position": [
+                    628.0,
+                    130.1999969482422,
+                    0.0
+                ]
+            },
+            "components": [
+                {
+                    "comp_id": 290,
+                    "comp_name": "RenderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "file_name": "",
+                        "overwritten": true,
+                        "render_layer": 0
+                    }
+                },
+                {
+                    "comp_id": 291,
+                    "comp_name": "SpriteComponent",
+                    "active": true,
+                    "comp_data": {
+                        "file_name": "Sprites.png",
+                        "source_rect": [
+                            112.0,
+                            88.0,
+                            32.0,
+                            8.0
+                        ],
+                        "dist_rect": [
+                            0.0,
+                            0.0,
+                            80.0,
+                            20.0
+                        ],
+                        "scale": [
+                            2.5,
+                            2.5
+                        ],
+                        "sprite_frame": {
+                            "columns": 1,
+                            "rows": 1,
+                            "frame_size": {
+                                "width": 32.0,
+                                "height": 8.0
+                            },
+                            "spacing": {
+                                "spacing_x": 0.0,
+                                "spacing_y": 0.0
+                            },
+                            "offset": {
+                                "offset_x": 112.0,
+                                "offset_y": 88.0
+                            }
+                        },
+                        "frame_index": 0
+                    }
+                },
+                {
+                    "comp_id": 292,
+                    "comp_name": "ColliderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "offset": {
+                            "x": 0.0,
+                            "y": 0.0
+                        },
+                        "width": 80.0,
+                        "height": 20.0
+                    }
+                },
+                {
+                    "comp_id": 293,
+                    "comp_name": "HamburgerMovementComponent",
+                    "active": true,
+                    "comp_data": {
+                        "fallSpeed": 100.0
+                    }
+                }
+            ]
+        },
+        {
+            "go_id": 95,
+            "parent_id": 92,
+            "go_name": "Burger_31",
+            "enabled": true,
+            "transform": {
+                "position": [
+                    628.0,
+                    209.89999389648438,
+                    0.0
+                ]
+            },
+            "components": [
+                {
+                    "comp_id": 295,
+                    "comp_name": "RenderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "file_name": "",
+                        "overwritten": true,
+                        "render_layer": 0
+                    }
+                },
+                {
+                    "comp_id": 296,
+                    "comp_name": "SpriteComponent",
+                    "active": true,
+                    "comp_data": {
+                        "file_name": "Sprites.png",
+                        "source_rect": [
+                            112.0,
+                            72.0,
+                            32.0,
+                            8.0
+                        ],
+                        "dist_rect": [
+                            0.0,
+                            0.0,
+                            80.0,
+                            20.0
+                        ],
+                        "scale": [
+                            2.5,
+                            2.5
+                        ],
+                        "sprite_frame": {
+                            "columns": 1,
+                            "rows": 1,
+                            "frame_size": {
+                                "width": 32.0,
+                                "height": 8.0
+                            },
+                            "spacing": {
+                                "spacing_x": 0.0,
+                                "spacing_y": 0.0
+                            },
+                            "offset": {
+                                "offset_x": 112.0,
+                                "offset_y": 72.0
+                            }
+                        },
+                        "frame_index": 0
+                    }
+                },
+                {
+                    "comp_id": 297,
+                    "comp_name": "ColliderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "offset": {
+                            "x": 0.0,
+                            "y": 0.0
+                        },
+                        "width": 80.0,
+                        "height": 20.0
+                    }
+                },
+                {
+                    "comp_id": 298,
+                    "comp_name": "HamburgerMovementComponent",
+                    "active": true,
+                    "comp_data": {
+                        "fallSpeed": 100.0
+                    }
+                }
+            ]
+        },
+        {
+            "go_id": 96,
+            "parent_id": 92,
+            "go_name": "Bun_Bottom_31",
+            "enabled": true,
+            "transform": {
+                "position": [
+                    628.0,
+                    289.8999938964844,
+                    0.0
+                ]
+            },
+            "components": [
+                {
+                    "comp_id": 300,
+                    "comp_name": "RenderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "file_name": "",
+                        "overwritten": true,
+                        "render_layer": 0
+                    }
+                },
+                {
+                    "comp_id": 301,
+                    "comp_name": "SpriteComponent",
+                    "active": true,
+                    "comp_data": {
+                        "file_name": "Sprites.png",
+                        "source_rect": [
+                            112.0,
+                            56.0,
+                            32.0,
+                            8.0
+                        ],
+                        "dist_rect": [
+                            0.0,
+                            0.0,
+                            80.0,
+                            20.0
+                        ],
+                        "scale": [
+                            2.5,
+                            2.5
+                        ],
+                        "sprite_frame": {
+                            "columns": 1,
+                            "rows": 1,
+                            "frame_size": {
+                                "width": 32.0,
+                                "height": 8.0
+                            },
+                            "spacing": {
+                                "spacing_x": 0.0,
+                                "spacing_y": 0.0
+                            },
+                            "offset": {
+                                "offset_x": 112.0,
+                                "offset_y": 56.0
+                            }
+                        },
+                        "frame_index": 0
+                    }
+                },
+                {
+                    "comp_id": 302,
+                    "comp_name": "ColliderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "offset": {
+                            "x": 0.0,
+                            "y": 0.0
+                        },
+                        "width": 80.0,
+                        "height": 20.0
+                    }
+                },
+                {
+                    "comp_id": 303,
+                    "comp_name": "HamburgerMovementComponent",
+                    "active": true,
+                    "comp_data": {
+                        "fallSpeed": 100.0
                     }
                 }
             ]

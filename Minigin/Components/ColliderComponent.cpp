@@ -3,6 +3,7 @@
 
 namespace ge {
     ColliderComponent::ColliderComponent(GameObject *go) : Component(go, "ColliderComponent") {}
+
     void ColliderComponent::Render() const {
         if (!m_IsActive) return;
 
@@ -23,7 +24,6 @@ namespace ge {
     }
 
     void ColliderComponent::InspectorGUI() {
-
         ImGui::Checkbox("Show Debug Colliders", &m_Debug);
 
         float offset[2] = {m_Offset.x, m_Offset.y};
@@ -45,6 +45,7 @@ namespace ge {
         data["height"] = m_Height;
         return data;
     }
+
     void ColliderComponent::Deserialize(const nlohmann::ordered_json &data) {
         if (data.contains("offset")) {
             auto &offset = data["offset"];
@@ -54,6 +55,7 @@ namespace ge {
         m_Width = data.value("width", 0.f);
         m_Height = data.value("height", 0.f);
     }
+
     glm::vec4 ColliderComponent::GetWorldBounds() const {
         const glm::vec2 pos = m_gameObject->GetTransform()->GetPosition();
         return {pos.x + m_Offset.x, pos.y + m_Offset.y, m_Width, m_Height};
@@ -65,5 +67,22 @@ namespace ge {
         const auto pos = GetWorldBounds();
         return (worldX >= pos.x && worldX <= pos.x + pos.z &&
                 worldY >= pos.y && worldY <= pos.y + pos.w);
+    }
+
+    bool ColliderComponent::IsOverlapping(const ColliderComponent *other) const {
+        if (!m_IsActive || !other->m_IsActive) return false;
+
+        const glm::vec4 boundsA = GetWorldBounds();
+        const glm::vec4 boundsB = other->GetWorldBounds();
+
+        return (boundsA.x < boundsB.x + boundsB.z &&
+                boundsA.x + boundsA.z > boundsB.x &&
+                boundsA.y < boundsB.y + boundsB.w &&
+                boundsA.y + boundsA.w > boundsB.y);
+    }
+
+    void ColliderComponent::IncreaseOffset(float width, float height) {
+        m_Offset.x += width;
+        m_Offset.y += height;
     }
 }

@@ -150,7 +150,7 @@ namespace ge {
         auto clone = original->Clone();
         GameObject *clonePtr = clone.get();
 
-        auto &scene = SceneManager::GetInstance().GetSceneByIdx(0);
+        auto &scene = SceneManager::GetInstance().GetSceneByIdx(SceneManager::GetInstance().GetCurrentSceneIdx());
         scene.Add(std::move(clone));
 
         if (newParent) {

@@ -15,6 +15,8 @@ namespace ge {
 
         [[nodiscard]] glm::vec4 GetWorldBounds() const;
         [[nodiscard]] bool IsColliding(float worldX, float worldY) const;
+        bool IsOverlapping(const ColliderComponent *other) const;
+        void IncreaseOffset(float width, float height);
 
     private:
         glm::vec2 m_Offset{};

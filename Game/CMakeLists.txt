@@ -38,8 +38,10 @@
         States/PSClimbing.h
         States/PSIdle.cpp
         States/PSIdle.h
-        Components/PlayerStateControllerComponent.cpp
-        Components/PlayerStateControllerComponent.h
+        Components/HamburgerMovementComponent.cpp
+        Components/HamburgerMovementComponent.h
+        Components/HamburgerHolderComponent.cpp
+        Components/HamburgerHolderComponent.h
 )
 
 target_include_directories(${TARGET_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
