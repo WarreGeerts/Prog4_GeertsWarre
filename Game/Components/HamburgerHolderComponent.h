@@ -9,7 +9,7 @@ namespace game {
         void Update() override;
         void Render() const override {};
         [[nodiscard]] nlohmann::ordered_json Serialize() const override;
-        void Deserialize(const nlohmann::ordered_json &json) override;
+        void Deserialize(const nlohmann::ordered_json &data) override;
         void InspectorGUI() override;
         void IsFinishedFalling(ge::GameObject *arrivedPart);
 

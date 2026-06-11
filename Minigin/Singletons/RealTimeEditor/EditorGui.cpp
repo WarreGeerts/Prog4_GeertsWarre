@@ -148,10 +148,11 @@ namespace ge {
         if (!original) return;
 
         auto clone = original->Clone();
-        GameObject *clonePtr = clone.get();
 
         auto &scene = SceneManager::GetInstance().GetSceneByIdx(SceneManager::GetInstance().GetCurrentSceneIdx());
         scene.Add(std::move(clone));
+
+        GameObject *clonePtr = scene.GetGameObjects().back().get();
 
         if (newParent) {
             clonePtr->SetParent(newParent, false);
@@ -320,7 +321,6 @@ namespace ge {
                     ImGui::MenuItem("Scene Graph", "", &m_ShowSceneGraph);
                     ImGui::MenuItem("Inspector", "", &m_ShowInspector);
                     ImGui::Separator();
-                    if (ImGui::MenuItem("Reset Layout")) {}
                     ImGui::EndMenu();
                 }
 

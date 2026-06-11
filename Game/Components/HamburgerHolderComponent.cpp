@@ -8,6 +8,9 @@
 
 namespace game {
     void HamburgerHolderComponent::Update() {
+        const auto *myCollider = m_gameObject->GetComponent<ge::ColliderComponent>();
+        if (!myCollider) return;
+
         if (!m_Initialized) {
             m_Initialized = true;
             if (!m_LinkedPartName.empty()) {
@@ -16,14 +19,21 @@ namespace game {
                     if (obj->GetName() == m_LinkedPartName) {
                         SDL_Log("Added object: %s", m_LinkedPartName.c_str());
                         m_StackedParts.push_back(obj.get());
+
+                        auto *otherCollider = obj->GetComponent<ge::ColliderComponent>();
+
+                        const auto otherBounds = otherCollider->GetWorldBounds();
+                        const auto colliderBounds = myCollider->GetWorldBounds();
+
+                        glm::vec3 pos = m_gameObject->GetWorldPosition();
+                        pos.y = colliderBounds.y - otherBounds.w;
+
+                        obj->SetLocalPosition(pos);
                         break;
                     }
                 }
             }
         }
-
-        const auto *myCollider = m_gameObject->GetComponent<ge::ColliderComponent>();
-        if (!myCollider) return;
 
         for (const auto &obj: ge::SceneManager::GetInstance().GetSceneByIdx(
                  ge::SceneManager::GetInstance().GetCurrentSceneIdx()).GetGameObjects()) {
@@ -49,9 +59,9 @@ namespace game {
         return data;
     }
 
-    void HamburgerHolderComponent::Deserialize(const nlohmann::ordered_json &json) {
-        m_LinkedPartName = json.value("linkedPart", "");
-        m_FallThrough = json.value("fallThrough", true);
+    void HamburgerHolderComponent::Deserialize(const nlohmann::ordered_json &data) {
+        m_LinkedPartName = data.value("linkedPart", "");
+        m_FallThrough = data.value("fallThrough", true);
     }
 
     void HamburgerHolderComponent::InspectorGUI() {
@@ -67,6 +77,47 @@ namespace game {
 
         if (ImGui::InputText("Linked Part##HC", buf, sizeof(buf))) {
             m_LinkedPartName = buf;
+        }
+
+        if (ImGui::Button("Reset Position")) {
+                const auto *myCollider = m_gameObject->GetComponent<ge::ColliderComponent>();
+
+            if (!m_FallThrough) {
+                float totalOffset = 0.f;
+                for (const auto *obj : m_StackedParts) {
+                    if (!obj) continue;
+                    const auto *partCollider = obj->GetComponent<ge::ColliderComponent>();
+                    if (partCollider) {
+                        totalOffset += partCollider->GetWorldBounds().w;
+                    }
+                }
+                if (totalOffset != 0.f) {
+                    m_gameObject->GetComponent<ge::ColliderComponent>()->
+                        IncreaseOffset(0, totalOffset);
+                }
+            }
+
+            m_Initialized = false;
+            m_StackedParts.clear();
+            m_WasTriggered = false;
+
+            if (!m_LinkedPartName.empty()) {
+                for (const auto &obj: ge::SceneManager::GetInstance().GetSceneByIdx(
+                         ge::SceneManager::GetInstance().GetCurrentSceneIdx()).GetGameObjects()) {
+                    if (obj->GetName() == m_LinkedPartName) {
+                        auto *otherCollider = obj->GetComponent<ge::ColliderComponent>();
+
+                        const auto otherBounds = otherCollider->GetWorldBounds();
+                        const auto colliderBounds = myCollider->GetWorldBounds();
+
+                        glm::vec3 pos = m_gameObject->GetWorldPosition();
+                        pos.y = colliderBounds.y - otherBounds.w;
+
+                        obj->SetLocalPosition(pos);
+                        break;
+                    }
+                }
+            }
         }
     }
 

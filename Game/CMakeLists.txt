@@ -42,6 +42,8 @@
         Components/HamburgerMovementComponent.h
         Components/HamburgerHolderComponent.cpp
         Components/HamburgerHolderComponent.h
+        Components/SpawnerComponent.cpp
+        Components/SpawnerComponent.h
 )
 
 target_include_directories(${TARGET_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
