@@ -35,8 +35,37 @@ namespace game {
             if (myCollider->IsOverlapping(otherCollider)) {
                 if (hamburgerPiece->IsFalling()) {
                     m_Health--;
+                    ge::EventManager::GetInstance().SendEvent(
+                        ge::Event(m_ScoreEventId).AddInt(100 * m_PointsMultiplier));
                 }
             }
         }
+    }
+
+    void EnemyComponent::InspectorGUI() {
+        ImGui::Text("Points Multiplier:");
+        ImGui::RadioButton("Mr. HotDog", &m_PointsMultiplier, 1);
+        ImGui::RadioButton("Mr. Pickle", &m_PointsMultiplier, 2);
+        ImGui::RadioButton("Mr. Egg", &m_PointsMultiplier, 3);
+
+        auto &em = ge::EventManager::GetInstance();
+        const std::string name = em.GetEventName(m_ScoreEventId);
+        if (ImGui::BeginCombo("Score Event##HMC", name.c_str())) {
+            for (auto const &[id, eventName]: em.GetRegisteredEvents()) {
+                if (ImGui::Selectable(eventName.c_str(), id == m_ScoreEventId))
+                    m_ScoreEventId = id;
+            }
+            ImGui::EndCombo();
+        }
+    }
+
+    nlohmann::ordered_json EnemyComponent::Serialize() const {
+        nlohmann::ordered_json data;
+        data["scoreEvent"] = m_ScoreEventId;
+        return data;
+    }
+
+    void EnemyComponent::Deserialize(const nlohmann::ordered_json &data) {
+        m_ScoreEventId = data.value("scoreEvent", -1);
     }
 }

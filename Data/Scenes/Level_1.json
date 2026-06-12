@@ -10,7 +10,7 @@
             "transform": {
                 "position": [
                     227.89999389648438,
-                    39.0,
+                    139.0,
                     0.0
                 ]
             },
@@ -434,8 +434,8 @@
             "enabled": true,
             "transform": {
                 "position": [
-                    346.3850402832031,
-                    192.0,
+                    601.57373046875,
+                    491.0,
                     0.0
                 ]
             },
@@ -447,7 +447,7 @@
                     "comp_data": {
                         "file_name": "",
                         "overwritten": true,
-                        "render_layer": 1
+                        "render_layer": 2
                     }
                 },
                 {
@@ -562,12 +562,48 @@
                                 "event_id": 1133829725,
                                 "index": 0,
                                 "valid": true
+                            },
+                            {
+                                "event_id": 1133829725,
+                                "index": 0,
+                                "valid": true
+                            },
+                            {
+                                "event_id": 1133829725,
+                                "index": 0,
+                                "valid": true
+                            },
+                            {
+                                "event_id": 1133829725,
+                                "index": 0,
+                                "valid": true
+                            },
+                            {
+                                "event_id": 1133829725,
+                                "index": 0,
+                                "valid": true
+                            },
+                            {
+                                "event_id": 1133829725,
+                                "index": 0,
+                                "valid": true
+                            },
+                            {
+                                "event_id": 1133829725,
+                                "index": 0,
+                                "valid": true
+                            },
+                            {
+                                "event_id": 1133829725,
+                                "index": 0,
+                                "valid": true
                             }
                         ],
                         "event_ids": [
                             1133829725
                         ],
-                        "broadcast_events": 2942008710
+                        "broadcast_events": 2942008710,
+                        "invincible": false
                     }
                 }
             ]
@@ -605,7 +641,7 @@
             "transform": {
                 "position": [
                     267.79998779296875,
-                    128.60000610351563,
+                    555.0,
                     0.0
                 ]
             },
@@ -679,7 +715,8 @@
                     "comp_name": "HamburgerMovementComponent",
                     "active": true,
                     "comp_data": {
-                        "fallSpeed": 100.0
+                        "fallSpeed": 100.0,
+                        "scoreEvent": 3994665819
                     }
                 }
             ]
@@ -692,7 +729,7 @@
             "transform": {
                 "position": [
                     267.79998779296875,
-                    148.60000610351563,
+                    248.60000610351563,
                     0.0
                 ]
             },
@@ -729,7 +766,7 @@
             "transform": {
                 "position": [
                     267.79998779296875,
-                    228.89999389648438,
+                    328.8999938964844,
                     0.0
                 ]
             },
@@ -766,7 +803,7 @@
             "transform": {
                 "position": [
                     267.79998779296875,
-                    349.29998779296875,
+                    449.29998779296875,
                     0.0
                 ]
             },
@@ -803,7 +840,7 @@
             "transform": {
                 "position": [
                     267.79998779296875,
-                    428.79998779296875,
+                    528.7999877929688,
                     0.0
                 ]
             },
@@ -840,7 +877,7 @@
             "transform": {
                 "position": [
                     267.79998779296875,
-                    535.0,
+                    635.0,
                     0.0
                 ]
             },
@@ -851,8 +888,8 @@
                     "active": true,
                     "comp_data": {
                         "offset": {
-                            "x": 10.0,
-                            "y": 0.0
+                            "x": 0.0,
+                            "y": -80.0
                         },
                         "width": 60.0,
                         "height": 20.0
@@ -877,7 +914,7 @@
             "transform": {
                 "position": [
                     267.79998779296875,
-                    208.89999389648438,
+                    575.0,
                     0.0
                 ]
             },
@@ -951,7 +988,8 @@
                     "comp_name": "HamburgerMovementComponent",
                     "active": true,
                     "comp_data": {
-                        "fallSpeed": 100.0
+                        "fallSpeed": 100.0,
+                        "scoreEvent": 3994665819
                     }
                 }
             ]
@@ -964,7 +1002,7 @@
             "transform": {
                 "position": [
                     267.79998779296875,
-                    329.29998779296875,
+                    595.0,
                     0.0
                 ]
             },
@@ -1038,7 +1076,8 @@
                     "comp_name": "HamburgerMovementComponent",
                     "active": true,
                     "comp_data": {
-                        "fallSpeed": 100.0
+                        "fallSpeed": 100.0,
+                        "scoreEvent": 3994665819
                     }
                 }
             ]
@@ -1051,7 +1090,7 @@
             "transform": {
                 "position": [
                     267.79998779296875,
-                    408.79998779296875,
+                    615.0,
                     0.0
                 ]
             },
@@ -1125,7 +1164,8 @@
                     "comp_name": "HamburgerMovementComponent",
                     "active": true,
                     "comp_data": {
-                        "fallSpeed": 100.0
+                        "fallSpeed": 100.0,
+                        "scoreEvent": 3994665819
                     }
                 }
             ]
@@ -1152,7 +1192,7 @@
             "transform": {
                 "position": [
                     388.0,
-                    68.9000015258789,
+                    168.89999389648438,
                     0.0
                 ]
             },
@@ -1189,7 +1229,7 @@
             "transform": {
                 "position": [
                     388.0,
-                    189.3000030517578,
+                    289.29998779296875,
                     0.0
                 ]
             },
@@ -1226,7 +1266,7 @@
             "transform": {
                 "position": [
                     388.0,
-                    269.3999938964844,
+                    369.3999938964844,
                     0.0
                 ]
             },
@@ -1263,7 +1303,7 @@
             "transform": {
                 "position": [
                     388.0,
-                    348.79998779296875,
+                    448.79998779296875,
                     0.0
                 ]
             },
@@ -1300,7 +1340,7 @@
             "transform": {
                 "position": [
                     388.0,
-                    428.79998779296875,
+                    528.7999877929688,
                     0.0
                 ]
             },
@@ -1337,7 +1377,7 @@
             "transform": {
                 "position": [
                     388.0,
-                    535.0,
+                    635.0,
                     0.0
                 ]
             },
@@ -1349,7 +1389,7 @@
                     "comp_data": {
                         "offset": {
                             "x": 0.0,
-                            "y": -40.0
+                            "y": -80.0
                         },
                         "width": 80.0,
                         "height": 8.0
@@ -1388,7 +1428,7 @@
             "transform": {
                 "position": [
                     388.0,
-                    48.900001525878906,
+                    555.0,
                     0.0
                 ]
             },
@@ -1462,7 +1502,8 @@
                     "comp_name": "HamburgerMovementComponent",
                     "active": true,
                     "comp_data": {
-                        "fallSpeed": 100.0
+                        "fallSpeed": 100.0,
+                        "scoreEvent": 3994665819
                     }
                 }
             ]
@@ -1475,7 +1516,7 @@
             "transform": {
                 "position": [
                     388.0,
-                    249.39999389648438,
+                    575.0,
                     0.0
                 ]
             },
@@ -1549,7 +1590,8 @@
                     "comp_name": "HamburgerMovementComponent",
                     "active": true,
                     "comp_data": {
-                        "fallSpeed": 100.0
+                        "fallSpeed": 100.0,
+                        "scoreEvent": 3994665819
                     }
                 }
             ]
@@ -1562,7 +1604,7 @@
             "transform": {
                 "position": [
                     388.0,
-                    328.79998779296875,
+                    595.0,
                     0.0
                 ]
             },
@@ -1636,7 +1678,8 @@
                     "comp_name": "HamburgerMovementComponent",
                     "active": true,
                     "comp_data": {
-                        "fallSpeed": 100.0
+                        "fallSpeed": 100.0,
+                        "scoreEvent": 3994665819
                     }
                 }
             ]
@@ -1649,7 +1692,7 @@
             "transform": {
                 "position": [
                     388.0,
-                    495.0,
+                    615.0,
                     0.0
                 ]
             },
@@ -1723,7 +1766,8 @@
                     "comp_name": "HamburgerMovementComponent",
                     "active": true,
                     "comp_data": {
-                        "fallSpeed": 100.0
+                        "fallSpeed": 100.0,
+                        "scoreEvent": 3994665819
                     }
                 }
             ]
@@ -1736,7 +1780,7 @@
             "transform": {
                 "position": [
                     508.0,
-                    68.9000015258789,
+                    168.89999389648438,
                     0.0
                 ]
             },
@@ -1773,7 +1817,7 @@
             "transform": {
                 "position": [
                     508.0,
-                    149.1999969482422,
+                    249.1999969482422,
                     0.0
                 ]
             },
@@ -1810,7 +1854,7 @@
             "transform": {
                 "position": [
                     508.0,
-                    268.3999938964844,
+                    368.3999938964844,
                     0.0
                 ]
             },
@@ -1847,7 +1891,7 @@
             "transform": {
                 "position": [
                     508.0,
-                    349.0,
+                    449.0,
                     0.0
                 ]
             },
@@ -1884,7 +1928,7 @@
             "transform": {
                 "position": [
                     508.0,
-                    429.29998779296875,
+                    529.2999877929688,
                     0.0
                 ]
             },
@@ -1921,7 +1965,7 @@
             "transform": {
                 "position": [
                     508.0,
-                    535.0,
+                    635.0,
                     0.0
                 ]
             },
@@ -1933,7 +1977,7 @@
                     "comp_data": {
                         "offset": {
                             "x": 0.0,
-                            "y": 0.0
+                            "y": -80.0
                         },
                         "width": 80.0,
                         "height": 8.0
@@ -1972,7 +2016,7 @@
             "transform": {
                 "position": [
                     508.0,
-                    48.900001525878906,
+                    555.0,
                     0.0
                 ]
             },
@@ -2046,7 +2090,8 @@
                     "comp_name": "HamburgerMovementComponent",
                     "active": true,
                     "comp_data": {
-                        "fallSpeed": 100.0
+                        "fallSpeed": 100.0,
+                        "scoreEvent": 3994665819
                     }
                 }
             ]
@@ -2059,7 +2104,7 @@
             "transform": {
                 "position": [
                     508.0,
-                    129.1999969482422,
+                    575.0,
                     0.0
                 ]
             },
@@ -2133,7 +2178,8 @@
                     "comp_name": "HamburgerMovementComponent",
                     "active": true,
                     "comp_data": {
-                        "fallSpeed": 100.0
+                        "fallSpeed": 100.0,
+                        "scoreEvent": 3994665819
                     }
                 }
             ]
@@ -2146,7 +2192,7 @@
             "transform": {
                 "position": [
                     508.0,
-                    409.29998779296875,
+                    615.0,
                     0.0
                 ]
             },
@@ -2220,7 +2266,8 @@
                     "comp_name": "HamburgerMovementComponent",
                     "active": true,
                     "comp_data": {
-                        "fallSpeed": 100.0
+                        "fallSpeed": 100.0,
+                        "scoreEvent": 3994665819
                     }
                 }
             ]
@@ -2233,7 +2280,7 @@
             "transform": {
                 "position": [
                     508.0,
-                    248.39999389648438,
+                    595.0,
                     0.0
                 ]
             },
@@ -2307,7 +2354,8 @@
                     "comp_name": "HamburgerMovementComponent",
                     "active": true,
                     "comp_data": {
-                        "fallSpeed": 100.0
+                        "fallSpeed": 100.0,
+                        "scoreEvent": 3994665819
                     }
                 }
             ]
@@ -2320,7 +2368,7 @@
             "transform": {
                 "position": [
                     628.0,
-                    68.9000015258789,
+                    168.89999389648438,
                     0.0
                 ]
             },
@@ -2357,7 +2405,7 @@
             "transform": {
                 "position": [
                     628.0,
-                    148.0,
+                    248.0,
                     0.0
                 ]
             },
@@ -2394,7 +2442,7 @@
             "transform": {
                 "position": [
                     628.0,
-                    228.1999969482422,
+                    328.20001220703125,
                     0.0
                 ]
             },
@@ -2431,7 +2479,7 @@
             "transform": {
                 "position": [
                     628.0,
-                    307.29998779296875,
+                    407.29998779296875,
                     0.0
                 ]
             },
@@ -2468,7 +2516,7 @@
             "transform": {
                 "position": [
                     628.0,
-                    426.79998779296875,
+                    526.7999877929688,
                     0.0
                 ]
             },
@@ -2505,7 +2553,7 @@
             "transform": {
                 "position": [
                     628.0,
-                    535.0,
+                    635.0,
                     0.0
                 ]
             },
@@ -2517,7 +2565,7 @@
                     "comp_data": {
                         "offset": {
                             "x": 0.0,
-                            "y": 0.0
+                            "y": -80.0
                         },
                         "width": 80.0,
                         "height": 8.0
@@ -2556,7 +2604,7 @@
             "transform": {
                 "position": [
                     628.0,
-                    48.900001525878906,
+                    555.0,
                     0.0
                 ]
             },
@@ -2630,7 +2678,8 @@
                     "comp_name": "HamburgerMovementComponent",
                     "active": true,
                     "comp_data": {
-                        "fallSpeed": 100.0
+                        "fallSpeed": 100.0,
+                        "scoreEvent": 3994665819
                     }
                 }
             ]
@@ -2643,7 +2692,7 @@
             "transform": {
                 "position": [
                     628.0,
-                    128.0,
+                    506.79998779296875,
                     0.0
                 ]
             },
@@ -2717,7 +2766,8 @@
                     "comp_name": "HamburgerMovementComponent",
                     "active": true,
                     "comp_data": {
-                        "fallSpeed": 100.0
+                        "fallSpeed": 100.0,
+                        "scoreEvent": 3994665819
                     }
                 }
             ]
@@ -2730,7 +2780,7 @@
             "transform": {
                 "position": [
                     628.0,
-                    208.1999969482422,
+                    575.0,
                     0.0
                 ]
             },
@@ -2804,7 +2854,8 @@
                     "comp_name": "HamburgerMovementComponent",
                     "active": true,
                     "comp_data": {
-                        "fallSpeed": 100.0
+                        "fallSpeed": 100.0,
+                        "scoreEvent": 3994665819
                     }
                 }
             ]
@@ -2817,7 +2868,7 @@
             "transform": {
                 "position": [
                     628.0,
-                    287.29998779296875,
+                    615.0,
                     0.0
                 ]
             },
@@ -2891,7 +2942,8 @@
                     "comp_name": "HamburgerMovementComponent",
                     "active": true,
                     "comp_data": {
-                        "fallSpeed": 100.0
+                        "fallSpeed": 100.0,
+                        "scoreEvent": 3994665819
                     }
                 }
             ]
@@ -2917,7 +2969,7 @@
                         "linkedName": "Player_1",
                         "spawnPosition": [
                             468.5,
-                            392.0
+                            492.0
                         ]
                     }
                 }
@@ -2931,7 +2983,7 @@
             "transform": {
                 "position": [
                     348.5,
-                    152.0,
+                    291.0,
                     0.0
                 ]
             },
@@ -2943,7 +2995,7 @@
                     "comp_data": {
                         "file_name": "",
                         "overwritten": true,
-                        "render_layer": 1
+                        "render_layer": 2
                     }
                 },
                 {
@@ -3039,7 +3091,9 @@
                     "comp_id": 315,
                     "comp_name": "EnemyComponent",
                     "active": true,
-                    "comp_data": null
+                    "comp_data": {
+                        "scoreEvent": 3994665819
+                    }
                 }
             ]
         },
@@ -3051,7 +3105,7 @@
             "transform": {
                 "position": [
                     224.8000030517578,
-                    37.29999923706055,
+                    661.5999755859375,
                     0.0
                 ]
             },
@@ -3073,7 +3127,7 @@
                     "comp_data": {
                         "font_file_name": "Lingua.otf",
                         "font_size": 18,
-                        "text": "# Extra Lives: -97",
+                        "text": "# Extra Lives: -112",
                         "color": [
                             255,
                             255,
@@ -3134,8 +3188,8 @@
             "enabled": true,
             "transform": {
                 "position": [
-                    346.51568603515625,
-                    192.0,
+                    648.5,
+                    397.864013671875,
                     0.0
                 ]
             },
@@ -3147,7 +3201,7 @@
                     "comp_data": {
                         "file_name": "",
                         "overwritten": true,
-                        "render_layer": 1
+                        "render_layer": 2
                     }
                 },
                 {
@@ -3243,7 +3297,9 @@
                     "comp_id": 330,
                     "comp_name": "EnemyComponent",
                     "active": true,
-                    "comp_data": null
+                    "comp_data": {
+                        "scoreEvent": 3994665819
+                    }
                 }
             ]
         },
@@ -3268,7 +3324,7 @@
                         "linkedName": "HotDog_2",
                         "spawnPosition": [
                             706.8569946289063,
-                            32.0
+                            132.0
                         ]
                     }
                 }
@@ -3281,8 +3337,8 @@
             "enabled": true,
             "transform": {
                 "position": [
-                    588.3950805664063,
-                    272.0,
+                    606.6060180664063,
+                    491.0,
                     0.0
                 ]
             },
@@ -3294,7 +3350,7 @@
                     "comp_data": {
                         "file_name": "",
                         "overwritten": true,
-                        "render_layer": 1
+                        "render_layer": 2
                     }
                 },
                 {
@@ -3390,7 +3446,9 @@
                     "comp_id": 341,
                     "comp_name": "EnemyComponent",
                     "active": true,
-                    "comp_data": null
+                    "comp_data": {
+                        "scoreEvent": 3994665819
+                    }
                 }
             ]
         },
@@ -3415,7 +3473,7 @@
                         "linkedName": "Egg_1",
                         "spawnPosition": [
                             706.8569946289063,
-                            392.0
+                            492.0
                         ]
                     }
                 }
@@ -3428,8 +3486,8 @@
             "enabled": true,
             "transform": {
                 "position": [
-                    341.32855224609375,
-                    192.0,
+                    606.234130859375,
+                    491.0,
                     0.0
                 ]
             },
@@ -3441,7 +3499,7 @@
                     "comp_data": {
                         "file_name": "",
                         "overwritten": true,
-                        "render_layer": 1
+                        "render_layer": 2
                     }
                 },
                 {
@@ -3537,7 +3595,9 @@
                     "comp_id": 352,
                     "comp_name": "EnemyComponent",
                     "active": true,
-                    "comp_data": null
+                    "comp_data": {
+                        "scoreEvent": 3994665819
+                    }
                 }
             ]
         },
@@ -3562,7 +3622,7 @@
                         "linkedName": "HotDog_3",
                         "spawnPosition": [
                             228.87100219726563,
-                            392.0
+                            492.0
                         ]
                     }
                 }
@@ -3589,8 +3649,137 @@
                         "linkedName": "HotDog_1",
                         "spawnPosition": [
                             228.85400390625,
-                            32.0
+                            132.0
                         ]
+                    }
+                }
+            ]
+        },
+        {
+            "go_id": 109,
+            "parent_id": -1,
+            "go_name": "Score",
+            "enabled": true,
+            "transform": {
+                "position": [
+                    0.0,
+                    0.0,
+                    0.0
+                ]
+            },
+            "components": [
+                {
+                    "comp_id": 358,
+                    "comp_name": "ScoreComponent",
+                    "active": true,
+                    "comp_data": {
+                        "handles": [
+                            {
+                                "event_id": 3994665819,
+                                "index": 0,
+                                "valid": true
+                            }
+                        ],
+                        "event_ids": [
+                            3994665819
+                        ],
+                        "broadcast_events": 3355189647
+                    }
+                }
+            ]
+        },
+        {
+            "go_id": 110,
+            "parent_id": 109,
+            "go_name": "1UP",
+            "enabled": true,
+            "transform": {
+                "position": [
+                    269.5,
+                    22.200000762939453,
+                    0.0
+                ]
+            },
+            "components": [
+                {
+                    "comp_id": 360,
+                    "comp_name": "RenderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "file_name": "",
+                        "overwritten": true,
+                        "render_layer": 0
+                    }
+                },
+                {
+                    "comp_id": 361,
+                    "comp_name": "TextComponent",
+                    "active": true,
+                    "comp_data": {
+                        "font_file_name": "ByteBounce.ttf",
+                        "font_size": 50,
+                        "text": "1UP",
+                        "color": [
+                            255,
+                            0,
+                            0,
+                            255
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "go_id": 111,
+            "parent_id": 109,
+            "go_name": "Score_UI",
+            "enabled": true,
+            "transform": {
+                "position": [
+                    269.5,
+                    46.70000076293945,
+                    0.0
+                ]
+            },
+            "components": [
+                {
+                    "comp_id": 363,
+                    "comp_name": "RenderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "file_name": "",
+                        "overwritten": true,
+                        "render_layer": 0
+                    }
+                },
+                {
+                    "comp_id": 364,
+                    "comp_name": "TextComponent",
+                    "active": true,
+                    "comp_data": {
+                        "font_file_name": "ByteBounce.ttf",
+                        "font_size": 46,
+                        "text": "7450",
+                        "color": [
+                            255,
+                            255,
+                            255,
+                            255
+                        ]
+                    }
+                },
+                {
+                    "comp_id": 365,
+                    "comp_name": "ScoreDisplayComponent",
+                    "active": true,
+                    "comp_data": {
+                        "event_id": 3355189647,
+                        "handle": {
+                            "event_id": 3355189647,
+                            "index": 0,
+                            "valid": true
+                        },
+                        "text": ""
                     }
                 }
             ]

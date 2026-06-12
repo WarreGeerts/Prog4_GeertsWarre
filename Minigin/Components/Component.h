@@ -20,6 +20,7 @@ namespace ge {
         virtual void RenderGUI() {}
         void ChangeActive(const bool active) { m_IsActive = active; }
         [[nodiscard]] bool GetActive() const { return m_IsActive; }
+        GameObject *GetGameObject() const { return m_gameObject; }
         //overrides
         virtual bool IsOverwritingText() { return false; };
         //Functions for EditorGui Inspector

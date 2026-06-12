@@ -313,8 +313,10 @@ namespace game {
         const float halfTile = tileSize * 0.5f;
 
         auto tileAt = [&](const int c, const int r) -> int {
-            const float wx = static_cast<float>(c) * tileSize + halfTile;
-            const float wy = static_cast<float>(r) * tileSize + halfTile;
+            const float mapOffsetX = m_Grid->GetGameObject()->GetTransform()->GetPosition().x;
+            const float mapOffsetY = m_Grid->GetGameObject()->GetTransform()->GetPosition().y;
+            const float wx = mapOffsetX + static_cast<float>(c) * tileSize + halfTile;
+            const float wy = mapOffsetY + static_cast<float>(r) * tileSize + halfTile;
             return m_Grid->GetTileTypeAtWorldPosition(wx, wy);
         };
 
@@ -354,20 +356,23 @@ namespace game {
 
     AIControllerComponent::PathNode AIControllerComponent::WorldToTile(const float worldX, const float worldY) const {
         const float tileSize = static_cast<float>(m_Grid->GetTileSize()) * m_Grid->GetScale();
+        const float mapOffsetY = m_Grid->GetGameObject()->GetTransform()->GetPosition().y;
+        const float mapOffsetX = m_Grid->GetGameObject()->GetTransform()->GetPosition().x;
 
-        int col = static_cast<int>(std::floor(worldX / tileSize));
-
-        int row = static_cast<int>(std::floor((worldY + 4.0f - 1.0f) / tileSize));
+        int col = static_cast<int>(std::floor((worldX - mapOffsetX) / tileSize));
+        int row = static_cast<int>(std::floor((worldY + 4.0f - 1.0f - mapOffsetY) / tileSize));
 
         return {col, row};
     }
 
     glm::vec2 AIControllerComponent::TileCenter(const int col, const int row) const {
         const float tileSize = static_cast<float>(m_Grid->GetTileSize()) * m_Grid->GetScale();
+        const float mapOffsetY = m_Grid->GetGameObject()->GetTransform()->GetPosition().y;
+        const float mapOffsetX = m_Grid->GetGameObject()->GetTransform()->GetPosition().x;
 
         return {
-            static_cast<float>(col) * tileSize + tileSize * 0.5f,
-            static_cast<float>(row) * tileSize
+            mapOffsetX + static_cast<float>(col) * tileSize + tileSize * 0.5f,
+            mapOffsetY + static_cast<float>(row) * tileSize
         };
     }
 

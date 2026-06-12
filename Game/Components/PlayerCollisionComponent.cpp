@@ -38,13 +38,14 @@ namespace game {
 
         const float tileSize{static_cast<float>(m_Grid->GetTileSize()) * m_Grid->GetScale()};
         const float halfTile{tileSize * 0.5f};
+        const float mapOffsetY{m_Grid->GetGameObject()->GetTransform()->GetPosition().y};
 
         const float feetWorldY{bounds.y + bounds.w};
         const float centerWorldX{bounds.x + bounds.z * 0.5f};
         const float centerWorldY{bounds.y + bounds.w * 0.5f};
 
-        const int feetTileRow{static_cast<int>(std::floor(feetWorldY / tileSize))};
-        const float feetMidY{static_cast<float>(feetTileRow) * tileSize + halfTile};
+        const int feetTileRow{static_cast<int>(std::floor((feetWorldY - mapOffsetY) / tileSize))};
+        const float feetMidY{static_cast<float>(feetTileRow) * tileSize + halfTile + mapOffsetY};
 
         const int centerTile{m_Grid->GetTileTypeAtWorldPosition(centerWorldX, centerWorldY)};
         const int footTile{m_Grid->GetTileTypeAtWorldPosition(centerWorldX, feetMidY)};
@@ -92,16 +93,16 @@ namespace game {
             const float targetFeetY{targetY + bounds.w};
 
             if (intendedMove.y < -0.001f) {
-                const int nextFeetRow{static_cast<int>(std::floor(targetFeetY / tileSize))};
-                const float nextFeetMidY{static_cast<float>(nextFeetRow) * tileSize + halfTile};
+                const int nextFeetRow{static_cast<int>(std::floor((targetFeetY - mapOffsetY) / tileSize))};
+                const float nextFeetMidY{static_cast<float>(nextFeetRow) * tileSize + halfTile + mapOffsetY};
                 const int nextFootTile{m_Grid->GetTileTypeAtWorldPosition(centerWorldX, nextFeetMidY)};
 
                 if (nextFootTile == 3) {
-                    const float snapTopY{static_cast<float>(nextFeetRow) * tileSize};
+                    const float snapTopY{static_cast<float>(nextFeetRow) * tileSize + mapOffsetY};
                     currentPos.y = snapTopY - bounds.w;
                     m_IsClimbing = false;
                 } else {
-                    const int nextCenterTile = {
+                    const int nextCenterTile{
                         m_Grid->GetTileTypeAtWorldPosition(
                             centerWorldX, targetY + bounds.w * 0.5f)
                     };
@@ -113,12 +114,12 @@ namespace game {
                     }
                 }
             } else if (intendedMove.y > 0.001f) {
-                const int nextFeetRow{static_cast<int>(std::floor(targetFeetY / tileSize))};
-                const float nextFeetMidY{static_cast<float>(nextFeetRow) * tileSize + halfTile};
+                const int nextFeetRow{static_cast<int>(std::floor((targetFeetY - mapOffsetY) / tileSize))};
+                const float nextFeetMidY{static_cast<float>(nextFeetRow) * tileSize + halfTile + mapOffsetY};
                 const int nextFootTile{m_Grid->GetTileTypeAtWorldPosition(centerWorldX, nextFeetMidY)};
 
                 if (nextFootTile == 4 || nextFootTile == 1) {
-                    const float snapTopY{static_cast<float>(nextFeetRow) * tileSize};
+                    const float snapTopY{static_cast<float>(nextFeetRow) * tileSize + mapOffsetY};
                     currentPos.y = snapTopY - bounds.w;
                     m_IsClimbing = false;
                 } else {
@@ -142,8 +143,10 @@ namespace game {
                 const float targetRight{targetLeft + bounds.z};
 
                 const float currentFeetY{currentPos.y + bounds.w};
-                const int currentFeetRow{static_cast<int>(std::floor(currentFeetY / tileSize))};
-                const float currentFeetMidY{static_cast<float>(currentFeetRow) * tileSize + halfTile};
+                const int currentFeetRow{static_cast<int>(std::floor((currentFeetY - mapOffsetY) / tileSize))};
+                const float currentFeetMidY{
+                    static_cast<float>(currentFeetRow) * tileSize + halfTile + mapOffsetY
+                };
 
                 const int nextLeftTile{m_Grid->GetTileTypeAtWorldPosition(targetLeft, currentFeetMidY)};
                 const int nextRightTile{m_Grid->GetTileTypeAtWorldPosition(targetRight, currentFeetMidY)};
@@ -154,8 +157,8 @@ namespace game {
             }
 
             const float currentFeetY{currentPos.y + bounds.w};
-            const int currentFeetRow{static_cast<int>(std::floor(currentFeetY / tileSize))};
-            const float tileTopY{static_cast<float>(currentFeetRow) * tileSize};
+            const int currentFeetRow{static_cast<int>(std::floor((currentFeetY - mapOffsetY) / tileSize))};
+            const float tileTopY{static_cast<float>(currentFeetRow) * tileSize + mapOffsetY};
             currentPos.y = tileTopY - bounds.w;
         }
 

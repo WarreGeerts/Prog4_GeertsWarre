@@ -152,12 +152,12 @@ namespace game {
             m_PendingDrop = m_StackedParts.front();
             m_StackedParts.erase(m_StackedParts.begin());
             m_RemainingDrops = remainingDrops;
-            m_TriggerTimer = 0.5f;
+            m_TriggerTimer = 0.1f;
         } else if (remainingDrops > 0) {
             m_PendingDrop = arrivedPart;
             m_StackedParts.pop_back();
             m_RemainingDrops = remainingDrops - 1;
-            m_TriggerTimer = 0.5f;
+            m_TriggerTimer = 0.1f;
         }
     }
 

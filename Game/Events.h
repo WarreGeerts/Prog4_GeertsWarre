@@ -8,9 +8,9 @@ public:
     static constexpr ge::EventId P2_HEALTH_UPDATE{ge::make_sdbm_hash("P2HealthUpdate")};
     static constexpr ge::EventId P1_DMG{ge::make_sdbm_hash("P1Dmg")};
     static constexpr ge::EventId P2_DMG{ge::make_sdbm_hash("P2Dmg")};
-    static constexpr ge::EventId SCORE_UPDATE{ge::make_sdbm_hash("ScoreUpdate")};
     //enemies
-    static constexpr ge::EventId BURGER_FALL{ge::make_sdbm_hash("BurgerFall")};
+    static constexpr ge::EventId SCORE_UPDATE{ge::make_sdbm_hash("ScoreUpdate")};
+    static constexpr ge::EventId SCORE_UI_UPDATE{ge::make_sdbm_hash("ScoreUIUpdate")};
     //UI
     static constexpr ge::EventId A_BUTTON_PRESSED{ge::make_sdbm_hash("APressed")};
     static constexpr ge::EventId UI_SELECTION_UP{ge::make_sdbm_hash("UISelectionUp")};
@@ -26,9 +26,9 @@ public:
         em.RegisterEventName(P2_HEALTH_UPDATE, "P2HealthUpdate");
         em.RegisterEventName(P1_DMG, "P1Dmg");
         em.RegisterEventName(P2_DMG, "P2Dmg");
-        em.RegisterEventName(SCORE_UPDATE, "ScoreUpdate");
         //Enemies
-        em.RegisterEventName(BURGER_FALL, "BurgerFall");
+        em.RegisterEventName(SCORE_UPDATE, "ScoreUpdate");
+        em.RegisterEventName(SCORE_UI_UPDATE, "ScoreUIUpdate");
         //UI
         em.RegisterEventName(A_BUTTON_PRESSED, "APressed");
         em.RegisterEventName(UI_SELECTION_UP, "UISelectionUp");

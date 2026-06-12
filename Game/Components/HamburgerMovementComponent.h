@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include <unordered_set>
-
 #include "Components/Component.h"
+#include "Singletons/EventManager.h"
 
 namespace game {
     class HamburgerHolderComponent;
@@ -22,8 +22,7 @@ namespace game {
         float m_FallSpeed{100.f};
         HamburgerHolderComponent *m_IgnoredHolder{nullptr};
         int m_AmountOfDrops{0};
-        std::unordered_set<ge::GameObject*> m_HitEnemies{};
-
-
+        std::unordered_set<ge::GameObject *> m_HitEnemies{};
+        ge::EventId m_ScoreEventId = -1;
     };
 }

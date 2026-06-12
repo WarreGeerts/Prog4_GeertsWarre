@@ -110,5 +110,7 @@ namespace game {
             m_Handle.valid = data.value("valid", false);
         }
         m_Text = data.value("text", "# Lives: ");
+        SetHandle(m_ListenEventId);
+
     }
 }

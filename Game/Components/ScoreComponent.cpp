@@ -110,22 +110,18 @@ namespace game {
         m_Handles.clear();
         m_ListenEventIds.clear();
 
-        if (data.contains("handles") && data["handles"].is_array()) {
-            for (const auto &handleData: data["handles"]) {
-                int eventId = handleData.value("event_id", 0);
-                int index = handleData.value("index", 0);
-                bool valid = handleData.value("valid", false);
-                m_Handles.emplace_back(eventId, index, valid);
-            }
-        }
-
         if (data.contains("event_ids") && data["event_ids"].is_array()) {
-            for (const auto &idData: data["event_ids"]) {
-                m_ListenEventIds.push_back(idData.get<int>());
+            for (const auto &idData : data["event_ids"]) {
+                ge::EventId id = idData.get<int>();
+                m_ListenEventIds.push_back(id);
+
+                m_Handles.emplace_back(ge::EventManager::GetInstance().AttachEvent(
+                    id,
+                    [this](const ge::Event &event) { IncreaseScore(std::get<int>(event.args[0])); }
+                ));
             }
         }
         m_SendEventId = data.value("broadcast_events", -1);
-
     }
 
     void ScoreComponent::IncreaseScore(const int amount) {

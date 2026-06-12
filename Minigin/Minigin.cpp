@@ -69,7 +69,7 @@ namespace ge {
         g_window = SDL_CreateWindow(
             "Burger Time",
             1024,
-            576,
+            700,
             SDL_WINDOW_OPENGL
         );
         if (g_window == nullptr) {

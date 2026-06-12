@@ -36,10 +36,12 @@ namespace game {
                 pos.y = otherBounds.y - myBounds.w - (myBounds.y - pos.y);
                 m_gameObject->SetLocalPosition(pos);
 
+                ge::EventManager::GetInstance().SendEvent(ge::Event(m_ScoreEventId).AddInt(50));
+
                 holder->IsFinishedFalling(m_gameObject, m_AmountOfDrops);
-                m_IsFalling = false;
                 m_AmountOfDrops = 0;
                 m_HitEnemies.clear();
+                m_IsFalling = false;
                 m_IgnoredHolder = nullptr;
                 break;
             }
@@ -56,14 +58,26 @@ namespace game {
     nlohmann::ordered_json HamburgerMovementComponent::Serialize() const {
         nlohmann::ordered_json data;
         data["fallSpeed"] = m_FallSpeed;
+        data["scoreEvent"] = m_ScoreEventId;
         return data;
     }
 
     void HamburgerMovementComponent::Deserialize(const nlohmann::ordered_json &json) {
         m_FallSpeed = json.value("fallSpeed", 100.f);
+        m_ScoreEventId = json.value("scoreEvent", -1);
     }
 
     void HamburgerMovementComponent::InspectorGUI() {
         ImGui::InputFloat("Fall Speed", &m_FallSpeed);
+
+        auto &em = ge::EventManager::GetInstance();
+        const std::string name = em.GetEventName(m_ScoreEventId);
+        if (ImGui::BeginCombo("Score Event##HMC", name.c_str())) {
+            for (auto const &[id, eventName]: em.GetRegisteredEvents()) {
+                if (ImGui::Selectable(eventName.c_str(), id == m_ScoreEventId))
+                    m_ScoreEventId = id;
+            }
+            ImGui::EndCombo();
+        }
     }
 }

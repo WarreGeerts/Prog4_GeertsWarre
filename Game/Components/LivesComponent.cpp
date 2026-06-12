@@ -52,10 +52,16 @@ namespace game {
                 m_AccTime = 0;
             }
         }
+
+        if (m_Lives < 0) {
+            m_GameOver = true;
+        }
     }
 
     void LivesComponent::InspectorGUI() {
         auto &em = ge::EventManager::GetInstance();
+
+        ImGui::Checkbox("Invincible##LC", &m_Invincible);
 
         if (ImGui::InputInt("Lives", &m_Lives, 1, 1)) {
             em.SendEvent(ge::Event(m_SendEventId).AddInt(m_Lives));
@@ -137,6 +143,7 @@ namespace game {
             data["event_ids"].push_back(id);
         }
         data["broadcast_events"] = m_SendEventId;
+        data["invincible"] = m_Invincible;
         return data;
     }
 
@@ -159,6 +166,7 @@ namespace game {
             }
         }
         m_SendEventId = data.value("broadcast_events", -1);
+        m_Invincibility = data.value("invincible", false);
 
         for (const auto& id : m_ListenEventIds) {
             m_Handles.emplace_back(ge::EventManager::GetInstance().AttachEvent(
@@ -167,7 +175,7 @@ namespace game {
     }
 
     void LivesComponent::PlayerDie() {
-        if (m_Invincibility) return;
+        if (m_Invincibility || m_Invincible) return;
         m_Damaged = true;
         --m_Lives;
         ge::EventManager::GetInstance().SendEvent(ge::Event(m_SendEventId).AddInt(m_Lives));
