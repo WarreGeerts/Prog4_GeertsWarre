@@ -14,3 +14,4 @@
 #include "HamburgerMovementComponent.h"
 #include "HamburgerHolderComponent.h"
 #include "SpawnerComponent.h"
+#include "AIControllerComponent.h"

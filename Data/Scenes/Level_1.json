@@ -434,7 +434,7 @@
             "enabled": true,
             "transform": {
                 "position": [
-                    501.79266357421875,
+                    522.4824829101563,
                     312.0,
                     0.0
                 ]
@@ -1311,7 +1311,7 @@
                     "comp_data": {
                         "offset": {
                             "x": 0.0,
-                            "y": 0.0
+                            "y": -20.0
                         },
                         "width": 80.0,
                         "height": 8.0
@@ -2881,6 +2881,114 @@
                             468.5,
                             392.0
                         ]
+                    }
+                }
+            ]
+        },
+        {
+            "go_id": 98,
+            "parent_id": -1,
+            "go_name": "Test1_Copy",
+            "enabled": true,
+            "transform": {
+                "position": [
+                    228.5,
+                    368.0,
+                    0.0
+                ]
+            },
+            "components": [
+                {
+                    "comp_id": 307,
+                    "comp_name": "RenderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "file_name": "",
+                        "overwritten": true,
+                        "render_layer": 1
+                    }
+                },
+                {
+                    "comp_id": 308,
+                    "comp_name": "TransformComponent",
+                    "active": true,
+                    "comp_data": {
+                        "position": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ]
+                    }
+                },
+                {
+                    "comp_id": 309,
+                    "comp_name": "SpriteComponent",
+                    "active": true,
+                    "comp_data": {
+                        "file_name": "Sprites.png",
+                        "source_rect": [
+                            0.0,
+                            32.0,
+                            16.0,
+                            16.0
+                        ],
+                        "dist_rect": [
+                            0.0,
+                            0.0,
+                            40.0,
+                            40.0
+                        ],
+                        "scale": [
+                            2.5,
+                            2.5
+                        ],
+                        "sprite_frame": {
+                            "columns": 1,
+                            "rows": 1,
+                            "frame_size": {
+                                "width": 16.0,
+                                "height": 16.0
+                            },
+                            "spacing": {
+                                "spacing_x": 0.0,
+                                "spacing_y": 0.0
+                            },
+                            "offset": {
+                                "offset_x": 0.0,
+                                "offset_y": 32.0
+                            }
+                        },
+                        "frame_index": 0
+                    }
+                },
+                {
+                    "comp_id": 310,
+                    "comp_name": "ColliderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "offset": {
+                            "x": 0.0,
+                            "y": 0.0
+                        },
+                        "width": 40.0,
+                        "height": 40.0
+                    }
+                },
+                {
+                    "comp_id": 311,
+                    "comp_name": "PlayerCollisionComponent",
+                    "active": true,
+                    "comp_data": null
+                },
+                {
+                    "comp_id": 312,
+                    "comp_name": "AIControllerComponent",
+                    "active": true,
+                    "comp_data": {
+                        "speed": 60.0,
+                        "ladderBias": 0.3,
+                        "noReversal": false,
+                        "targetName": "Player_1"
                     }
                 }
             ]

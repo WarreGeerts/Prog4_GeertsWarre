@@ -18,6 +18,10 @@ namespace game {
         void InspectorGUI() override;
         [[nodiscard]] nlohmann::ordered_json Serialize() const override;
         void Deserialize(const nlohmann::ordered_json &data) override;
+        void SetClimbing(const bool climbing) {
+            m_IsClimbing = climbing;
+        }
+        bool IsClimbing() const { return m_IsClimbing; }
     private:
         ge::ColliderComponent* m_Collider{nullptr};
         CollisionGridComponent* m_Grid{nullptr};
