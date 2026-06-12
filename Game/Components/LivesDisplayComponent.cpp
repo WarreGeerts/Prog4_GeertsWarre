@@ -26,49 +26,96 @@ namespace game {
     }
 
     void LivesDisplayComponent::Update() {
-        if (!m_Handle.valid || m_Handle.index == 18446744073709551615ULL) {
+        if (!m_Handle.valid) {
             SetHandle(m_ListenEventId);
         }
 
         if (!m_IsActive) return;
 
-        if (NeedsUpdate()) {
+        if (!m_TextComponentRef) {
             m_TextComponentRef = m_gameObject->GetComponent<ge::TextComponent>();
         }
 
-        if (m_TextComponentRef && (m_Lives != m_PrevLives)) {
-            m_TextComponentRef->SetText(m_Text + std::to_string(m_Lives));
-            m_PrevLives = m_Lives;
+        if (m_DisplayMode == DisplayMode::Sprites && m_LifeSprites.empty()) {
+            m_LifeSprites.clear();
+            for (int i = 0; i < m_gameObject->GetChildCount(); ++i) {
+                m_LifeSprites.push_back(m_gameObject->GetChildAt(i));
+            }
+        }
+
+        if (m_DisplayMode == DisplayMode::Text) {
+            for (auto *sprite: m_LifeSprites) {
+                if (sprite->IsActive()) sprite->SetActive(false);
+            }
+
+            if (m_TextComponentRef && (m_Lives != m_PrevLives)) {
+                m_TextComponentRef->SetText(m_Text + std::to_string(m_Lives));
+                m_PrevLives = m_Lives;
+            }
+        } else if (m_DisplayMode == DisplayMode::Sprites) {
+            if (m_TextComponentRef && m_TextComponentRef->GetActive()) {
+                m_TextComponentRef->ChangeActive(false);
+            }
+
+            for (size_t i = 0; i < m_LifeSprites.size(); ++i) {
+                const int displayLives = (m_Lives < 0) ? 0 : m_Lives;
+
+                bool shouldBeVisible = (i < static_cast<size_t>(displayLives));
+
+                if (m_LifeSprites[i]->IsActive() != shouldBeVisible) {
+                    m_LifeSprites[i]->SetActive(shouldBeVisible);
+                }
+            }
         }
     }
 
     void LivesDisplayComponent::InspectorGUI() {
-        m_HasWarning = false;
-        if (!m_TextComponentRef) {
-            m_HasWarning = true;
-            if (ImGui::IsItemHovered()) {
-                ImGui::PushStyleColor(ImGuiCol_PopupBg, ImVec4(0.2f, 0.f, 0.f, 0.95f));
-
-                ImGui::BeginTooltip();
-                ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "WARNING: TextComponent is NEEDED");
-                ImGui::EndTooltip();
-
-                ImGui::PopStyleColor();
-            }
+        const char *modes[] = {"Text", "Sprites"};
+        int modeIndex = static_cast<int>(m_DisplayMode);
+        if (ImGui::Combo("Display Mode", &modeIndex, modes, IM_ARRAYSIZE(modes))) {
+            m_DisplayMode = static_cast<DisplayMode>(modeIndex);
         }
 
-        //Text
-        char textBuffer[256];
+        if (m_DisplayMode == DisplayMode::Text) {
+            m_HasWarning = false;
+            if (!m_TextComponentRef) {
+                m_HasWarning = true;
+                if (ImGui::IsItemHovered()) {
+                    ImGui::PushStyleColor(ImGuiCol_PopupBg, ImVec4(0.2f, 0.f, 0.f, 0.95f));
+
+                    ImGui::BeginTooltip();
+                    ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "WARNING: TextComponent is NEEDED");
+                    ImGui::EndTooltip();
+
+                    ImGui::PopStyleColor();
+                }
+            }
+
+            //Text
+            char textBuffer[256];
 
 #if defined(_WIN32) || defined(_WIN64)
-        strncpy_s(textBuffer, sizeof(textBuffer), m_Text.c_str(), _TRUNCATE);
+            strncpy_s(textBuffer, sizeof(textBuffer), m_Text.c_str(), _TRUNCATE);
 #else
-        strncpy(textBuffer, m_Text.c_str(), sizeof(textBuffer) - 1);
-        textBuffer[sizeof(textBuffer) - 1] = '\0';
+            strncpy(textBuffer, m_Text.c_str(), sizeof(textBuffer) - 1);
+            textBuffer[sizeof(textBuffer) - 1] = '\0';
 #endif
 
-        if (ImGui::InputText("Display Text##LD", textBuffer, sizeof(textBuffer))) {
-            m_Text = textBuffer;
+            if (ImGui::InputText("Display Text##LD", textBuffer, sizeof(textBuffer))) {
+                m_Text = textBuffer;
+            }
+        } else {
+            if (ImGui::Button("Refresh Sprite Cache")) {
+                if (m_DisplayMode == DisplayMode::Sprites && m_LifeSprites.empty()) {
+                    m_LifeSprites.clear();
+                    for (int i = 0; i < m_gameObject->GetChildCount(); ++i) {
+                        m_LifeSprites.push_back(m_gameObject->GetChildAt(i));
+                    }
+                }
+            }
+
+            ImGui::Text("Using children as sprites.");
+            ImGui::Text("Ensure child order matches life count.");
         }
 
         ImGui::InputInt("Lives", &m_Lives, 0, 0, ImGuiInputTextFlags_ReadOnly);
@@ -104,6 +151,7 @@ namespace game {
             {"valid", m_Handle.valid},
         };
         data["text"] = m_Text;
+        data["display_mode"] = static_cast<int>(m_DisplayMode);
         return data;
     }
 
@@ -116,7 +164,7 @@ namespace game {
             m_Handle.valid = data.value("valid", false);
         }
         m_Text = data.value("text", "# Lives: ");
-
+        m_DisplayMode = static_cast<DisplayMode>(data.value("display_mode", 0));
         SetHandle(m_ListenEventId);
     }
 

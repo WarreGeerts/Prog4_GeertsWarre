@@ -4,6 +4,7 @@
 #include "Components/EngineComponents.h"
 
 namespace game {
+    enum class DisplayMode { Text, Sprites };
     class LivesDisplayComponent final : public ge::Component {
     public:
         explicit LivesDisplayComponent(ge::GameObject *go) : Component(go, "LivesDisplayComponent") {}
@@ -27,5 +28,7 @@ namespace game {
         ge::EventId m_ListenEventId{};
         ge::EventHandle m_Handle{};
         std::string m_Text{"# Lives: "};
+        DisplayMode m_DisplayMode = DisplayMode::Text;
+        std::vector<ge::GameObject*> m_LifeSprites;
     };
 }
