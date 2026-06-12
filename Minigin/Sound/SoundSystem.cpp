@@ -18,4 +18,10 @@ namespace ge {
     void LoggingSoundSystem::Load(const sound_id id, const std::string &path) {
         SDL_Log("LoggingSoundSystem: Load requested for %s", path.c_str());
         m_RealSs->Load(id, path);
-    }}
+    }
+
+    void LoggingSoundSystem::SetMasterVolume(float volume) {
+        SDL_Log("Setting master volume to %f", volume);
+        m_RealSs->SetMasterVolume(volume);
+    }
+}

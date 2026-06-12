@@ -10,6 +10,7 @@ namespace game {
         void Initialize();
         void ChangeState(std::unique_ptr<GameState> newState);
         void Update();
+        void NextLevel();
 
     private:
         friend Singleton<GSManager>;

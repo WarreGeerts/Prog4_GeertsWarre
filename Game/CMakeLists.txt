@@ -51,6 +51,8 @@
         Components/EnemyComponent.cpp
         Components/EnemyComponent.h
         GameUpdater.h
+        Components/HamburgerManager.cpp
+        Components/HamburgerManager.h
 )
 
 target_include_directories(${TARGET_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})

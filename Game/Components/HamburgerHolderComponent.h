@@ -12,6 +12,7 @@ namespace game {
         void Deserialize(const nlohmann::ordered_json &data) override;
         void InspectorGUI() override;
         void IsFinishedFalling(ge::GameObject *arrivedPart, int remainingDrops);
+        [[nodiscard]] bool IsFull(int requiredCount) const;
 
     private:
         void DropPendingPart();

@@ -31,6 +31,6 @@ namespace ge {
         void PlayMusic(sound_id id, float volume, bool loop) override;
         void Update() override;
         void Load(sound_id, const std::string&) override;
-        void SetMasterVolume(float) override{};
+        void SetMasterVolume(float volume) override;
     };
 }

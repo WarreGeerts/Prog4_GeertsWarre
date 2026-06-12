@@ -145,7 +145,6 @@ namespace game {
             data["event_ids"].push_back(id);
         }
         data["broadcast_events"] = m_SendEventId;
-        data["invincible"] = m_Invincible;
         return data;
     }
 
@@ -168,7 +167,6 @@ namespace game {
             }
         }
         m_SendEventId = data.value("broadcast_events", -1);
-        m_Invincibility = data.value("invincible", false);
 
         for (const auto& id : m_ListenEventIds) {
             m_Handles.emplace_back(ge::EventManager::GetInstance().AttachEvent(

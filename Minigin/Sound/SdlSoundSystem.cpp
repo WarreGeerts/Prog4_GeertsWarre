@@ -40,7 +40,7 @@ namespace ge {
         std::queue<SoundRequest> queue;
         bool running{true};
         float masterVolume = 1.0f;
-        std::vector<SDL_AudioStream*> activeStreams;
+        std::vector<SDL_AudioStream *> activeStreams;
 #ifndef __EMSCRIPTEN__
         std::condition_variable CV;
         std::thread audioThread;
@@ -86,18 +86,17 @@ namespace ge {
         void CleanupStreams() {
             activeStreams.erase(
                 std::remove_if(activeStreams.begin(), activeStreams.end(),
-                [](SDL_AudioStream* s) {
-                    if (SDL_GetAudioStreamQueued(s) == 0) {
-                        SDL_DestroyAudioStream(s);
-                        return true;
-                    }
-                    return false;
-                }),
+                               [](SDL_AudioStream *s) {
+                                   if (SDL_GetAudioStreamQueued(s) == 0) {
+                                       SDL_DestroyAudioStream(s);
+                                       return true;
+                                   }
+                                   return false;
+                               }),
                 activeStreams.end());
         }
 
         void RefillMusic(SDL_AudioStream *stream) {
-            std::lock_guard<std::mutex> lock(mutex);
             if (isLooping && sounds.contains(currentMusicId)) {
                 const auto &data = sounds[currentMusicId];
                 SDL_PutAudioStreamData(stream, data.buffer, static_cast<int>(data.length));
@@ -136,7 +135,6 @@ namespace ge {
         }
 #endif
         void PlaySoundInternal(const sound_id id, const float volume) {
-            std::lock_guard<std::mutex> lock(mutex);
             if (!sounds.contains(id)) {
                 SDL_Log("Error: Sound ID %d not loaded!", id);
                 return;
@@ -238,7 +236,7 @@ namespace ge {
             SDL_SetAudioStreamGain(pImpl->musicStream, pImpl->masterVolume);
         }
 
-        for (auto* stream : pImpl->activeStreams) {
+        for (auto *stream: pImpl->activeStreams) {
             SDL_SetAudioStreamGain(stream, pImpl->masterVolume);
         }
     }

@@ -1,6 +1,7 @@
 ﻿#include "HamburgerHolderComponent.h"
 #include <SDL3/SDL_log.h>
 #include "GameObject.h"
+#include "HamburgerManager.h"
 #include "HamburgerMovementComponent.h"
 #include "Components/CharacterControllerComponent.h"
 #include "Components/ColliderComponent.h"
@@ -34,6 +35,14 @@ namespace game {
                         break;
                     }
                 }
+            }
+
+            if (!m_FallThrough) {
+                auto *manager = ge::SceneManager::GetInstance().GetSceneByIdx(
+                            ge::SceneManager::GetInstance().GetCurrentSceneIdx()).GetGameObjectByName(
+                            "HamburgerManager")
+                        .GetComponent<HamburgerManager>();
+                if (manager) manager->RegisterPlate(this);
             }
         }
 
@@ -166,7 +175,10 @@ namespace game {
             m_RemainingDrops = remainingDrops - 1;
             m_TriggerTimer = 0.1f;
         }
+    }
 
+    bool HamburgerHolderComponent::IsFull(int requiredCount) const {
+        return m_StackedParts.size() >= static_cast<size_t>(requiredCount);
     }
 
     void HamburgerHolderComponent::DropPendingPart() {

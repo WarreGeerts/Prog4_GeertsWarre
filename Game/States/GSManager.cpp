@@ -1,5 +1,7 @@
 ﻿#include "GSManager.h"
+#include "GSGame.h"
 #include "GSMainMenu.h"
+#include "../../cmake-build-debug/_deps/sdl3-src/include/SDL3/SDL_log.h"
 
 namespace game {
     void GSManager::Initialize() {
@@ -17,5 +19,12 @@ namespace game {
 
     void GSManager::Update() {
         if (m_CurrentGameState) m_CurrentGameState->Update();
+    }
+
+    void GSManager::NextLevel() {
+        SDL_Log("next level . . .");
+        if (dynamic_cast<GSGame *>(m_CurrentGameState.get()) != nullptr) {
+            m_CurrentGameState->NextLevel();
+        }
     }
 }
