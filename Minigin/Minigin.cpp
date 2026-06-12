@@ -10,6 +10,7 @@
 #include <SDL3_ttf/SDL_ttf.h>
 #include "Minigin.h"
 #include <thread>
+#include "EngineUpdater.h"
 #include "Input/InputManager.h"
 #include "Singletons/SceneManager.h"
 #include "Singletons/Renderer.h"
@@ -21,41 +22,40 @@
 #include "Sound/SdlSoundSystem.h"
 #include "Sound/ServiceLocator.h"
 SDL_Window *g_window{};
+//visualize debugging for sounds
+#define DBG false
 
-    //visualize debugging for sounds
-#define DBG true
-
-    void LogSDLVersion(const std::string &message, int major, int minor, int patch) {
+void LogSDLVersion(const std::string &message, int major, int minor, int patch) {
 #if WIN32
-        std::stringstream ss;
-        ss << message << major << "." << minor << "." << patch << "\n";
-        OutputDebugString(ss.str().c_str());
+    std::stringstream ss;
+    ss << message << major << "." << minor << "." << patch << "\n";
+    OutputDebugString(ss.str().c_str());
 #else
-        std::cout << message << major << "." << minor << "." << patch << "\n";
+    std::cout << message << major << "." << minor << "." << patch << "\n";
 #endif
-    }
+}
 #ifdef __EMSCRIPTEN__
 #include "emscripten.h"
-    void LoopCallback(void *arg) {
-        static_cast<ge::Minigin *>(arg)->Update();
-    }
+void LoopCallback(void *arg) {
+    static_cast<ge::Minigin *>(arg)->Update();
+}
 #endif
-    // Why bother with this? Because sometimes students have a different SDL version installed on their pc.
-    // That is not a problem unless for some reason the dll's from this project are not copied next to the exe.
-    // These entries in the debug output help to identify that issue.
-    void PrintSDLVersion() {
-        LogSDLVersion("Compiled with SDL", SDL_MAJOR_VERSION, SDL_MINOR_VERSION, SDL_MICRO_VERSION);
-        int version = SDL_GetVersion();
-        LogSDLVersion("Linked with SDL ", SDL_VERSIONNUM_MAJOR(version), SDL_VERSIONNUM_MINOR(version),
-                      SDL_VERSIONNUM_MICRO(version));
-        // LogSDLVersion("Compiled with SDL_image ",SDL_IMAGE_MAJOR_VERSION, SDL_IMAGE_MINOR_VERSION, SDL_IMAGE_MICRO_VERSION);
-        // version = IMG_Version();
-        // LogSDLVersion("Linked with SDL_image ", SDL_VERSIONNUM_MAJOR(version), SDL_VERSIONNUM_MINOR(version), SDL_VERSIONNUM_MICRO(version));
-        LogSDLVersion("Compiled with SDL_ttf ", SDL_TTF_MAJOR_VERSION, SDL_TTF_MINOR_VERSION,SDL_TTF_MICRO_VERSION);
-        version = TTF_Version();
-        LogSDLVersion("Linked with SDL_ttf ", SDL_VERSIONNUM_MAJOR(version), SDL_VERSIONNUM_MINOR(version),
-                      SDL_VERSIONNUM_MICRO(version));
-    }
+// Why bother with this? Because sometimes students have a different SDL version installed on their pc.
+// That is not a problem unless for some reason the dll's from this project are not copied next to the exe.
+// These entries in the debug output help to identify that issue.
+void PrintSDLVersion() {
+    LogSDLVersion("Compiled with SDL", SDL_MAJOR_VERSION, SDL_MINOR_VERSION, SDL_MICRO_VERSION);
+    int version = SDL_GetVersion();
+    LogSDLVersion("Linked with SDL ", SDL_VERSIONNUM_MAJOR(version), SDL_VERSIONNUM_MINOR(version),
+                  SDL_VERSIONNUM_MICRO(version));
+    // LogSDLVersion("Compiled with SDL_image ",SDL_IMAGE_MAJOR_VERSION, SDL_IMAGE_MINOR_VERSION, SDL_IMAGE_MICRO_VERSION);
+    // version = IMG_Version();
+    // LogSDLVersion("Linked with SDL_image ", SDL_VERSIONNUM_MAJOR(version), SDL_VERSIONNUM_MINOR(version), SDL_VERSIONNUM_MICRO(version));
+    LogSDLVersion("Compiled with SDL_ttf ", SDL_TTF_MAJOR_VERSION, SDL_TTF_MINOR_VERSION,SDL_TTF_MICRO_VERSION);
+    version = TTF_Version();
+    LogSDLVersion("Linked with SDL_ttf ", SDL_VERSIONNUM_MAJOR(version), SDL_VERSIONNUM_MINOR(version),
+                  SDL_VERSIONNUM_MICRO(version));
+}
 
 namespace ge {
     Minigin::Minigin(const std::filesystem::path &dataPath) {
@@ -88,7 +88,6 @@ namespace ge {
     }
 
     void Minigin::Run(const std::function<void()> &load) {
-
         //engine components
         ComponentFactory::GetInstance().Register<TransformComponent>("TransformComponent");
         ComponentFactory::GetInstance().Register<RenderComponent>("RenderComponent");
@@ -98,12 +97,6 @@ namespace ge {
         ComponentFactory::GetInstance().Register<CharacterControllerComponent>("CharacterControllerComponent");
         ComponentFactory::GetInstance().Register<RotateComponent>("RotateComponent");
         ComponentFactory::GetInstance().Register<ColliderComponent>("ColliderComponent");
-
-        load(); //initialization (once run)
-
-        //controllers
-        InputManager::GetInstance().AddController(0);
-        InputManager::GetInstance().AddController(1);
 
         //sound
         auto sdl_ss{std::make_unique<SdlSoundSystem>()};
@@ -115,8 +108,11 @@ namespace ge {
         ServiceLocator::RegisterSoundSystem(std::move(sdl_ss));
 #endif
 
-        //TODO: put inside component for sounds and or music. And then make it so you can link sounds to events that happen instead of putting them inside code
-        ServiceLocator::GetSoundSystem().PlayMusic(0, 0.5f, true);
+        load(); //initialization (once run)
+
+        //controllers
+        InputManager::GetInstance().AddController(0);
+        InputManager::GetInstance().AddController(1);
 
         //Time
         DeltaTime::GetInstance().SetFPS(60);
@@ -137,14 +133,18 @@ namespace ge {
     //uses DeltaTime
     void Minigin::Update() //main loop
     {
+        //DeltaTime
+        DeltaTime::GetInstance().StartDeltaTime();
+
+        //Update states
+        EngineUpdater::Update();
+
         //Inputs
         m_quit = !InputManager::GetInstance().ProcessInput();
 
-        // 2. Sound System Service (Crucial for Web!)
-        ServiceLocator::GetSoundSystem().Update();
 
-        //DeltaTime
-        DeltaTime::GetInstance().StartDeltaTime();
+        //Sound System Service
+        ServiceLocator::GetSoundSystem().Update();
 
         while (DeltaTime::GetInstance().Lag() >= DeltaTime::GetInstance().FixedTime()) {
             FixedUpdate(); //Loop has to use FixedDeltaTime

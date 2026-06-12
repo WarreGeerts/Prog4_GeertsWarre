@@ -50,6 +50,7 @@
         Components/DamageComponent.h
         Components/EnemyComponent.cpp
         Components/EnemyComponent.h
+        GameUpdater.h
 )
 
 target_include_directories(${TARGET_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})

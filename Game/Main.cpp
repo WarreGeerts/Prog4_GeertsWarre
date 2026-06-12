@@ -1,8 +1,15 @@
 #include <SDL3/SDL_main.h>
 
+#include "EngineUpdater.h"
 #include "Events.h"
+#include "GameUpdater.h"
+#include "Commands/MuteCommand.h"
+#include "Commands/SkipLevelCommand.h"
+#include "Input/InputManager.h"
+#include "SDL3/SDL_log.h"
 #include "Singletons/RealTimeEditor/ComponentFactory.h"
 #include "Singletons/RealTimeEditor/SceneSerializer.h"
+#include "Sound/ServiceLocator.h"
 #include "States/GMSManager.h"
 #include "States/GSManager.h"
 #if _DEBUG && __has_include(<vld.h>)
@@ -73,19 +80,40 @@ namespace game {
 
         auto &gameModeStateManager = GMSManager::GetInstance();
         gameModeStateManager.Initialize();
+
+        //Debug commands
+        auto &Input{ge::InputManager::GetInstance()};
+        Input.AddBinding({ge::KeyState::Down, static_cast<int>(SDL_SCANCODE_F1), true},
+                             std::make_unique<SkipLevelCommand>());
+        Input.AddBinding({ge::KeyState::Down, static_cast<int>(SDL_SCANCODE_F2), true},
+                             std::make_unique<MuteCommand>());
+
+        //Sounds
+        auto &ss = ge::ServiceLocator::GetSoundSystem();
+
+        ss.Load(0, "BGM.wav");
+        ss.Load(1, "Game Start.wav");
+        ss.Load(2, "Round Clear.wav");
+        ss.Load(3, "Death.wav");
+        ss.Load(4, "Burger Step.wav");
+        ss.Load(5, "Burger Fall.wav");
+        ss.Load(6, "Burger Land.wav");
+        ss.Load(7, "Enemy Squahed.wav");
     }
 }
 
-    int main(int, char *[]) {
+int main(int, char *[]) {
 #if __EMSCRIPTEN__
-        fs::path data_location = "";
+    fs::path data_location = "";
 #else
-        fs::path data_location = "./Data/";
-        if (!fs::exists(data_location))
-            data_location = "../Data/";
+    fs::path data_location = "./Data/";
+    if (!fs::exists(data_location))
+        data_location = "../Data/";
 #endif
-        ge::Minigin engine(data_location);
-        engine.Run(game::load);
+    ge::Minigin engine(data_location);
+    auto gameUpdater = std::make_unique<GameUpdater>();
+    ge::EngineUpdater::SetUpdater(gameUpdater.get());
+    engine.Run(game::load);
 
-        return 0;
-    }
+    return 0;
+}

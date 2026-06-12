@@ -18,6 +18,7 @@ namespace game {
         void Deserialize(const nlohmann::ordered_json &data) override;
         void PlayerDie();
         bool GameOver() const { return m_GameOver; }
+        bool Damaged() const { return m_Damaged; }
 
     private:
         std::vector<ge::EventId> m_ListenEventIds{};

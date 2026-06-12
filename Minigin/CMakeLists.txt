@@ -57,6 +57,12 @@ add_library(Minigin STATIC
         ${implot_SOURCE_DIR}/implot_items.cpp
         Components/ColliderComponent.cpp
         Components/ColliderComponent.h
+        Updatable.h
+        EngineUpdater.h
+        ../Game/Commands/MuteCommand.cpp
+        ../Game/Commands/MuteCommand.h
+        ../Game/Commands/SkipLevelCommand.cpp
+        ../Game/Commands/SkipLevelCommand.h
 )
 
 # Propagate headers and dependencies to anyone who links to us (the Game)

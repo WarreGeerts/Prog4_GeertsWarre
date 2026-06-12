@@ -6,6 +6,7 @@
 #include "Components/ColliderComponent.h"
 #include "Singletons/DeltaTime.h"
 #include "Singletons/SceneManager.h"
+#include "Sound/ServiceLocator.h"
 
 namespace game {
     void HamburgerHolderComponent::Update() {
@@ -61,6 +62,9 @@ namespace game {
                         m_PendingDrop = m_StackedParts.back();
                         m_StackedParts.pop_back();
                         m_RemainingDrops = 0;
+                        auto &ss = ge::ServiceLocator::GetSoundSystem();
+                        ss.Play(4, 0.5f);
+                        ss.Play(5, 0.5f);
                         DropPendingPart();
                     }
                     break;
@@ -142,6 +146,9 @@ namespace game {
 
         auto *myCollider = m_gameObject->GetComponent<ge::ColliderComponent>();
 
+        auto &ss = ge::ServiceLocator::GetSoundSystem();
+        ss.Play(6, 0.5f);
+
         if (!m_FallThrough) {
             auto arrivedCollider = arrivedPart->GetComponent<ge::ColliderComponent>();
             myCollider->IncreaseOffset(0, -arrivedCollider->GetWorldBounds().w);
@@ -159,6 +166,7 @@ namespace game {
             m_RemainingDrops = remainingDrops - 1;
             m_TriggerTimer = 0.1f;
         }
+
     }
 
     void HamburgerHolderComponent::DropPendingPart() {

@@ -1,4 +1,5 @@
 ﻿#include "SdlSoundSystem.h"
+#include <algorithm>
 #include <SDL3/SDL.h>
 #include <map>
 #include <ranges>
@@ -38,6 +39,8 @@ namespace ge {
         std::mutex mutex;
         std::queue<SoundRequest> queue;
         bool running{true};
+        float masterVolume = 1.0f;
+        std::vector<SDL_AudioStream*> activeStreams;
 #ifndef __EMSCRIPTEN__
         std::condition_variable CV;
         std::thread audioThread;
@@ -45,6 +48,11 @@ namespace ge {
         Impl() {
 #ifndef __EMSCRIPTEN__
             audioThread = std::thread(&Impl::ProcessQueue, this);
+            if (audioThread.joinable()) {
+                SDL_Log("Audio thread started successfully");
+            } else {
+                SDL_Log("CRITICAL: Audio thread failed to start!");
+            }
 #endif
         }
 
@@ -75,6 +83,19 @@ namespace ge {
             impl->RefillMusic(stream);
         }
 
+        void CleanupStreams() {
+            activeStreams.erase(
+                std::remove_if(activeStreams.begin(), activeStreams.end(),
+                [](SDL_AudioStream* s) {
+                    if (SDL_GetAudioStreamQueued(s) == 0) {
+                        SDL_DestroyAudioStream(s);
+                        return true;
+                    }
+                    return false;
+                }),
+                activeStreams.end());
+        }
+
         void RefillMusic(SDL_AudioStream *stream) {
             std::lock_guard<std::mutex> lock(mutex);
             if (isLooping && sounds.contains(currentMusicId)) {
@@ -100,34 +121,43 @@ namespace ge {
                 }
             }
         }
-
 #ifndef __EMSCRIPTEN__
         void ProcessQueue() {
             while (true) {
                 std::unique_lock<std::mutex> lock(mutex);
                 CV.wait(lock, [this] { return !queue.empty() || !running; });
                 if (!running && queue.empty()) return;
+
                 lock.unlock();
                 ProcessQueueOnce();
+                std::lock_guard<std::mutex> cleanLock(mutex);
+                CleanupStreams();
             }
         }
 #endif
-
         void PlaySoundInternal(const sound_id id, const float volume) {
-            if (!sounds.contains(id)) Load(id);
+            std::lock_guard<std::mutex> lock(mutex);
+            if (!sounds.contains(id)) {
+                SDL_Log("Error: Sound ID %d not loaded!", id);
+                return;
+            }
             const auto &[buffer, length, spec] = sounds[id];
-
+            float finalVolume = volume * masterVolume;
             SDL_AudioStream *stream = SDL_OpenAudioDeviceStream(
                 SDL_AUDIO_DEVICE_DEFAULT_PLAYBACK, &spec, nullptr, nullptr);
             if (stream) {
-                SDL_SetAudioStreamGain(stream, volume);
+                SDL_SetAudioStreamGain(stream, finalVolume);
                 SDL_PutAudioStreamData(stream, buffer, static_cast<int>(length));
                 SDL_ResumeAudioStreamDevice(stream);
+                activeStreams.push_back(stream);
             }
         }
 
         void PlayMusicInternal(const sound_id id, const float volume, const bool loop) {
-            if (!sounds.contains(id)) Load(id);
+            if (!sounds.contains(id)) {
+                SDL_Log("Error: Sound ID %d not loaded!", id);
+                return;
+            }
             const auto &[buffer, length, spec] = sounds[id];
 
             if (musicStream) {
@@ -142,7 +172,10 @@ namespace ge {
                 SDL_SetAudioStreamGain(musicStream, volume);
 
                 SDL_PutAudioStreamData(musicStream, buffer, static_cast<int>(length));
-                SDL_ResumeAudioStreamDevice(musicStream);
+
+                if (!SDL_ResumeAudioStreamDevice(musicStream)) {
+                    SDL_Log("Failed to resume audio device: %s", SDL_GetError());
+                }
             }
         }
 
@@ -152,27 +185,6 @@ namespace ge {
                     const auto &data = sounds[currentMusicId];
                     SDL_PutAudioStreamData(musicStream, data.buffer, static_cast<int>(data.length));
                 }
-            }
-        }
-
-        void Load(sound_id id) {
-            std::string filename;
-            switch (static_cast<SoundID>(id)) {
-                case SoundID::BGM: filename = "BGM.wav";
-                    break;
-                case SoundID::CoinPickup: filename = "Coin.wav";
-                    break;
-                case SoundID::Death: filename = "Death.wav";
-                    break;
-            }
-
-            const std::string path = "Data/Sounds/" + filename;
-            SoundData data{};
-            if (SDL_LoadWAV(path.c_str(), &data.spec, &data.buffer, &data.length)) {
-                sounds[id] = data;
-                SDL_Log("Successfully loaded: %s", path.c_str());
-            } else {
-                SDL_Log("SDL_LoadWAV failed: %s", SDL_GetError());
             }
         }
     };
@@ -188,7 +200,7 @@ namespace ge {
 #ifndef __EMSCRIPTEN__
         pImpl->CV.notify_one();
 #endif
-        }
+    }
 
     void SdlSoundSystem::PlayMusic(const sound_id id, const float volume, const bool loop) {
         std::lock_guard<std::mutex> lock(pImpl->mutex);
@@ -196,12 +208,38 @@ namespace ge {
 #ifndef __EMSCRIPTEN__
         pImpl->CV.notify_one();
 #endif
-        }
+    }
 
     void SdlSoundSystem::Update() {
 #ifdef __EMSCRIPTEN__
         pImpl->ProcessQueueOnce();
         pImpl->UpdateMusicLoop();
 #endif
+    }
+
+    void SdlSoundSystem::Load(sound_id id, const std::string &filename) {
+        const std::string path = "Data/Sounds/" + filename;
+
+        Impl::SoundData data{};
+        if (SDL_LoadWAV(path.c_str(), &data.spec, &data.buffer, &data.length)) {
+            std::lock_guard<std::mutex> lock(pImpl->mutex);
+            pImpl->sounds[id] = data;
+            SDL_Log("Loaded sound: %s", path.c_str());
+        } else {
+            SDL_Log("Failed to load: %s", SDL_GetError());
+        }
+    }
+
+    void SdlSoundSystem::SetMasterVolume(float volume) {
+        std::lock_guard<std::mutex> lock(pImpl->mutex);
+        pImpl->masterVolume = std::clamp(volume, 0.0f, 1.0f);
+
+        if (pImpl->musicStream) {
+            SDL_SetAudioStreamGain(pImpl->musicStream, pImpl->masterVolume);
+        }
+
+        for (auto* stream : pImpl->activeStreams) {
+            SDL_SetAudioStreamGain(stream, pImpl->masterVolume);
+        }
     }
 }

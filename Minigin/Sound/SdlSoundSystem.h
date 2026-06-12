@@ -17,6 +17,9 @@ namespace ge {
         void Play(sound_id id, float volume) override;
         void PlayMusic(sound_id id, float volume, bool loop) override;
         void Update() override;
+        void Load(sound_id id, const std::string& filename) override;
+        void SetMasterVolume(float volume);
+
 
     private:
         struct Impl;

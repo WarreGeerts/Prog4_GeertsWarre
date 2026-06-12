@@ -3,6 +3,8 @@
 #include "GameObject.h"
 #include "SDL3/SDL_log.h"
 #include "Singletons/DeltaTime.h"
+#include "Sound/SdlSoundSystem.h"
+#include "Sound/ServiceLocator.h"
 
 namespace game {
     LivesComponent::LivesComponent(ge::GameObject *go, const std::vector<ge::EventId> &listenEventIds,
@@ -178,6 +180,8 @@ namespace game {
         if (m_Invincibility || m_Invincible) return;
         m_Damaged = true;
         --m_Lives;
+        auto &ss = ge::ServiceLocator::GetSoundSystem();
+        ss.Play(3, 0.5f);
         ge::EventManager::GetInstance().SendEvent(ge::Event(m_SendEventId).AddInt(m_Lives));
     }
 }

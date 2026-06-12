@@ -15,30 +15,5 @@ namespace ge {
     };
 
     //DEBUG COMMANDS
-    class DieCommand : public GameActorCommand {
-    public:
-        explicit DieCommand(GameObject *actor, EventId playerDieEvent);
-        void Execute() override;
 
-    private:
-        EventId m_PlayerDieEvent{};
-    };
-
-    class ScoreCommandLow : public GameActorCommand {
-    public:
-        explicit ScoreCommandLow(GameObject *actor, EventId playerScoreEvent);
-        void Execute() override;
-
-    private:
-        EventId m_PlayerScoreEvent{};
-    };
-
-    class ScoreCommandHigh : public GameActorCommand {
-    public:
-        explicit ScoreCommandHigh(GameObject *actor, EventId playerScoreEvent);
-        void Execute() override;
-
-    private:
-        EventId m_PlayerScoreEvent{};
-    };
 }

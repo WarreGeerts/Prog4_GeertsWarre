@@ -1,9 +1,20 @@
 ﻿#include "SpawnerComponent.h"
 #include "EnemyComponent.h"
+#include "LivesComponent.h"
 #include "Components/ColliderComponent.h"
 #include "Singletons/SceneManager.h"
 
 namespace game {
+    void SpawnerComponent::SetDeathListener(ge::EventId deathEventId) {
+        if (m_Handle.valid) {
+            ge::EventManager::GetInstance().DetachEvent(m_Handle);
+        }
+        m_DeathEventId = deathEventId;
+        m_Handle = ge::EventManager::GetInstance().AttachEvent(deathEventId, [this](const ge::Event &) {
+            m_ShouldRespawnAll = true;
+        });
+    }
+
     void SpawnerComponent::Update() {
         if ((!m_Start && m_Deserialized)) {
             if (!m_LinkedGOName.empty()) {
@@ -19,8 +30,13 @@ namespace game {
             m_Start = true;
         }
 
+        if (m_ShouldRespawnAll) {
+            m_Respawn = true;
+            m_ShouldRespawnAll = false;
+        }
+
         if (m_linkedGo != nullptr) {
-            auto* enemyComp = m_linkedGo->GetComponent<EnemyComponent>();
+            auto *enemyComp = m_linkedGo->GetComponent<EnemyComponent>();
             if (enemyComp && enemyComp->Dead()) {
                 m_Respawn = true;
             }
@@ -55,12 +71,26 @@ namespace game {
         if (ImGui::InputText("Linked GameObject##SC", buf, sizeof(buf))) {
             m_LinkedGOName = buf;
         }
+
+        auto &em = ge::EventManager::GetInstance();
+        const std::string name = em.GetEventName(m_DeathEventId);
+
+        if (ImGui::BeginCombo("Death Trigger Event##SC", name.c_str())) {
+            for (auto const &[id, eventName]: em.GetRegisteredEvents()) {
+                if (ImGui::Selectable(eventName.c_str(), id == m_DeathEventId)) {
+                    m_DeathEventId = id;
+                    SetDeathListener(m_DeathEventId);
+                }
+            }
+            ImGui::EndCombo();
+        }
     }
 
     nlohmann::ordered_json SpawnerComponent::Serialize() const {
         nlohmann::ordered_json data;
         data["linkedName"] = m_LinkedGOName;
         data["spawnPosition"] = {m_SpawnPosition.x, m_SpawnPosition.y};
+        data["deathEventId"] = m_DeathEventId;
         return data;
     }
 
@@ -77,6 +107,9 @@ namespace game {
                 m_SpawnPosition.y = posArray[1].get<float>();
             }
         }
+        m_DeathEventId = data.value("deathEventId", -1);
+        SetDeathListener(m_DeathEventId);
+
         m_Deserialized = true;
     }
 }

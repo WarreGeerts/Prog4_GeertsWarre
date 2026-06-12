@@ -5,6 +5,7 @@
 #include "Components/RenderComponent.h"
 #include "Singletons/DeltaTime.h"
 #include "Singletons/SceneManager.h"
+#include "Sound/ServiceLocator.h"
 
 namespace game {
     void EnemyComponent::Update() {
@@ -35,6 +36,8 @@ namespace game {
             if (myCollider->IsOverlapping(otherCollider)) {
                 if (hamburgerPiece->IsFalling()) {
                     m_Health--;
+                    auto &ss = ge::ServiceLocator::GetSoundSystem();
+                    ss.Play(7, 0.5f);
                     ge::EventManager::GetInstance().SendEvent(
                         ge::Event(m_ScoreEventId).AddInt(100 * m_PointsMultiplier));
                 }
