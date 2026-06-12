@@ -8,7 +8,7 @@ namespace game {
         void OnExit() override{};
         void HandleInput() override{};
         void Update() override;
-        void NextLevel();
+        void NextLevel() override;
 
     private:
         float m_WaitTimer{};

@@ -73,6 +73,11 @@ namespace game {
         ge::SceneSerializer::LoadScene(L3Path.string(), ge::SceneManager::GetInstance().GetSceneByIdx(sceneIdx));
         ++sceneIdx;
 
+        ge::SceneManager::GetInstance().CreateScene("GameOver");
+        const std::filesystem::path GameOverPath = scenesDir / ("GameOver.json");
+        ge::SceneSerializer::LoadScene(GameOverPath.string(), ge::SceneManager::GetInstance().GetSceneByIdx(sceneIdx));
+        ++sceneIdx;
+
         //events
         EventRegistry::Initialize();
 

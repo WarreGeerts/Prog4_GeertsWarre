@@ -11,6 +11,7 @@ namespace game {
         void ChangeState(std::unique_ptr<GameState> newState);
         void Update();
         void NextLevel();
+        void GameOver();
 
     private:
         friend Singleton<GSManager>;

@@ -1,5 +1,6 @@
 ﻿#include "GSManager.h"
 #include "GSGame.h"
+#include "GSGameOver.h"
 #include "GSMainMenu.h"
 #include "../../cmake-build-debug/_deps/sdl3-src/include/SDL3/SDL_log.h"
 
@@ -26,5 +27,9 @@ namespace game {
         if (dynamic_cast<GSGame *>(m_CurrentGameState.get()) != nullptr) {
             m_CurrentGameState->NextLevel();
         }
+    }
+
+    void GSManager::GameOver() {
+        ChangeState(std::make_unique<GSGameOver>());
     }
 }
