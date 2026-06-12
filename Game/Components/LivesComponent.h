@@ -9,7 +9,7 @@ namespace game {
         explicit LivesComponent(ge::GameObject *go, const std::vector<ge::EventId> &listenEventIds, ge::EventId sendEventId);
         LivesComponent(ge::GameObject *go, const std::vector<ge::EventId> &listenEventIds, ge::EventId sendEventId, int lives);
         ~LivesComponent() override;
-        void Update() override {};
+        void Update() override;
         void Render() const override {};
         void InspectorGUI() override;
         [[nodiscard]] nlohmann::ordered_json Serialize() const override;
@@ -21,5 +21,9 @@ namespace game {
         std::vector<ge::EventHandle> m_Handles{};
         ge::EventId m_SendEventId{};
         int m_Lives{3};
+        bool m_Invincibility {false};
+        bool m_Damaged {false};
+        float m_AccTime{0};
+        float m_IMaxTime{2};
     };
 }

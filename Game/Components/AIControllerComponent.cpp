@@ -32,6 +32,7 @@ namespace game {
 
     void AIControllerComponent::Update() {
         if (!m_IsActive) return;
+        if (m_Dead) return;
 
         if (!m_Start && m_Deserialized) {
             if (!m_TargetName.empty()) {
@@ -164,7 +165,7 @@ namespace game {
     }
 
     void AIControllerComponent::Render() const {
-        if (!m_Grid || m_CurrentPath.empty()) return;
+        /*if (!m_Grid || m_CurrentPath.empty()) return;
 
         SDL_Renderer *renderer = ge::Renderer::GetInstance().GetSDLRenderer();
         SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
@@ -200,7 +201,7 @@ namespace game {
             const glm::vec2 wp = TileCenter(m_CurrentPath[m_PathStep].col, m_CurrentPath[m_PathStep].row);
             SDL_SetRenderDrawColor(renderer, 255, 230, 0, 200);
             SDL_RenderLine(renderer, cx, feetY, wp.x, wp.y);
-        }
+        }*/
     }
 
     void AIControllerComponent::FindPath() {

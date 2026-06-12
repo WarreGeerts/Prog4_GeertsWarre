@@ -1,9 +1,14 @@
 ﻿#include "LivesComponent.h"
 
+#include "GameObject.h"
+#include "SDL3/SDL_log.h"
+#include "Singletons/DeltaTime.h"
+
 namespace game {
     LivesComponent::LivesComponent(ge::GameObject *go, const std::vector<ge::EventId> &listenEventIds,
                                    const ge::EventId sendEventId)
         : ge::Component(go, "LivesComponent"), m_ListenEventIds(listenEventIds), m_SendEventId{sendEventId} {
+
         for (const auto &eventId: m_ListenEventIds) {
             m_Handles.emplace_back(ge::EventManager::GetInstance().AttachEvent(
                 eventId,
@@ -32,6 +37,20 @@ namespace game {
         if (!ge::EventManager::GetInstance().isAlive()) return;
         for (const auto &handle: m_Handles) {
             ge::EventManager::GetInstance().DetachEvent(handle);
+        }
+    }
+
+    void LivesComponent::Update() {
+        if (m_Damaged) {
+            m_Invincibility = true;
+
+            m_AccTime += ge::DeltaTime::GetInstance().Time();
+
+            if (m_AccTime >= m_IMaxTime) {
+                m_Invincibility = false;
+                m_Damaged = false;
+                m_AccTime = 0;
+            }
         }
     }
 
@@ -117,6 +136,7 @@ namespace game {
         for (auto id: m_ListenEventIds) {
             data["event_ids"].push_back(id);
         }
+        data["broadcast_events"] = m_SendEventId;
         return data;
     }
 
@@ -138,9 +158,17 @@ namespace game {
                 m_ListenEventIds.push_back(idData.get<int>());
             }
         }
+        m_SendEventId = data.value("broadcast_events", -1);
+
+        for (const auto& id : m_ListenEventIds) {
+            m_Handles.emplace_back(ge::EventManager::GetInstance().AttachEvent(
+                id, [this](const ge::Event&) { PlayerDie(); }));
+        }
     }
 
     void LivesComponent::PlayerDie() {
+        if (m_Invincibility) return;
+        m_Damaged = true;
         --m_Lives;
         ge::EventManager::GetInstance().SendEvent(ge::Event(m_SendEventId).AddInt(m_Lives));
     }

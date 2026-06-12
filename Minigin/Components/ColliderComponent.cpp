@@ -85,4 +85,9 @@ namespace ge {
         m_Offset.x += width;
         m_Offset.y += height;
     }
+
+    void ColliderComponent::SetOffset(float width, float height) {
+        m_Offset.x = width;
+        m_Offset.y = height;
+    }
 }

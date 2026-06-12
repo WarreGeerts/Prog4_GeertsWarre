@@ -32,6 +32,8 @@ namespace game {
         ge::ComponentFactory::GetInstance().Register<HamburgerHolderComponent>("HamburgerHolderComponent");
         ge::ComponentFactory::GetInstance().Register<SpawnerComponent>("SpawnerComponent");
         ge::ComponentFactory::GetInstance().Register<AIControllerComponent>("AIControllerComponent");
+        ge::ComponentFactory::GetInstance().Register<DamageComponent>("DamageComponent");
+        ge::ComponentFactory::GetInstance().Register<EnemyComponent>("EnemyComponent");
 
         //load in all scenes at start
         ge::SceneManager::GetInstance().CreateScene("Main");

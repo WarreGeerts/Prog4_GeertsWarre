@@ -1,5 +1,7 @@
 ﻿#include "EventManager.h"
 
+#include "SDL3/SDL_log.h"
+
 namespace ge {
     bool EventManager::s_IsDestroyed = false;
 

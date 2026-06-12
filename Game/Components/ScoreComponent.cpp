@@ -101,6 +101,8 @@ namespace game {
         for (auto id: m_ListenEventIds) {
             data["event_ids"].push_back(id);
         }
+        data["broadcast_events"] = m_SendEventId;
+
         return data;
     }
 
@@ -122,6 +124,8 @@ namespace game {
                 m_ListenEventIds.push_back(idData.get<int>());
             }
         }
+        m_SendEventId = data.value("broadcast_events", -1);
+
     }
 
     void ScoreComponent::IncreaseScore(const int amount) {

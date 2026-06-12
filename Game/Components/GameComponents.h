@@ -15,3 +15,5 @@
 #include "HamburgerHolderComponent.h"
 #include "SpawnerComponent.h"
 #include "AIControllerComponent.h"
+#include "DamageComponent.h"
+#include "EnemyComponent.h"

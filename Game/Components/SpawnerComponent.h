@@ -11,12 +11,14 @@ namespace game {
         void InspectorGUI() override;
         [[nodiscard]] nlohmann::ordered_json Serialize() const override;
         void Deserialize(const nlohmann::ordered_json &data) override;
+        void Respawn(){m_Respawn = true;}
 
     private:
         bool m_Start = false;
         bool m_Deserialized = false;
         glm::vec2 m_SpawnPosition = { 0.0f, 0.0f };
         std::string m_LinkedGOName{};
-
+        ge::GameObject* m_linkedGo{};
+        bool m_Respawn = false;
     };
 }

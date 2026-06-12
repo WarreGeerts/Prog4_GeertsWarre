@@ -1,5 +1,7 @@
 ﻿#include "LivesDisplayComponent.h"
 #include "GameObject.h"
+#include "SDL3/SDL_log.h"
+
 namespace game {
     LivesDisplayComponent::LivesDisplayComponent(ge::GameObject *go, const ge::EventId eventId)
         : Component(go, "LivesDisplayComponent"), m_ListenEventId(eventId) {
@@ -24,6 +26,10 @@ namespace game {
     }
 
     void LivesDisplayComponent::Update() {
+        if (!m_Handle.valid || m_Handle.index == 18446744073709551615ULL) {
+            SetHandle(m_ListenEventId);
+        }
+
         if (!m_IsActive) return;
 
         if (NeedsUpdate()) {
@@ -110,5 +116,11 @@ namespace game {
             m_Handle.valid = data.value("valid", false);
         }
         m_Text = data.value("text", "# Lives: ");
+
+        SetHandle(m_ListenEventId);
+    }
+
+    void LivesDisplayComponent::OnPlayerDied(const int lives) {
+        m_Lives = lives;
     }
 }

@@ -26,6 +26,8 @@ namespace game {
         void SetPersonality(const AIPersonality &p) { m_Personality = p; }
         [[nodiscard]] const AIPersonality &GetPersonality() const { return m_Personality; }
         void SetTarget(ge::GameObject *target) { m_Target = target; }
+        void Died() { m_Dead = true; }
+        void Respawned() { m_Dead = false; }
 
     private:
         struct PathNode {
@@ -71,6 +73,6 @@ namespace game {
         bool m_Start{false};
         bool m_Deserialized = false;
         std::string m_TargetName{};
-
+        bool m_Dead{false};
     };
 }

@@ -19,7 +19,7 @@ namespace game {
         bool IsOverwritingText() override {return true;}
 
     private:
-        void OnPlayerDied(const int lives) { m_Lives = lives; };
+        void OnPlayerDied(const int lives);
         int m_MaxLives{3};
         int m_Lives{m_MaxLives};
         int m_PrevLives{-1};

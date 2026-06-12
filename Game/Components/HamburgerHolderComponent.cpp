@@ -4,6 +4,7 @@
 #include "HamburgerMovementComponent.h"
 #include "Components/CharacterControllerComponent.h"
 #include "Components/ColliderComponent.h"
+#include "Singletons/DeltaTime.h"
 #include "Singletons/SceneManager.h"
 
 namespace game {
@@ -35,18 +36,35 @@ namespace game {
             }
         }
 
-        for (const auto &obj: ge::SceneManager::GetInstance().GetSceneByIdx(
-                 ge::SceneManager::GetInstance().GetCurrentSceneIdx()).GetGameObjects()) {
-            if (obj.get() == m_gameObject) continue;
+        if (m_TriggerTimer > 0.0f) {
+            m_TriggerTimer -= ge::DeltaTime::GetInstance().Time();
+            if (m_TriggerTimer <= 0.0f) {
+                m_TriggerTimer = 0.0f;
+                m_WasTriggered = false;
+                DropPendingPart();
+            }
+            return;
+        }
 
-            const auto *otherCollider = obj->GetComponent<ge::ColliderComponent>();
-            if (!otherCollider) continue;
+        if (!m_WasTriggered) {
+            for (const auto &obj: ge::SceneManager::GetInstance().GetSceneByIdx(
+                     ge::SceneManager::GetInstance().GetCurrentSceneIdx()).GetGameObjects()) {
+                if (obj.get() == m_gameObject) continue;
 
-            if (!myCollider->IsOverlapping(otherCollider)) continue;
+                const auto *otherCollider = obj->GetComponent<ge::ColliderComponent>();
+                if (!otherCollider) continue;
 
-            if (!m_WasTriggered && obj->GetComponent<ge::CharacterControllerComponent>()) {
-                m_WasTriggered = true;
-                DropObject();
+                if (myCollider->IsOverlapping(otherCollider) &&
+                    obj->GetComponent<ge::CharacterControllerComponent>()) {
+                    m_WasTriggered = true;
+                    if (!m_StackedParts.empty()) {
+                        m_PendingDrop = m_StackedParts.back();
+                        m_StackedParts.pop_back();
+                        m_RemainingDrops = 0;
+                        DropPendingPart();
+                    }
+                    break;
+                }
             }
         }
     }
@@ -62,6 +80,11 @@ namespace game {
     void HamburgerHolderComponent::Deserialize(const nlohmann::ordered_json &data) {
         m_LinkedPartName = data.value("linkedPart", "");
         m_FallThrough = data.value("fallThrough", true);
+
+        if (!m_FallThrough) {
+            auto *myCollider = m_gameObject->GetComponent<ge::ColliderComponent>();
+            myCollider->SetOffset(0, 0);
+        }
     }
 
     void HamburgerHolderComponent::InspectorGUI() {
@@ -80,26 +103,18 @@ namespace game {
         }
 
         if (ImGui::Button("Reset Position")) {
-                const auto *myCollider = m_gameObject->GetComponent<ge::ColliderComponent>();
+            auto *myCollider = m_gameObject->GetComponent<ge::ColliderComponent>();
 
             if (!m_FallThrough) {
-                float totalOffset = 0.f;
-                for (const auto *obj : m_StackedParts) {
-                    if (!obj) continue;
-                    const auto *partCollider = obj->GetComponent<ge::ColliderComponent>();
-                    if (partCollider) {
-                        totalOffset += partCollider->GetWorldBounds().w;
-                    }
-                }
-                if (totalOffset != 0.f) {
-                    m_gameObject->GetComponent<ge::ColliderComponent>()->
-                        IncreaseOffset(0, totalOffset);
-                }
+                myCollider->SetOffset(0, 0);
             }
 
             m_Initialized = false;
             m_StackedParts.clear();
+            m_PendingDrop = nullptr;
             m_WasTriggered = false;
+            m_TriggerTimer = 0.0f;
+            m_RemainingDrops = 0;
 
             if (!m_LinkedPartName.empty()) {
                 for (const auto &obj: ge::SceneManager::GetInstance().GetSceneByIdx(
@@ -121,34 +136,39 @@ namespace game {
         }
     }
 
-    void HamburgerHolderComponent::IsFinishedFalling(ge::GameObject *arrivedPart) {
-        m_WasTriggered = true;
-        if (std::find(m_StackedParts.begin(), m_StackedParts.end(), arrivedPart) != m_StackedParts.end())
-            return;
-
+    void HamburgerHolderComponent::IsFinishedFalling(ge::GameObject *arrivedPart, int remainingDrops) {
         m_StackedParts.push_back(arrivedPart);
         m_WasTriggered = false;
 
-        if (m_FallThrough && m_StackedParts.size() > 1) {
-            DropObject();
-        }
+        auto *myCollider = m_gameObject->GetComponent<ge::ColliderComponent>();
 
         if (!m_FallThrough) {
             auto arrivedCollider = arrivedPart->GetComponent<ge::ColliderComponent>();
-            m_gameObject->GetComponent<ge::ColliderComponent>()->
-                    IncreaseOffset(0, -arrivedCollider->GetWorldBounds().w);
+            myCollider->IncreaseOffset(0, -arrivedCollider->GetWorldBounds().w);
+            return;
+        }
+
+        if (!m_StackedParts.empty() && m_StackedParts.front() != arrivedPart) {
+            m_PendingDrop = m_StackedParts.front();
+            m_StackedParts.erase(m_StackedParts.begin());
+            m_RemainingDrops = remainingDrops;
+            m_TriggerTimer = 0.5f;
+        } else if (remainingDrops > 0) {
+            m_PendingDrop = arrivedPart;
+            m_StackedParts.pop_back();
+            m_RemainingDrops = remainingDrops - 1;
+            m_TriggerTimer = 0.5f;
         }
     }
 
-    void HamburgerHolderComponent::DropObject() {
-        if (m_StackedParts.empty()) return;
-        const auto droppedPart = m_StackedParts[0];
-        m_StackedParts.erase(m_StackedParts.begin());
-        m_WasTriggered = false;
+    void HamburgerHolderComponent::DropPendingPart() {
+        if (!m_PendingDrop) return;
 
-        auto *movement = droppedPart->GetComponent<HamburgerMovementComponent>();
+        auto *movement = m_PendingDrop->GetComponent<HamburgerMovementComponent>();
+        m_PendingDrop = nullptr;
+
         if (movement) {
-            movement->StartFalling(this);
+            movement->StartFalling(this, m_RemainingDrops);
         }
     }
 }
