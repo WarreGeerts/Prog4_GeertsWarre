@@ -23,6 +23,6 @@ namespace game {
         HamburgerHolderComponent *m_IgnoredHolder{nullptr};
         int m_AmountOfDrops{0};
         std::unordered_set<ge::GameObject *> m_HitEnemies{};
-        ge::EventId m_ScoreEventId = -1;
+        ge::EventId m_ScoreEventId = static_cast<ge::EventId>(-1);
     };
 }

@@ -31,5 +31,6 @@ namespace game {
         bool m_GameOver{false};
         float m_AccTime{0};
         float m_IMaxTime{2};
+        int m_FramesActive{ 0 };
     };
 }

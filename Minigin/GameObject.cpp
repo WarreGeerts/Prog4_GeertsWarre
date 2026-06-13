@@ -60,17 +60,11 @@ namespace ge {
         if (m_MarkedForDeletion) return;
         m_MarkedForDeletion = true;
 
-        if (m_Parent) {
-            m_Parent->RemoveChild(this);
-            m_Parent = nullptr;
-        }
-
-        for (auto *child: m_Children) {
+        for (auto& child : m_Children) {
             if (child) {
                 child->MarkForDeletion();
             }
         }
-        m_Children.clear();
     }
 
     void GameObject::SetActive(const bool value) {
@@ -143,6 +137,22 @@ namespace ge {
         for (auto *child: m_Children) {
             if (child) {
                 child->SetPositionDirty();
+            }
+        }
+    }
+
+    void GameObject::CleanupDeadChildren() {
+        m_Children.erase(
+            std::remove_if(m_Children.begin(), m_Children.end(),
+                [](GameObject* child) {
+                    return child == nullptr || child->MarkedForDeletion();
+                }),
+            m_Children.end()
+        );
+
+        for (auto* child : m_Children) {
+            if (child) {
+                child->CleanupDeadChildren();
             }
         }
     }

@@ -2,7 +2,7 @@
 #include "GSGame.h"
 #include "GSGameOver.h"
 #include "GSMainMenu.h"
-#include "../../cmake-build-debug/_deps/sdl3-src/include/SDL3/SDL_log.h"
+#include "SDL3/SDL_log.h"
 
 namespace game {
     void GSManager::Initialize() {

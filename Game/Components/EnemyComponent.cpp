@@ -65,10 +65,12 @@ namespace game {
     nlohmann::ordered_json EnemyComponent::Serialize() const {
         nlohmann::ordered_json data;
         data["scoreEvent"] = m_ScoreEventId;
+		data["pointsMultiplier"] = m_PointsMultiplier;
         return data;
     }
 
     void EnemyComponent::Deserialize(const nlohmann::ordered_json &data) {
         m_ScoreEventId = data.value("scoreEvent", -1);
+		m_PointsMultiplier = data.value("pointsMultiplier", 1);
     }
 }

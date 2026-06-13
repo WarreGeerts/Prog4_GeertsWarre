@@ -36,17 +36,17 @@ namespace ge {
         ImGui::Begin("Scene Graph");
 
         if (ImGui::BeginPopupContextWindow("SceneGraphContext",
-                                           ImGuiPopupFlags_MouseButtonRight | ImGuiPopupFlags_NoOpenOverItems)) {
+            ImGuiPopupFlags_MouseButtonRight | ImGuiPopupFlags_NoOpenOverItems)) {
             if (ImGui::MenuItem("Create Empty GameObject")) {
-                auto &scene = SceneManager::GetInstance().GetSceneByIdx(
+                auto& scene = SceneManager::GetInstance().GetSceneByIdx(
                     SceneManager::GetInstance().GetCurrentSceneIdx());
                 scene.Add(std::make_unique<GameObject>("Empty GameObject"));
             }
             ImGui::EndPopup();
         }
 
-        auto &currentScene = SceneManager::GetInstance().
-                GetSceneByIdx(SceneManager::GetInstance().GetCurrentSceneIdx());
+        auto& currentScene = SceneManager::GetInstance().
+            GetSceneByIdx(SceneManager::GetInstance().GetCurrentSceneIdx());
         const std::string currentSceneName = currentScene.GetName();
         char sceneNameBuf[64] = {};
         strncpy(sceneNameBuf, currentSceneName.c_str(), sizeof(sceneNameBuf) - 1);
@@ -59,15 +59,18 @@ namespace ge {
 
         ImGui::PopItemWidth();
 
-        for (auto &GO: currentScene.GetGameObjects()) {
-            if (GO->GetParent() == nullptr)
-                VisualizeSceneGraph(GO.get());
+        const int originalSceneSize = currentScene.GetSceneSize();
+        for (int i = 0; i < originalSceneSize; ++i) {
+            GameObject* GO = &currentScene.GetGameObjectByIndex(i);
+            if (GO->GetParent() == nullptr) {
+                VisualizeSceneGraph(GO);
+            }
         }
 
         ImGui::Dummy(ImGui::GetContentRegionAvail());
         if (ImGui::BeginDragDropTarget()) {
-            if (const ImGuiPayload *payload = ImGui::AcceptDragDropPayload("GAMEOBJECT_HIERARCHY")) {
-                GameObject *draggedGO = *static_cast<GameObject **>(payload->Data);
+            if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("GAMEOBJECT_HIERARCHY")) {
+                GameObject* draggedGO = *static_cast<GameObject**>(payload->Data);
                 draggedGO->SetParent(nullptr, true);
             }
             ImGui::EndDragDropTarget();

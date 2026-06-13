@@ -19,7 +19,7 @@ namespace game {
         int m_MaxHealth{1};
         float m_AccTime{0};
         float m_RespawnTime{2};
-        ge::EventId m_ScoreEventId = -1;
+        ge::EventId m_ScoreEventId = static_cast<ge::EventId>(-1);
         int m_PointsMultiplier {1};
     };
 }

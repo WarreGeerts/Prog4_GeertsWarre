@@ -27,6 +27,8 @@ namespace ge {
         Scene &operator=(Scene &&other) = delete;
         void RequestClear();
 
+        void CleanupGeneration();
+
         //id
         int GetId() const { return m_Id; }
 

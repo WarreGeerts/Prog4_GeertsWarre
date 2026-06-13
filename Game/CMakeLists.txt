@@ -48,6 +48,8 @@
         Components/HamburgerManager.h
         States/GSGameOver.cpp
         States/GSGameOver.h
+        ProgressionManager.cpp
+        ProgressionManager.h
 )
 
 target_include_directories(${TARGET_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})

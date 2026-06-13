@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include <memory>
 #include "SoundSystem.h"
+#include <string>
 
 namespace ge {
     class SdlSoundSystem final : public SoundSystem {
@@ -18,7 +19,7 @@ namespace ge {
         void PlayMusic(sound_id id, float volume, bool loop) override;
         void Update() override;
         void Load(sound_id id, const std::string& filename) override;
-        void SetMasterVolume(float volume);
+        void SetMasterVolume(float volume) override;
 
 
     private:

@@ -54,6 +54,7 @@ namespace ge {
         [[nodiscard]] const glm::vec3 &GetLocalPosition() const { return m_LocalPosition; }
         void UpdateWorldPosition();
         void SetPositionDirty();
+        void CleanupDeadChildren();
         void AddIntendedMovement(const glm::vec3& displacement) { m_IntendedMovement += displacement; }
         [[nodiscard]] const glm::vec3& GetIntendedMovement() const { return m_IntendedMovement; }
         void ClearIntendedMovement() { m_IntendedMovement = glm::vec3(0.0f); }

@@ -57,7 +57,7 @@ namespace game {
             return;
         }
 
-        if (!m_WasTriggered) {
+        if (!m_WasTriggered && m_FallThrough) {
             for (const auto &obj: ge::SceneManager::GetInstance().GetSceneByIdx(
                      ge::SceneManager::GetInstance().GetCurrentSceneIdx()).GetGameObjects()) {
                 if (obj.get() == m_gameObject) continue;

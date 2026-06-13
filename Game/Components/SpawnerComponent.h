@@ -25,6 +25,6 @@ namespace game {
 
         ge::EventHandle m_Handle;
         bool m_ShouldRespawnAll = false;
-        ge::EventId m_DeathEventId = -1;
+        ge::EventId m_DeathEventId = static_cast<ge::EventId>(-1);
     };
 }

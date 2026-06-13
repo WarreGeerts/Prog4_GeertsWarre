@@ -123,14 +123,21 @@ namespace ge {
 #ifndef __EMSCRIPTEN__
         void ProcessQueue() {
             while (true) {
-                std::unique_lock<std::mutex> lock(mutex);
-                CV.wait(lock, [this] { return !queue.empty() || !running; });
-                if (!running && queue.empty()) return;
+                SoundRequest request{};
+                {
+                    std::lock_guard<std::mutex> lock(mutex);
+                    if (queue.empty()) return;
 
-                lock.unlock();
-                ProcessQueueOnce();
-                std::lock_guard<std::mutex> cleanLock(mutex);
-                CleanupStreams();
+                    request = queue.front();
+                    queue.pop();
+
+                    if (request.is_music) {
+                        PlayMusicInternal(request.id, request.volume, request.loop);
+                    }
+                    else {
+                        PlaySoundInternal(request.id, request.volume);
+                    }
+                }
             }
         }
 #endif

@@ -8,7 +8,7 @@ namespace game {
         explicit ScoreComponent(ge::GameObject *go) : Component(go, "ScoreComponent") {}
         explicit ScoreComponent(ge::GameObject *go, const std::vector<ge::EventId> &listenEventIds, ge::EventId sendEventId);
         ~ScoreComponent() override;
-        void Update() override {};
+        void Update() override;
         void Render() const override {};
         void InspectorGUI() override;
         [[nodiscard]] nlohmann::ordered_json Serialize() const override;
@@ -20,5 +20,7 @@ namespace game {
         ge::EventId m_SendEventId{};
         std::vector<ge::EventHandle> m_Handles;
         int m_Score{};
+        int m_FramesActive{ 0 };
+
     };
 }

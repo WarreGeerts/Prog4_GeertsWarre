@@ -1,5 +1,7 @@
 ﻿#include "ScoreComponent.h"
 
+#include "ProgressionManager.h"
+
 namespace game {
     ScoreComponent::ScoreComponent(ge::GameObject *go, const std::vector<ge::EventId> &listenEventIds,
                                    const ge::EventId sendEventId)
@@ -16,6 +18,17 @@ namespace game {
         if (!ge::EventManager::GetInstance().isAlive()) return;
         for (const auto &handle: m_Handles) {
             ge::EventManager::GetInstance().DetachEvent(handle);
+        }
+    }
+
+    void ScoreComponent::Update()
+    {
+        if (m_FramesActive == 0) {
+            ge::EventManager::GetInstance().SendEvent(ge::Event(m_SendEventId).AddInt(m_Score));
+        }
+
+        if (m_FramesActive < 5) {
+            m_FramesActive++;
         }
     }
 
@@ -122,10 +135,12 @@ namespace game {
             }
         }
         m_SendEventId = data.value("broadcast_events", -1);
+		m_Score = ProgressionManager::GetInstance().GetScore();
     }
 
     void ScoreComponent::IncreaseScore(const int amount) {
         m_Score += amount;
+		game::ProgressionManager::GetInstance().AddScore(amount);
         ge::EventManager::GetInstance().SendEvent(ge::Event(m_SendEventId).AddInt(m_Score));
     }
 }

@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include <memory>
+#include <string>
 using sound_id = unsigned short;
 
 namespace ge {
@@ -30,7 +31,7 @@ namespace ge {
         void Play(sound_id id, float volume) override;
         void PlayMusic(sound_id id, float volume, bool loop) override;
         void Update() override;
-        void Load(sound_id, const std::string&) override;
+        void Load(sound_id id, const std::string& path) override;
         void SetMasterVolume(float volume) override;
     };
 }
