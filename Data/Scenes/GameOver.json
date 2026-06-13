@@ -1,5 +1,31 @@
 {
-    "scene_id": 5,
+    "scene_id": 0,
     "scene_name": "GameOver",
-    "gameobjects": []
+    "gameobjects": [
+        {
+            "go_id": 118,
+            "parent_id": -1,
+            "go_name": "Background",
+            "enabled": true,
+            "transform": {
+                "position": [
+                    0.0,
+                    0.0,
+                    0.0
+                ]
+            },
+            "components": [
+                {
+                    "comp_id": 383,
+                    "comp_name": "RenderComponent",
+                    "active": true,
+                    "comp_data": {
+                        "file_name": "Background_BT.png",
+                        "overwritten": false,
+                        "render_layer": 0
+                    }
+                }
+            ]
+        }
+    ]
 }
