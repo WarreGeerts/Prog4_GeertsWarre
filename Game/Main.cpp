@@ -22,6 +22,8 @@
 namespace fs = std::filesystem;
 
 namespace game {
+
+
     static void load() //loads once
     {
         //game components
@@ -61,16 +63,6 @@ namespace game {
         ge::SceneManager::GetInstance().CreateScene("Level_1");
         const std::filesystem::path L1Path = scenesDir / ("Level_1.json");
         ge::SceneSerializer::LoadScene(L1Path.string(), ge::SceneManager::GetInstance().GetSceneByIdx(sceneIdx));
-        ++sceneIdx;
-
-        ge::SceneManager::GetInstance().CreateScene("Level_2");
-        const std::filesystem::path L2Path = scenesDir / ("Level_2.json");
-        ge::SceneSerializer::LoadScene(L2Path.string(), ge::SceneManager::GetInstance().GetSceneByIdx(sceneIdx));
-        ++sceneIdx;
-
-        ge::SceneManager::GetInstance().CreateScene("Level_3");
-        const std::filesystem::path L3Path = scenesDir / ("Level_3.json");
-        ge::SceneSerializer::LoadScene(L3Path.string(), ge::SceneManager::GetInstance().GetSceneByIdx(sceneIdx));
         ++sceneIdx;
 
         ge::SceneManager::GetInstance().CreateScene("GameOver");

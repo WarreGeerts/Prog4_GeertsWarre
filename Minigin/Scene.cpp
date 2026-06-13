@@ -61,6 +61,7 @@ namespace ge {
                 object->Update();
             }
         }
+
         //after update look through all objects to delete those who are marked
         m_objects.erase(
             std::remove_if(m_objects.begin(), m_objects.end(),
@@ -72,6 +73,11 @@ namespace ge {
                            }),
             m_objects.end()
         );
+
+        if (m_ClearRequested) {
+            m_objects.clear();
+            m_ClearRequested = false;
+        }
     }
 
     void Scene::Render() const {
@@ -113,5 +119,9 @@ namespace ge {
 
     void Scene::ClearGameObjects() {
         m_objects.clear();
+    }
+
+    void Scene::RequestClear() {
+        m_ClearRequested = true;
     }
 }

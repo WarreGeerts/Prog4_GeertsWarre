@@ -6,26 +6,14 @@
 namespace ge {
     void SceneManager::Update() {
         m_scenes.at(m_SceneIdx)->Update();
-
-        /*for (auto &scene: m_scenes) {
-            scene->Update();
-        }*/
     }
 
     void SceneManager::Render() const {
         m_scenes.at(m_SceneIdx)->Render();
-
-        /*for (const auto &scene: m_scenes) {
-            scene->Render();
-        }*/
     }
 
     void SceneManager::RenderGUI() const {
         m_scenes.at(m_SceneIdx)->RenderGUI();
-
-        /*for (const auto &scene: m_scenes) {
-            scene->RenderGUI();
-        }*/
     }
 
     int SceneManager::GetCurrentSceneIdx() const { return m_SceneIdx; }

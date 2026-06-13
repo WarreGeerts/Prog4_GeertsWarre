@@ -48,4 +48,10 @@ namespace ge {
         const auto it = m_EventNames.find(id);
         return (it != m_EventNames.end()) ? it->second : "Unknown Event";
     }
+
+    void EventManager::ClearAllEvents() {
+        for (auto& [id, listeners] : m_EventListeners) {
+            listeners.clear();
+        }
+    }
 }

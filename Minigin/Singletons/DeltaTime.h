@@ -16,6 +16,7 @@ namespace ge {
         [[nodiscard]] float Lag() const { return m_Lag; }
         [[nodiscard]] float GetMsPerFrame() const { return m_Ms_Per_Frame; }
         void SetFPS(int fps);
+        void Reset();
 
     private:
         friend Singleton<DeltaTime>;

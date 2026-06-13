@@ -27,5 +27,6 @@ namespace ge {
         SceneManager() = default;
         std::vector<std::unique_ptr<Scene> > m_scenes{};
         int m_SceneIdx {0};
+        bool m_ClearRequested {false};
     };
 }

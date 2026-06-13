@@ -9,6 +9,12 @@ namespace game {
         AddHandles();
     }
 
+    UiGameModeSelector::~UiGameModeSelector() {
+        ge::EventManager::GetInstance().DetachEvent(m_HandleDown);
+        ge::EventManager::GetInstance().DetachEvent(m_HandleUp);
+        ge::EventManager::GetInstance().DetachEvent(m_HandleSelected);
+    }
+
     void UiGameModeSelector::Update() {
         if (!m_LateLoad) {
             m_gameObject->GetChildAt(0)->GetComponent<ge::TextComponent>()->SetColor(m_ColorSelected);
@@ -79,12 +85,24 @@ namespace game {
     }
 
     void UiGameModeSelector::SwitchSelection() {
-        m_gameObject->GetChildAt(m_PrevOption)->GetComponent<ge::TextComponent>()->SetColor(m_ColorDefault);
+        int childCount = m_gameObject->GetChildCount();
+        if (childCount == 0) return;
 
-        if (m_CurrentOption < 0) m_CurrentOption = m_gameObject->GetChildCount() - 1;
-        m_CurrentOption %= m_gameObject->GetChildCount();
+        if (m_CurrentOption < 0) m_CurrentOption = childCount - 1;
+        m_CurrentOption %= childCount;
 
-        m_gameObject->GetChildAt(m_CurrentOption)->GetComponent<ge::TextComponent>()->SetColor(m_ColorSelected);
+        auto* prevObj = m_gameObject->GetChildAt(m_PrevOption);
+        if (prevObj) {
+            if (auto* tc = prevObj->GetComponent<ge::TextComponent>())
+                tc->SetColor(m_ColorDefault);
+        }
+
+        auto* currObj = m_gameObject->GetChildAt(m_CurrentOption);
+        if (currObj) {
+            if (auto* tc = currObj->GetComponent<ge::TextComponent>())
+                tc->SetColor(m_ColorSelected);
+        }
+
         m_PrevOption = m_CurrentOption;
     }
 

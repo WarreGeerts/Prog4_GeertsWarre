@@ -17,4 +17,9 @@ namespace ge {
         m_Ms_Per_Frame = 1.f / static_cast<float>(m_FPS);
         std::cout << "ms per frame: " << m_Ms_Per_Frame << std::endl;
     }
+
+    void DeltaTime::Reset() {
+        m_LastTime = std::chrono::high_resolution_clock::now();
+        m_DeltaTime = 0.0f;
+    }
 }

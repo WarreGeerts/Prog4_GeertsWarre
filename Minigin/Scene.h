@@ -25,6 +25,8 @@ namespace ge {
         Scene(Scene &&other) = delete;
         Scene &operator=(const Scene &other) = delete;
         Scene &operator=(Scene &&other) = delete;
+        void RequestClear();
+
         //id
         int GetId() const { return m_Id; }
 
@@ -33,6 +35,7 @@ namespace ge {
         explicit Scene(std::string name) : m_Id(GenerateNextId()) { m_Name = std::move(name); }
         std::vector<std::unique_ptr<GameObject> > m_objects{};
         std::string m_Name;
+        bool m_ClearRequested{false};
         //id
         int m_Id;
         static int s_NextId;

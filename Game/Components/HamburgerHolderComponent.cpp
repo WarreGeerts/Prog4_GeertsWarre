@@ -11,6 +11,7 @@
 
 namespace game {
     void HamburgerHolderComponent::Update() {
+        if (!m_gameObject || m_gameObject->MarkedForDeletion()) return;
         const auto *myCollider = m_gameObject->GetComponent<ge::ColliderComponent>();
         if (!myCollider) return;
 

@@ -7,6 +7,7 @@ namespace game {
     class UiGameModeSelector final : public ge::Component {
     public:
         explicit UiGameModeSelector(ge::GameObject *go);
+        ~UiGameModeSelector();
         void Update() override;
         void Render() const override {};
         void InspectorGUI() override;

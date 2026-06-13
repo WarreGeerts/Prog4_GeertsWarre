@@ -58,19 +58,18 @@ namespace ge {
 
     void GameObject::MarkForDeletion() {
         if (m_MarkedForDeletion) return;
-
         m_MarkedForDeletion = true;
+
+        if (m_Parent) {
+            m_Parent->RemoveChild(this);
+            m_Parent = nullptr;
+        }
 
         for (auto *child: m_Children) {
             if (child) {
                 child->MarkForDeletion();
             }
         }
-
-        if (m_Parent) {
-            this->SetParent(nullptr, false);
-        }
-
         m_Children.clear();
     }
 

@@ -71,6 +71,7 @@ namespace ge {
         void RegisterEventName(EventId id, const std::string &name);
         const std::unordered_map<EventId, std::string> &GetRegisteredEvents() const;
         std::string GetEventName(EventId id) const;
+        void ClearAllEvents();
 
     private:
         friend Singleton<EventManager>;
